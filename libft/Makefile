@@ -20,6 +20,17 @@ SRC = \
 	memdel\
 	memmove\
 	memset\
+	mchain\
+	mladd\
+	mlalloc\
+	mlappend\
+	mlarray\
+	mldel\
+	mlfind\
+	mlpop\
+	mlremove\
+	mlrev\
+	mlxfer\
 	putchar\
 	putchar_fd\
 	putendl\
