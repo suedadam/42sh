@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/16 01:17:06 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/21 21:44:37 by satkins          ###   ########.fr       */
+/*   Created: 2018/03/21 21:07:00 by satkins           #+#    #+#             */
+/*   Updated: 2018/03/21 21:13:58 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PARSER_H
 
-char	*ft_strcat(char *s1, const char *s2)
-{
-	ft_stpcpy(s1 + ft_strlen(s1), s2);
-	return (s1);
-}
+# define PARSER_H
+
+# include "libft.h"
+
+#endif

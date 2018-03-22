@@ -1,19 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/16 01:17:06 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/21 21:44:37 by satkins          ###   ########.fr       */
+/*   Created: 2018/03/21 21:07:24 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/03/21 21:12:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strcat(char *s1, const char *s2)
-{
-	ft_stpcpy(s1 + ft_strlen(s1), s2);
-	return (s1);
-}
+#include "lbift.h"
+#include "ast.h"
