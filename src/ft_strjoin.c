@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/21 17:32:39 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/21 20:31:46 by tle-huu-         ###   ########.fr       */
+/*   Created: 2016/12/16 19:11:14 by sgardner          #+#    #+#             */
+/*   Updated: 2018/03/19 17:26:20 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct		s_ast
-{
-	t_token				*token_array;
-	struct s_ast		*left_child;
-	struct s_ast		*right_child;
-}					t_ast;
+#include <stdlib.h>
+#include "libft.h"
 
-typedef struct		s_token
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char 				*token;
-	enum token_type		type;
+	char	*res;
 
-}					t_token;
+	if ((res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+		ft_stpcpy(ft_stpcpy(res, s1), s2);
+	return (res);
+}
