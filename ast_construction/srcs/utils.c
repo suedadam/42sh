@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:53 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/21 23:08:35 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/22 14:14:50 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ t_token_type	*sub_token_type(t_token_type *array, int index, int length)
 	int				j;
 
 	if (!(copy = (t_token_type *)ft_memalloc(sizeof(t_token_type) *
+		(length + 1))))
+		return (NULL);
+	j = 0;
+	i = index;
+	copy[length] = 0;
+	while (i < length)
+	{
+		copy[j] = array[i];
+		i++;
+		j++;
+	}
+	return (copy);
+}
+
+char	**sub_token_char(char **array, int index, int length)
+{
+	char			**copy;
+	int				i;
+	int				j;
+
+	if (!(copy = (char **)ft_memalloc(sizeof(char *) *
 		(length + 1))))
 		return (NULL);
 	j = 0;

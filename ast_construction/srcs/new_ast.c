@@ -6,19 +6,28 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:15:19 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/21 22:16:17 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/22 14:26:16 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_ast		*new_ast(void)
+t_ast		*new_ast_node(char **tokens, t_token_type *types,
+	t_ast *left, t_ast *right)
 {
-	if (!(ast = (t_ast *)ft_memalloc(sizeof(t_ast))))
+	int			i;
+	t_ast		*node;
+
+	if (!(node = (t_ast *)ft_memalloc(sizeof(t_ast))))
 		return (NULL);
-	ast->token = 0;
-	ast->type = 0;
-	ast->left_child = 0;
-	ast->right_child = 0;
+	node->token = tokens;
+	node->type = type;
+	node->left_child = left;
+	node->right_child = right;
 	return (ast);
+}
+
+t_ast		*new_ast_leaf(char **tokens, t_token_type *type)
+{
+	return (new_ast_node(tokens, type, NULL, NULL));
 }
