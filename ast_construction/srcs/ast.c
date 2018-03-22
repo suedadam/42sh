@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/22 14:27:39 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/22 16:33:37 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,27 @@ static int			parse_tokens(char **tokens, t_token_type *type,
 	while (tokens[i])
 	{
 		if (type[i] == operator && is_operator(tokens[i]))
-		{
 			return (i);
-			// TODO : link parsing and build of the ast
-			// build_ast(strsub(0, i + 1), sub_token_type(type, 0, i + 1));
-			// parse_tokens(token + i, type + i);
-		}
 		i++;
 	}
 	return (END_PARSING);
 }
 
-static t_ast		*build_ast(char **tokens, t_token_type *type)
+static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 {
 	int					i;
 	t_ast				*ast;
 	char				**sub_token_char;
 	t_token_type		*sub_token_type;
 
+	ast = NULL;
 	if ((i = parse_tokens(tokens, type)) == END_PARSING)
-		return (new_ast_node(tokens, type));
+		return (ast);
+	*position += i;
 	sub_token_char = sub_token_char(tokens, 0, i + 1);
 	sub_token_type = sub_token_type(type, 0, i + 1);
+	if (ft_strequ(tokens[i], ";") || !tokens[i])
+		return (new_ast_leaf(sub_token_char, sub_token_type));
 	ast = new_ast_node(sub_token_char(sub_token_char, i, 1),
 							sub_token_type(sub_token_type, i, 1),
 								new_ast_leaf(sub_token_char, sub_token_type),
@@ -62,10 +61,12 @@ t_list				*build_forest(char **tokens, t_token_type *type)
 	t_list		*forest;
 	t_list		*new_list;
 	t_ast		*ast;
+	int			position;
 
 	if (!(forest = (t_list *)ft_memalloc(sizeof(t_list))))
 		return (NULL);
-	while ((ast = build_ast(tokens, type)))
+	position = 0;
+	while ((ast = build_ast(tokens + position, type, &position)))
 	{
 		new_list = ft_lstnew(ast, sizeof(*ast));
 		ft_lstadd(&forest, ast);
