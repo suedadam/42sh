@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/22 13:53:28 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/22 14:34:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_EXEC_H
@@ -20,7 +20,7 @@
 
 typedef struct	s_process
 {
-	int	stdin;
+	int	*stdin; // 0 and 1 are the same FD.
 	int	*stdout; // 0 = read;1 = write
 	int	*stderr; // ^
 	int	*dep;

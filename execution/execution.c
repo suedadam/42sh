@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/22 13:53:26 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/22 14:40:56 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,55 @@ struct s_redir_op	redir_ops[] = {
 	{NULL, NULL}
 };
 
-int	open_arg(char *str, t_process *p_info)
+int		*create_fd(char *str)
 {
-	if (*str == '&')
-		symbolic_fd(str, t_process *p_info);
+	int	*fds;
+
+	if (!(fds = malloc(sizeof(int) * 2)))
+		return (NULL);
+	if ((fds[0] = open(str, O_RDONLY)) == -1)
+	{
+		free(fds);
+		return (NULL);
+	}
+	if ((fds[1] = open(str, O_WRONLY)) == -1)
+	{
+		free(fds);
+		free(fds[0]);
+		return (NULL);
+	}
+	return (fds);
+}
+
+int		*fd_pointer(char *str, t_process *p_info)
+{
+	int	rel_fd;
+
+	if (*str == '&' || (strlen(str) == 1 && *str >= '0' && *str <= '2'))
+	{
+		str++;
+		rel_fd = *str - '0';
+		if (rel_fd == 1)
+			return (p_info->stdout);
+		if (rel_fd == 2)
+			return (p_info->stderr);
+		if (rel_fd == 0)
+			return (p_info->stdin);
+		return (NULL);
+	}
+	else
+		return (create_fd(str));
+}
+
+int		open_arg(char *from, char *to, t_process *p_info)
+{
+	int	*from_p;
+
+	if (!(from_p = fd_pointer(from, p_info)))
+	{
+		printf("Empty?\n");
+		return (EXIT_FAILURE);
+	}
 }
 
 /*
@@ -40,9 +85,18 @@ int	parse_redirection(t_ast *exec, t_process *p_info, size_t len)
 	i = 0;
 	prev = NULL;
 	post = NULL;
-	if (len > 0)
+	if (len > 0 && strlen(exec->token[len - 1] <= 2 ))
 		prev = exec->token[len - 1];
-
+	else
+		prev = strdup("1"); /* Default to 1 if not explicity set. */
+	if (exec->token[len] && exec->token[len + 1])
+		post = exec->token[len + 1];
+	else
+	{
+		printf("Error. Undefined behavior.\n");
+		return (EXIT_FAILURE);
+	}
+	// open_arg(prev, post, p_info, 1);
 	while (redir_ops[i].opflag)
 	{
 		if (!strcmp(redir_ops[i].opflag, exec->token[len]))
@@ -73,7 +127,16 @@ t_process *init_process(void)
 		free(info->stdout);
 		return (NULL);
 	}
-	info->stdin = 0; //How tf am I going to get this? We need a way to give me the previous one if there is one.
+	/*
+	** I'll need to copy the stdin from the previous command if this is a pipe.
+	*/
+	if (!(info->stdin = malloc(sizeof(int) * 2)))
+	{
+		free(info);
+		free(info->stdout);
+		free(info->stderr);
+		return (NULL);
+	}
 	if (pipe(info->stdout) == -1)
 	{
 		free(info);
