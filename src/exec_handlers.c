@@ -6,21 +6,15 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/23 11:05:42 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/25 19:16:11 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void	func(int clr)
-{
-	clr = 0;
-	ft_printf("clearline\n");
-}
-
 int		shsignal_handlers(void)
 {
-	signal(SIGINT, &func);
+	signal(SIGINT, &ft_clearline);
 	return (EXIT_SUCCESS);
 }
 
@@ -55,7 +49,7 @@ int		ft_restoretty(t_terminf *anti)
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);
 	}
-	printf("restore\n");
+	ft_printf("exit\n");
 	return (EXIT_SUCCESS);
 }
 

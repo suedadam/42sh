@@ -10,6 +10,8 @@ OBJINC = $(patsubst %, %.o, $(INC))
 SRC += src/test
 SRC += src/error
 SRC += src/exec_handlers
+SRC += src/cursor_moves
+SRC += src/multibyte_dispatch
 
 # GENERAL LIBFT FUNCTIONS
 INC += lib/ft_strlen

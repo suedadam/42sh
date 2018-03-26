@@ -17,31 +17,27 @@ int		terminit(t_terminf *anti)
 		g_ft_errnum = TGETZ;
 	if (!(buff = (char *)ft_memalloc(2048)))
 		return (EXIT_FAILURE);
-//	if (!(temp = tgetstr("pc", &buff)))
-//		g_ft_errnum = TGETSTR;
-//	else
-//		PC = *temp;
 	/* for term_buff and tgoto */
 	if (!(BC = tgetstr("le", &(anti->term_buff))))
 		g_ft_errnum = TGETSTR;
 	if (!(UP = tgetstr("up", &(anti->term_buff))))
 		g_ft_errnum = TGETSTR;
+	PC = 0;
 	return (((ret > 0) && (!g_ft_errnum)) ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
-int		read_multibyte(char byte, int *mpass)
+int		read_multibyte(char byte, int *mpass, t_terminf *anti)
 {
 	char	discard[2];
 
 	if (*mpass == 0
 		|| (*mpass == 1 && byte == '['))
 	{
-		ft_printf("escape sequence %d\n", *mpass);
 		(*mpass)++;
 		return (EXIT_SUCCESS);
 	}
 	else if (*mpass && LSEEK(byte))
-		ft_printf("\nhome or end\n");
+		line_seek(anti, byte);
 	else if (*mpass && DEL(byte))
 	{
 		read(STDIN_FILENO, &discard, 1);
@@ -66,8 +62,14 @@ int		read_multibyte(char byte, int *mpass)
 
 int		quote_mode(char byte)
 {
-	byte = 0;
-	ft_printf("quote mode\n");
+	char	*temp;
+
+	temp = tgetstr("do", 0);
+	tputs(temp, 1, my_stupidput);
+	if (byte == '\'')
+		ft_printf("quote> ");
+	else
+		ft_printf("dquote> ");
 	return (EXIT_SUCCESS);
 }
 
@@ -78,33 +80,23 @@ int		read_loop(t_terminf *anti)
 
 	anti = (void *)anti;
 	mpass = 0;
+	ft_printf("42sh%% ");
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
 		if ((byte == 27) || mpass)
-			read_multibyte(byte, &mpass);
+			read_multibyte(byte, &mpass, anti);
 		else if (byte == 12 && !mpass)
-			ft_printf("clearscreen\n");
+			ft_clearscreen(anti);
 		else if (byte == 127 && !mpass)
-			ft_printf("backspace\n");
-		else if (byte == 39 || byte == 34)
-			quote_mode(byte);
-	/* quick and dirty test to see what sort of tty flags need to be set on executions
-		if (byte == 'p')
-		{
-			char	*catarg[2] = {"ls", 0};
-			int pid = fork();
-			if (pid == 0)
-			{
-				execv("//bin/ls", catarg);
-			}
-			else
-				wait(&pid);
-		}
-	*/
+			ft_backspace(anti);
+	//	else if (byte == 39 || byte == 34)
+	//		quote_mode(byte);
+		else if (byte == '\n')
+			ft_passinput(anti);
 		else if (byte == 4 && !mpass)
 			break ;
 		else if (!mpass)
-			ft_printf("num:  %d\nchar: %c\n", byte, byte);
+			ft_printf("%lc", byte);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -142,8 +134,7 @@ int		main(void)
 {
 	t_terminf	anti;
 
-	printf("errno: %d\n", errno);
-	bzero(&anti, sizeof(t_terminf));
+	ft_bzero(&anti, sizeof(t_terminf));
 	if (io_init(&anti) == EXIT_FAILURE
 		|| shsignal_handlers() == EXIT_FAILURE
 		|| terminit(&anti) == EXIT_FAILURE

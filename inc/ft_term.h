@@ -75,4 +75,23 @@ int		ft_setty(t_terminf *anti);
 int		ft_resetty(t_terminf *anti);
 int		ft_restoretty(t_terminf *anti);
 
+/*
+**		ANSI sequences for cursor movement (cursor_moves.c)
+*/
+
+int		ft_curight(t_terminf *anti);
+int		ft_curleft(t_terminf *anti);
+int		ft_clearscreen(t_terminf *anti);
+void	ft_clearline(int clr);
+int		ft_curhome(t_terminf *anti);
+int		my_stupidput(int chrr);
+int		ft_backspace(t_terminf *anti);
+int		ft_passinput(t_terminf *anti);
+
+/*
+**		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
+*/
+
+int		line_seek(t_terminf *anti, char byte);
+
 #endif
