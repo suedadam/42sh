@@ -12,6 +12,7 @@ SRC_DIR = src
 SRC = \
 	atoi\
 	itoa\
+	lstnew\
 	memalloc\
 	memccpy\
 	memchr\
