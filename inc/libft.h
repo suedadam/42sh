@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:23:55 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/22 13:45:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/26 13:31:44 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,18 @@ char	*ft_strrev(char *str);
 char	*ft_strsub(const char *s, unsigned int start, size_t len);
 char	*ft_strtrim(const char *s);
 char	*ft_strupcase(char *str);
+
+/*
+** Simple linked list
+*/
+
+typedef struct		s_list
+{
+
+	void			*content;
+	int				content_size;
+	struct s_list	*next;
+
+}					t_list;
+
 #endif

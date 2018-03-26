@@ -39,6 +39,7 @@ SRC = \
 	putnbr_fd\
 	putstr\
 	putstr_fd\
+	queue\
 	stpcpy\
 	stpncpy\
 	strcapitalize\

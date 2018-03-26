@@ -6,12 +6,11 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:48:49 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/21 14:11:07 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/26 13:32:59 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "queue.h"
-#include "graph.h"
 
 t_queue			*new_queue(void)
 {
@@ -19,7 +18,7 @@ t_queue			*new_queue(void)
 
 	if (!(queue = (t_queue *)ft_memalloc(sizeof(t_queue))))
 	{
-		ft_printf("Error malloc new queue\n");
+		ft_putendl("Error malloc new queue\n");
 		return (NULL);
 	}
 	queue->head = NULL;
@@ -48,7 +47,7 @@ void			enqueue(t_queue *queue, t_list *node)
 		}
 	}
 	else
-		ft_printf("No queue pointer or NULL node in trying to enqueuing\n");
+		ft_putendl("No queue pointer or NULL node in trying to enqueuing\n");
 }
 
 t_list			*queue_pop(t_queue *queue)
@@ -63,7 +62,7 @@ t_list			*queue_pop(t_queue *queue)
 			queue->tail = NULL;
 		return (head);
 	}
-	ft_printf("Error while poping\n");
+	ft_putendl("Error while poping\n");
 	return (NULL);
 }
 
@@ -71,6 +70,6 @@ int				queue_empty(t_queue *queue)
 {
 	if (queue)
 		return (!(queue->head));
-	ft_printf("Error queue pointer null\n");
+	ft_putendl("Error queue pointer null\n");
 	return (-2);
 }
