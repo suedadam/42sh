@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_ast.c                                          :+:      :+:    :+:   */
+/*   new_ast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:15:19 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/22 14:26:16 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/26 14:05:29 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ t_ast		*new_ast_node(char **tokens, t_token_type *types,
 	if (!(node = (t_ast *)ft_memalloc(sizeof(t_ast))))
 		return (NULL);
 	node->token = tokens;
-	node->type = type;
+	node->type = types;
 	node->left_child = left;
 	node->right_child = right;
-	return (ast);
+	return (node);
 }
 
 t_ast		*new_ast_leaf(char **tokens, t_token_type *type)

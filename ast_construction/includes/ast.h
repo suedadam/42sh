@@ -6,12 +6,16 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/22 14:27:35 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/26 16:46:59 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
+
+# include "libft.h"
+# include "queue.h"
+
 
 typedef enum			e_token_type
 {
@@ -28,6 +32,10 @@ typedef struct				s_ast
 	struct s_ast			*right_child;
 }							t_ast;
 
+
+t_queue			*build_forest(char **tokens, t_token_type *type);
+
+
 /*
 ***		 utils (mostly parsing)
 */
@@ -43,5 +51,14 @@ int				str_search(char **argv, char *str);
 t_ast		*new_ast_node(char **tokens, t_token_type *types,
 		t_ast *left, t_ast *right);
 t_ast		*new_ast_leaf(char **tokens, t_token_type *type);
+
+/*
+***		ast debugging
+*/
+
+void		print_token(char **argv, t_token_type *types, int spaces);
+void		print_ast(t_ast *ast, int spaces);
+
+
 
 #endif
