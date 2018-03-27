@@ -70,13 +70,27 @@ static void			handle_embedded_quotes(uint8_t *quoted,
 			if (!(**str == '\\' || **str == '\"'))
 				*current_token = strappend(*current_token, '\\');
 			*current_token = strappend(*current_token, **str);
+			quoted &= ~BACKSLASH;
 		}
-		if (**str == '\\' && (*(*str + 1)) == '\\' || *(*str + 1) == '\"')
-			;
+		else if (**str == '\\')
+			quoted |= BACKSLASH;
 		else if (**str == '\"')
 			quoted &= ~DOUBLE_QUOTE;
+		else if (**str == '\'')
+			*current_token = strappend(*current_token, **str);
 	}
-	else if (quoted & )
+	else if (quoted & SINGLE_QUOTE)
+	{		
+		if (**str == '\'')
+			quoted &= ~SINGLE_QUOTE;
+		else
+			*current_token = strappend(*current_token, **str);
+	}
+	else if (quoted & BACKSLASH)
+	{
+		*current_token = strappend(*current_token, **str);
+		quoted &= ~BACKSLASH;
+	}
 }
 
 void				parser(char *input_str)
