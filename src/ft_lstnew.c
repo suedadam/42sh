@@ -6,13 +6,13 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:19:47 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/12 21:34:32 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/26 14:02:50 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstnew(void const *content, long long int content_size)
+t_list		*ft_lstnew(void const *content, int content_size)
 {
 	t_list		*list;
 

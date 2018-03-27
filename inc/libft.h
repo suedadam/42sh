@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:23:55 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/26 13:31:44 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/26 14:01:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,7 @@ typedef struct		s_list
 	struct s_list	*next;
 
 }					t_list;
+
+t_list	*ft_lstnew(void const *content, int content_size);
 
 #endif
