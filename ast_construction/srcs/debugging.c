@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:55:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/26 16:54:40 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/27 15:40:24 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_spaces(int i)
 	int j;
 
 	j = 0;
-	while(j < i)
+	while (j < i)
 	{
 		ft_putstr(" ");
 		j++;
@@ -42,12 +42,12 @@ void		print_ast(t_ast *ast, int spaces)
 {
 	if (ast)
 	{
-		// printf("_________________________\n");
 		print_token(ast->token, ast->type, spaces);
-		// printf("-------------------------\n\n");
-		print_spaces(spaces);ft_putendl("   --> [left]");
+		print_spaces(spaces);
+		ft_putendl("   --> [left]");
 		print_ast(ast->left_child, spaces + 4);
-		print_spaces(spaces);ft_putendl("   --> [right]");
+		print_spaces(spaces);
+		ft_putendl("   --> [right]");
 		print_ast(ast->right_child, spaces + 4);
 		return ;
 	}

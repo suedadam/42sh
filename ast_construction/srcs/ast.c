@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/27 14:04:02 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/27 15:41:06 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int			is_operator(char *token_char)
 {
 	int		res;
 	int		i;
-	char *operators[6];
+	char	*operators[6];
 
 	res = 0;
 	operators[0] = ft_strdup("|");
