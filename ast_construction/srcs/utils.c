@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:53 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/26 16:35:18 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/27 13:50:00 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int				str_search(char **argv, char *str)
 	i = 0;
 	while (argv[i])
 	{
-		printf("argv[i] : [%s] str : {%s}\n", argv[i], str);
 		if (ft_strequ(argv[i], str))
 			return (1);
 

@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/26 16:46:59 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:17:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ t_ast		*new_ast_leaf(char **tokens, t_token_type *type);
 
 void		print_token(char **argv, t_token_type *types, int spaces);
 void		print_ast(t_ast *ast, int spaces);
+
+/*
+***		free utils
+*/
+
+void		free_argv(char **argv);
+void		free_types(t_token_type *types);
+void		free_ast(t_ast *ast);
 
 
 

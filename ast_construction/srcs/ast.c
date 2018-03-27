@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/26 16:35:26 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/27 14:04:02 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int			parse_tokens(char **tokens, t_token_type *type)
 			return (i);
 		i++;
 	}
-	ft_putendl("coucou\n");
 	return (!i ? END_PARSING : i - 1);
 }
 
@@ -68,24 +67,17 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 	i = 0;
 	if ((i = parse_tokens(tokens, type)) == END_PARSING)
 		return (ast);
-	printf("i : %d\n", i);
 	*position += i + 1;
 	sub_string = sub_token_char(tokens, 0, i + 1);
 	sub_types = sub_token_type(type, 0, i + 1);
-	// int j =0;
-	// char **test = sub_token_char(sub_string, i, 1);
-	// while (test[j])
-	// {
-	// 	printf("%s\n", sub_string[j]);
-	// 	j++;
-	// }
-	// exit(1);
 	if (ft_strequ(tokens[i], ";") || !tokens[i + 1])
 		return (new_ast_leaf(sub_string, sub_types));
 	ast = new_ast_node(sub_token_char(sub_string, i, 1),
 			sub_token_type(sub_types, i, 1),
 			new_ast_leaf(sub_token_char(sub_string, 0, i), sub_types),
 			build_ast(tokens + i + 1, type + i + 1, position));
+	free(sub_string);
+	sub_string = NULL;
 	return (ast);
 }
 
@@ -101,8 +93,6 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	pos = 0;
 	while (tokens && type && (ast = build_ast(tokens + pos, type, &pos)))
 	{
-		// change list with a queue
-		ft_putendl("je passe ici\n");
 		new_list = ft_lstnew(ast, sizeof(*ast));
 		enqueue(forest, new_list);
 		free(ast);
