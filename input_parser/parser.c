@@ -14,7 +14,7 @@
 
 static char			*strappend(char *str, char c)
 {
-	if (!(str = ft_realloc(str, ft_strlen(str) + 2))
+	if (!(str = ft_realloc(str, ft_strlen(str) + 2)))
 		return (NULL);
 	str = ft_strncat(str, &c, 1);
 	return (str);
@@ -46,7 +46,7 @@ static void			add_token(char *curr_token, t_token_type *curr_type,
 	types[i + 1] = NULL;
 	if (*curr_token != ';')
 		ft_bzero(curr_token, ft_strlen(curr_token));
-	ft_bzero(curr_type, sizeof(*t_token_type);
+	ft_bzero(curr_type, sizeof(*t_token_type));
 
 }
 
@@ -60,7 +60,8 @@ static uint8_t			quoted_flags(char c)
 		return (BACKSLASH);
 }
 
-static void			handle_embedded_quotes(uint8_t *quoted, char **str, char **current_token)
+static void			handle_embedded_quotes(uint8_t *quoted,
+	char **str, char **current_token)
 {
 	if (quoted & DOUBLE_QUOTE)
 	{
@@ -70,7 +71,7 @@ static void			handle_embedded_quotes(uint8_t *quoted, char **str, char **current
 				*current_token = strappend(*current_token, '\\');
 			*current_token = strappend(*current_token, **str);
 		}
-		if (**str == '\\' && (*(*str + 1)) == '\\' || *(*str + 1) == '\"'))
+		if (**str == '\\' && (*(*str + 1)) == '\\' || *(*str + 1) == '\"')
 			;
 		else if (**str == '\"')
 			quoted &= ~DOUBLE_QUOTE;
