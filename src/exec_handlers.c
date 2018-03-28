@@ -6,21 +6,38 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/28 16:20:44 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/28 16:43:34 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
+static void		ft_idonothing(int signal)
+{
+	signal = 0;
+	ft_printf("I do nothing amd i am ft_idonothing\n");
+	return ;
+}
+
+static void		ft_window(int signal)
+{
+
+	ft_printf("I do nothing amd I am ft_window\n");
+	return ;
+	signal = 0;
+}
+
 void			handle_sign(int signal)
 {
 	char *str;
 
+	ft_printf("coucou\n");
+	if (signal != SIGQUIT)
+		ft_printf("hey\n");
 	if ((str = tgetstr("ve", NULL)) == NULL)
 		return ;
-	tputs(str, 1, my_putchar);
-	if (tcsetattr(0, TCSADRAIN, &g_terence.oldterm) == -1)
-		return ;
+	tputs(str, 1, my_stupidput);
+	ft_printf("I have pushed escape key\n");
 	exit(1);
 }
 
@@ -28,9 +45,9 @@ void			handle_sign(int signal)
 int		shsignal_handlers(void)
 {
 	signal(SIGINT, &ft_clearline);
-	signal(SIGQUIT, handle_quit;
-	// signal(SIGTSTP, );
-	// signal(SIGCONT, );
+	signal(SIGTSTP, ft_idonothing);
+	signal(SIGCONT, ft_idonothing);
+	signal(SIGWINCH, ft_window);
 	return (EXIT_SUCCESS);
 }
 
@@ -48,7 +65,9 @@ int		ft_setty(t_terminf *anti)
 
 int		ft_resetty(t_terminf *anti)
 {
-	anti->antishell->c_lflag ^= (ECHO | ICANON);
+	anti->antishell->c_lflag &= ~(ICANON);
+	anti->antishell->c_lflag &= ~(ECHO);
+	// anti->antishell->c_lflag ^= (ECHO | ICANON);
 	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, anti->antishell)) < 0)
 	{
 		ft_printf("other fail\n");

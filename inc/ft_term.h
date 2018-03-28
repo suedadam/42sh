@@ -92,6 +92,7 @@ int		ft_passinput(t_terminf *anti);
 **		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
 */
 
+int		read_multibyte(char byte, int *mpass, t_terminf *anti);
 int		line_seek(t_terminf *anti, char byte);
 
 #endif
