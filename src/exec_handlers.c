@@ -3,18 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   exec_handlers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/25 19:16:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/28 16:19:57 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
+void			handle_sign(int signal)
+{
+	char *str;
+
+	if ((str = tgetstr("ve", NULL)) == NULL)
+		return ;
+	tputs(str, 1, my_putchar);
+	if (tcsetattr(0, TCSADRAIN, &g_terence.oldterm) == -1)
+		return ;
+	exit(1);
+}
+
+
 int		shsignal_handlers(void)
 {
 	signal(SIGINT, &ft_clearline);
+	signal(SIGQUIT, handle_quit;
+	// signal(SIGTSTP, );
+	// signal(SIGCONT, );
 	return (EXIT_SUCCESS);
 }
 
@@ -52,4 +68,3 @@ int		ft_restoretty(t_terminf *anti)
 	ft_printf("exit\n");
 	return (EXIT_SUCCESS);
 }
-

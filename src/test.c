@@ -1,6 +1,5 @@
 #include "ft_term.h"
 
-
 int		terminit(t_terminf *anti)
 {
 	int		ret;
@@ -101,9 +100,9 @@ int		read_loop(t_terminf *anti)
 	return (EXIT_SUCCESS);
 }
 
-/* 
-** isatty returns 0 when it fails, and sets errno 
-** tcgetattr returns -1 on failure and sets errno 
+/*
+** isatty returns 0 when it fails, and sets errno
+** tcgetattr returns -1 on failure and sets errno
 */
 
 int		io_init(t_terminf *anti)
