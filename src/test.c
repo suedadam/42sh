@@ -6,16 +6,16 @@ int		terminit(t_terminf *anti)
 	char	*buff;
 //	char	*temp;
 
-	anti->term_buff = (char *)ft_memalloc(2048);
+	ft_printf("%d\n", ERR);
+	if (!(anti->term_buff = (char *)ft_memalloc(2048))
+		|| !(buff = (char *)ft_memalloc(2048)))
+		return (EXIT_FAILURE);
 	anti->term_name = getenv("TERM");
-	ft_printf("anti->term_name : %s\n", anti->term_name);
 	ret = tgetent(anti->term_buff, anti->term_name);
 	if (ret < 0)
 		g_ft_errnum = TGETN;
 	else if (ret == 0)
 		g_ft_errnum = TGETZ;
-	if (!(buff = (char *)ft_memalloc(2048)))
-		return (EXIT_FAILURE);
 	/* for term_buff and tgoto */
 	if (!(BC = tgetstr("le", &(anti->term_buff))))
 		g_ft_errnum = TGETSTR;
