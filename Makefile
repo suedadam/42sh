@@ -4,7 +4,7 @@ CFLAGS += -Wall -Werror -Wextra -g #-fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/ 
 CC = gcc
 SRCDIR = src/
-LIBDIR = libft/
+LIBDIR = lib/
 OBJSRC = $(patsubst %, %.o, $(addprefix $(SRCDIR),$(SRC)))
 OBJLIB = $(patsubst %, %.o, $(addprefix $(LIBDIR), $(LIB)))
 RED = \033[1;31m
