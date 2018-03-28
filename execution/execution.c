@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/27 21:33:07 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/28 03:17:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	build_leafs(t_ast *curr)
 	if (!(info = ft_memalloc(sizeof(t_process))))
 		return ;
 	info->stdin = curr->p_info->comm[0];
+	if (!(info->stdout = ft_memalloc(sizeof(int))))
+		return ;
 	// printf("seg faulting here.\n");
-	// if (curr->right_child && *(curr->right_child->type) == operator)
-	// 	*(info->stdout) = curr->p_info->stdout[1];
+	if (curr->right_child && *(curr->right_child->type) == operator)
+		*(info->stdout) = curr->p_info->stdout[1];
 	// printf("nah here..\n");
 	curr->right_child->p_info = info;
 	printf("Done building mah leafs\n");
@@ -52,15 +54,14 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		printf("puta\n");
 		return ;
 	}
-	if (!(curr->p_info = ft_memalloc(sizeof(t_process))))
+	if (!curr->p_info && !(curr->p_info = ft_memalloc(sizeof(t_process))))
 		return ;
-	if (prev)
-	{
-		printf("here lol\n");
-		curr->p_info->stdin = (prev->p_info->stdout)[0];
-	}
-	else
+	if (!prev)
 		curr->p_info->stdin = STDIN_FILENO;
+	// if (prev)
+	// 	curr->p_info->stdin = (prev->p_info->stdout)[0];
+	// else
+	// 	curr->p_info->stdin = STDIN_FILENO;
 	pipe(fds);
 	curr->p_info->comm = ft_memalloc(sizeof(int) * 2);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
@@ -110,15 +111,17 @@ int		build_info(t_ast *prev, t_ast *curr)
 {
 	if (!curr)
 		return (-1);
-	if ((prev && *(prev->type) == operator && !strcmp(*(prev->token), "|")) ||
-		(*(curr->type) == operator && !strcmp(*(curr->token), "|")))
-	{
-		printf("hola ;) \n");
+	// if (prev && *(prev->type) == operator && !strcmp(*(prev->token, "|")))
+
+	// 	follow_pipe()
+		// add stdin from old stdout. 
+	if (*(curr->type) == operator && !strcmp(*(curr->token), "|"))
 		pipe_carry(prev, curr);
-	}
 	else if ((prev && *(prev->type) != operator && strcmp(*(prev->token), "|")))
-		printf("testme\n");
+	{
+		printf("This should theoretically never get here...\n");
 		// build_default(curr);
+	}
 	build_info(curr, curr->right_child);
 	return (0);
 }
