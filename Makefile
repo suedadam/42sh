@@ -1,87 +1,96 @@
-PROGRAM = fileio
-NAME = lib/libftls.a 
+NAME = fileio
+STAT = lib/libft.a 
 CFLAGS += -Wall -Werror -Wextra -g #-fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/ 
 CC = gcc
-OBJSRC = $(patsubst %, %.o, $(SRC))
-OBJINC = $(patsubst %, %.o, $(INC))
+SRCDIR = src/
+LIBDIR = libft/
+OBJSRC = $(patsubst %, %.o, $(addprefix $(SRCDIR),$(SRC)))
+OBJLIB = $(patsubst %, %.o, $(addprefix $(LIBDIR), $(LIB)))
+RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[1;33m
+CYAN = \033[1;36m
+RES = \033[0m
 
-# LEMIN SOURCE
-SRC += src/test
-SRC += src/error
-SRC += src/exec_handlers
-SRC += src/cursor_moves
-SRC += src/multibyte_dispatch
+
+# FILEIO SOURCE
+SRC += test
+SRC += error
+SRC += exec_handlers
+SRC += cursor_moves
+SRC += multibyte_dispatch
 
 # GENERAL LIBFT FUNCTIONS
-INC += lib/ft_strlen
-INC += lib/ft_memalloc
-INC += lib/ft_strcpy
-INC += lib/ft_bzero
-INC += lib/ft_isalpha
-INC += lib/ft_isdigit
-INC += lib/ft_memdel
-INC += lib/ft_memset
-INC += lib/ft_strncpy
-INC += lib/ft_strcat
-INC += lib/ft_strnew
-INC += lib/ft_strsplit
-INC += lib/ft_strsub
-INC += lib/ft_strcmp
-INC += lib/ft_memcpy
-INC += lib/ft_memmove
-INC += lib/ft_queue
-INC += lib/ft_queue_util
-INC += lib/ft_dblistnew
-INC += lib/ft_mergesort
-INC += lib/ft_strdup
-INC += lib/ft_strchr
-INC += lib/ft_numlen
-INC += lib/ft_atoi_base
-INC += lib/ft_strnstr
-INC += lib/ft_strnchr
-INC += lib/ft_strchr
-INC += lib/ft_nlookup
-INC += lib/ft_atoi
-INC += lib/ft_lstadd
-INC += lib/ft_isalnum
-INC += lib/ft_strnequ
-INC += lib/ft_strncmp
-INC += lib/ft_fifoqueue
-INC += lib/ft_error
-INC += lib/ft_strequ
+LIB += ft_strlen
+LIB += ft_memalloc
+LIB += ft_strcpy
+LIB += ft_bzero
+LIB += ft_isalpha
+LIB += ft_isdigit
+LIB += ft_memdel
+LIB += ft_memset
+LIB += ft_strncpy
+LIB += ft_strcat
+LIB += ft_strnew
+LIB += ft_strsplit
+LIB += ft_strsub
+LIB += ft_strcmp
+LIB += ft_memcpy
+LIB += ft_memmove
+LIB += ft_queue
+LIB += ft_queue_util
+LIB += ft_dblistnew
+LIB += ft_mergesort
+LIB += ft_strdup
+LIB += ft_strchr
+LIB += ft_numlen
+LIB += ft_atoi_base
+LIB += ft_strnstr
+LIB += ft_strnchr
+LIB += ft_strchr
+LIB += ft_nlookup
+LIB += ft_atoi
+LIB += ft_lstadd
+LIB += ft_isalnum
+LIB += ft_strnequ
+LIB += ft_strncmp
+LIB += ft_fifoqueue
+LIB += ft_error
+LIB += ft_strequ
 
 # FTPRINTF
-INC += lib/ft_printf/conversion_diou
-INC += lib/ft_printf/dispatcher
-INC += lib/ft_printf/printflags
-INC += lib/ft_printf/conversion_sc
-INC += lib/ft_printf/storeflags
-INC += lib/ft_printf/conversion_xp
-INC += lib/ft_printf/misc
-INC += lib/ft_printf/ulitobase
+LIB += ft_printf/conversion_diou
+LIB += ft_printf/dispatcher
+LIB += ft_printf/printflags
+LIB += ft_printf/conversion_sc
+LIB += ft_printf/storeflags
+LIB += ft_printf/conversion_xp
+LIB += ft_printf/misc
+LIB += ft_printf/ulitobase
 
 all: $(NAME)
 
-$(NAME): $(OBJINC) $(OBJSRC)
-	@ echo "Building static library..."
-	@ ar -rcs $(NAME) $(OBJINC)
-	@ echo "Compiling $(PROGRAM) program"
-	@ $(CC) $(CFLAGS) -L lib/ -lftls -ltermcap $(OBJSRC) -o $(PROGRAM)
+$(NAME): $(OBJLIB) $(OBJSRC)
+	@ echo "$(YELLOW)Building static library...$(RES)"
+	ar -rcs $(STAT) $(OBJLIB)
+	@ echo "$(YELLOW)Compiling ftls program$(RES)"
+	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap $(OBJSRC) -o $(NAME)
+	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 %.o: %.c
-#	@ echo "Compiling $<..."
-	@ $(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@ echo "$(YELLOW)Compiling $<...$(RES)"
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@ /bin/rm -f $(OBJSRC)
-	@ /bin/rm -f $(OBJINC)
-	@ echo "Cleaning folders of object files..."
+	@ /bin/rm -f $(OBJLIB)
+	@ echo "$(RED)Cleaning folders of object files...$(RES)"
 
 fclean: clean
 	@ /bin/rm -f $(NAME)
-	@ /bin/rm -f $(PROGRAM)
-	@ echo "Removing library file and binary..."
+	@ /bin/rm -f $(STAT)
+	@ echo "$(RED)Removing library file and binary...$(RES)"
 
 re: fclean all
-	@ echo "Program Remade"
+	@ echo "$(GREEN)Binary Remade$(RES)"
