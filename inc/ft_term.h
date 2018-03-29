@@ -51,6 +51,15 @@ typedef	struct		s_terminf
 }					t_terminf;
 
 
+typedef struct		s_env
+{
+	t_terminf		*terminfo;
+	t_hashtable		*hashtable;
+	char			**env_variables;
+	
+}					t_env;
+
+
 /* Allocate at sizes of 128 bytes, sequentially, to be arranged in a queue */
 
 typedef struct		s_linebuf
