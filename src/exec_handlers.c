@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/28 16:43:34 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 14:33:14 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,49 +41,15 @@ void			handle_sign(int signal)
 	exit(1);
 }
 
-
-int		shsignal_handlers(void)
+int		quote_mode(char byte)
 {
-	signal(SIGINT, &ft_clearline);
-	signal(SIGTSTP, ft_idonothing);
-	signal(SIGCONT, ft_idonothing);
-	signal(SIGWINCH, ft_window);
-	return (EXIT_SUCCESS);
-}
+	char	*temp;
 
-int		ft_setty(t_terminf *anti)
-{
-	anti->antishell->c_lflag ^= (ECHO | ICANON);
-	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, anti->antishell)) < 0)
-	{
-		ft_printf("other fail\n");
-		g_ft_errnum = SYSERR;
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int		ft_resetty(t_terminf *anti)
-{
-	anti->antishell->c_lflag &= ~(ICANON);
-	anti->antishell->c_lflag &= ~(ECHO);
-	// anti->antishell->c_lflag ^= (ECHO | ICANON);
-	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, anti->antishell)) < 0)
-	{
-		ft_printf("other fail\n");
-		g_ft_errnum = SYSERR;
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int		ft_restoretty(t_terminf *anti)
-{
-	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, &anti->og)) < 0)
-	{
-		g_ft_errnum = SYSERR;
-		return (EXIT_FAILURE);
-	}
-	ft_printf("exit\n");
+	temp = tgetstr("do", 0);
+	tputs(temp, 1, my_stupidput);
+	if (byte == '\'')
+		ft_printf("quote> ");
+	else
+		ft_printf("dquote> ");
 	return (EXIT_SUCCESS);
 }

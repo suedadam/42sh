@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_utils.c                                     :+:      :+:    :+:   */
+/*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 21:38:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 16:24:25 by tle-huu-         ###   ########.fr       */
+/*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
+/*   Updated: 2018/03/29 14:26:01 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		new_prompt(void)
+int		shsignal_handlers(void)
 {
-	char	pwd[4096];
-	int		n;
-
-	pwd = getcwd(pwd, 4096);
-	n = ft_printf("42sh [%s] %% ", pwd);
-	g_shell_env->prompt_length = n;
+	signal(SIGINT, &ft_clearline);
+	signal(SIGTSTP, ft_idonothing);
+	signal(SIGCONT, ft_idonothing);
+	signal(SIGWINCH, ft_window);
+	return (EXIT_SUCCESS);
 }
