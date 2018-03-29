@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 15:35:02 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/29 16:56:08 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <errno.h>
+
+struct s_ophandlers	op_handlers[] = {
+	{&op_pipe_check, &op_pipe_exec},
+	{&op_or_check, &op_or_exec},
+	{&op_and_check, &op_and_exec},
+	{NULL, NULL},
+};
+
 
 // struct s_redir_op	redir_ops[] = {
 // 	{">", &ops_redir_to}
@@ -26,27 +34,15 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	int 	res;
 
 	if (!curr || *(curr->type) == operator)
-	{
-		// printf("------>\n");
-		// printf("%d || %d\n", !curr, *(curr->type) != operator);
 		return (-1);
-	}
 	if ((pid = fork()) == -1)
-	{
-		// printf("fork() = %s\n", strerror(errno));
 		return (-1);
-	}
 	if (pid == 0)
 	{
-		// printf("%s out = %d in = %d\n", *(curr->token), *(curr->p_info->stdout), curr->p_info->stdin);
 		dup2(curr->p_info->stdin, STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(curr->p_info->stderr, STDERR_FILENO);
-		char str[1024];
-		strcpy(str, "/nfs/2017/a/asyed/TestExec/");
-		strcpy(str, *(curr->token));
-		// printf("str = \"%s\" args = \"%s\"\n", str, curr->token[1]);
-		execvp(str, curr->token);
+		execvP(*(curr->token), getenv("PATH"), curr->token);
 		exit(EXIT_FAILURE);
 	}
 	if (wait)
@@ -163,93 +159,23 @@ int		build_info(t_ast *prev, t_ast *curr)
 	return (0);
 }
 
-/*
-** I honestly dunno if this is going to work.
-*/
-/*
-	int		ops_redir_to(t_ast *curr, size_t pos)
-	{
-		size_t	len;
-		int		fdptr;
-
-		if (!curr->token[pos + 1])
-			return (-1);
-		if (*(curr->token[pos + 1]) == '&')
-		{
-			if (!curr->token[pos + 1][1])
-				return (-1);
-			if (curr->token[pos + 1][1] == '1')
-				fdptr = (curr->p_info->stdout)[1];
-			else if (curr->token[pos + 1][1] == '2')
-				fdptr = curr->p_info->stderr;
-			else
-			{
-				printf("Err not supported FD: \"%c\"\n", curr->token[pos + 1][1]);
-				return (-1);
-			}
-		}
-		else
-		{
-			if ((fdptr = open(curr->token[pos + 1], O_CREAT | O_TRUNC | O_WRONLY)) == -1)
-			{
-				printf("Failed to open = \"%s\"\n", strerror(errno));
-				return (-1);
-			}
-		}
-		if (strlen(curr->token[pos - 1]) > 1)
-		{
-			printf("Previous is too long: %d\n", strlen(curr->token[pos - 1]));
-			return (-1);
-		}
-		if (*(curr->token[pos - 1]) == '2')
-			curr->p_info->stderr = fdptr;
-		else
-			*(curr->p_info->stdout) = fdptr;
-		return (0);
-	}
-*/
-
 int		run_tree(t_ast *curr)
 {
+	int	i;
+
 	if (!curr || !curr->left_child)
 		return (0);
 	if (*(curr->type) == operator)
 	{
-		if (!strcmp(*(curr->token), "|"))
+		i = 0;
+		while (op_handlers[i].check)
 		{
-			run_operation(curr->left_child, 0);
-			if (curr->right_child)
-			{
-				run_operation(curr->right_child, 1);
-				run_tree(curr->right_child);
-			}
-		}
-		else if (!strcmp(*(curr->token), "||"))
-		{
-			if (run_operation(curr->left_child, 1)) //0 = success
-			{
-				run_operation(curr->right_child, 1);
-				run_tree(curr->right_child);
-			}
-		}
-		else if (!strcmp(*(curr->token), "&&"))
-		{
-			if (!run_operation(curr->left_child, 1)) //0 = success
-			{
-				run_operation(curr->right_child, 1);
-				run_tree(curr->right_child);
-			}
-		}
-		else
-		{
-			printf("unknown operator\n");
+			if (!op_handlers[i].check(*(curr->token)))
+				return (op_handlers[i].exec(curr));
+			i++;
 		}
 	}
-	else
-	{
-		printf("wtf O.o\n");
-	}
-	return (0);
+	return (EXIT_FAILURE);
 }
 
 int		run_forest(t_ast **asts)
@@ -259,13 +185,11 @@ int		run_forest(t_ast **asts)
 	i = 0;
 	while (asts[i])
 	{
-		// printf("hmmm\n");
 		if (build_info(NULL, asts[i]))
 			return (-1);
 		if (run_tree(asts[i]))
 			return (-1);
 		i++;
-		return (255);
 	}
 	return (0);
 }
