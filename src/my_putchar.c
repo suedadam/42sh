@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_utils.c                                     :+:      :+:    :+:   */
+/*   my_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 21:38:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 14:54:21 by nkouris          ###   ########.fr       */
+/*   Created: 2018/03/29 14:53:50 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/03/29 14:54:36 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		new_prompt(t_terminf *shell_env)
+int		my_putchar(int char)
 {
-	char	pwd[4096];
-	int		n;
-
-	pwd = getcwd(pwd, 4096);
-	n = ft_printf("42sh [%s] %% ", pwd);
-	g_shell_env->prompt_length = n;
+	write(1, &chrr, 1);
+	return (EXIT_SUCCESS);
 }

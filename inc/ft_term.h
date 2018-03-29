@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:10 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 14:36:18 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/29 14:54:35 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,16 @@
 
 int					g_ft_errnum;
 
+typedef struct	s_vertex
+{
+	int		x;
+	int		y;
+}				t_vertex;
+
 typedef struct	s_cursor
 {
-	int		c;
-	int		l;
+	t_vertex	og_position;
+	t_vertex	curr_position;
 }				t_cursor;
 
 typedef struct	s_errstr
@@ -78,6 +84,7 @@ typedef	struct		s_terminf
 	int					prompt_length;
 	t_buffer			*buffer;
 	t_cursor			cursor;
+	struct winsize		window;
 	// t_hashtable		*hashtable;
 }					t_terminf;
 
@@ -123,7 +130,7 @@ int		ft_curleft(t_terminf *anti);
 int		ft_clearscreen(t_terminf *anti);
 void	ft_clearline(int clr);
 int		ft_curhome(t_terminf *anti);
-int		my_stupidput(int chrr);
+int		my_putchar(int chrr);
 int		ft_backspace(t_terminf *anti);
 int		ft_passinput(t_terminf *anti);
 
@@ -167,6 +174,6 @@ int				handle_keys(t_terminf *shell_env, char byte);
 **		history
 */
 int			add_buff_to_history(char *buffer);
-int			open_history();
-
+int			open_history()
+  
 #endif
