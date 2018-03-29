@@ -6,13 +6,13 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 16:23:22 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/29 16:37:26 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		read_loop(t_terminf *shell_env)
+int		read_loop(void)
 {
 	char	byte;
 	int		mpass;
@@ -20,17 +20,17 @@ int		read_loop(t_terminf *shell_env)
 
 	mpass = 0;
 	bslash = 0;
-	new_prompt(shell_env);
+	new_prompt();
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
 		if (byte == '\n' && !backslash)
 		{
-			if (carriage_return(shell_env, byte) == EXIT_FAILURE)
-				new_prompt(shell_env);
+			if (carriage_return(gbyte) == EXIT_FAILURE)
+				new_prompt();
 		}
 		else if (handle_keys(byte, &mpass) == EXIT_FAILURE
-				|| checktty(shell_env) == EXIT_FAILURE)
-			reset_terminal(shell_env);
+				|| checktty() == EXIT_FAILURE)
+			reset_terminal();
 	}
 	return (EXIT_SUCCESS);
 }

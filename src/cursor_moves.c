@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/29 15:31:19 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:38:24 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	move_cursor(t_cursor *cursor)
 	og_col = cursor->og_position.y;
 	og_line = cursor->og_position.x;
 
-	new_lin = (og_line + cursor->position.x) % g_shell_env->window.ws_row;
+	new_lin = (og_line + cursor->position.x) % g_shell_env.window.ws_row;
 	new_col = og_col + cursor->position.x +
-		(og_line + cursor->position.x >= g_shell_env->window.ws_row);
+		(og_line + cursor->position.x >= g_shell_env.window.ws_row);
 	tputs(tgoto(tgetstr("cm", NULL), new_lin - 1, new_col - 1), 0, &my_putchar);
 }
 
 void		cursor_to_right(t_cursor *cursor)
 {
-	if (g_shell_env->buffer->len_buffer == cursor->pos.x)
+	if (g_shell_env.buffer->len_buffer == cursor->pos.x)
 	{
 		cursor->position.x++;
 		move_cursor(cursor);
@@ -54,7 +54,7 @@ void		cursor_to_home(t_cursor *cursor)
 
 void		cursor_to_end(t_cursor *cursor)
 {
-	cursor->position = g_shell_env->buffer->length;
+	cursor->position = g_shell_env.buffer->length;
 	move_cursor(cursor);
 }
 

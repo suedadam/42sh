@@ -11,7 +11,7 @@
 
 #include "ft_term.h"
 
-static int		multibyte(t_terminf *shell_env, char byte, int *mpass)
+static int		multibyte(char byte, int *mpass)
 {
 	if (*mpass == 0
 		|| (*mpass == 1 && byte == '['))
@@ -21,7 +21,7 @@ static int		multibyte(t_terminf *shell_env, char byte, int *mpass)
 	}
 	else if (*mpass == 1 && byte != '[')
 	{
-		one_byte(shell_env, byte);
+		one_byte(byte);
 		return (EXIT_SUCCESS);
 	}
 	// jump table
@@ -46,25 +46,25 @@ static int		regular_text(char byte)
 	return (ret);
 }
 
-static int		control_char(t_terminf *shell_env, char byte)
+static int		control_char(char byte)
 {
 	// jump table
 }
 
 
-static int		one_byte(t_terminf *shell_env, char byte)
+static int		one_byte(char byte)
 {
 	int		ret;
 
 	ret = EXIT_SUCCESS;
 	if (byte >= 32 && byte <= 126)
-		ret = one_byte(shell_env, byte);
+		ret = one_byte(byte);
 	if (byte < 32 || byte == 127)
-		ret = control_char(shell_env, byte);
+		ret = control_char(byte);
 	return (ret);
 }
 
-int				handle_keys(t_terminf *shell_env, char byte, int *mpass)
+int				handle_keys(char byte, int *mpass)
 {
 	int		ret;
 	int		token;
@@ -72,8 +72,8 @@ int				handle_keys(t_terminf *shell_env, char byte, int *mpass)
 	ret = EXIT_SUCCESS;
 	token = 0;
 	if (byte == 27)
-		ret = multibyte(shell_env, byte, mpass);
+		ret = multibyte(byte, mpass);
 	else
-		ret = one_byte(shell_env, byte);
+		ret = one_byte(byte);
 	return (ret);
 }

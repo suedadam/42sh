@@ -36,8 +36,6 @@
 # define SHIFT(x)
 # define BUFF_SIZE 1024
 
-# define 
-
 int					g_ft_errnum;
 
 typedef struct	s_vertex
@@ -147,7 +145,7 @@ int		line_seek(t_terminf *anti, char byte);
 **		read_loop
 */
 
-int		read_loop(t_terminf *shell_env);
+int		read_loop(void);
 
 
 /*
@@ -158,18 +156,18 @@ void		new_prompt(void);
 /*
 **		prompt_utils
 */
-int			carriage_return(t_terminf *shell_env, char byte, int slash_token)
+int			carriage_return(char byte, int slash_token)
 
 /*
 **		buffer_utils
 */
-int			init_buffer(t_terminf *shell_env);
-int			handle_buffer(t_terminf *shell_env);
+int			init_buffer();
+int			handle_buffer();
 
 /*
 **		keys_handler
 */
-int				handle_keys(t_terminf *shell_env, char byte);
+int				handle_keys(, char byte);
 
 /*
 **		history
