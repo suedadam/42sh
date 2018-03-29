@@ -1,7 +1,7 @@
 NAME = fileio
-STAT = lib/libft.a 
+STAT = lib/libft.a
 CFLAGS +=  -g -fsanitize=address
-INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/ 
+INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
 CC = gcc
 SRCDIR = src/
 LIBDIR = lib/
@@ -15,11 +15,22 @@ RES = \033[0m
 
 
 # FILEIO SOURCE
-SRC += test
-SRC += error
-SRC += exec_handlers
+SRC += buffer_utils
+SRC += carriage_return
+SRC += change_terminal
 SRC += cursor_moves
+SRC += exec_handlers
+SRC += error
+SRC += history
+SRC += keys_handler
+SRC += main
 SRC += multibyte_dispatch
+SRC += multibyte_dispatch
+SRC += my_putchar
+SRC += prompt_utils
+SRC += read_loop
+SRC += scrn_infor
+SRC += set_signal
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen
