@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:10 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 13:36:55 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 14:36:18 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@
 # define BUFF_SIZE 1024
 
 int					g_ft_errnum;
-extern char			PC;
-extern char			*UP;
-extern char			*BC;
-extern short		ospeed;
 
 typedef struct	s_cursor
 {
@@ -74,18 +70,18 @@ typedef struct		s_buffer
 typedef	struct		s_terminf
 {
 /* For ioctl purposes */
-	struct termios		og; /* no free */
-	struct termios		*antishell; /* no free */
+	struct termios		original_tty; /* no free */
+	struct termios		*shell_tty; /* FREE */
 /* For terminal initialization */
 	char				*term_name; /* no free */
 	char				*term_buff; /* FREE */
-	// char				*line_buffer;
-	// int					length_buffer;
-	t_cursor			cursor;
 	int					prompt_length;
 	t_buffer			*buffer;
+	t_cursor			cursor;
 	// t_hashtable		*hashtable;
 }					t_terminf;
+
+t_terminf			*g_shell_env;
 
 //
 // typedef struct		s_env
@@ -95,8 +91,6 @@ typedef	struct		s_terminf
 // 	char			**envron
 // }					t_env;
 
-
-/* Allocate at sizes of 128 bytes, sequentially, to be arranged in a queue */
 
 typedef struct		s_linebuf
 {
@@ -175,5 +169,4 @@ int				handle_keys(t_terminf *shell_env, char byte);
 int			add_buff_to_history(char *buffer);
 int			open_history();
 
-t_terminf		g_shell_env
 #endif
