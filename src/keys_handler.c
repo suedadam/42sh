@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:40:21 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/28 21:49:21 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 13:18:54 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,27 @@ static int		multibyte(t_terminf *shell_env, char byte, int *token)
 
 static int		regular_text(t_terminf *shell_env, char byte)
 {
-	// print byte
+	int			i;
+	t_buffer	*buffer;
+
+	i = 0;
+	buffer = shell_env->buffer;
+	if (buffer->len_buffer == buffer->maxsize_buffer)
+		resize_buffer(buffer);
+	// print byte on the cursor, find a solution to editing line
+	if (shell_env->line_buffer[shell_env->cursor.c])
+	if (!shell_env->line_buffer[shell_env->cursor.c])
+		shell_env->line_buffer[shell_env->cursor.c] = byte;
+	else
+	{
+		i = shell_env->length_buffer;
+		while (i > shell_env->cursor.c)
+		{
+			shell_env->line_buffer[i] = shell_env->line_buffer[i - 1];
+			i--;
+		}
+		shell_env->line_buffer[shell_env->cursor.c] = byte;
+	}
 	// add to the line_buffer --> handle with cursor pointer and
 			//resizing buffer if necessary
 }

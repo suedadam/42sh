@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   carriage_return.c                                  :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 21:50:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 12:00:50 by tle-huu-         ###   ########.fr       */
+/*   Created: 2018/03/29 10:56:52 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/03/29 11:57:12 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "t_term.h"
 
-int			carriage_return(t_terminf *shell_env, char byte, int slash_token)
+int			add_buff_to_history(char *buffer)
 {
-	int		ret;
+	int		fd;
 
-	ret = EXIT_SUCCESS;
+	if ((fd = open(".42sh_history", O_WRONLY | O_CREAT)) < 0
+		|| lseek(fd, 1, SEEK_END) < 0)
+		return (EXIT_FAILURE);
+	ft_putendl_fd(buffer, fd);
+	if (close(fd) < 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
-	// fork ?
+int			open_history()
+{
 
-	// history_handler
-	// satkins(shell_env->line_buffer);
-	// reset the buffer
-	return (ret);
 }

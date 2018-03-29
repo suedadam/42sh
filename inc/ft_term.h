@@ -1,30 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_term.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/29 10:57:10 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/03/29 13:36:55 by tle-huu-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_TERM_H
-#define FT_TERM_H
+# define FT_TERM_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <curses.h>
-#include <term.h>
-#include <strings.h>
-#include <unistd.h>
-#include <sys/uio.h>
-#include <termios.h>
-#include <signal.h>
-#include "libft.h"
-#include "ft_printf.h"
 
-#define LSEEK(x) ((x >=70 && x <= 72) || (x >= 'C' && x <= 'D'))
-#define DEL(x) (x == 51)
-#define SCRL(x) (x >= 53 && x <= 54)
-#define HIST(x) (x >= 'A' && x <= 'B')
-#define SHIFT(x)
-#define BUFF_SIZE 1024
+# include <curses.h>
+# include <fcntl.h>
+# include <sys/uio.h>
+# include <signal.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <strings.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <term.h>
+# include <termios.h>
+# include <unistd.h>
+
+# include "libft.h"
+# include "ft_printf.h"
+
+# define LSEEK(x) ((x >=70 && x <= 72) || (x >= 'C' && x <= 'D'))
+# define DEL(x) (x == 51)
+# define SCRL(x) (x >= 53 && x <= 54)
+# define HIST(x) (x >= 'A' && x <= 'B')
+# define SHIFT(x)
+# define BUFF_SIZE 1024
 
 int					g_ft_errnum;
 extern char			PC;
 extern char			*UP;
 extern char			*BC;
 extern short		ospeed;
+
+typedef struct	s_cursor
+{
+	int		c;
+	int		l;
+}				t_cursor;
 
 typedef struct	s_errstr
 {
@@ -41,15 +64,26 @@ enum {
 	TGETSTR
 };
 
+typedef struct		s_buffer
+{
+	char		*buff;
+	int			len_buffer;
+	int			maxsize_buffer;
+}					t_buffer;
+
 typedef	struct		s_terminf
 {
 /* For ioctl purposes */
-	struct termios	og; /* no free */
-	struct termios	*antishell; /* no free */
+	struct termios		og; /* no free */
+	struct termios		*antishell; /* no free */
 /* For terminal initialization */
-	char			*term_name; /* no free */
-	char			*term_buff; /* FREE */
-	char			*line_buffer;
+	char				*term_name; /* no free */
+	char				*term_buff; /* FREE */
+	// char				*line_buffer;
+	// int					length_buffer;
+	t_cursor			cursor;
+	int					prompt_length;
+	t_buffer			*buffer;
 	// t_hashtable		*hashtable;
 }					t_terminf;
 
@@ -135,4 +169,11 @@ int			handle_buffer(t_terminf *shell_env);
 */
 int				handle_keys(t_terminf *shell_env, char byte);
 
+/*
+**		history
+*/
+int			add_buff_to_history(char *buffer);
+int			open_history();
+
+t_terminf		g_shell_env
 #endif

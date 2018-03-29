@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/03/29 12:09:55 by tle-huu-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_term.h"
 
 int		terminit(t_terminf *anti)
@@ -38,13 +50,24 @@ int		quote_mode(char byte)
 	return (EXIT_SUCCESS);
 }
 
+int static	init_env(t_terminf	*shell_env)
+{
+	if (!(shell_env = (t_terminf *)ft_memalloc(sizeof(struct termios)))
+		|| !(shell_env->term_name = getenv("TERM"))
+		|| tgetent(NULL, name_term) == ERR
+		|| !(line_buffer = (char *)ft_memalloc(sizeof(char) * 4096)))
+		retrn (EXIT_FAILURE);
+	shell_env->cursor.c = 0;
+	shell_env->cursor.l = 0;
+	return (EXIT_SUCCESS);
+}
 
 /*
 ** isatty returns 0 when it fails, and sets errno
 ** tcgetattr returns -1 on failure and sets errno
 */
 
-int		io_init(t_terminf *anti)
+int			io_init(t_terminf *anti)
 {
 	if (!(anti->antishell = ft_memalloc(sizeof(struct termios)))
 		|| (!(isatty(STDIN_FILENO)))
