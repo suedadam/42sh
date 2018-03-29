@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:56:52 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 11:57:12 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:30:58 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			add_buff_to_history(char *buffer)
 	return (EXIT_SUCCESS);
 }
 
-int			open_history()
+int			get_history()
 {
 
 }

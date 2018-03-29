@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:40:21 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 13:18:54 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:43:13 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,23 @@ static int		multibyte(t_terminf *shell_env, char byte, int *token)
 	// jump table
 }
 
-static int		regular_text(t_terminf *shell_env, char byte)
+static int		regular_text(char byte)
 {
-	int			i;
-	t_buffer	*buffer;
+	t_cursor	*cursor;
+	char		*buffer;
+	int			ret;
 
-	i = 0;
-	buffer = shell_env->buffer;
-	if (buffer->len_buffer == buffer->maxsize_buffer)
-		resize_buffer(buffer);
-	// print byte on the cursor, find a solution to editing line
-	if (shell_env->line_buffer[shell_env->cursor.c])
-	if (!shell_env->line_buffer[shell_env->cursor.c])
-		shell_env->line_buffer[shell_env->cursor.c] = byte;
-	else
-	{
-		i = shell_env->length_buffer;
-		while (i > shell_env->cursor.c)
-		{
-			shell_env->line_buffer[i] = shell_env->line_buffer[i - 1];
-			i--;
-		}
-		shell_env->line_buffer[shell_env->cursor.c] = byte;
-	}
-	// add to the line_buffer --> handle with cursor pointer and
-			//resizing buffer if necessary
+	ret = EXIT_SUCCESS;
+	cursor = &(g_shell_env.cursor);
+	buffer = g_shell_env->buffer->buff;
+	if (g_shell_env->buffer->length == g_shell_env->buffer->max_size)
+		ret = resize_buffer(void);
+	ft_memove(buffer[cursor->position + 1], buffer[cursor->position],
+			g_shell_env->buffer->length - cursor->position);
+	tputs(tgetstr("im", 0), 1, &my_putchar);
+	ft_putchar_fd(byte, 0);
+	tputs(tgetstr("ei", 0), 1, &my_putchar);
+	return (ret);
 }
 
 static int		control_char(t_terminf *shell_env, char byte)
