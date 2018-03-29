@@ -6,13 +6,13 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:53:50 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 14:54:36 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:09:41 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		my_putchar(int char)
+int		my_putchar(int chrr)
 {
 	write(1, &chrr, 1);
 	return (EXIT_SUCCESS);

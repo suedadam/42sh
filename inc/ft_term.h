@@ -5,8 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/29 10:57:10 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 16:23:20 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/29 16:24:10 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +49,7 @@ typedef struct	s_vertex
 typedef struct	s_cursor
 {
 	t_vertex	og_position;
-	t_vertex	curr_position;
+	t_vertex	position;
 }				t_cursor;
 
 typedef struct	s_errstr
@@ -71,8 +70,8 @@ enum {
 typedef struct		s_buffer
 {
 	char		*buff;
-	int			len_buffer;
-	int			maxsize_buffer;
+	int			length;
+	int			max_size;
 }					t_buffer;
 
 typedef	struct		s_terminf
@@ -154,7 +153,7 @@ int		read_loop(t_terminf *shell_env);
 /*
 **		prompt_utils
 */
-void		new_prompt(t_terminf *shell_env);
+void		new_prompt(void);
 
 /*
 **		prompt_utils
@@ -176,6 +175,16 @@ int				handle_keys(t_terminf *shell_env, char byte);
 **		history
 */
 int			add_buff_to_history(char *buffer);
-int			open_history()
-  
+int			open_history();
+
+/*
+**		cursor motions=
+*/
+void		move_cursor(t_cursor *cursor);
+void		cursor_to_right(t_cursor *cursor);
+void		cursor_to_left(t_cursor *cursor);
+
+
+t_terminf		g_shell_env;
+
 #endif
