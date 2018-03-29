@@ -18,6 +18,7 @@
 #define SCRL(x) (x >= 53 && x <= 54)
 #define HIST(x) (x >= 'A' && x <= 'B')
 #define SHIFT(x)
+#define BUFF_SIZE 1024
 
 int					g_ft_errnum;
 extern char			PC;
@@ -46,18 +47,19 @@ typedef	struct		s_terminf
 	struct termios	og; /* no free */
 	struct termios	*antishell; /* no free */
 /* For terminal initialization */
-	char	*term_name; /* no free */
-	char	*term_buff; /* FREE */
+	char			*term_name; /* no free */
+	char			*term_buff; /* FREE */
+	char			*line_buffer;
+	// t_hashtable		*hashtable;
 }					t_terminf;
 
-
-typedef struct		s_env
-{
-	t_terminf		*terminfo;
-	t_hashtable		*hashtable;
-	char			**env_variables;
-	
-}					t_env;
+//
+// typedef struct		s_env
+// {
+// 	t_terminf		*terminfo;
+// 	t_hashtable		*hashtable;
+// 	char			**envron
+// }					t_env;
 
 
 /* Allocate at sizes of 128 bytes, sequentially, to be arranged in a queue */
@@ -103,5 +105,34 @@ int		ft_passinput(t_terminf *anti);
 
 int		read_multibyte(char byte, int *mpass, t_terminf *anti);
 int		line_seek(t_terminf *anti, char byte);
+
+
+/*
+**		read_loop
+*/
+
+int		read_loop(t_terminf *shell_env);
+
+
+/*
+**		prompt_utils
+*/
+void		new_prompt(t_terminf *shell_env);
+
+/*
+**		prompt_utils
+*/
+int			carriage_return(t_terminf *shell_env, char byte, int slash_token)
+
+/*
+**		buffer_utils
+*/
+int			init_buffer(t_terminf *shell_env);
+int			handle_buffer(t_terminf *shell_env);
+
+/*
+**		keys_handler
+*/
+int				handle_keys(t_terminf *shell_env, char byte);
 
 #endif

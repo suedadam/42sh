@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/28 17:56:21 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/28 21:16:14 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,26 @@ int		my_stupidput(int chrr)
 int		ft_curight(t_terminf *anti)
 {
 	anti = (void *)anti;
-	if (write(STDIN_FILENO, "\e[1C", 4) < 0)
+	char	*str;
+
+	if (!(str = tgetstr("nd", 0)))
 		return (EXIT_FAILURE);
+	tputs(str, 1, my_stupidput);
+	// if (write(STDIN_FILENO, "\e[1C", 4) < 0)
+		// return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
 int		ft_curleft(t_terminf *anti)
 {
 	anti = (void *)anti;
-	if (write(STDIN_FILENO, "\e[1D", 4) < 0)
+	char *str;
+	if (!(str = tgetstr("le", 0)))
 		return (EXIT_FAILURE);
+
+		tputs(str, 1, my_stupidput);
+	// if (write(STDIN_FILENO, "\e[1D", 4) < 0)
+		// return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -79,14 +89,14 @@ int		ft_backspace(t_terminf *anti)
 	return (EXIT_SUCCESS);
 }
 
-int		ft_delete(t_terminf *anti)
-{
-	char	*temp;
-
-	temp = tgetstr("dl", 0);
-	tputs(temp, 1, my_stupidput);
-	return (EXIT_SUCCESS);
-}
+// int		ft_delete(t_terminf *anti)
+// {
+// 	char	*temp;
+//
+// 	temp = tgetstr("dl", 0);
+// 	tputs(temp, 1, my_stupidput);
+// 	return (EXIT_SUCCESS);
+// }
 
 
 void	ft_clearline(int clr)

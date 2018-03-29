@@ -25,40 +25,6 @@ int		terminit(t_terminf *anti)
 	return (((ret > 0) && (!g_ft_errnum)) ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
-// int		read_multibyte(char byte, int *mpass, t_terminf *anti)
-// {
-// 	char	discard[2];
-//
-// 	if (*mpass == 0
-// 		|| (*mpass == 1 && byte == '['))
-// 	{
-// 		(*mpass)++;
-// 		return (EXIT_SUCCESS);
-// 	}
-// 	else if (*mpass && LSEEK(byte))
-// 		line_seek(anti, byte);
-// 	else if (*mpass && DEL(byte))
-// 	{
-// 		read(STDIN_FILENO, &discard, 1);
-// 		ft_printf("\ndelete key\n");
-// 	}
-// 	else if (*mpass && SCRL(byte))
-// 	{
-// 		read(STDIN_FILENO, &discard, 1);
-// 		ft_printf("\npgup or pgdwn\n");
-// 	}
-// 	else if (*mpass && HIST(byte))
-// 		ft_printf("\narrup or arrdwn\n");
-// 	else if (*mpass == 2 && byte == '1')
-// 	{
-// 		read(STDIN_FILENO, &discard, 2);
-// 		ft_printf("\nshift\n");
-// 	}
-// 	*mpass = 0;
-//
-// 	return (EXIT_SUCCESS);
-// }
-
 int		quote_mode(char byte)
 {
 	char	*temp;
@@ -72,33 +38,6 @@ int		quote_mode(char byte)
 	return (EXIT_SUCCESS);
 }
 
-int		read_loop(t_terminf *anti)
-{
-	char	byte;
-	int		mpass;
-
-	anti = (void *)anti;
-	mpass = 0;
-	ft_printf("42sh%% ");
-	while (read(STDIN_FILENO, &byte, 1) == 1)
-	{
-		if ((byte == 27) || mpass)
-			read_multibyte(byte, &mpass, anti);
-		else if (byte == 12 && !mpass)
-			ft_clearscreen(anti);
-		else if (byte == 127 && !mpass)
-			ft_backspace(anti);
-	//	else if (byte == 39 || byte == 34)
-	//		quote_mode(byte);
-		else if (byte == '\n')
-			ft_passinput(anti);
-		else if (byte == 4 && !mpass)
-			break ;
-		else if (!mpass)
-			ft_printf("%lc", byte);
-	}
-	return (EXIT_SUCCESS);
-}
 
 /*
 ** isatty returns 0 when it fails, and sets errno
@@ -120,7 +59,6 @@ int		io_init(t_terminf *anti)
 	}
 	return (EXIT_SUCCESS);
 }
-
 
 /*
 ** Welcome to the shitty shell.  I am your host, anti.
