@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/28 21:16:37 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:23:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ int		read_multibyte(char byte, int *mpass, t_terminf *anti)
 {
 	char	discard[2];
 
-	if (*mpass == 0
-		|| (*mpass == 1 && byte == '['))
-	{
-		(*mpass)++;
-		return (EXIT_SUCCESS);
-	}
 	else if (*mpass && LSEEK(byte))
 		line_seek(anti, byte);
 	else if (*mpass && DEL(byte))

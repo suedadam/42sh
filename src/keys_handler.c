@@ -6,14 +6,25 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:40:21 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 13:18:54 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:23:21 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-static int		multibyte(t_terminf *shell_env, char byte, int *token)
+static int		multibyte(t_terminf *shell_env, char byte, int *mpass)
 {
+	if (*mpass == 0
+		|| (*mpass == 1 && byte == '['))
+	{
+		(*mpass)++;
+		return (EXIT_SUCCESS);
+	}
+	else if (*mpass == 1 && byte != '[')
+	{
+		one_byte(shell_env, byte);
+		return (EXIT_SUCCESS);
+	}
 	// jump table
 }
 
@@ -62,7 +73,7 @@ static int		one_byte(t_terminf *shell_env, char byte)
 	return (ret);
 }
 
-int				handle_keys(t_terminf *shell_env, char byte)
+int				handle_keys(t_terminf *shell_env, char byte, int *mpass)
 {
 	int		ret;
 	int		token;
@@ -70,7 +81,7 @@ int				handle_keys(t_terminf *shell_env, char byte)
 	ret = EXIT_SUCCESS;
 	token = 0;
 	if (byte == 27)
-		ret = multibyte(shell_env, byte, &token);
+		ret = multibyte(shell_env, byte, mpass);
 	else
 		ret = one_byte(shell_env, byte);
 	return (ret);

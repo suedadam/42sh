@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:10 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 14:54:35 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:23:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define HIST(x) (x >= 'A' && x <= 'B')
 # define SHIFT(x)
 # define BUFF_SIZE 1024
+
+# define 
 
 int					g_ft_errnum;
 
