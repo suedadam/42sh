@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 11:59:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 14:54:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,21 @@ int		read_loop(t_terminf *shell_env)
 {
 	char	byte;
 	int		mpass;
+	int		backslash;
 
-	anti = (void *)anti;
 	mpass = 0;
+	backslash = 0;
 	new_prompt(shell_env);
-	// while (read(STDIN_FILENO, &byte, 1) == 1)
-	// {
-	// 	if ((byte == 27) || mpass)
-	// 		read_multibyte(byte, &mpass, anti);
-	// 	else if (byte == 12 && !mpass)
-	// 		ft_clearscreen(anti);
-	// 	else if (byte == 127 && !mpass)
-	// 		ft_backspace(anti);
-	// //	else if (byte == 39 || byte == 34)
-	// //		quote_mode(byte);
-	// 	else if (byte == '\n')
-	// 		ft_passinput(anti);
-	// 	else if (byte == 4 && !mpass)
-	// 		break ;
-	// 	else if (!mpass)
-	// 		ft_printf("%lc", byte);
-	// }
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
-		if (byte == '\n')
+		if (byte == '\n' && !backslash)
 		{
 			if (carriage_return(shell_env, byte) == EXIT_FAILURE)
 				new_prompt(shell_env);
-			continue ;
 		}
 		else if (handle_keys(byte) == EXIT_FAILURE
-				|| checktty(anti) == EXIT_FAILURE)
-			reset_terminal(byte);
+				|| checktty(shell_env) == EXIT_FAILURE)
+			reset_terminal(shell_env);
 	}
-
 	return (EXIT_SUCCESS);
 }

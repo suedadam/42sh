@@ -38,10 +38,6 @@
 # define BUFF_SIZE 1024
 
 int					g_ft_errnum;
-extern char			PC;
-extern char			*UP;
-extern char			*BC;
-extern short		ospeed;
 
 typedef struct	s_vertex
 {
@@ -80,19 +76,19 @@ typedef struct		s_buffer
 typedef	struct		s_terminf
 {
 /* For ioctl purposes */
-	struct termios		og; /* no free */
-	struct termios		*antishell; /* no free */
+	struct termios		original_tty; /* no free */
+	struct termios		*shell_tty; /* FREE */
 /* For terminal initialization */
 	char				*term_name; /* no free */
 	char				*term_buff; /* FREE */
-	// char				*line_buffer;
-	// int					length_buffer;
-	t_cursor			cursor;
 	int					prompt_length;
 	t_buffer			*buffer;
+	t_cursor			cursor;
 	struct winsize		window;
 	// t_hashtable		*hashtable;
 }					t_terminf;
+
+t_terminf			*g_shell_env;
 
 //
 // typedef struct		s_env
@@ -102,8 +98,6 @@ typedef	struct		s_terminf
 // 	char			**envron
 // }					t_env;
 
-
-/* Allocate at sizes of 128 bytes, sequentially, to be arranged in a queue */
 
 typedef struct		s_linebuf
 {
@@ -180,8 +174,6 @@ int				handle_keys(t_terminf *shell_env, char byte);
 **		history
 */
 int			add_buff_to_history(char *buffer);
-int			open_history();
-
-t_terminf		g_shell_env;
-
+int			open_history()
+  
 #endif
