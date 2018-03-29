@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/28 03:17:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/28 23:20:24 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,36 @@
 struct s_redir_op	redir_ops[] = {
 	{">", &ops_redir_to}
 };
+
+int		run_operation(t_ast *curr)
+{
+	int	pid;
+
+	if (!curr || *(curr->type) == operator)
+	{
+		printf("%d || %d\n", !curr, *(curr->type) != operator);
+		return (-1);
+	}
+	if ((pid = fork()) == -1)
+	{
+		printf("fork() = %s\n", strerror(errno));
+		return (-1);
+	}
+	if (pid == 0)
+	{
+		printf("%s out = %d in = %d\n", *(curr->token), *(curr->p_info->stdout), curr->p_info->stdin);
+		dup2(curr->p_info->stdin, STDIN_FILENO);
+		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
+		dup2(curr->p_info->stderr, STDERR_FILENO);
+		char str[1024];
+		strcpy(str, "/nfs/2017/a/asyed/TestExec/");
+		strcpy(str, *(curr->token));
+		printf("str = \"%s\" args = \"%s\"\n", str, curr->token[1]);
+		execvp(str, curr->token);
+		printf("Failed!\n");
+	}
+	return (0);
+}
 
 void	build_leafs(t_ast *curr)
 {
@@ -37,10 +67,7 @@ void	build_leafs(t_ast *curr)
 	info->stdin = curr->p_info->comm[0];
 	if (!(info->stdout = ft_memalloc(sizeof(int))))
 		return ;
-	// printf("seg faulting here.\n");
-	if (curr->right_child && *(curr->right_child->type) == operator)
-		*(info->stdout) = curr->p_info->stdout[1];
-	// printf("nah here..\n");
+	*(info->stdout) = curr->p_info->stdout[1];
 	curr->right_child->p_info = info;
 	printf("Done building mah leafs\n");
 }
@@ -58,10 +85,6 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		return ;
 	if (!prev)
 		curr->p_info->stdin = STDIN_FILENO;
-	// if (prev)
-	// 	curr->p_info->stdin = (prev->p_info->stdout)[0];
-	// else
-	// 	curr->p_info->stdin = STDIN_FILENO;
 	pipe(fds);
 	curr->p_info->comm = ft_memalloc(sizeof(int) * 2);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
@@ -73,8 +96,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		fds[1] = STDOUT_FILENO;
 	}
 	memcpy(curr->p_info->stdout, fds, sizeof(int) * 2);
-	printf("About to build leaf but comm in = %d and stdout = %d\n", curr->p_info->stdin, *(curr->p_info->stdout));
-	if (curr->left_child && curr->right_child) //Should always be true...?
+	if (curr->left_child && curr->right_child)
 		build_leafs(curr);
 }
 
@@ -92,6 +114,7 @@ void	build_default(t_ast *curr)
 	}
 	*(info->stdout) = STDOUT_FILENO;
 	info->stderr = STDERR_FILENO;
+	curr->p_info = info;
 }
 
 /* 
@@ -111,16 +134,18 @@ int		build_info(t_ast *prev, t_ast *curr)
 {
 	if (!curr)
 		return (-1);
-	// if (prev && *(prev->type) == operator && !strcmp(*(prev->token, "|")))
-
-	// 	follow_pipe()
-		// add stdin from old stdout. 
 	if (*(curr->type) == operator && !strcmp(*(curr->token), "|"))
 		pipe_carry(prev, curr);
 	else if ((prev && *(prev->type) != operator && strcmp(*(prev->token), "|")))
 	{
 		printf("This should theoretically never get here...\n");
 		// build_default(curr);
+	}
+	else if (!prev)
+	{
+		build_default(curr);
+		run_operation(curr);
+		printf("Just one command....\n");
 	}
 	build_info(curr, curr->right_child);
 	return (0);
@@ -171,50 +196,25 @@ int		ops_redir_to(t_ast *curr, size_t pos)
 	return (0);
 }
 
-int		run_operation(t_ast *curr)
-{
-	int	pid;
-
-	if (!curr || *(curr->type) == operator)
-	{
-		printf("%d || %d\n", !curr, *(curr->type) != operator);
-		return (-1);
-	}
-	if ((pid = fork()) == -1)
-		return (-1);
-	if (pid == 0)
-	{
-		printf("%s out = %d in = %d\n", *(curr->token), *(curr->p_info->stdout), curr->p_info->stdin);
-		dup2(curr->p_info->stdin, STDIN_FILENO);
-		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
-		dup2(curr->p_info->stderr, STDERR_FILENO);
-		char str[1024];
-		strcpy(str, "/bin/");
-		strcpy(str, *(curr->token));
-		printf("str = \"%s\" args = \"%s\"\n", str, curr->token[1]);
-		execvp(str, curr->token);
-		printf("Failed!\n");
-	}
-	return (0);
-}
-
 int		run_tree(t_ast *curr)
 {
 	if (!curr || !curr->left_child)
 		return (0);
-	printf("test\n");
-	printf("Left (\"%s\") in: %d out: %d\n", *(curr->left_child->token), curr->left_child->p_info->stdin, *(curr->left_child->p_info->stdout));
-	// printf("curr->right_child = %p %s %d\n", curr->right_child, *(curr->right_child->token), curr->right_child->p_info->stdin);
-	// printf("Right: %p %d\n", curr->right_child, *(curr->right_child->type));
-	if (curr->right_child && *(curr->right_child->type) == token)
-		printf("Right (\"%s\") in: %d out: %d\n", *(curr->right_child->token), curr->right_child->p_info->stdin , *(curr->right_child->p_info->stdout));
-	// printf("-----> Called it\n");
-	// run_operation(curr->left_child);
+	printf("Running operation for %s(%s) -> %s\n", *(curr->token), *(curr->left_child->token), *(curr->right_child->token));
+	run_operation(curr->left_child);
 	if (curr->right_child && *(curr->right_child->type) == operator)
-	// {
-	// 	run_operation(curr->right_child);
+	{
 		run_tree(curr->right_child);
-	// }
+	}
+	else
+	{
+		if (curr->right_child)
+			printf("--------> Right_child type = %s (%s) -> %d (%s)\n", *(curr->token), *(curr->left_child->token), *(curr->right_child->type), *(curr->right_child->token));
+		else
+			printf("--------> Right child is (NULL)\n");
+		printf("Running operation for %s(%s) -> %s\n", *(curr->token), *(curr->right_child->token), *(curr->right_child->token));
+		run_operation(curr->right_child);
+	}
 	return (0);
 }
 
@@ -225,11 +225,9 @@ int		run_forest(t_ast **asts)
 	i = 0;
 	while (asts[i])
 	{
+		printf("hmmm\n");
 		if (build_info(NULL, asts[i]))
 			return (-1);
-		// printf("stdout 1st = %d\n", *((*asts)->left_child->p_info->stdout));
-		// printf("stdin 2nd = %d\n", (*asts)->right_child->p_info->stdin);
-		// printf("%s\n", );
 		if (run_tree(asts[i]))
 			return (-1);
 		i++;
