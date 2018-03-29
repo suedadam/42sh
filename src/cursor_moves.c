@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/28 16:25:48 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/28 17:54:33 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,16 @@ int		ft_backspace(t_terminf *anti)
 	tputs(temp, 1, my_stupidput);
 	return (EXIT_SUCCESS);
 }
+
+int		ft_delete(t_terminf *anti)
+{
+	char	*temp;
+
+	temp = tgetstr("dl", 0);
+	tputs(temp, 1, my_stupidput);
+	return (EXIT_SUCCESS);
+}
+
 
 void	ft_clearline(int clr)
 {
