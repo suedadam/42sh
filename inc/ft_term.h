@@ -29,14 +29,36 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-# define LSEEK(x) ((x >=70 && x <= 72) || (x >= 'C' && x <= 'D'))
-# define DEL(x) (x == 51)
-# define SCRL(x) (x >= 53 && x <= 54)
-# define HIST(x) (x >= 'A' && x <= 'B')
-# define SHIFT(x)
 # define BUFF_SIZE 1024
 
 int					g_ft_errnum;
+
+enum {
+	CURSOR_MOVE,
+	DEL_KEY,
+	SCROLL,
+	HISTORY,
+	SHIFT
+};
+
+enum {
+	C_G,
+	C_H,
+	C_J,
+	C_L,
+	C_M,
+	C_O,
+	C_V,
+	C_W
+};
+
+enum {
+	SYSERR,
+	TERMGET,
+	TGETN,
+	TGETZ,
+	TGETSTR
+};
 
 typedef struct	s_vertex
 {
@@ -58,33 +80,6 @@ typedef struct	s_errstr
 	size_t		len;
 }				t_errstr;
 
-enum {
-	SYSERR,
-	TERMGET,
-	TGETN,
-	TGETZ,
-	TGETSTR
-};
-
-enum {
-	CURSOR_MOVE,
-	DEL_KEY,
-	SCROLL,
-	HISTORY,
-	SHIFT
-};
-
-enum {
-	C_G,
-	C_H,
-	C_J,
-	C_L,
-	C_M,
-	C_O,
-	C_V,
-	C_W
-};
-
 typedef struct		s_buffer
 {
 	char			*buff;
@@ -92,19 +87,24 @@ typedef struct		s_buffer
 	size_t			max_size;
 }					t_buffer;
 
+typedef struct		s_tokens
+{
+	int				mpass;
+	int				bslash;
+}					t_tokens;
+
 typedef	struct		s_terminf
 {
-/* For ioctl purposes */
 	struct termios		original_tty; /* no free */
 	struct termios		*shell_tty; /* FREE */
-/* For terminal initialization */
-	char				*term_name; /* no free */
-	char				*term_buff; /* FREE */
-	int					prompt_length;
+	struct winsize		window;
 	t_buffer			*buffer;
 	t_cursor			cursor;
-	struct winsize		window;
+	t_tokens			tokens;	
 	// t_hashtable		*hashtable;
+	int					prompt_length;
+	char				*term_name; /* no free */
+	char				*term_buff; /* FREE */
 }					t_terminf;
 
 
@@ -115,14 +115,6 @@ typedef	struct		s_terminf
 // 	t_hashtable		*hashtable;
 // 	char			**envron
 // }					t_env;
-
-
-typedef struct		s_linebuf
-{
-	char			*line;
-	char			*curr_pos;
-	size_t			len;
-}					t_linebuf;
 
 /*
 **		Error handling (error.c)
@@ -170,26 +162,29 @@ int		read_loop(void);
 /*
 **		prompt_utils
 */
+
 void		new_prompt(void);
+void		reset_prompt(void);
 
 /*
 **		prompt_utils
 */
-int			ft_carriage_return(char byte, int slash_token);
+int			ft_carriage_return(char byte);
 
 /*
 **		buffer_utils
 */
 int			init_buffer();
-int			handle_buffer();
+int			reset_buffer();
 int			resize_buffer();
+int			reprint_buffer();
 
 
 /*
 **		keys_handler
 */
 
-int				handle_keys(char byte, int *mpass);
+int				handle_keys(char byte);
 
 /*
 **		history

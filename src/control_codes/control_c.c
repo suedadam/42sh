@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 10:00:39 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 11:51:12 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 13:34:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,5 @@
 
 void	control_c(int c)
 {
-	char	*temp;
-	
-	c = 0;
-	temp = tgetstr("do", 0);
-	tputs(temp, 1, my_putchar);
-	new_prompt();
-	get_cursor_first_position();
+	reset_prompt();
 }

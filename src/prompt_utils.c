@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:38:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 20:31:52 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/30 13:28:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,15 @@ void		new_prompt(void)
 	getcwd(pwd, 4096);
 	n = ft_printf("42sh [%s] %% ", pwd);
 	g_shell_env.prompt_length = n;
+	get_cursor_first_position();
+}
+
+void		reset_prompt(void)
+{
+	char	*temp;
+
+	temp = tgetstr("do", 0);
+	tputs(temp, 1, my_putchar);
+	new_prompt();
 	get_cursor_first_position();
 }

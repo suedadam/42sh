@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:18:24 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/30 10:32:14 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 15:22:37 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,19 @@ int			shift_buffer(t_buffer *buffer)
 
 }
 
-int			handle_buffer(void)
+int			reset_buffer(void)
 {
-	return (EXIT_SUCCESS);
+	int	ret;
+
+	free(g_shell_env.buffer->buff);
+	free(g_shell_env.buffer);
+	ret = init_buffer();
+	return (ret);
 }
 
 int			reprint_buffer(void)
 {
+	ft_printf("%s", g_shell_env.buffer->buff);
+	move_cursor(&g_shell_env.cursor);
 	return (EXIT_SUCCESS);
 }

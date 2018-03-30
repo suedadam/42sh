@@ -37,7 +37,6 @@ static int		control_char(char byte)
 {
 	int	ret;
 
-	ft_printf("cnt");
 	if ((ret = control_dispatch(byte)) < 0)
 		return (EXIT_FAILURE);
 	else
@@ -77,23 +76,24 @@ static int		one_byte(char byte)
 		ret = regular_text(byte);
 	if (byte < 32 || byte == 127)
 		ret = control_char(byte);
+	g_shell_env.tokens.bslash = 0;
 	return (ret);
 }
 
-static int		multibyte(char byte, int *mpass)
+static int		multibyte(char byte)
 {
 	int	ret;
 
-	if (*mpass == 0
-		|| (*mpass == 1 && byte == '['))
+	if (g_shell_env.tokens.mpass == 0
+		|| (g_shell_env.tokens.mpass == 1 && byte == '['))
 	{
-		(*mpass)++;
+		(g_shell_env.tokens.mpass)++;
 		return (EXIT_SUCCESS);
 	}
-	else if (*mpass == 1 && byte != '[')
+	else if (g_shell_env.tokens.mpass == 1 && byte != '[')
 	{
 		one_byte(byte);
-		*mpass = 0;
+		g_shell_env.tokens.mpass = 0;
 		return (EXIT_SUCCESS);
 	}
 	if ((ret = multibyte_dispatch(byte)) != EXIT_FAILURE)
@@ -103,19 +103,19 @@ static int		multibyte(char byte, int *mpass)
 	}
 	else
 		return (EXIT_FAILURE);
-	*mpass = 0;
+	g_shell_env.tokens.mpass = 0;
 	return (EXIT_SUCCESS);
 }
 
-int				handle_keys(char byte, int *mpass)
+int				handle_keys(char byte)
 {
 	int		ret;
 	int		token;
 
 	ret = EXIT_SUCCESS;
 	token = 0;
-	if (byte == 27 || *mpass)
-		ret = multibyte(byte, mpass);
+	if (byte == 27 || g_shell_env.tokens.mpass)
+		ret = multibyte(byte);
 	else
 		ret = one_byte(byte);
 	return (ret);
