@@ -30,6 +30,8 @@ SRC += prompt_utils
 SRC += read_loop
 SRC += set_signal
 SRC += ft_linemove
+SRC += scrn_info 
+SRC += utils 
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen

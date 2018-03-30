@@ -13,7 +13,8 @@
 
 
 static int		(*multibyte_jump[])(char byte) = {
-	
+
+	ft_linemove
 	/*
 	ft_delete,
 	ft_scroll,
@@ -53,12 +54,15 @@ static int		regular_text(char byte)
 	int			ret;
 
 	ret = EXIT_SUCCESS;
-	cursor = &(g_shell_env.cursor);
 	buffer = g_shell_env.buffer->buff;
+	cursor = &(g_shell_env.cursor);
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 		ret = resize_buffer();
-	ft_memmove(&buffer[cursor->position + 1], &buffer[cursor->position],
-			g_shell_env.buffer->length - cursor->position);
+	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
+			g_shell_env.buffer->max_size - cursor->position - 1);
+	buffer[cursor->position] = byte;
+	cursor->position++;
+	g_shell_env.buffer->length++;
 	tputs(tgetstr("im", 0), 1, &my_putchar);
 	ft_putchar_fd(byte, 0);
 	tputs(tgetstr("ei", 0), 1, &my_putchar);
@@ -94,7 +98,10 @@ static int		multibyte(char byte, int *mpass)
 		return (EXIT_SUCCESS);
 	}
 	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
-		multibyte_jump[ret](byte);
+	{
+		if (ret == MOVE)
+			multibyte_jump[ret](byte);
+	}
 	else
 		return (EXIT_FAILURE);
 	*mpass = 0;
@@ -109,7 +116,7 @@ int				handle_keys(char byte, int *mpass)
 
 	ret = EXIT_SUCCESS;
 	token = 0;
-	if (byte == 27)
+	if (byte == 27 || *mpass)
 		ret = multibyte(byte, mpass);
 	else
 		ret = one_byte(byte);

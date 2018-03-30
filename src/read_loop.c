@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 18:03:55 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/29 21:19:55 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int				read_loop(void)
 			if (ft_carriage_return(byte, bslash) == EXIT_FAILURE)
 				new_prompt();
 		}
+		else if (byte == 4)
+			break ;
 		else if (handle_keys(byte, &mpass) == EXIT_FAILURE
 				|| checktty() == EXIT_FAILURE)
 			reset_terminal();

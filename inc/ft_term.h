@@ -46,8 +46,8 @@ typedef struct	s_vertex
 
 typedef struct	s_cursor
 {
-	t_vertex	og_position;
-	int			position;
+	t_vertex		og_position;
+	size_t			position;
 
 }				t_cursor;
 
@@ -88,9 +88,9 @@ enum {
 
 typedef struct		s_buffer
 {
-	char		*buff;
-	int			length;
-	int			max_size;
+	char			*buff;
+	size_t			length;
+	size_t			max_size;
 }					t_buffer;
 
 typedef	struct		s_terminf
@@ -207,6 +207,16 @@ void		cursor_to_left(t_cursor *cursor);
 
 /* ft_linemove */
 int		ft_linemove(char byte);
+
+/*
+**		screen info
+*/
+int		get_window_size(void);
+
+/*
+**		utils
+*/
+void		get_cursor_first_position(void);
 
 t_terminf		g_shell_env;
 

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/29 17:38:26 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 21:38:27 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ void	move_cursor(t_cursor *cursor)
 	int		new_col;
 	int		new_line;
 
-	ft_printf("ici\n");
-	og_col = cursor->og_position.y;
-	og_line = cursor->og_position.x;
-	new_line = og_line + cursor->position;
-	new_col = og_col + cursor->position / g_shell_env.window.ws_col +
-		(new_line >= g_shell_env.window.ws_row);
-	new_line %= g_shell_env.window.ws_row;
+	og_line = cursor->og_position.y;
+	og_col = cursor->og_position.x;
+	new_col = og_col + cursor->position;
+	new_line = og_line + cursor->position / g_shell_env.window.ws_col +
+		(new_line > g_shell_env.window.ws_col);
+	new_col %= g_shell_env.window.ws_col;
 	tputs(tgoto(tgetstr("cm", NULL),
-		new_line - 1, new_col - 1), 0, &my_putchar);
+		new_col - 1, new_line - 1), 0, &my_putchar);
 }
 
 void		cursor_to_right(t_cursor *cursor)
 {
-	if (g_shell_env.buffer->length == cursor->position)
+	if (g_shell_env.buffer->length != cursor->position)
 	{
 		cursor->position++;
 		move_cursor(cursor);
@@ -41,7 +40,7 @@ void		cursor_to_right(t_cursor *cursor)
 
 void		cursor_to_left(t_cursor *cursor)
 {
-	if (cursor->og_position.x == cursor->position)
+	if (cursor->position > 0)
 	{
 		cursor->position--;
 		move_cursor(cursor);
