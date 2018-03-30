@@ -75,10 +75,10 @@ enum {
 };
 
 enum {
-	C_C,
 	C_G,
 	C_H,
 	C_J,
+	C_L,
 	C_M,
 	C_O,
 	C_V,
@@ -156,8 +156,8 @@ int		ft_passinput(void);
 **		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
 */
 
-int		multibyte_read(char byte);
-int		cntrl_read(char byte);
+int		multibyte_dispatch(char byte);
+int		control_dispatch(char byte);
 
 
 /*

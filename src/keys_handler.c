@@ -23,18 +23,14 @@ static int		(*multibyte_jump[])(char byte) = {
 };
 
 static int		(*control_jump[])(char byte) = {
-	/*
-	control_newline,
-	ft_backspace,
-	control_newline,
-	*/
-	control_l
-		/*
-	cntrl_m,
-	cntrl_o,
-	cntrl_v,
-	cntrl_w
-*/
+	control_g,
+	control_h,
+	control_j,
+	control_l,
+	control_m,
+	control_o,
+	control_v,
+	control_w
 };
 
 static int		control_char(char byte)
@@ -42,7 +38,7 @@ static int		control_char(char byte)
 	int	ret;
 
 	ft_printf("cnt");
-	if ((ret = cntrl_read(byte)) < 0)
+	if ((ret = control_dispatch(byte)) < 0)
 		return (EXIT_FAILURE);
 	else
 		ret = control_jump[ret](byte);
@@ -100,7 +96,7 @@ static int		multibyte(char byte, int *mpass)
 		*mpass = 0;
 		return (EXIT_SUCCESS);
 	}
-	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
+	if ((ret = multibyte_dispatch(byte)) != EXIT_FAILURE)
 	{
 		if (ret == CURSOR_MOVE)
 			multibyte_jump[ret](byte);

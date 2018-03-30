@@ -32,6 +32,7 @@ SRC += scrn_info
 SRC += utils 
 
 # CONTROL CHARACTERS
+SRC += control_codes/control_dispatch
 SRC += control_codes/control_c
 SRC += control_codes/control_l
 SRC += control_codes/control_g
@@ -45,8 +46,8 @@ SRC += control_codes/control_newline
 SRC += control_codes/control_execute
 
 # ESCAPE SEQUENCES 
-SRC += escape_sequences/ft_linemove
 SRC += escape_sequences/multibyte_dispatch
+SRC += escape_sequences/ft_linemove
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen
