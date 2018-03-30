@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 16:40:58 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:21:37 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	init_shellenv(void)
 	if (!(g_shell_env.shell_tty = ft_memalloc(sizeof(struct termios)))
 		|| (!(isatty(STDIN_FILENO)))
 		|| ((tcgetattr(STDIN_FILENO, &g_shell_env.original_tty)) < 0)
-		|| (!(ft_memcpy(g_shell_env.shell_tty, &original_tty,
+		|| (!(ft_memcpy(g_shell_env.shell_tty, &g_shell_env.original_tty,
 					sizeof(struct termios))))
 		|| (ft_setty() == EXIT_FAILURE)
 		|| ((init_buffer() == EXIT_FAILURE)))

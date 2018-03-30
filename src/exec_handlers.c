@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/29 16:34:30 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:52:42 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			handle_sign(int signal)
 		ft_printf("hey\n");
 	if ((str = tgetstr("ve", NULL)) == NULL)
 		return ;
-	tputs(str, 1, my_stupidput);
+	tputs(str, 1, my_putchar);
 	ft_printf("I have pushed escape key\n");
 	exit(1);
 }
@@ -46,7 +46,7 @@ int		quote_mode(char byte)
 	char	*temp;
 
 	temp = tgetstr("do", 0);
-	tputs(temp, 1, my_stupidput);
+	tputs(temp, 1, my_putchar);
 	if (byte == '\'')
 		ft_printf("quote> ");
 	else

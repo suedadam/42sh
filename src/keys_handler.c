@@ -63,11 +63,11 @@ static int		regular_text(char byte)
 
 	ret = EXIT_SUCCESS;
 	cursor = &(g_shell_env.cursor);
-	buffer = g_shell_env->buffer->buff;
-	if (g_shell_env->buffer->length == g_shell_env->buffer->max_size)
-		ret = resize_buffer(void);
-	ft_memove(buffer[cursor->position + 1], buffer[cursor->position],
-			g_shell_env->buffer->length - cursor->position);
+	buffer = g_shell_env.buffer->buff;
+	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
+		ret = resize_buffer();
+	ft_memmove(&buffer[cursor->position + 1], &buffer[cursor->position],
+			g_shell_env.buffer->length - cursor->position);
 	tputs(tgetstr("im", 0), 1, &my_putchar);
 	ft_putchar_fd(byte, 0);
 	tputs(tgetstr("ei", 0), 1, &my_putchar);
@@ -80,8 +80,10 @@ static int		control_char(char byte)
 	if ((ret = cntrl_read(byte)) < 0)
 		return (EXIT_SUCCESS);
 	else
-}
+    ;
+  return (EXIT_SUCCESS);
 
+}
 
 static int		one_byte(char byte)
 {
@@ -89,11 +91,29 @@ static int		one_byte(char byte)
 
 	ret = EXIT_SUCCESS;
 	if (byte >= 32 && byte <= 126)
-		ret = one_byte(byte);
+		ret = regular_text(byte);
 	if (byte < 32 || byte == 127)
 		ret = control_char(byte);
 	return (ret);
 }
+
+static int		multibyte(char byte, int *mpass)
+{
+	if (*mpass == 0
+		|| (*mpass == 1 && byte == '['))
+	{
+		(*mpass)++;
+		return (EXIT_SUCCESS);
+	}
+	else if (*mpass == 1 && byte != '[')
+	{
+		one_byte(byte);
+		return (EXIT_SUCCESS);
+	}
+	// jump table
+	return (EXIT_SUCCESS);
+}
+
 
 int				handle_keys(char byte, int *mpass)
 {

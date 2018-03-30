@@ -6,12 +6,11 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/29 17:47:50 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/29 17:23:58 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
-
 
 int		multibyte_read(char byte)
 {

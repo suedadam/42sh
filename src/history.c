@@ -6,11 +6,11 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:56:52 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 15:30:58 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:52:54 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_term.h"
+#include "ft_term.h"
 
 int			add_buff_to_history(char *buffer)
 {
