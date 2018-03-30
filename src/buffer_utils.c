@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:18:24 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 17:20:37 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:47:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 int			init_buffer(void)
 {
-	if (!(g_shell_env.buffer = (t_buffer *)ft_memalloc(sizeof(t_buffer))))
+	if (!(g_shell_env.buffer = (t_buffer *)ft_memalloc(sizeof(t_buffer)))
+		|| !(g_shell_env.buffer->buff = (char *)ft_memalloc(BUFF_SIZE + 1)))
 		return (EXIT_FAILURE);
+	g_shell_env.buffer->length = 0;
+	g_shell_env.buffer->max_size = BUFF_SIZE;
+	g_shell_env.cursor.position = 0;
 	return (EXIT_SUCCESS);
 }
 
