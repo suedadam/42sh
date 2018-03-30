@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 20:31:22 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/29 22:03:13 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	{
 		waitpid(pid, &res, 0);
 		if (!res)
-			return (0);
+			return (EXIT_SUCCESS);
 		else
-			return (-1);
+			return (EXIT_FAILURE);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	build_leafs(t_ast *curr)

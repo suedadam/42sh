@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 21:47:29 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/29 22:01:47 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ops_read_from(t_ast *curr, int pos)
 	int	ftmp;
 	int	**src;
 
-	if (!(ftmp - ft_atoi(curr->token[pos - 1]) && curr->token[pos - 1][0] != '0') || ftmp == 0)
+	if (!(ftmp = ft_atoi(curr->token[pos - 1]) && curr->token[pos - 1][0] != '0') || ftmp == 0)
 		src = &(curr->p_info->stdin);
 	else
 		return (EXIT_FAILURE);
