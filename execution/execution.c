@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 17:50:17 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/29 20:31:22 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	{
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
-		dup2(curr->p_info->stdin, STDIN_FILENO);
+		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
-		dup2(curr->p_info->stderr, STDERR_FILENO);
+		dup2(*(curr->p_info->stderr), STDERR_FILENO);
 		execvP(*(curr->token), getenv("PATH"), curr->token);
 		exit(EXIT_FAILURE);
 	}
@@ -59,14 +59,20 @@ void	build_leafs(t_ast *curr)
 
 	if (!(info = ft_memalloc(sizeof(t_process))))
 		return ;
-	info->stdin = curr->p_info->stdin;
+	if (!(info->stdin = ft_memalloc(sizeof(int)))
+		|| !(info->stderr = ft_memalloc(sizeof(int))))
+		return ;
+	*(info->stdin) = *(curr->p_info->stdin);
 	if (!(info->stdout = ft_memalloc(sizeof(int))))
 		return ;
 	*(info->stdout) = curr->p_info->comm[1];
 	curr->left_child->p_info = info;
 	if (!(info = ft_memalloc(sizeof(t_process))))
 		return ;
-	info->stdin = curr->p_info->comm[0];
+	if (!(info->stdin = ft_memalloc(sizeof(int)))
+		|| !(info->stderr = ft_memalloc(sizeof(int))))
+		return ;
+	*(info->stdin) = curr->p_info->comm[0];
 	if (!(info->stdout = ft_memalloc(sizeof(int))))
 		return ;
 	*(info->stdout) = curr->p_info->stdout[1];
@@ -78,14 +84,14 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 	int fds[2];
 
 	if (!curr)
-	{
-		printf("puta\n");
 		return ;
-	}
 	if (!curr->p_info && !(curr->p_info = ft_memalloc(sizeof(t_process))))
 		return ;
 	if (!prev)
-		curr->p_info->stdin = STDIN_FILENO;
+	{
+		curr->p_info->stdin = ft_memalloc(sizeof(int));
+		*(curr->p_info->stdin) = STDIN_FILENO;
+	}
 	pipe(fds);
 	curr->p_info->comm = ft_memalloc(sizeof(int) * 2);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
@@ -97,6 +103,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		fds[1] = STDOUT_FILENO;
 	}
 	memcpy(curr->p_info->stdout, fds, sizeof(int) * 2);
+	curr->p_info->stderr = ft_memalloc(sizeof(int));
 	if (curr->left_child && curr->right_child)
 		build_leafs(curr);
 }
@@ -109,14 +116,27 @@ void	build_default(t_ast *curr)
 		return ;
 	if (!(info = ft_memalloc(sizeof(t_process))))
 		return ;
-	info->stdin = STDIN_FILENO;
-	if (!(info->stdout = ft_memalloc(sizeof(int))))
+	if (!(info->stdin = ft_memalloc(sizeof(int))))
 	{
 		free(info);
 		return ;
 	}
+	*(info->stdin) = STDIN_FILENO;
+	if (!(info->stdout = ft_memalloc(sizeof(int))))
+	{
+		free(info->stdin);
+		free(info);
+		return ;
+	}
 	*(info->stdout) = STDOUT_FILENO;
-	info->stderr = STDERR_FILENO;
+	if (!(info->stderr = ft_memalloc(sizeof(int))))
+	{
+		free(info->stdin);
+		free(info->stdout);
+		free(info);
+		return ;
+	}
+	*(info->stderr) = STDERR_FILENO;
 	curr->p_info = info;
 }
 
