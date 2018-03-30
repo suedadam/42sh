@@ -69,7 +69,7 @@ enum {
 enum {
 	MOVE,
 	DEL,
-	SCROLL,
+	SCRL,
 	HIST,
 	SHIFT
 };
@@ -157,8 +157,8 @@ int		ft_passinput(void);
 **		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
 */
 
-int		read_multibyte(char byte, int *mpass);
-int		line_seek(t_terminf *anti, char byte);
+int		multibyte_read(char byte);
+int		cntrl_read(char byte);
 
 
 /*
@@ -205,6 +205,8 @@ void		move_cursor(t_cursor *cursor);
 void		cursor_to_right(t_cursor *cursor);
 void		cursor_to_left(t_cursor *cursor);
 
+/* ft_linemove */
+int		ft_linemove(char byte);
 
 t_terminf		g_shell_env;
 

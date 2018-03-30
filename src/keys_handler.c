@@ -11,15 +11,17 @@
 
 #include "ft_term.h"
 
-/*
+
 static int		(*multibyte_jump[])(char byte) = {
-	ft_linemove,
+	
+	/*
 	ft_delete,
 	ft_scroll,
 	ft_history,
 	ft_shiftmod
-}
-
+	*/
+};
+/*
 static int		(*control_jump[])(char byte) = {
 	cntrl_c,
 	cntrl_d,
@@ -33,26 +35,15 @@ static int		(*control_jump[])(char byte) = {
 }
 */
 
-static int		multibyte(char byte, int *mpass)
+static int		control_char(char byte)
 {
 	int	ret;
-
-	if (*mpass == 0
-		|| (*mpass == 1 && byte == '['))
-	{
-		(*mpass)++;
+	if ((ret = cntrl_read(byte)) < 0)
 		return (EXIT_SUCCESS);
-	}
-	else if (*mpass == 1 && byte != '[')
-	{
-		one_byte(byte);
-		return (EXIT_SUCCESS);
-	}
-	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
-		multibytejump[ret](byte);
 	else
-		return (EXIT_FAILURE);
-	// jump table
+    ;
+  return (EXIT_SUCCESS);
+
 }
 
 static int		regular_text(char byte)
@@ -74,17 +65,6 @@ static int		regular_text(char byte)
 	return (ret);
 }
 
-static int		control_char(char byte)
-{
-	int	ret;
-	if ((ret = cntrl_read(byte)) < 0)
-		return (EXIT_SUCCESS);
-	else
-    ;
-  return (EXIT_SUCCESS);
-
-}
-
 static int		one_byte(char byte)
 {
 	int		ret;
@@ -99,6 +79,8 @@ static int		one_byte(char byte)
 
 static int		multibyte(char byte, int *mpass)
 {
+	int	ret;
+
 	if (*mpass == 0
 		|| (*mpass == 1 && byte == '['))
 	{
@@ -108,12 +90,17 @@ static int		multibyte(char byte, int *mpass)
 	else if (*mpass == 1 && byte != '[')
 	{
 		one_byte(byte);
+		*mpass = 0;
 		return (EXIT_SUCCESS);
 	}
-	// jump table
+	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
+		multibyte_jump[ret](byte);
+	else
+		return (EXIT_FAILURE);
+	*mpass = 0;
 	return (EXIT_SUCCESS);
+	// jump table
 }
-
 
 int				handle_keys(char byte, int *mpass)
 {
