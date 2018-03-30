@@ -1,6 +1,6 @@
 NAME = fileio
 STAT = lib/libft.a
-CFLAGS +=  -g -fsanitize=address
+CFLAGS +=  -Wall -Werror -Wextra -g -fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
 CC = gcc
 SRCDIR = src/

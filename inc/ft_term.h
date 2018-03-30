@@ -65,6 +65,26 @@ enum {
 	TGETSTR
 };
 
+enum {
+	MOVE,
+	DEL,
+	SCROLL,
+	HIST,
+	SHIFT
+};
+
+enum {
+	C_C,
+	C_D,
+	C_G,
+	C_H,
+	C_J,
+	C_M,
+	C_O,
+	C_V,
+	C_W
+};
+
 typedef struct		s_buffer
 {
 	char		*buff;
