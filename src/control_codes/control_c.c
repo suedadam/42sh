@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scrn_info.c                                        :+:      :+:    :+:   */
+/*   control_c.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/23 13:02:56 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 10:48:28 by nkouris          ###   ########.fr       */
+/*   Created: 2018/03/30 10:00:39 by nkouris           #+#    #+#             */
+/*   Updated: 2018/03/30 10:48:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		get_window_size(void)
+void	*control_c(int c)
 {
-	ioctl(0, TIOCGWINSZ, &g_shell_env.window);
-	// if (ioclt(STDIN_FILENO, TIOCGWINSZ) < 0)
-		// return (EXIT_FAILURE);
+	char	*temp;
+	
+	c = 0;
+	temp = tgetstr("cl", 0);
+	tputs(temp, 1, my_putchar);
+	new_prompt();
+	get_cursor_first_position();
 	return (EXIT_SUCCESS);
 }

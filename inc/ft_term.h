@@ -67,16 +67,15 @@ enum {
 };
 
 enum {
-	MOVE,
-	DEL,
-	SCRL,
-	HIST,
+	CURSOR_MOVE,
+	DEL_KEY,
+	SCROLL,
+	HISTORY,
 	SHIFT
 };
 
 enum {
 	C_C,
-	C_D,
 	C_G,
 	C_H,
 	C_J,
@@ -206,17 +205,26 @@ void		cursor_to_right(t_cursor *cursor);
 void		cursor_to_left(t_cursor *cursor);
 
 /* ft_linemove */
+
 int		ft_linemove(char byte);
 
 /*
 **		screen info
 */
+
 int		get_window_size(void);
 
 /*
 **		utils
 */
+
 void		get_cursor_first_position(void);
+
+/*
+**		utils
+*/
+
+void		*control_c(int c);
 
 t_terminf		g_shell_env;
 

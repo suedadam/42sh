@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:18:24 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 20:47:46 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/30 10:32:14 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			init_buffer(void)
 	return (EXIT_SUCCESS);
 }
 
-int			resize_buffer()
+int			resize_buffer(void)
 {
 	// realloc buffer twize the size;
 	return (EXIT_SUCCESS);
@@ -39,5 +39,9 @@ int			shift_buffer(t_buffer *buffer)
 int			handle_buffer(void)
 {
 	return (EXIT_SUCCESS);
+}
 
+int			reprint_buffer(void)
+{
+	return (EXIT_SUCCESS);
 }

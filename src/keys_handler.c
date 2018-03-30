@@ -11,7 +11,6 @@
 
 #include "ft_term.h"
 
-
 static int		(*multibyte_jump[])(char byte) = {
 
 	ft_linemove
@@ -22,9 +21,10 @@ static int		(*multibyte_jump[])(char byte) = {
 	ft_shiftmod
 	*/
 };
-/*
+
 static int		(*control_jump[])(char byte) = {
-	cntrl_c,
+	control_c
+/*
 	cntrl_d,
 	cntrl_g,
 	cntrl_h,
@@ -33,17 +33,17 @@ static int		(*control_jump[])(char byte) = {
 	cntrl_o,
 	cntrl_v,
 	cntrl_w
-}
 */
+};
 
 static int		control_char(char byte)
 {
 	int	ret;
 	if ((ret = cntrl_read(byte)) < 0)
-		return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
 	else
-    ;
-  return (EXIT_SUCCESS);
+		ret = control_jump[ret](byte);
+  return (ret == EXIT_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
 
 }
 
@@ -99,7 +99,7 @@ static int		multibyte(char byte, int *mpass)
 	}
 	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
 	{
-		if (ret == MOVE)
+		if (ret == CURSOR_MOVE)
 			multibyte_jump[ret](byte);
 	}
 	else

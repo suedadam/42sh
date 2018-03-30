@@ -24,14 +24,19 @@ SRC += error
 SRC += history
 SRC += keys_handler
 SRC += main
-SRC += multibyte_dispatch
 SRC += my_putchar
 SRC += prompt_utils
 SRC += read_loop
 SRC += set_signal
-SRC += ft_linemove
 SRC += scrn_info 
 SRC += utils 
+
+# CONTROL CHARACTERS
+SRC += control_codes/control_c
+
+# ESCAPE SEQUENCES 
+SRC += escape_sequences/ft_linemove
+SRC += escape_sequences/multibyte_dispatch
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen
