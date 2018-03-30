@@ -23,12 +23,13 @@ static int		(*multibyte_jump[])(char byte) = {
 };
 
 static int		(*control_jump[])(char byte) = {
-	control_c
-/*
-	cntrl_d,
-	cntrl_g,
-	cntrl_h,
-	cntrl_j,
+	/*
+	control_newline,
+	ft_backspace,
+	control_newline,
+	*/
+	control_l
+		/*
 	cntrl_m,
 	cntrl_o,
 	cntrl_v,
@@ -39,6 +40,8 @@ static int		(*control_jump[])(char byte) = {
 static int		control_char(char byte)
 {
 	int	ret;
+
+	ft_printf("cnt");
 	if ((ret = cntrl_read(byte)) < 0)
 		return (EXIT_FAILURE);
 	else
@@ -106,7 +109,6 @@ static int		multibyte(char byte, int *mpass)
 		return (EXIT_FAILURE);
 	*mpass = 0;
 	return (EXIT_SUCCESS);
-	// jump table
 }
 
 int				handle_keys(char byte, int *mpass)

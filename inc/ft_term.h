@@ -203,6 +203,8 @@ int			open_history();
 void		move_cursor(t_cursor *cursor);
 void		cursor_to_right(t_cursor *cursor);
 void		cursor_to_left(t_cursor *cursor);
+void		cursor_to_home(t_cursor *cursor);
+void		cursor_to_end(t_cursor *cursor);
 
 /* ft_linemove */
 
@@ -224,8 +226,16 @@ void		get_cursor_first_position(void);
 **		utils
 */
 
-void		*control_c(int c);
-
-t_terminf		g_shell_env;
+void		control_c(int c);
+int			control_l(char byte);
+int			control_newline(char byte);
+int			control_g(char byte);
+int			control_h(char byte);
+int			control_j(char byte);
+int			control_m(char byte);
+int			control_o(char byte);
+int			control_v(char byte);
+int			control_w(char byte);
+t_terminf	g_shell_env;
 
 #endif

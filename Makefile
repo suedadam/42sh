@@ -33,6 +33,16 @@ SRC += utils
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_c
+SRC += control_codes/control_l
+SRC += control_codes/control_g
+SRC += control_codes/control_h
+SRC += control_codes/control_j
+SRC += control_codes/control_m
+SRC += control_codes/control_o
+SRC += control_codes/control_v
+SRC += control_codes/control_w
+SRC += control_codes/control_newline
+SRC += control_codes/control_execute
 
 # ESCAPE SEQUENCES 
 SRC += escape_sequences/ft_linemove

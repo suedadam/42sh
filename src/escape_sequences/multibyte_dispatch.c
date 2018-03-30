@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 10:48:33 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 11:51:11 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int		multibyte_read(char byte)
 
 int		cntrl_read(char byte)
 {
-	if (byte == 3)
-		return (C_C);
-	else if (byte == 7)
+	if (byte == 7)
 		return (C_G);
 	else if (byte == 8)
 		return (C_H);
 	else if (byte == 10)
 		return (C_J);
+	else if (byte == 12)
+		return (0);
 	else if (byte == 13)
 		return (C_M);
 	else if (byte == 15)
