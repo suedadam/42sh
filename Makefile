@@ -1,4 +1,4 @@
-NAME = fileio
+NAME = 42sh
 STAT = lib/libft.a
 CFLAGS +=  -g -fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
@@ -25,11 +25,9 @@ SRC += history
 SRC += keys_handler
 SRC += main
 SRC += multibyte_dispatch
-SRC += multibyte_dispatch
 SRC += my_putchar
 SRC += prompt_utils
 SRC += read_loop
-SRC += scrn_infor
 SRC += set_signal
 
 # GENERAL LIBFT FUNCTIONS
@@ -69,6 +67,10 @@ LIB += ft_strncmp
 LIB += ft_fifoqueue
 LIB += ft_error
 LIB += ft_strequ
+LIB += ft_putchar_fd
+LIB += ft_putstr_fd
+LIB += ft_putendl_fd
+
 
 # FTPRINTF
 LIB += ft_printf/conversion_diou

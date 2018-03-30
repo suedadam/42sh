@@ -6,13 +6,23 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 16:37:26 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:31:17 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		read_loop(void)
+static int		checktty(void)
+{
+	return (EXIT_SUCCESS);
+}
+
+static int		reset_terminal(void)
+{
+	return (EXIT_SUCCESS);
+}
+
+int				read_loop(void)
 {
 	char	byte;
 	int		mpass;
@@ -23,9 +33,9 @@ int		read_loop(void)
 	new_prompt();
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
-		if (byte == '\n' && !backslash)
+		if (byte == '\n' && !bslash)
 		{
-			if (carriage_return(gbyte) == EXIT_FAILURE)
+			if (ft_carriage_return(byte, bslash) == EXIT_FAILURE)
 				new_prompt();
 		}
 		else if (handle_keys(byte, &mpass) == EXIT_FAILURE

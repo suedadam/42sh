@@ -47,7 +47,8 @@ typedef struct	s_vertex
 typedef struct	s_cursor
 {
 	t_vertex	og_position;
-	t_vertex	position;
+	int			position;
+
 }				t_cursor;
 
 typedef struct	s_errstr
@@ -87,7 +88,6 @@ typedef	struct		s_terminf
 	// t_hashtable		*hashtable;
 }					t_terminf;
 
-t_terminf			*g_shell_env;
 
 //
 // typedef struct		s_env
@@ -116,28 +116,28 @@ void				ft_terror(void);
 */
 
 int		shsignal_handlers(void);
-int		ft_setty(t_terminf *anti);
-int		ft_resetty(t_terminf *anti);
-int		ft_restoretty(t_terminf *anti);
+int		ft_setty(void);
+int		ft_resetty(void);
+int		ft_restoretty(void);
 
 /*
 **		ANSI sequences for cursor movement (cursor_moves.c)
 */
 
-int		ft_curight(t_terminf *anti);
-int		ft_curleft(t_terminf *anti);
-int		ft_clearscreen(t_terminf *anti);
+int		ft_curight(void);
+int		ft_curleft(void);
+int		ft_clearscreen(void);
 void	ft_clearline(int clr);
-int		ft_curhome(t_terminf *anti);
+int		ft_curhome(void);
 int		my_putchar(int chrr);
-int		ft_backspace(t_terminf *anti);
-int		ft_passinput(t_terminf *anti);
+int		ft_backspace(void);
+int		ft_passinput(void);
 
 /*
 **		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
 */
 
-int		read_multibyte(char byte, int *mpass, t_terminf *anti);
+int		read_multibyte(char byte, int *mpass);
 int		line_seek(t_terminf *anti, char byte);
 
 
@@ -156,18 +156,21 @@ void		new_prompt(void);
 /*
 **		prompt_utils
 */
-int			carriage_return(char byte, int slash_token)
+int			ft_carriage_return(char byte, int slash_token);
 
 /*
 **		buffer_utils
 */
 int			init_buffer();
 int			handle_buffer();
+int			resize_buffer();
+
 
 /*
 **		keys_handler
 */
-int				handle_keys(, char byte);
+
+int				handle_keys(char byte, int *mpass);
 
 /*
 **		history
