@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 16:51:11 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/29 17:52:47 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_EXEC_H
@@ -38,7 +38,7 @@ typedef struct	s_ophandlers
 typedef struct	s_redir_op
 {
 	char	*opflag;
-	int		(*func)(t_ast *test, size_t pos);
+	int		(*func)(t_ast *curr, int pos);
 }				t_redir_op;
 
 /*
@@ -68,6 +68,14 @@ void	build_default(t_ast *curr);
 int		build_info(t_ast *prev, t_ast *curr);
 int		run_tree(t_ast *curr);
 
+
+/*
+** redirection.c
+*/
+
+int		handle_redirection(t_ast *curr);
+int		ops_redir_to(t_ast *curr, int pos);
+int		ops_append_to(t_ast *curr, int pos);
 // int	run_forest(t_ast **asts);
 // int	ops_redir_to(t_ast *curr, size_t pos);
 // int	redir_outfile(t_process *p_info, t_ast *ast, size_t pos);

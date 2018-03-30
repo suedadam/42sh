@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 16:56:08 by asyed            ###   ########.fr       */
+/*   Updated: 2018/03/29 17:50:17 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-
-// struct s_redir_op	redir_ops[] = {
-// 	{">", &ops_redir_to}
-// };
-
 int		run_operation(t_ast *curr, uint8_t wait)
 {
 	pid_t	pid;
@@ -39,6 +34,8 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (-1);
 	if (pid == 0)
 	{
+		if (handle_redirection(curr))
+			exit(EXIT_FAILURE);
 		dup2(curr->p_info->stdin, STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(curr->p_info->stderr, STDERR_FILENO);
@@ -189,6 +186,7 @@ int		run_forest(t_ast **asts)
 			return (-1);
 		if (run_tree(asts[i]))
 			return (-1);
+		return (255);
 		i++;
 	}
 	return (0);
