@@ -11,6 +11,50 @@
 
 #include "ft_term.h"
 
+/*
+static int		(*multibyte_jump[])(char byte) = {
+	ft_linemove,
+	ft_delete,
+	ft_scroll,
+	ft_history,
+	ft_shiftmod
+}
+
+static int		(*control_jump[])(char byte) = {
+	cntrl_c,
+	cntrl_d,
+	cntrl_g,
+	cntrl_h,
+	cntrl_j,
+	cntrl_m,
+	cntrl_o,
+	cntrl_v,
+	cntrl_w
+}
+*/
+
+static int		multibyte(char byte, int *mpass)
+{
+	int	ret;
+
+	if (*mpass == 0
+		|| (*mpass == 1 && byte == '['))
+	{
+		(*mpass)++;
+		return (EXIT_SUCCESS);
+	}
+	else if (*mpass == 1 && byte != '[')
+	{
+		one_byte(byte);
+		return (EXIT_SUCCESS);
+	}
+	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
+		multibytejump[ret](byte);
+	else
+		return (EXIT_FAILURE);
+	// jump table
+}
+
 static int		regular_text(char byte)
 {
 	t_cursor	*cursor;
@@ -32,8 +76,13 @@ static int		regular_text(char byte)
 
 static int		control_char(char byte)
 {
-	// jump table
-	return (EXIT_SUCCESS);
+	int	ret;
+	if ((ret = cntrl_read(byte)) < 0)
+		return (EXIT_SUCCESS);
+	else
+    ;
+  return (EXIT_SUCCESS);
+
 }
 
 static int		one_byte(char byte)
