@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <strings.h>
+# include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <term.h>
@@ -203,6 +204,8 @@ int			open_history();
 void		move_cursor(t_cursor *cursor);
 void		cursor_to_right(t_cursor *cursor);
 void		cursor_to_left(t_cursor *cursor);
+void		cursor_to_home(t_cursor *cursor);
+void		cursor_to_end(t_cursor *cursor);
 
 /* ft_linemove */
 
@@ -225,6 +228,11 @@ void		get_cursor_first_position(void);
 */
 
 void		*control_c(int c);
+
+/*
+**		ft_delete
+*/
+int			ft_delete(char byte);
 
 t_terminf		g_shell_env;
 

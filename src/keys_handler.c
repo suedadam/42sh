@@ -15,7 +15,8 @@ static int		(*multibyte_jump[])(char byte) = {
 
 	ft_linemove
 	/*
-	ft_delete,
+
+	ft_backspace,
 	ft_scroll,
 	ft_history,
 	ft_shiftmod
@@ -23,7 +24,7 @@ static int		(*multibyte_jump[])(char byte) = {
 };
 
 static int		(*control_jump[])(char byte) = {
-	control_c
+	// control_c
 /*
 	cntrl_d,
 	cntrl_g,
@@ -32,7 +33,8 @@ static int		(*control_jump[])(char byte) = {
 	cntrl_m,
 	cntrl_o,
 	cntrl_v,
-	cntrl_w
+	cntrl_w,
+	ft_delete
 */
 };
 
@@ -64,7 +66,9 @@ static int		regular_text(char byte)
 	cursor->position++;
 	g_shell_env.buffer->length++;
 	tputs(tgetstr("im", 0), 1, &my_putchar);
+	tputs(tgetstr("ic", 0), 1, &my_putchar);
 	ft_putchar_fd(byte, 0);
+	tputs(tgetstr("ip", 0), 1, &my_putchar);
 	tputs(tgetstr("ei", 0), 1, &my_putchar);
 	return (ret);
 }

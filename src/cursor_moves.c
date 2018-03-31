@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 10:32:16 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/31 15:12:23 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ void	move_cursor(t_cursor *cursor)
 	og_line = cursor->og_position.y;
 	og_col = cursor->og_position.x;
 	new_col = og_col + cursor->position;
-	new_line = og_line + cursor->position / g_shell_env.window.ws_col +
-		(new_line > g_shell_env.window.ws_col);
-	new_col %= g_shell_env.window.ws_col;
+	new_line = og_line + (new_col - 1) / g_shell_env.window.ws_col;
+	new_col %= g_shell_env.window.ws_col + 1;
 	tputs(tgoto(tgetstr("cm", NULL),
 		new_col - 1, new_line - 1), 0, &my_putchar);
 }

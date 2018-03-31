@@ -6,26 +6,26 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 10:48:28 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/31 15:15:44 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
-
-static void		ft_idonothing(int signal)
-{
-	signal = 0;
-	ft_printf("I do nothing amd i am ft_idonothing\n");
-	return ;
-}
-
-static void		ft_window(int signal)
-{
-
-	ft_printf("I do nothing amd I am ft_window\n");
-	return ;
-	signal = 0;
-}
+// 
+// static void		ft_idonothing(int signal)
+// {
+// 	signal = 0;
+// 	ft_printf("I do nothing amd i am ft_idonothing\n");
+// 	return ;
+// }
+//
+// static void		ft_window(int signal)
+// {
+//
+// 	ft_printf("I do nothing amd I am ft_window\n");
+// 	return ;
+// 	signal = 0;
+// }
 
 void			handle_sign(int signal)
 {

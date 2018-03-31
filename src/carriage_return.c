@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:50:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 16:49:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/31 15:15:18 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int			ft_carriage_return(char byte, int slash_token)
 {
 	int		ret;
+
+	slash_token = (int)byte;
 
 	ret = EXIT_SUCCESS;
 

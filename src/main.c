@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/30 10:32:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 13:13:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static int	init_shellenv(void)
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);
 	}
+	tputs(tgetstr("am", 0), 1, &my_putchar);
 	get_window_size();
 	return (EXIT_SUCCESS);
 }
