@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/30 17:29:55 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/31 10:43:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int				read_loop(void)
 			if (ft_carriage_return() == EXIT_FAILURE)
 				new_prompt();
 		}
+		else if (byte == 10 && g_shell_env.tokens.bslash)
+			backslash_char();
 		else if (byte == 4)
 		{
 			reset_prompt();

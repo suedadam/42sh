@@ -30,6 +30,7 @@ SRC += read_loop
 SRC += set_signal
 SRC += scrn_info 
 SRC += utils 
+SRC += backslash_char 
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch

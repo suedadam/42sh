@@ -171,6 +171,7 @@ int		read_loop(void);
 
 void		new_prompt(void);
 void		reset_prompt(void);
+void		back_prompt(void);
 
 /*
 **		prompt_utils
@@ -180,10 +181,10 @@ int			ft_carriage_return(void);
 /*
 **		buffer_utils
 */
-int			init_buffer();
-int			reset_buffer();
-int			resize_buffer();
-int			reprint_buffer();
+int			init_buffer(void);
+int			reset_buffer(void);
+int			resize_buffer(void);
+int			reprint_buffer(void);
 
 
 /*
@@ -196,7 +197,7 @@ int				handle_keys(char byte);
 **		history
 */
 int			add_buff_to_history(char *buffer);
-int			open_history();
+int			open_history(void);
 
 /*
 **		cursor motions=
@@ -240,5 +241,11 @@ int			control_o(void);
 int			control_v(void);
 int			control_w(void);
 t_terminf	g_shell_env;
+
+/*
+**		backslash handler
+*/
+
+int		backslash_char(void);
 
 #endif

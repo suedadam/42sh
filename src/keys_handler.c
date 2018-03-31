@@ -74,11 +74,12 @@ static int		one_byte(char byte)
 	int		ret;
 
 	ret = EXIT_SUCCESS;
+	if (byte == '\\')
+		g_shell_env.tokens.bslash = 1;
 	if (byte >= 32 && byte <= 126)
 		ret = regular_text(byte);
-	if (byte < 32 || byte == 127)
+	else if (byte < 32 || byte == 127)
 		ret = control_char(byte);
-	g_shell_env.tokens.bslash = 0;
 	return (ret);
 }
 
