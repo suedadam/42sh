@@ -6,13 +6,13 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 10:58:23 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 14:29:33 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:49:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_l(char byte)
+int		control_l(void)
 {
 	char	*temp;
 	

@@ -1,6 +1,6 @@
 NAME = 42sh
 STAT = lib/libft.a
-CFLAGS +=  -g -fsanitize=address
+CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
 CC = gcc
 SRCDIR = src/
@@ -33,7 +33,9 @@ SRC += utils
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch
+SRC += control_codes/control_a
 SRC += control_codes/control_c
+SRC += control_codes/control_e
 SRC += control_codes/control_l
 SRC += control_codes/control_g
 SRC += control_codes/control_h

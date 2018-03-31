@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 15:19:00 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:03:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	move_cursor(t_cursor *cursor)
 	int		new_col;
 	int		new_line;
 
+	new_line = 0;
 	og_line = cursor->og_position.y;
 	og_col = cursor->og_position.x;
 	new_col = og_col + cursor->position;

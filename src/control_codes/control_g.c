@@ -6,13 +6,17 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:31:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 11:51:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:47:59 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_g(char byte)
+int		control_g(void)
 {
+	int	c;
+
+	c = 0;
+	control_c(c);
 	return (EXIT_SUCCESS);
 }

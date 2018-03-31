@@ -6,14 +6,14 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:34:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 15:15:43 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:48:50 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_j(char byte)
+int		control_j(void)
 {
-	ft_carriage_return(byte);
+	ft_carriage_return();
 	return (EXIT_SUCCESS);
 }

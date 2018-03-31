@@ -6,12 +6,13 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 11:51:18 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:09:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
+/*
 static void		ft_idonothing(int signal)
 {
 	signal = 0;
@@ -26,7 +27,7 @@ static void		ft_window(int signal)
 	return ;
 	signal = 0;
 }
-
+*/
 void			handle_sign(int signal)
 {
 	char *str;

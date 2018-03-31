@@ -6,15 +6,16 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 11:51:14 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:11:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
 static void ft_idonothing(int lol)
-{}
-
+{
+	lol = 0;
+}
 
 int		shsignal_handlers(void)
 {

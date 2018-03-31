@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_dispatch.c                                 :+:      :+:    :+:   */
+/*   control_e.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 11:57:37 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 16:36:59 by nkouris          ###   ########.fr       */
+/*   Created: 2018/03/30 16:40:12 by nkouris           #+#    #+#             */
+/*   Updated: 2018/03/30 17:47:11 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_dispatch(char byte)
+int		control_e(void)
 {
-	if (byte == 1)
-		return (C_A);
-	else if (byte == 5)
-		return (C_E);
-	if (byte == 7)
-		return (C_G);
-	else if (byte == 8)
-		return (C_H);
-	else if (byte == 10)
-		return (C_J);
-	else if (byte == 12)
-		return (C_L);
-	else if (byte == 13)
-		return (C_M);
-	else if (byte == 15)
-		return (C_O);
-	else if (byte == 22)
-		return (C_V);
-	else if (byte == 23)
-		return (C_W);
-	return (-1);
+	cursor_to_end(&g_shell_env.cursor);
+	return (EXIT_SUCCESS);
 }

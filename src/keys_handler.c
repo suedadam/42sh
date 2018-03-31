@@ -22,7 +22,9 @@ static int		(*multibyte_jump[])(char byte) = {
 	*/
 };
 
-static int		(*control_jump[])(char byte) = {
+static int		(*control_jump[])() = {
+	control_a,
+	control_e,
 	control_g,
 	control_h,
 	control_j,
@@ -40,7 +42,7 @@ static int		control_char(char byte)
 	if ((ret = control_dispatch(byte)) < 0)
 		return (EXIT_FAILURE);
 	else
-		ret = control_jump[ret](byte);
+		ret = control_jump[ret]();
   return (ret == EXIT_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
 
 }

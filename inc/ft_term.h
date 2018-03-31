@@ -25,11 +25,14 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
+# include <limits.h>
+# include <sys/ioctl.h>
 
 # include "libft.h"
 # include "ft_printf.h"
 
 # define BUFF_SIZE 1024
+# define UNSET (void *)
 
 int					g_ft_errnum;
 
@@ -42,6 +45,8 @@ enum {
 };
 
 enum {
+	C_A,
+	C_E,
 	C_G,
 	C_H,
 	C_J,
@@ -91,6 +96,7 @@ typedef struct		s_tokens
 {
 	int				mpass;
 	int				bslash;
+	int				control_v;
 }					t_tokens;
 
 typedef	struct		s_terminf
@@ -169,7 +175,7 @@ void		reset_prompt(void);
 /*
 **		prompt_utils
 */
-int			ft_carriage_return(char byte);
+int			ft_carriage_return(void);
 
 /*
 **		buffer_utils
@@ -222,15 +228,17 @@ void		get_cursor_first_position(void);
 */
 
 void		control_c(int c);
-int			control_l(char byte);
-int			control_newline(char byte);
-int			control_g(char byte);
-int			control_h(char byte);
-int			control_j(char byte);
-int			control_m(char byte);
-int			control_o(char byte);
-int			control_v(char byte);
-int			control_w(char byte);
+int			control_a(void);
+int			control_e(void);
+int			control_l(void);
+int			control_newline(void);
+int			control_g(void);
+int			control_h(void);
+int			control_j(void);
+int			control_m(void);
+int			control_o(void);
+int			control_v(void);
+int			control_w(void);
 t_terminf	g_shell_env;
 
 #endif

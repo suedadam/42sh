@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:18:24 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/30 15:22:37 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/30 17:07:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			resize_buffer(void)
 
 int			shift_buffer(t_buffer *buffer)
 {
+	buffer  = (void *)buffer;
 	return (EXIT_SUCCESS);
 
 }
