@@ -6,11 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:18:24 by tle-huu-          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/03/30 18:09:46 by nkouris          ###   ########.fr       */
-=======
-/*   Updated: 2018/03/31 15:14:50 by tle-huu-         ###   ########.fr       */
->>>>>>> termio
+/*   Updated: 2018/03/31 17:04:15 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +29,12 @@ int			resize_buffer(void)
 	return (EXIT_SUCCESS);
 
 }
-<<<<<<< HEAD
 
 int			shift_buffer(t_buffer *buffer)
 {
 	buffer  = (void *)buffer;
 	return (EXIT_SUCCESS);
-
 }
-=======
-//
-// int			shift_buffer(t_buffer *buffer)
-// {
-// 	return (EXIT_SUCCESS);
-//
-// }
->>>>>>> termio
 
 int			reset_buffer(void)
 {
