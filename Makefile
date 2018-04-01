@@ -47,6 +47,8 @@ SRC += control_codes/control_v
 SRC += control_codes/control_w
 SRC += control_codes/control_newline
 SRC += control_codes/control_execute
+SRC += control_codes/ft_backspace
+SRC += control_codes/ft_delete
 
 # ESCAPE SEQUENCES 
 SRC += escape_sequences/multibyte_dispatch
