@@ -47,6 +47,17 @@ static int		control_char(char byte)
 
 }
 
+static void		update_end_of_screen(void)
+{
+	if (g_shell_env.cursor.og_position.y + (g_shell_env.cursor.og_position.x  +
+		g_shell_env.buffer->length) / g_shell_env.window.ws_col
+			>= g_shell_env.window.ws_row)
+	{
+		g_shell_env.cursor.og_position.y--;
+		ft_putchar_fd('\n', 0);
+	}
+}
+
 static void		update_buffer(char *buffer)
 {
 	int i = 0;
@@ -73,6 +84,7 @@ static int		regular_text(char byte)
 	buffer[cursor->position] = byte;
 	g_shell_env.buffer->length++;
 	update_buffer(buffer + cursor->position);
+	update_end_of_screen();
 	cursor->position++;
 	move_cursor(cursor);
 	return (ret);
