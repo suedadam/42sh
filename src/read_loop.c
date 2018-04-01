@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/29 21:19:55 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/31 10:43:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,25 @@ static int		reset_terminal(void)
 int				read_loop(void)
 {
 	char	byte;
-	int		mpass;
-	int		bslash;
 
-	mpass = 0;
-	bslash = 0;
+	g_shell_env.tokens.mpass = 0;
+	g_shell_env.tokens.bslash = 0;
 	new_prompt();
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
-		if (byte == '\n' && !bslash)
+		if (byte == 10 && !g_shell_env.tokens.bslash)
 		{
-			if (ft_carriage_return(byte, bslash) == EXIT_FAILURE)
+			if (ft_carriage_return() == EXIT_FAILURE)
 				new_prompt();
 		}
+		else if (byte == 10 && g_shell_env.tokens.bslash)
+			backslash_char();
 		else if (byte == 4)
+		{
+			reset_prompt();
 			break ;
-		else if (handle_keys(byte, &mpass) == EXIT_FAILURE
+		}
+		else if (handle_keys(byte) == EXIT_FAILURE
 				|| checktty() == EXIT_FAILURE)
 			reset_terminal();
 	}

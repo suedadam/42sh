@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   carriage_return.c                                  :+:      :+:    :+:   */
+/*   control_a.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 21:50:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/31 17:43:35 by nkouris          ###   ########.fr       */
+/*   Created: 2018/03/30 16:38:16 by nkouris           #+#    #+#             */
+/*   Updated: 2018/03/30 18:09:44 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int			ft_carriage_return(void)
+int		control_a(void)
 {
-	int		ret;
-
-	slash_token = (int)byte;
-
-	ret = EXIT_SUCCESS;
-	ret = reset_buffer();
-	if (ret == EXIT_SUCCESS)
-		reset_prompt();
-	// history_handler
-	// satkins(shell_env->line_buffer);
-	// reset the buffer
-	return (ret);
+	cursor_to_home(&g_shell_env.cursor);
+	return (EXIT_SUCCESS);
 }

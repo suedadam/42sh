@@ -26,18 +26,45 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
+# include <limits.h>
+# include <sys/ioctl.h>
 
 # include "libft.h"
 # include "ft_printf.h"
 
-# define LSEEK(x) ((x >=70 && x <= 72) || (x >= 'C' && x <= 'D'))
-# define DEL(x) (x == 51)
-# define SCRL(x) (x >= 53 && x <= 54)
-# define HIST(x) (x >= 'A' && x <= 'B')
-# define SHIFT(x)
 # define BUFF_SIZE 1024
+# define UNSET (void *)
 
 int					g_ft_errnum;
+
+enum {
+	CURSOR_MOVE,
+	DEL_KEY,
+	SCROLL,
+	HISTORY,
+	SHIFT
+};
+
+enum {
+	C_A,
+	C_E,
+	C_G,
+	C_H,
+	C_J,
+	C_L,
+	C_M,
+	C_O,
+	C_V,
+	C_W
+};
+
+enum {
+	SYSERR,
+	TERMGET,
+	TGETN,
+	TGETZ,
+	TGETSTR
+};
 
 typedef struct	s_vertex
 {
@@ -59,33 +86,6 @@ typedef struct	s_errstr
 	size_t		len;
 }				t_errstr;
 
-enum {
-	SYSERR,
-	TERMGET,
-	TGETN,
-	TGETZ,
-	TGETSTR
-};
-
-enum {
-	CURSOR_MOVE,
-	DEL_KEY,
-	SCROLL,
-	HISTORY,
-	SHIFT
-};
-
-enum {
-	C_C,
-	C_G,
-	C_H,
-	C_J,
-	C_M,
-	C_O,
-	C_V,
-	C_W
-};
-
 typedef struct		s_buffer
 {
 	char			*buff;
@@ -93,19 +93,25 @@ typedef struct		s_buffer
 	size_t			max_size;
 }					t_buffer;
 
+typedef struct		s_tokens
+{
+	int				mpass;
+	int				bslash;
+	int				control_v;
+}					t_tokens;
+
 typedef	struct		s_terminf
 {
-/* For ioctl purposes */
 	struct termios		original_tty; /* no free */
 	struct termios		*shell_tty; /* FREE */
-/* For terminal initialization */
-	char				*term_name; /* no free */
-	char				*term_buff; /* FREE */
-	int					prompt_length;
+	struct winsize		window;
 	t_buffer			*buffer;
 	t_cursor			cursor;
-	struct winsize		window;
+	t_tokens			tokens;	
 	// t_hashtable		*hashtable;
+	int					prompt_length;
+	char				*term_name; /* no free */
+	char				*term_buff; /* FREE */
 }					t_terminf;
 
 
@@ -116,14 +122,6 @@ typedef	struct		s_terminf
 // 	t_hashtable		*hashtable;
 // 	char			**envron
 // }					t_env;
-
-
-typedef struct		s_linebuf
-{
-	char			*line;
-	char			*curr_pos;
-	size_t			len;
-}					t_linebuf;
 
 /*
 **		Error handling (error.c)
@@ -157,8 +155,8 @@ int		ft_passinput(void);
 **		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
 */
 
-int		multibyte_read(char byte);
-int		cntrl_read(char byte);
+int		multibyte_dispatch(char byte);
+int		control_dispatch(char byte);
 
 
 /*
@@ -171,32 +169,36 @@ int		read_loop(void);
 /*
 **		prompt_utils
 */
+
 void		new_prompt(void);
+void		reset_prompt(void);
+void		back_prompt(void);
 
 /*
 **		prompt_utils
 */
-int			ft_carriage_return(char byte, int slash_token);
+int			ft_carriage_return(void);
 
 /*
 **		buffer_utils
 */
-int			init_buffer();
-int			handle_buffer();
-int			resize_buffer();
+int			init_buffer(void);
+int			reset_buffer(void);
+int			resize_buffer(void);
+int			reprint_buffer(void);
 
 
 /*
 **		keys_handler
 */
 
-int				handle_keys(char byte, int *mpass);
+int				handle_keys(char byte);
 
 /*
 **		history
 */
 int			add_buff_to_history(char *buffer);
-int			open_history();
+int			open_history(void);
 
 /*
 **		cursor motions=
@@ -227,7 +229,23 @@ void		get_cursor_first_position(void);
 **		utils
 */
 
-void		*control_c(int c);
+void		control_c(int c);
+int			control_a(void);
+int			control_e(void);
+int			control_l(void);
+int			control_newline(void);
+int			control_g(void);
+int			control_h(void);
+int			control_j(void);
+int			control_m(void);
+int			control_o(void);
+int			control_v(void);
+int			control_w(void);
+t_terminf	g_shell_env;
+
+/*
+**		backslash handler
+*/
 
 /*
 **		ft_delete
@@ -235,5 +253,6 @@ void		*control_c(int c);
 int			ft_delete(char byte);
 
 t_terminf		g_shell_env;
+int		backslash_char(void);
 
 #endif

@@ -23,28 +23,27 @@ static int		(*multibyte_jump[])(char byte) = {
 	*/
 };
 
-static int		(*control_jump[])(char byte) = {
-	// control_c
-/*
-	cntrl_d,
-	cntrl_g,
-	cntrl_h,
-	cntrl_j,
-	cntrl_m,
-	cntrl_o,
-	cntrl_v,
-	cntrl_w,
-	ft_delete
-*/
+static int		(*control_jump[])() = {
+	control_a,
+	control_e,
+	control_g,
+	control_h,
+	control_j,
+	control_l,
+	control_m,
+	control_o,
+	control_v,
+	control_w
 };
 
 static int		control_char(char byte)
 {
 	int	ret;
-	if ((ret = cntrl_read(byte)) < 0)
+
+	if ((ret = control_dispatch(byte)) < 0)
 		return (EXIT_FAILURE);
 	else
-		ret = control_jump[ret](byte);
+		ret = control_jump[ret]();
   return (ret == EXIT_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
 
 }
@@ -78,50 +77,51 @@ static int		one_byte(char byte)
 	int		ret;
 
 	ret = EXIT_SUCCESS;
+	if (byte == '\\')
+		g_shell_env.tokens.bslash = 1;
 	if (byte >= 32 && byte <= 126)
 		ret = regular_text(byte);
-	if (byte < 32 || byte == 127)
+	else if (byte < 32 || byte == 127)
 		ret = control_char(byte);
 	return (ret);
 }
 
-static int		multibyte(char byte, int *mpass)
+static int		multibyte(char byte)
 {
 	int	ret;
 
-	if (*mpass == 0
-		|| (*mpass == 1 && byte == '['))
+	if (g_shell_env.tokens.mpass == 0
+		|| (g_shell_env.tokens.mpass == 1 && byte == '['))
 	{
-		(*mpass)++;
+		(g_shell_env.tokens.mpass)++;
 		return (EXIT_SUCCESS);
 	}
-	else if (*mpass == 1 && byte != '[')
+	else if (g_shell_env.tokens.mpass == 1 && byte != '[')
 	{
 		one_byte(byte);
-		*mpass = 0;
+		g_shell_env.tokens.mpass = 0;
 		return (EXIT_SUCCESS);
 	}
-	if ((ret = multibyte_read(byte)) != EXIT_FAILURE)
+	if ((ret = multibyte_dispatch(byte)) != EXIT_FAILURE)
 	{
 		if (ret == CURSOR_MOVE)
 			multibyte_jump[ret](byte);
 	}
 	else
 		return (EXIT_FAILURE);
-	*mpass = 0;
+	g_shell_env.tokens.mpass = 0;
 	return (EXIT_SUCCESS);
-	// jump table
 }
 
-int				handle_keys(char byte, int *mpass)
+int				handle_keys(char byte)
 {
 	int		ret;
 	int		token;
 
 	ret = EXIT_SUCCESS;
 	token = 0;
-	if (byte == 27 || *mpass)
-		ret = multibyte(byte, mpass);
+	if (byte == 27 || g_shell_env.tokens.mpass)
+		ret = multibyte(byte);
 	else
 		ret = one_byte(byte);
 	return (ret);

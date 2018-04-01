@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/31 15:17:04 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/03/31 17:45:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void ft_idonothing(int lol)
 
 int		shsignal_handlers(void)
 {
-	// signal(SIGINT, control_c);
+	signal(SIGINT, &control_c);
 	signal(SIGTSTP, ft_idonothing);
 	// signal(SIGCONT, ft_idonothing);
 	// signal(SIGWINCH, ft_idonothing);
