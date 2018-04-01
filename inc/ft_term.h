@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <strings.h>
+# include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <term.h>
@@ -106,7 +107,7 @@ typedef	struct		s_terminf
 	struct winsize		window;
 	t_buffer			*buffer;
 	t_cursor			cursor;
-	t_tokens			tokens;	
+	t_tokens			tokens;
 	// t_hashtable		*hashtable;
 	int					prompt_length;
 	char				*term_name; /* no free */
@@ -245,7 +246,12 @@ t_terminf	g_shell_env;
 /*
 **		backslash handler
 */
-
 int		backslash_char(void);
+/*
+**		ft_delete
+*/
+int			ft_delete(char byte);
+
+t_terminf		g_shell_env;
 
 #endif

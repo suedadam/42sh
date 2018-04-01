@@ -1,6 +1,10 @@
 NAME = 42sh
 STAT = lib/libft.a
+<<<<<<< HEAD
 CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
+=======
+CFLAGS +=  -Wall -Werror -Wextra -g -fsanitize=address
+>>>>>>> termio
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
 CC = gcc
 SRCDIR = src/
@@ -36,6 +40,7 @@ SRC += backslash_char
 SRC += control_codes/control_dispatch
 SRC += control_codes/control_a
 SRC += control_codes/control_c
+<<<<<<< HEAD
 SRC += control_codes/control_e
 SRC += control_codes/control_l
 SRC += control_codes/control_g
@@ -48,6 +53,9 @@ SRC += control_codes/control_w
 SRC += control_codes/control_newline
 SRC += control_codes/control_execute
 
+=======
+SRC += control_codes/ft_delete
+>>>>>>> termio
 # ESCAPE SEQUENCES 
 SRC += escape_sequences/multibyte_dispatch
 SRC += escape_sequences/ft_linemove
