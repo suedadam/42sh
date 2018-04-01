@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 20:13:30 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/30 18:09:43 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/31 19:05:25 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void		get_cursor_first_position(void)
 	i = read(0, temp, 42);
 	temp[i] = 0;
 	i = 2;
-	g_shell_env.cursor.og_position.y = ft_atoi(temp + i);
+	g_shell_env.cursor.og_position.y = ft_atoi(temp + i) - 1;
 	while (ft_isdigit(temp[i]))
 		i++;
-	g_shell_env.cursor.og_position.x = ft_atoi(temp + i + 1);
+	g_shell_env.cursor.og_position.x = ft_atoi(temp + i + 1) - 1;
 }

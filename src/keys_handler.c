@@ -47,6 +47,16 @@ static int		control_char(char byte)
 
 }
 
+void static lol(char *buffer)
+{
+	int i = 0;
+	while (buffer[i])
+	{
+		ft_putchar_fd(buffer[i], 0);
+		i++;
+	}
+}
+
 static int		regular_text(char byte)
 {
 	t_cursor	*cursor;
@@ -56,16 +66,24 @@ static int		regular_text(char byte)
 	ret = EXIT_SUCCESS;
 	buffer = g_shell_env.buffer->buff;
 	cursor = &(g_shell_env.cursor);
+	if (byte == 'p')
+	{
+		ft_printf("cursor position : %d\n", cursor->position);
+		ft_printf("og col + cursor position / g shell : %d\n", (g_shell_env.cursor.og_position.x
+	+ g_shell_env.cursor.position) / g_shell_env.window.ws_col );
+	}
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 		ret = resize_buffer();
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
 			g_shell_env.buffer->max_size - cursor->position - 1);
 	buffer[cursor->position] = byte;
-	cursor->position++;
 	g_shell_env.buffer->length++;
-	tputs(tgetstr("im", 0), 1, &my_putchar);
-	ft_putchar_fd(byte, 0);
-	tputs(tgetstr("ei", 0), 1, &my_putchar);
+	// tputs(tgetstr("im", 0), 1, &my_putchar);
+	// ft_putchar_fd(byte, 0);
+	// tputs(tgetstr("ei", 0), 1, &my_putchar);
+	lol(buffer + cursor->position);
+	cursor->position++;
+	move_cursor(cursor);
 	return (ret);
 }
 
