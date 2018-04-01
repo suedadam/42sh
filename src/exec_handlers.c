@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 18:09:52 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/03/31 17:44:17 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void		ft_window(int signal)
 	signal = 0;
 }
 */
+
 void			handle_sign(int signal)
 {
 	char *str;

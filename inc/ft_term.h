@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <strings.h>
+# include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <term.h>
@@ -246,6 +247,12 @@ t_terminf	g_shell_env;
 **		backslash handler
 */
 
+/*
+**		ft_delete
+*/
+int			ft_delete(char byte);
+
+t_terminf		g_shell_env;
 int		backslash_char(void);
 
 #endif
