@@ -40,7 +40,7 @@ typedef struct				s_ast
 # define DOUBLE_QUOTE 2
 # define BACKSLASH 4
 # define IS_QUOTE(c) (c == '\'' || c == '\"' || c == '\\' ? 1 : 0)
-
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 # define OPS 7
 static const char			*ops[ OPS ] = {"&&", "||", ">>", ">", "&", "|", ">|"};
 

@@ -11,14 +11,7 @@
 /* ************************************************************************** */
 
 #include "ast.h"
-
-void				*ft_realloc(void *ptr, size_t size)
-{
-	if (!ptr)
-		return (ft_memalloc(size));
-	ft_memalloc(size);
-}
-
+//check size for simplifcations
 int					is_op(char *token, char c)
 {
 	char			*tmp;
@@ -49,13 +42,13 @@ static char			*strappend(char *str, char c)
 	return (str);
 }
 
-static void			add_token(char *curr_token, t_token_type *curr_type,
+static int			add_token(char *curr_token, t_token_type *curr_type,
 	t_token_type *types, char **tokens)
 {
 	int				i;
 
 	if (!curr_token || !curr_type)
-		return ;
+		return (EXIT_FAILURE);
 	i = -1;
 	while (tokens[++i])
 		;
@@ -63,20 +56,22 @@ static void			add_token(char *curr_token, t_token_type *curr_type,
 	{
 		if (!(tokens = ft_realloc(tokens, sizeof(char *) * (i + 2)))
 			|| !(types = ft_realloc(types, sizeof(t_token_type) * (i + 2))))
-			return ;
+			return (EXIT_FAILURE);
 	}
 	else if (!(tokens = ft_memalloc(sizeof(char *) * 2))
 		|| !(types = ft_memalloc(sizeof(t_token_type * 2))))
-		return ;
+		return (EXIT_FAILURE);
 	if (!(tokens[i] = ft_strdup(curr_token))
 		|| !ft_memcpy(types[i], curr_type, sizeof(t_token_type)))
-			return ;
+			return (EXIT_FAILURE);
 	tokens[i + 1] = NULL;
 	types[i + 1] = NULL;
 	if (*curr_token != ';')
+	{
 		ft_bzero(curr_token, ft_strlen(curr_token));
-	ft_bzero(curr_type, sizeof(*t_token_type));
-
+		*curr_type = null;
+	}
+	return (EXIT_SUCCESS);
 }
 
 static uint8_t			quoted_flags(char c)
@@ -115,11 +110,28 @@ static void			handle_embedded_quotes(uint8_t *quoted,
 		else
 			*current_token = strappend(*current_token, **str);
 	}
-	else if (quoted & BACKSLASH)
+	else if (quoted & BACKSLASH) //Change to ASCII value of character a/k/a \n instead of "\n"
 	{
 		*current_token = strappend(*current_token, **str);
 		quoted &= ~BACKSLASH;
 	}
+}
+
+static void 	skip_whitespace(char **input_str)
+{
+	if (!input_str)
+		return ;
+	while (IS_WHITESPACE(**input_str))
+		(*input_str)++;
+}
+
+void				end_statement(char *curr_token, char **tokens, t_token_type *current_type, t_token_type *types)
+{
+	t_token_type	tmp;
+
+	tmp = operator;
+	add_token(current_token, &current_type, tokens, types);
+	add_token(";", &tmp, tokens, types);
 }
 
 void				parser(char *input_str)
@@ -128,39 +140,40 @@ void				parser(char *input_str)
 	char			**tokens;
 	uint8_t			quoted;
 	t_token_type	*types;
-	t_token_type	*current_type;
+	t_token_type	current_type;
 
+	//allocate pointers dummy
 	*tokens = NULL;
 	current_token = NULL;
 	types = NULL;
-	*current_type = null;
+	current_type = null;
 	quoted = 0;
 	while (*input_str)
 	{
 		if (!quoted && *input_str == ';')
-		{
-			add_token(current_token, current_type, tokens, types);
-			add_token(";", operator, tokens, types);
-		}
+			end_statement(current_token, tokens, &current_type, types);
 		else if (current_type && *current_type == operator && !quoted && is_op(current_token, *input_str))
 			current_token = strappend(current_token, *input_str);
-		else if (current_type && *current_type == operator)
+		else if (current_type && !quoted && *current_type == operator)
 		{
-			add_token(current_token, current_type, tokens, types);
+			add_token(current_token, &current_type, tokens, types);
 			continue ;
 		}
 		else if (IS_QUOTE(*input_str) && !quoted)
-			quoted |= quoted_flags(*input_str);
+			quoted = quoted_flags(*input_str);
 		else if (IS_QUOTE(*input_str))
-			handle_embedded_quotes(&quoted, &input_str);
+			handle_embedded_quotes(&quoted, &input_str, &current_token);
 		else if (!quoted && is_op("", *input_str))
 		{
-			add_token(current_token, current_type, tokens, types);
-			*current_type = operator;
+			add_token(current_token, &current_type, tokens, types);
+			current_type = operator;
 			strappend(current_token, *input_str);
 		}
-		else if (!quoted && (*input_str == '\n' || *input_str == ' '))
+		else if (!quoted && IS_WHITESPACE(*input_str))
+		{
 			add_token(current_token, current_type, tokens, types);
+			skip_whitespace(&input_str);
+		}
 		else if (*current_type == word)
 			current_token = strappend(current_token, *input_str);
 		else if (*input_str == '#')
