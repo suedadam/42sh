@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 19:25:59 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 20:01:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ int			ft_delete(char byte)
 	char		*buffer;
 	int			ret;
 
-	byte = 'c';
 	/*
 	** !!!!!!!!!!!! Temporary solution !!!!!!!!!!!!!
 	*/
-	if (read(STDIN_FILENO, &byte, 1) < 0)
-		return (EXIT_FAILURE);
+	if (byte > 0)
+	{
+		if (read(STDIN_FILENO, &byte, 1) < 0)
+			return (EXIT_FAILURE);
+	}
 	/*
 	** !!!!!!!!!!!! Temporary solution !!!!!!!!!!!!!
 	*/

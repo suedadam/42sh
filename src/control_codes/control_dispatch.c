@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:57:37 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/31 18:31:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/01 20:01:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int		control_dispatch(char byte)
 		return (C_A);
 	else if (byte == 5)
 		return (C_E);
-	if (byte == 7)
+	else if (byte == 7)
 		return (C_G);
-	else if (byte == 8)
+	else if (byte == 8 || byte == 127)
 		return (C_H);
 	else if (byte == 10)
 		return (C_J);

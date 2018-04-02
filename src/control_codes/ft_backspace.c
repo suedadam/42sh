@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:19:32 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 19:38:21 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 20:03:43 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // 	return (ret == ERR ? EXIT_FAILURE : EXIT_SUCCESS);
 // }
 
-int			ft_backspace(char byte)
+int			ft_backspace(void)
 {
 	t_cursor	*cursor;
 
@@ -40,7 +40,7 @@ int			ft_backspace(char byte)
 	if (cursor->position > 0)
 	{
 		cursor->position--;
-		return (ft_delete(byte));
+		return (ft_delete(-1));
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:32:54 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 18:09:40 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/01 20:01:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int		control_h(void)
 {
-//	backspace
+	ft_backspace();
 	return (EXIT_SUCCESS);
 }
