@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 23:35:13 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/31 23:41:27 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 17:22:25 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		update_buffer(char *buffer)
 		ft_putchar_fd(buffer[i], 0);
 		i++;
 	}
+	update_end_of_screen();
 	g_shell_env.cursor.position = position;
 	move_cursor(&g_shell_env.cursor);
 }
