@@ -30,6 +30,8 @@ typedef struct				s_ast
 	struct s_ast			*right_child;
 }							t_ast;
 
+
+
 /*
 ** quoted flags
 */
@@ -39,5 +41,7 @@ typedef struct				s_ast
 # define BACKSLASH 4
 # define IS_QUOTE(c) (c == '\'' || c == '\"' || c == '\\' ? 1 : 0)
 
+# define OPS 7
+static const char			*ops[ OPS ] = {"&&", "||", ">>", ">", "&", "|", ">|"};
 
 #endif

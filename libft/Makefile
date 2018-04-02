@@ -68,7 +68,8 @@ SRC = \
 	strstr\
 	strsub\
 	strtrim\
-	strupcase
+	strupcase\
+	realloc
 OBJ_DIR = $(SRC_DIR)/obj
 OBJ = $(patsubst %, $(OBJ_DIR)/ft_%.o, $(SRC))
 

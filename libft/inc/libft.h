@@ -71,6 +71,7 @@ void	ft_putstr_fd(const char *s, int fd);
 ** Reproduction of <string.h>
 */
 
+void	*ft_realloc(void *src, size_t new_size);
 void	*ft_memccpy(void *s1, const void *s2, int c, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

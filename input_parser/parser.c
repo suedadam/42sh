@@ -12,9 +12,38 @@
 
 #include "ast.h"
 
+void				*ft_realloc(void *ptr, size_t size)
+{
+	if (!ptr)
+		return (ft_memalloc(size));
+	ft_memalloc(size);
+}
+
+int					is_op(char *token, char c)
+{
+	char			*tmp;
+	size_t			len;
+	int				i;
+
+	len = ft_strlen(token);
+	if (!(tmp = ft_memalloc(len + 2)))
+		return (-1);
+	ft_stpcpy(tmp, token);
+	tmp[len] = c;
+	i = -1;
+	while (++i < OPS)
+		if (!ft_strncmp(ops[i], tmp, len + 1))
+		{
+			free(tmp);
+			return (1);
+		}
+	free(tmp);
+	return (0);
+}
+
 static char			*strappend(char *str, char c)
 {
-	if (!(str = ft_realloc(str, ft_strlen(str) + 2))
+	if (!(str = ft_realloc(str, ft_strlen(str) + 2)))
 		return (NULL);
 	str = ft_strncat(str, &c, 1);
 	return (str);
@@ -46,7 +75,7 @@ static void			add_token(char *curr_token, t_token_type *curr_type,
 	types[i + 1] = NULL;
 	if (*curr_token != ';')
 		ft_bzero(curr_token, ft_strlen(curr_token));
-	ft_bzero(curr_type, sizeof(*t_token_type);
+	ft_bzero(curr_type, sizeof(*t_token_type));
 
 }
 
@@ -60,7 +89,8 @@ static uint8_t			quoted_flags(char c)
 		return (BACKSLASH);
 }
 
-static void			handle_embedded_quotes(uint8_t *quoted, char **str, char **current_token)
+static void			handle_embedded_quotes(uint8_t *quoted,
+	char **str, char **current_token)
 {
 	if (quoted & DOUBLE_QUOTE)
 	{
@@ -69,15 +99,27 @@ static void			handle_embedded_quotes(uint8_t *quoted, char **str, char **current
 			if (!(**str == '\\' || **str == '\"'))
 				*current_token = strappend(*current_token, '\\');
 			*current_token = strappend(*current_token, **str);
+			quoted &= ~BACKSLASH;
 		}
-		if (**str == '\\' && (*(*str + 1)) == '\\' || *(*str + 1) == '\"'))
-			;
+		else if (**str == '\\')
+			quoted |= BACKSLASH;
 		else if (**str == '\"')
 			quoted &= ~DOUBLE_QUOTE;
+		else if (**str == '\'')
+			*current_token = strappend(*current_token, **str);
 	}
-	else if (quoted & SINGLE_QUOTE && **str != '\'')
+	else if (quoted & SINGLE_QUOTE)
+	{		
+		if (**str == '\'')
+			quoted &= ~SINGLE_QUOTE;
+		else
+			*current_token = strappend(*current_token, **str);
+	}
+	else if (quoted & BACKSLASH)
+	{
 		*current_token = strappend(*current_token, **str);
-	else if ()
+		quoted &= ~BACKSLASH;
+	}
 }
 
 void				parser(char *input_str)
