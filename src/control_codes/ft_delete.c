@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 19:14:32 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 19:25:59 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void		delete_last(int starting_position, t_cursor *cursor)
 	g_shell_env.buffer->buff[length] = 0;
 	move_cursor(cursor);
 	ft_putchar_fd(' ', 0);
-	// tputs(tgetstr("dc", 0), 1, &my_putchar);
 	cursor->position = starting_position;
 	move_cursor(cursor);
 }
