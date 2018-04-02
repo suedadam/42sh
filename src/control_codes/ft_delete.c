@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/31 23:50:05 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 17:37:33 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		delete_last(int starting_position, t_cursor *cursor)
 {
 	cursor->position = g_shell_env.buffer->length;
 	move_cursor(cursor);
+	sleep(5);
 	tputs(tgetstr("dc", 0), 1, &my_putchar);
 	cursor->position = starting_position;
 	move_cursor(cursor);
@@ -44,6 +45,7 @@ int			ft_delete(char byte)
 		ret = tputs(tgetstr("dc", 0), 1, &my_putchar);
 		g_shell_env.buffer->length--;
 		delete_last(cursor->position, cursor);
+		cursor->position--;
 		update_buffer(buffer + cursor->position);
 	}
 	return (ret == ERR ? EXIT_FAILURE : EXIT_SUCCESS);

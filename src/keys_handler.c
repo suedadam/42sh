@@ -65,7 +65,7 @@ static int		regular_text(char byte)
 	buffer[cursor->position] = byte;
 	g_shell_env.buffer->length++;
 	update_buffer(buffer + cursor->position);
-	update_end_of_screen();
+	// update_end_of_screen();
 	cursor->position++;
 	move_cursor(cursor);
 	return (ret);
