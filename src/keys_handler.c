@@ -15,11 +15,9 @@ static int		(*multibyte_jump[])(char byte) = {
 
 	ft_linemove,
 	ft_delete,
-	/*
-	ft_scroll,
-	ft_history,
-	ft_shiftmod
-	*/
+/*	ft_scroll,*/0,
+/*	ft_history,*/0,
+/*	ft_shiftmod*/0
 };
 
 static int		(*control_jump[])() = {
@@ -76,6 +74,8 @@ static int		one_byte(char byte)
 	int		ret;
 
 	ret = EXIT_SUCCESS;
+	if (g_shell_env.tokens.bslash)
+		g_shell_env.tokens.bslash = 0;
 	if (byte == '\\')
 		g_shell_env.tokens.bslash = 1;
 	if (byte >= 32 && byte <= 126)
@@ -102,12 +102,7 @@ static int		multibyte(char byte)
 		return (EXIT_SUCCESS);
 	}
 	if ((ret = multibyte_dispatch(byte)) >= 0)
-	{
-		if (ret == CURSOR_MOVE)
-			multibyte_jump[ret](byte);
-		if (ret == DEL_KEY)
-			multibyte_jump[ret](byte);
-	}
+		multibyte_jump[ret](byte);
 	else
 		return (EXIT_FAILURE);
 	g_shell_env.tokens.mpass = 0;
