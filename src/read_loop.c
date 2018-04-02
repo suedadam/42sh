@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/31 21:31:51 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 19:44:11 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int				read_loop(void)
 	new_prompt();
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
-		get_window_size();
 		if (byte == 10 && !g_shell_env.tokens.bslash)
 		{
 			if (ft_carriage_return() == EXIT_FAILURE)

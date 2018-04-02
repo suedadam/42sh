@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:19:32 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 19:31:24 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/01 19:38:21 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			ft_backspace(char byte)
 	if (cursor->position > 0)
 	{
 		cursor->position--;
-		ft_delete(byte);
+		return (ft_delete(byte));
 	}
+	return (EXIT_SUCCESS);
 }

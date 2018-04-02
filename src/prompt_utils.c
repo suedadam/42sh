@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:38:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 19:32:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/01 20:02:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,17 @@ void		new_prompt(void)
 	int		n;
 
 	getcwd(pwd, 4096);
+	get_window_size();
 	n = ft_printf("42sh [%s] %% ", pwd);
 	g_shell_env.prompt_length = n;
 	get_cursor_first_position();
+	/*
+	** trying to fix the very small window size_t
+
+	** update_end_of_screen();
+	** move_cursor(&g_shell_env.cursor);
+
+	*/
 }
 
 void		reset_prompt(void)
