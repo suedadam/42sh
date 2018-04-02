@@ -71,10 +71,14 @@ static int		one_byte(char byte)
 	int		ret;
 
 	ret = EXIT_SUCCESS;
-	if (g_shell_env.tokens.bslash)
-		g_shell_env.tokens.bslash = 0;
+	if (T_BSLASH)
+		T_BSLASH = 0;
 	if (byte == '\\')
-		g_shell_env.tokens.bslash = 1;
+		T_BSLASH = 1;
+	else if (byte == '\'')
+		(T_QUOTE == 1) ? (T_QUOTE = 0) : (T_QUOTE = 1);
+	else if (byte == '\"')
+		(T_DQUOTE == 1) ? (T_DQUOTE = 0) : (T_DQUOTE = 1);
 	if (byte >= 32 && byte <= 126)
 		ret = regular_text(byte);
 	else if (byte < 32 || byte == 127)
@@ -86,23 +90,23 @@ static int		multibyte(char byte)
 {
 	int	ret;
 
-	if (g_shell_env.tokens.mpass == 0
-		|| (g_shell_env.tokens.mpass == 1 && byte == '['))
+	if (T_MPASS == 0
+		|| (T_MPASS == 1 && byte == '['))
 	{
-		(g_shell_env.tokens.mpass)++;
+		(T_MPASS)++;
 		return (EXIT_SUCCESS);
 	}
-	else if (g_shell_env.tokens.mpass == 1 && byte != '[')
+	else if (T_MPASS == 1 && byte != '[')
 	{
 		one_byte(byte);
-		g_shell_env.tokens.mpass = 0;
+		T_MPASS = 0;
 		return (EXIT_SUCCESS);
 	}
 	if ((ret = multibyte_dispatch(byte)) >= 0)
 		multibyte_jump[ret](byte);
 	else
 		return (EXIT_FAILURE);
-	g_shell_env.tokens.mpass = 0;
+	T_MPASS = 0;
 	return (EXIT_SUCCESS);
 }
 
@@ -113,7 +117,7 @@ int				handle_keys(char byte)
 
 	ret = EXIT_SUCCESS;
 	token = 0;
-	if (byte == 27 || g_shell_env.tokens.mpass)
+	if (byte == 27 || T_MPASS)
 		ret = multibyte(byte);
 	else
 		ret = one_byte(byte);

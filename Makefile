@@ -32,6 +32,7 @@ SRC += set_signal
 SRC += scrn_info
 SRC += utils
 SRC += update_screen_utils 
+SRC += quote_mode 
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch

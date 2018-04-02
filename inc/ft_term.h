@@ -34,6 +34,11 @@
 # define BUFF_SIZE 1024
 # define UNSET (void *)
 
+#define T_BSLASH (g_shell_env.tokens.bslash)
+#define T_MPASS (g_shell_env.tokens.mpass)
+#define T_QUOTE (g_shell_env.tokens.quote) 
+#define T_DQUOTE (g_shell_env.tokens.dquote)
+
 int					g_ft_errnum;
 
 enum {
@@ -97,6 +102,8 @@ typedef struct		s_tokens
 	int				mpass;
 	int				bslash;
 	int				control_v;
+	int				quote;
+	int				dquote;
 }					t_tokens;
 
 typedef	struct		s_terminf
@@ -254,6 +261,6 @@ int		backslash_char(void);
 */
 void		update_end_of_screen(void);
 void		update_buffer(char *buffer);
-
+void		quote_mode(char byte);
 
 #endif
