@@ -12,7 +12,6 @@
 #include "ft_term.h"
 
 static int		(*multibyte_jump[])(char byte) = {
-
 	ft_linemove,
 	ft_delete,
 /*	ft_scroll,*/0,
@@ -44,8 +43,6 @@ static int		control_char(char byte)
   return (ret == EXIT_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
 
 }
-
-
 
 static int		regular_text(char byte)
 {
