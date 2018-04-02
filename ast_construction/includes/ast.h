@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/22 13:57:41 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/22 16:58:42 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ typedef enum			e_token_type
 {
 						null,
 						word,
-						operator
+						operator,
+						redir
 
 }						t_token_type;
 

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/22 14:52:49 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/22 17:23:46 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ static void			handle_embedded_quotes(uint8_t *quoted, char **str, char **current
 		else if (**str == '\"')
 			quoted &= ~DOUBLE_QUOTE;
 	}
-	else if (quoted & )
+	else if (quoted & SINGLE_QUOTE && **str != '\'')
+		*current_token = strappend(*current_token, **str);
+	else if ()
 }
 
 void				parser(char *input_str)
