@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 23:35:13 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 20:01:34 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/01 20:02:21 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void		update_end_of_screen(void)
 	}
 }
 
+
+
 void		update_buffer(char *buffer)
 {
 	int		i;
@@ -30,6 +32,9 @@ void		update_buffer(char *buffer)
 
 	i = 0;
 	position = g_shell_env.cursor.position;
+	/*
+	** putstr ?
+	*/	
 	while (buffer[i])
 	{
 		ft_putchar_fd(buffer[i], 0);
