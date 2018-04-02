@@ -239,7 +239,7 @@ int			control_m(void);
 int			control_o(void);
 int			control_v(void);
 int			control_w(void);
-int			ft_backspace(char byte);
+int			ft_backspace(void);
 int			ft_delete(char byte);
 
 t_terminf	g_shell_env;
