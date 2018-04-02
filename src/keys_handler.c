@@ -13,9 +13,9 @@
 
 static int		(*multibyte_jump[])(char byte) = {
 
-	ft_linemove
-	/*
+	ft_linemove,
 	ft_delete,
+	/*
 	ft_scroll,
 	ft_history,
 	ft_shiftmod
@@ -47,6 +47,8 @@ static int		control_char(char byte)
 
 }
 
+
+
 static int		regular_text(char byte)
 {
 	t_cursor	*cursor;
@@ -61,11 +63,11 @@ static int		regular_text(char byte)
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
 			g_shell_env.buffer->max_size - cursor->position - 1);
 	buffer[cursor->position] = byte;
-	cursor->position++;
 	g_shell_env.buffer->length++;
-	tputs(tgetstr("im", 0), 1, &my_putchar);
-	ft_putchar_fd(byte, 0);
-	tputs(tgetstr("ei", 0), 1, &my_putchar);
+	update_buffer(buffer + cursor->position);
+	update_end_of_screen();
+	cursor->position++;
+	move_cursor(cursor);
 	return (ret);
 }
 
@@ -99,9 +101,11 @@ static int		multibyte(char byte)
 		g_shell_env.tokens.mpass = 0;
 		return (EXIT_SUCCESS);
 	}
-	if ((ret = multibyte_dispatch(byte)) != EXIT_FAILURE)
+	if ((ret = multibyte_dispatch(byte)) >= 0)
 	{
 		if (ret == CURSOR_MOVE)
+			multibyte_jump[ret](byte);
+		if (ret == DEL_KEY)
 			multibyte_jump[ret](byte);
 	}
 	else

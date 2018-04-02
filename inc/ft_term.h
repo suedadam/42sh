@@ -106,7 +106,7 @@ typedef	struct		s_terminf
 	struct winsize		window;
 	t_buffer			*buffer;
 	t_cursor			cursor;
-	t_tokens			tokens;	
+	t_tokens			tokens;
 	// t_hashtable		*hashtable;
 	int					prompt_length;
 	char				*term_name; /* no free */
@@ -247,7 +247,13 @@ t_terminf	g_shell_env;
 /*
 **		backslash handler
 */
-
 int		backslash_char(void);
+
+/*
+**		update screen utils
+*/
+void		update_end_of_screen(void);
+void		update_buffer(char *buffer);
+
 
 #endif

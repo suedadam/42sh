@@ -15,6 +15,7 @@ RES = \033[0m
 
 
 # FILEIO SOURCE
+SRC += backslash_char
 SRC += buffer_utils
 SRC += carriage_return
 SRC += change_terminal
@@ -28,9 +29,9 @@ SRC += my_putchar
 SRC += prompt_utils
 SRC += read_loop
 SRC += set_signal
-SRC += scrn_info 
-SRC += utils 
-SRC += backslash_char 
+SRC += scrn_info
+SRC += utils
+SRC += update_screen_utils 
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch
@@ -50,7 +51,7 @@ SRC += control_codes/control_execute
 SRC += control_codes/ft_backspace
 SRC += control_codes/ft_delete
 
-# ESCAPE SEQUENCES 
+# ESCAPE SEQUENCES
 SRC += escape_sequences/multibyte_dispatch
 SRC += escape_sequences/ft_linemove
 
