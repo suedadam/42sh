@@ -98,39 +98,60 @@ static int			conds_extended(t_parser *par, char **input_str)
 	}
 	return (EXIT_SUCCESS);
 }
-static void			init_parser(t_parser *parser)
+static inline __attribute__((always_inline)) void	*init_parser(void)
 {
-	parser->tokens = ft_memalloc(sizeof(char *));
-	parser->current_token = ft_memalloc(sizeof(char));
+	t_parser	*parser;
+
+	if (!(parser = malloc(sizeof(t_ast))))
+		return (NULL);
+	if (!(parser->tokens = malloc(sizeof(char *))))
+	{
+		free(parser);
+		return (NULL);
+	}
+	if (!(parser->current_token = malloc(sizeof(char))))
+	{
+		free(parser);
+		free(parser->tokens);
+		return (NULL);
+	}
 	parser->types = NULL;
 	parser->current_type = null;
 	parser->quoted = 0;
+	return (parser);
 }
 
-int					parser(char *input_str)
+/*
+** ToDo:
+** When failing (return NULL) we need to free all memory regions
+*/
+
+t_ast				*parser(char *input_str)
 {
-	t_parser		par;
+	t_parser		*par;
 	int				ret;
 
-	init_parser(&par);
+	if (!(par = init_parser()))
+		return (NULL);
 	while (*input_str)
 	{
 		printf("<%c>\t%d\n", *input_str, par.current_type);
 		ret = UNUSED_CHAR;
-		if (!par.quoted && (ret = unquoted_conds(&par, *input_str)) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (ret == UNUSED_CHAR && (ret = conds_extended(&par, &input_str)) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if (!par->quoted && (ret = unquoted_conds(par, *input_str)) == EXIT_FAILURE)
+			return (NULL);
+		if (ret == UNUSED_CHAR && (ret = conds_extended(par, &input_str)) == EXIT_FAILURE)
+			return (NULL);
 		if (ret == CONTINUE)
 			continue ;
 		else if (ret == BREAK)
 			break ;
 		input_str++;
 	}
-	if (add_token(par.current_token, &(par.current_type), &(par.tokens), &(par.types)) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	print_toks(par.tokens, par.types);
-	return (EXIT_SUCCESS);
+	if (add_token(par->current_token, &(par->current_type), &(par->tokens), &(par->types)) == EXIT_FAILURE)
+		return (NULL);
+	print_toks(par->tokens, par->types);
+	free(par->current_token);
+	return ((t_ast *)par);
 }
 
 int main(int argc, char **argv)
