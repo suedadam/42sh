@@ -41,7 +41,6 @@ static int		control_char(char byte)
 	else
 		ret = control_jump[ret]();
   return (ret == EXIT_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
-
 }
 
 static int		regular_text(char byte)

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/02 12:07:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/02 16:54:22 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,3 @@ void		cursor_to_end(t_cursor *cursor)
 	cursor->position = g_shell_env.buffer->length;
 	move_cursor(cursor);
 }
-
-/*
-{
-
-int		ft_backspace(t_terminf *anti)
-{
-	char	*temp;
-
-	ft_curleft(anti);
-	if (!(temp = tgetstr("dc", 0)))
-		return (EXIT_FAILURE);
-	tputs(temp, 1, my_stupidput);
-	return (EXIT_SUCCESS);
-}
-
-// int		ft_delete(t_terminf *anti)
-// {
-// 	char	*temp;
-//
-// 	temp = tgetstr("dl", 0);
-// 	tputs(temp, 1, my_stupidput);
-// 	return (EXIT_SUCCESS);
-// }
- */

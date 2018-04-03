@@ -1,0 +1,52 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/1aef85b/
+add_buff_to_history	src/history.c	/^int			add_buff_to_history(char *buffer)$/;"	f	typeref:typename:int
+back_prompt	src/prompt_utils.c	/^void		back_prompt(void)$/;"	f	typeref:typename:void
+backslash_char	src/backslash_char.c	/^int		backslash_char(void)$/;"	f	typeref:typename:int
+checktty	src/read_loop.c	/^static int		checktty(void)$/;"	f	typeref:typename:int	file:
+control_char	src/keys_handler.c	/^static int		control_char(char byte)$/;"	f	typeref:typename:int	file:
+control_jump	src/keys_handler.c	/^static int		(*control_jump[])() = {$/;"	v	typeref:typename:int (* [])()	file:
+cursor_to_end	src/cursor_moves.c	/^void		cursor_to_end(t_cursor *cursor)$/;"	f	typeref:typename:void
+cursor_to_home	src/cursor_moves.c	/^void		cursor_to_home(t_cursor *cursor)$/;"	f	typeref:typename:void
+cursor_to_left	src/cursor_moves.c	/^void		cursor_to_left(t_cursor *cursor)$/;"	f	typeref:typename:void
+cursor_to_right	src/cursor_moves.c	/^void		cursor_to_right(t_cursor *cursor)$/;"	f	typeref:typename:void
+ft_carriage_return	src/carriage_return.c	/^int			ft_carriage_return(void)$/;"	f	typeref:typename:int
+ft_idonothing	src/set_signal.c	/^static void ft_idonothing(int lol)$/;"	f	typeref:typename:void	file:
+ft_restoretty	src/change_terminal.c	/^int		ft_restoretty(void)$/;"	f	typeref:typename:int
+ft_setty	src/change_terminal.c	/^int		ft_setty(void)$/;"	f	typeref:typename:int
+ft_terror	src/error.c	/^void		ft_terror(void)$/;"	f	typeref:typename:void
+g_errtable	src/error.c	/^t_errstr g_errtable[6] =$/;"	v	typeref:typename:t_errstr[6]
+get_cursor_first_position	src/utils.c	/^void		get_cursor_first_position(void)$/;"	f	typeref:typename:void
+get_history	src/history.c	/^int			get_history()$/;"	f	typeref:typename:int
+get_window_size	src/scrn_info.c	/^int		get_window_size(void)$/;"	f	typeref:typename:int
+handle_keys	src/keys_handler.c	/^int				handle_keys(char byte)$/;"	f	typeref:typename:int
+handle_sign	src/exec_handlers.c	/^void			handle_sign(int signal)$/;"	f	typeref:typename:void
+init_buffer	src/buffer_utils.c	/^int			init_buffer(void)$/;"	f	typeref:typename:int
+init_shellenv	src/main.c	/^static int	init_shellenv(void)$/;"	f	typeref:typename:int	file:
+init_termcaps	src/main.c	/^static int	init_termcaps(void)$/;"	f	typeref:typename:int	file:
+main	src/main.c	/^int			main(void)$/;"	f	typeref:typename:int
+move_cursor	src/cursor_moves.c	/^void	move_cursor(t_cursor *cursor)$/;"	f	typeref:typename:void
+multibyte	src/keys_handler.c	/^static int		multibyte(char byte)$/;"	f	typeref:typename:int	file:
+multibyte_jump	src/keys_handler.c	/^static int		(*multibyte_jump[])(char byte) = {$/;"	v	typeref:typename:int (* [])(char byte)	file:
+my_putchar	src/my_putchar.c	/^int		my_putchar(int chrr)$/;"	f	typeref:typename:int
+new_prompt	src/prompt_utils.c	/^void		new_prompt(void)$/;"	f	typeref:typename:void
+one_byte	src/keys_handler.c	/^static int		one_byte(char byte)$/;"	f	typeref:typename:int	file:
+quote_mode	src/quote_mode.c	/^void		quote_mode(char byte)$/;"	f	typeref:typename:void
+read_loop	src/read_loop.c	/^int				read_loop(void)$/;"	f	typeref:typename:int
+regular_text	src/keys_handler.c	/^static int		regular_text(char byte)$/;"	f	typeref:typename:int	file:
+reprint_buffer	src/buffer_utils.c	/^int			reprint_buffer(void)$/;"	f	typeref:typename:int
+reset_buffer	src/buffer_utils.c	/^int			reset_buffer(void)$/;"	f	typeref:typename:int
+reset_prompt	src/prompt_utils.c	/^void		reset_prompt(void)$/;"	f	typeref:typename:void
+reset_terminal	src/read_loop.c	/^static int		reset_terminal(void)$/;"	f	typeref:typename:int	file:
+resize_buffer	src/buffer_utils.c	/^int			resize_buffer(void)$/;"	f	typeref:typename:int
+scroll_down	src/screen_scroll.c	/^int		scroll_down(void)$/;"	f	typeref:typename:int
+scroll_up	src/screen_scroll.c	/^int		scroll_up(void)$/;"	f	typeref:typename:int
+shift_buffer	src/buffer_utils.c	/^int			shift_buffer(t_buffer *buffer)$/;"	f	typeref:typename:int
+shsignal_handlers	src/set_signal.c	/^int		shsignal_handlers(void)$/;"	f	typeref:typename:int
+update_buffer	src/update_screen_utils.c	/^void		update_buffer(char *buffer)$/;"	f	typeref:typename:void
+update_end_of_screen	src/update_screen_utils.c	/^void		update_end_of_screen(void)$/;"	f	typeref:typename:void

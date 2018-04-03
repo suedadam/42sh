@@ -21,7 +21,7 @@ int			ft_carriage_return(void)
 	if (ret == EXIT_SUCCESS)
 		reset_prompt();
 	// history_handler
-	// satkins(shell_env->line_buffer);
+	// satkins_parser(shell_env->line_buffer);
 	// reset the buffer
 	return (ret);
 }
