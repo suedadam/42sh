@@ -29,7 +29,6 @@ int		run_operation(t_ast *curr, uint8_t wait, __attribute__((unused)) t_environ 
 {
 	pid_t	pid;
 	int 	res;
-
 	if (!curr || *(curr->type) == operator)
 		return (-1);
 	if ((pid = fork()) == -1)
@@ -84,6 +83,8 @@ static inline __attribute__((always_inline)) void	*init_process(void)
 		free(new->stderr);
 		free(new->stdout);
 	}
+	else
+		return (new);
 	return (NULL);
 }
 

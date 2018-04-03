@@ -4,12 +4,16 @@
 # SETTINGS                                                                     #
 ################################################################################
 
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
 42SH = 42sh
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -O3
 OBJFLAGS = -Wall -Werror -Wextra -O3 -c
 LIBFT = deps/libft/libft.a
-MALLOC = deps/malloc/libft_malloc.so
+MALLOC = deps/malloc/libft_malloc_${HOSTTYPE}.so
 42SH_MANAGER_SRCDIR = manager
 42SH_EXECUTION_SRCDIR = execution
 42SH_ASTCONSTRUCTION_SRCDIR = ast_construction
@@ -53,10 +57,16 @@ BLUE = \033[1;36m
 
 all: $(42SH)
 
+DEBUG: $(LIBFT) $(42SH_MANAGER_OBJ) $(42SH_EXECUTION_OBJ) $(42SH_ASTCONSTRUCTION_OBJ)
+	@printf "$(YELLOW)%-50s$(NC)" "Building $@... "
+	$(CC) $(CFLAGS) -g -fsanitize=address $(LIBFT) $(42SH_MANAGER_OBJ) $(42SH_EXECUTION_OBJ) $(42SH_ASTCONSTRUCTION_OBJ) $(42SH_INC) ast_construction/main.c -o $@
+	@echo "$(GREEN)DONE$(NC)"
+
 $(42SH): $(LIBFT) $(MALLOC) $(42SH_MANAGER_OBJ) $(42SH_EXECUTION_OBJ) $(42SH_ASTCONSTRUCTION_OBJ)
 	@printf "$(YELLOW)%-50s$(NC)" "Building $@... "
 	@$(CC) $(CFLAGS) $(LIBFT) $(MALLOC) $(42SH_MANAGER_OBJ) $(42SH_EXECUTION_OBJ) $(42SH_ASTCONSTRUCTION_OBJ) $(42SH_INC) ast_construction/main.c -o $@
 	@echo "$(GREEN)DONE$(NC)"
+	@install_name_tool -change libft_malloc_x86_64_Darwin.so $(PWD)/deps/malloc/libft_malloc_x86_64_Darwin.so 42sh
 
 obj/%.o: $(42SH_EXECUTION_SRCDIR)/%.c
 	@mkdir -p $(dir $@)
