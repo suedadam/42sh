@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:16:09 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/19 16:37:19 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/02 21:47:32 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putstr(const char *s)
 {
-	ft_putstr_fd(s, 1);
+	ft_putstr_fd(s, STDOUT_FILENO);
 }

@@ -6,13 +6,14 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:23:55 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/26 14:01:46 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/02 23:14:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <unistd.h>
 
 /*
 ** Fugly hack to suppress unused variable warning
