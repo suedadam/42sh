@@ -58,14 +58,14 @@ static int			add_token(char *curr_token, t_token_type *curr_type,
 			|| !(types = ft_realloc(types, sizeof(t_token_type) * (i + 2))))
 			return (EXIT_FAILURE);
 	}
-	else if (!(tokens = ft_memalloc(sizeof(char *) * 2))
+	else if (!(tokens = ft_memalloc(sizeof(char *) * 2)) // this elif may be deleted depending on implementation of realloc
 		|| !(types = ft_memalloc(sizeof(t_token_type * 2))))
 		return (EXIT_FAILURE);
 	if (!(tokens[i] = ft_strdup(curr_token))
 		|| !ft_memcpy(types[i], curr_type, sizeof(t_token_type)))
 			return (EXIT_FAILURE);
 	tokens[i + 1] = NULL;
-	types[i + 1] = NULL;
+	types[i + 1] = null;
 	if (*curr_token != ';')
 	{
 		ft_bzero(curr_token, ft_strlen(curr_token));
@@ -152,11 +152,11 @@ void				parser(char *input_str)
 	{
 		if (!quoted && *input_str == ';')
 			end_statement(current_token, tokens, &current_type, types);
-		else if (current_type && *current_type == operator && !quoted && is_op(current_token, *input_str))
+		else if (current_type && current_type == operator && !quoted && is_op(current_token, *input_str))
 			current_token = strappend(current_token, *input_str);
-		else if (current_type && !quoted && *current_type == operator)
+		else if (current_type && !quoted && current_type == operator)
 		{
-			add_token(current_token, &current_type, tokens, types);
+			add_token(current_token, current_type, tokens, types);
 			continue ;
 		}
 		else if (IS_QUOTE(*input_str) && !quoted)
@@ -186,4 +186,11 @@ void				parser(char *input_str)
 		input_str++;
 	}
 	add_token(current_token, current_type, tokens, types);
+}
+
+int main(char **argv, int argc)
+{
+	if (argc < 2)
+		return (0);
+	parser(argv[1]);
 }
