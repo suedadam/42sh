@@ -6,18 +6,18 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:47:47 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 16:50:41 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/03 00:07:43 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int		op_and_exec(t_ast *curr)
+int		op_and_exec(t_ast *curr, t_environ *environ)
 {
-	if (!run_operation(curr->left_child, 1))
+	if (!run_operation(curr->left_child, 1, environ))
 	{
-		run_operation(curr->right_child, 1);
-		return (run_tree(curr->right_child));
+		run_operation(curr->right_child, 1, environ);
+		return (run_tree(curr->right_child, environ));
 	}
 	return (EXIT_FAILURE);
 }

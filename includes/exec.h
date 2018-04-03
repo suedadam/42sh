@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 21:47:15 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/03 00:27:59 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_EXEC_H
@@ -32,7 +32,7 @@ typedef struct	s_process
 typedef struct	s_ophandlers
 {
 	int		(*check)(char *str);
-	int		(*exec)(t_ast *curr);
+	int		(*exec)(t_ast *curr, t_environ *environ);
 }				t_ophandlers;
 
 typedef struct	s_redir_op
@@ -40,6 +40,13 @@ typedef struct	s_redir_op
 	char	*opflag;
 	int		(*func)(t_ast *curr, int pos);
 }				t_redir_op;
+
+/*
+** builtins
+*/
+int		cmd_env(char *argv[], t_environ *environ);
+int		cmd_setenv(char *argv[], t_environ *environ);
+int		cmd_unsetenv(char *argv[], t_environ *environ);
 
 /*
 ** op_checks
@@ -53,20 +60,20 @@ int		op_and_check(char *str);
 ** op_execs
 */
 
-int		op_pipe_exec(t_ast *curr);
-int		op_or_exec(t_ast *curr);
-int		op_and_exec(t_ast *curr);
+int		op_pipe_exec(t_ast *curr, t_environ *environ);
+int		op_or_exec(t_ast *curr, t_environ *environ);
+int		op_and_exec(t_ast *curr, t_environ *environ);
 
 /*
 ** execution.c
 */
 
-int		run_operation(t_ast *curr, uint8_t wait);
+int		run_operation(t_ast *curr, uint8_t wait, t_environ *environ);
 void	build_leafs(t_ast *curr);
 void	pipe_carry(t_ast *prev, t_ast *curr);
 void	build_default(t_ast *curr);
-int		build_info(t_ast *prev, t_ast *curr);
-int		run_tree(t_ast *curr);
+int		build_info(t_ast *prev, t_ast *curr, t_environ *environ);
+int		run_tree(t_ast *curr, t_environ *environ);
 
 
 /*

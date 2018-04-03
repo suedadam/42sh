@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 22:03:13 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/03 00:30:47 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <strings.h>
 #include <errno.h>
 
+t_environ	*g_environ;
+
 struct s_ophandlers	op_handlers[] = {
 	{&op_pipe_check, &op_pipe_exec},
 	{&op_or_check, &op_or_exec},
@@ -23,7 +25,7 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-int		run_operation(t_ast *curr, uint8_t wait)
+int		run_operation(t_ast *curr, uint8_t wait, __attribute__((unused)) t_environ *environ)
 {
 	pid_t	pid;
 	int 	res;
@@ -36,6 +38,7 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	{
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
+		printf("[In: %d, Out: %d, Err: %d]\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr));
 		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
@@ -53,29 +56,52 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	return (EXIT_SUCCESS);
 }
 
+static inline __attribute__((always_inline)) void	*init_process(void)
+{
+	t_process	*new;
+
+	if (!(new = ft_memalloc(sizeof(t_process))))
+		return (NULL);
+	else if (!(new->stdin = ft_memalloc(sizeof(int))))
+	{
+		free(new);
+	}
+	else if (!(new->stderr = ft_memalloc(sizeof(int))))
+	{
+		free(new);
+		free(new->stdin);
+	}
+	else if (!(new->stdout = ft_memalloc(sizeof(int) * 2)))
+	{
+		free(new);
+		free(new->stdin);
+		free(new->stderr);
+	}
+	else if (!(new->comm = ft_memalloc(sizeof(int) * 2)))
+	{
+		free(new);
+		free(new->stdin);
+		free(new->stderr);
+		free(new->stdout);
+	}
+	return (NULL);
+}
+
 void	build_leafs(t_ast *curr)
 {
 	t_process *info;
 
-	if (!(info = ft_memalloc(sizeof(t_process))))
-		return ;
-	if (!(info->stdin = ft_memalloc(sizeof(int)))
-		|| !(info->stderr = ft_memalloc(sizeof(int))))
+	if (!(info = init_process()))
 		return ;
 	*(info->stdin) = *(curr->p_info->stdin);
-	if (!(info->stdout = ft_memalloc(sizeof(int))))
-		return ;
 	*(info->stdout) = curr->p_info->comm[1];
+	*(info->stderr) = *(curr->p_info->stderr);
 	curr->left_child->p_info = info;
-	if (!(info = ft_memalloc(sizeof(t_process))))
-		return ;
-	if (!(info->stdin = ft_memalloc(sizeof(int)))
-		|| !(info->stderr = ft_memalloc(sizeof(int))))
+	if (!(info = init_process()))
 		return ;
 	*(info->stdin) = curr->p_info->comm[0];
-	if (!(info->stdout = ft_memalloc(sizeof(int))))
-		return ;
 	*(info->stdout) = curr->p_info->stdout[1];
+	*(info->stderr) = *(curr->p_info->stderr);
 	curr->right_child->p_info = info;
 }
 
@@ -85,25 +111,19 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 
 	if (!curr)
 		return ;
-	if (!curr->p_info && !(curr->p_info = ft_memalloc(sizeof(t_process))))
+	if (!curr->p_info && !(curr->p_info = init_process()))
 		return ;
-	if (!prev)
-	{
-		curr->p_info->stdin = ft_memalloc(sizeof(int));
-		*(curr->p_info->stdin) = STDIN_FILENO;
-	}
+	*(curr->p_info->stdin) = (prev ? *(prev->p_info->stdout) : STDIN_FILENO);
 	pipe(fds);
-	curr->p_info->comm = ft_memalloc(sizeof(int) * 2);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
 	pipe(fds);
-	curr->p_info->stdout = ft_memalloc(sizeof(int) * 2);
 	if (!(curr->right_child->right_child)) //Right child should *ALWAYS* be allocated
 	{
 		fds[0] = STDOUT_FILENO;
 		fds[1] = STDOUT_FILENO;
 	}
 	memcpy(curr->p_info->stdout, fds, sizeof(int) * 2);
-	curr->p_info->stderr = ft_memalloc(sizeof(int));
+	*(curr->p_info->stderr) = STDERR_FILENO;
 	if (curr->left_child && curr->right_child)
 		build_leafs(curr);
 }
@@ -114,28 +134,10 @@ void	build_default(t_ast *curr)
 
 	if (!curr || *(curr->type) == operator)
 		return ;
-	if (!(info = ft_memalloc(sizeof(t_process))))
+	if (!(info = init_process()))
 		return ;
-	if (!(info->stdin = ft_memalloc(sizeof(int))))
-	{
-		free(info);
-		return ;
-	}
 	*(info->stdin) = STDIN_FILENO;
-	if (!(info->stdout = ft_memalloc(sizeof(int))))
-	{
-		free(info->stdin);
-		free(info);
-		return ;
-	}
 	*(info->stdout) = STDOUT_FILENO;
-	if (!(info->stderr = ft_memalloc(sizeof(int))))
-	{
-		free(info->stdin);
-		free(info->stdout);
-		free(info);
-		return ;
-	}
 	*(info->stderr) = STDERR_FILENO;
 	curr->p_info = info;
 }
@@ -153,7 +155,7 @@ void	build_default(t_ast *curr)
 ** 	-> stdout = curr->p_info->stdout[0];
 */
 
-int		build_info(t_ast *prev, t_ast *curr)
+int		build_info(t_ast *prev, t_ast *curr, t_environ *environ)
 {
 	if (!curr)
 		return (-1);
@@ -170,13 +172,13 @@ int		build_info(t_ast *prev, t_ast *curr)
 	else if (!prev)
 	{
 		build_default(curr);
-		run_operation(curr, 0);
+		run_operation(curr, 0, environ);
 	}
-	build_info(curr, curr->right_child);
+	build_info(curr, curr->right_child, environ);
 	return (0);
 }
 
-int		run_tree(t_ast *curr)
+int		run_tree(t_ast *curr, t_environ *environ)
 {
 	int	i;
 
@@ -188,23 +190,23 @@ int		run_tree(t_ast *curr)
 		while (op_handlers[i].check)
 		{
 			if (!op_handlers[i].check(*(curr->token)))
-				return (op_handlers[i].exec(curr));
+				return (op_handlers[i].exec(curr, environ));
 			i++;
 		}
 	}
 	return (EXIT_FAILURE);
 }
 
-int		run_forest(t_ast **asts)
+int		run_forest(t_ast **asts, t_environ *environ)
 {
 	int	i;
 
 	i = 0;
 	while (asts[i])
 	{
-		if (build_info(NULL, asts[i]))
+		if (build_info(NULL, asts[i], environ))
 			return (-1);
-		if (run_tree(asts[i]))
+		if (run_tree(asts[i], environ))
 			return (-1);
 		return (255);
 		i++;

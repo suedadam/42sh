@@ -6,15 +6,17 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/27 17:09:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/03 00:29:55 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "libft.h"
-# include "queue.h"
+# include "libft/inc/libft.h"
+# include "libft/inc/queue.h"
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
+# include <unistd.h>
 
 typedef enum	e_token_type
 {
@@ -31,12 +33,17 @@ typedef struct	s_ast
 	struct s_process		*p_info;
 }				t_ast;
 
+typedef struct	s_environ
+{
+	size_t		size;
+	char		**environ;
+}				t_environ;
+
 
 /*
 ** lol remove me.
 */
-int		run_forest(t_ast **asts);
-
+int				run_forest(t_ast **asts, t_environ *environ);
 t_queue			*build_forest(char **tokens, t_token_type *type);
 
 /*
@@ -69,5 +76,7 @@ void			print_ast(t_ast *ast, int spaces);
 void			free_argv(char **argv);
 void			free_types(t_token_type *types);
 void			free_ast(t_ast *ast);
+
+extern	t_environ	*g_environ;
 
 #endif

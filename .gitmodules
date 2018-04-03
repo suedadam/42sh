@@ -1,4 +1,8 @@
-[submodule "libft"]
-	path = libft
+[submodule "deps_libft"]
+	path = deps/libft
 	url = https://github.com/suedadam/42sh
 	branch = libft
+[submodule "malloc"]
+	path = deps/malloc
+	url = https://github.com/suedadam/ft_malloc
+	branch = master

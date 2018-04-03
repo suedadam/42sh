@@ -6,15 +6,15 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:24:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/28 16:13:30 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/03 00:23:49 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "ast.h"
+#include "exec.h"
 
-int main(int argc, char **argv) {
+int main(int __attribute__((unused)) argc, char **argv, char **environ) {
 
 
 	t_token_type *type = ft_memalloc(sizeof(t_token_type) * 13);
@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 	type[1] = 0;
 	type[2] = 1;
 	type[5] = 1;
-	type[8] = 1;
+	// type[8] = 1;
 
 	// type[0] = 0;
 	// type[1] = 0;
@@ -46,8 +46,17 @@ int main(int argc, char **argv) {
 	// }
 	// argv[argc - 1] = 0;
 
+	t_environ *test;
+
+	test = malloc(sizeof(t_environ));
+	test->environ = environ;
+	int i;
+
+	for (i = 0; environ[i]; ++i)
+		;
+	test->size = i;
 	t_queue *forest = build_forest(argv + 1, (t_token_type *)type);
-	run_forest((t_ast **)&(forest->head->content));
+	run_forest((t_ast **)&(forest->head->content), test);
 	printf("PUTUUUHH\n");
 	// while (vasy)
 	// {

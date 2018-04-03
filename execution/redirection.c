@@ -99,7 +99,6 @@ int		handle_redirection(t_ast *curr)
 	int	j;
 
 	i = 0;
-	printf("Got here.\n");
 	while (curr->token[i])
 	{
 		j = 0;
