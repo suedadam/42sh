@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/03 15:25:03 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/03 16:08:56 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int					parser(char *input_str)
 	init_parser(&par);
 	while (*input_str)
 	{
+		printf("<%c>\t%d\n", *input_str, par.current_type);
 		ret = UNUSED_CHAR;
 		if (!par.quoted && (ret = unquoted_conds(&par, *input_str)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
