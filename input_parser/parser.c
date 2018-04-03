@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/03 16:08:56 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/03 16:52:39 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void 	skip_whitespace(char **input_str)
 		(*input_str)++;
 }
 
-int					end_statement(char *curr_token, char ***tokens, t_token_type *current_type, t_token_type **types)
+int					end_statement(char *curr_token, t_token_type *current_type, t_parser *par)
 {
 	t_token_type	tmp;
 
 	tmp = operator;
-	if (add_token(curr_token, current_type, tokens, types) == EXIT_FAILURE
-		|| add_token(";", &tmp, tokens, types) == EXIT_FAILURE)
+	if (add_token(curr_token, current_type, par) == EXIT_FAILURE
+		|| add_token(";", &tmp, par) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -39,8 +39,8 @@ static int			unquoted_conds(t_parser *par, char cur_char)
 	ret = USED_CHAR;
 	if (cur_char == ';')
 	{
-		if (end_statement(par->current_token, &(par->tokens),
-			&(par->current_type), &(par->types)) == EXIT_FAILURE)
+		if (end_statement(par->current_token, &(par->current_type),
+			par) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	else if (par->current_type == operator)
@@ -51,7 +51,7 @@ static int			unquoted_conds(t_parser *par, char cur_char)
 				return (EXIT_FAILURE);
 		}
 		else if (add_token(par->current_token, &(par->current_type),
-			&(par->tokens), &(par->types)) == EXIT_FAILURE)
+			par) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		else
 			return (CONTINUE);
@@ -64,21 +64,21 @@ static int			unquoted_conds(t_parser *par, char cur_char)
 }
 static int			conds_extended(t_parser *par, char **input_str)
 {
-	if (IS_QUOTE(**input_str) || par->quoted & BACKSLASH)
+	if (IS_QUOTE(**input_str))
 	{
 		if (handle_embedded_quotes(&(par->quoted), input_str, &(par->current_token)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	else if (!par->quoted && is_op("", **input_str))
 	{
-		if (add_token(par->current_token, &(par->current_type), &(par->tokens), &(par->types)) == EXIT_FAILURE
+		if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE
 			|| !strappend(&(par->current_token), **input_str))
 			return (EXIT_FAILURE);
 		par->current_type = operator;
 	}
 	else if (!par->quoted && IS_WHITESPACE(**input_str))
 	{
-		if (add_token(par->current_token, &(par->current_type), &(par->tokens), &(par->types)) == EXIT_FAILURE)
+		if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
 		 	return (EXIT_FAILURE);
 		skip_whitespace(input_str);
 		return (CONTINUE);
@@ -96,20 +96,21 @@ static int			conds_extended(t_parser *par, char **input_str)
 		if (!(par->current_token = strappend(&(par->current_token), **input_str)))
 			return (EXIT_FAILURE);
 	}
+	par->quoted &= ~BACKSLASH;
 	return (EXIT_SUCCESS);
 }
 static inline __attribute__((always_inline)) void	*init_parser(void)
 {
 	t_parser	*parser;
 
-	if (!(parser = malloc(sizeof(t_ast))))
+	if (!(parser = malloc(sizeof(t_ast))) || !ft_memset(parser, 0, sizeof(t_parser)))
 		return (NULL);
-	if (!(parser->tokens = malloc(sizeof(char *))))
+	if (!(parser->tokens = malloc(sizeof(char *))) || !ft_memset(parser->tokens, 0, sizeof(char *)))
 	{
 		free(parser);
 		return (NULL);
 	}
-	if (!(parser->current_token = malloc(sizeof(char))))
+	if (!(parser->current_token = malloc(sizeof(char))) || !ft_memset(parser->current_token, 0, sizeof(char)))
 	{
 		free(parser);
 		free(parser->tokens);
@@ -135,7 +136,7 @@ t_ast				*parser(char *input_str)
 		return (NULL);
 	while (*input_str)
 	{
-		printf("<%c>\t%d\n", *input_str, par.current_type);
+		// printf("<%c>\t%d\n", *input_str, par->current_type);
 		ret = UNUSED_CHAR;
 		if (!par->quoted && (ret = unquoted_conds(par, *input_str)) == EXIT_FAILURE)
 			return (NULL);
@@ -147,7 +148,7 @@ t_ast				*parser(char *input_str)
 			break ;
 		input_str++;
 	}
-	if (add_token(par->current_token, &(par->current_type), &(par->tokens), &(par->types)) == EXIT_FAILURE)
+	if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
 		return (NULL);
 	print_toks(par->tokens, par->types);
 	free(par->current_token);

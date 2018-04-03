@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/03 14:53:28 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/03 16:48:07 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct				s_parser
 int							is_op(char *token, char c);
 char						*strappend(char **str, char c);
 int							add_token(char *curr_token,
-	t_token_type *curr_type, char ***tokens , t_token_type **types);
+	t_token_type *curr_type, t_parser *par);
 int							handle_embedded_quotes(uint8_t *quoted,
 	char **str, char **current_token);
 uint8_t						quoted_flags(char c);
