@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 10:41:08 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/03 14:54:46 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/03 15:25:43 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				handle_embedded_quotes(uint8_t *quoted,
 		else if (!(*current_token = strappend(current_token, **str)))
 			return (EXIT_FAILURE);
 	}
-	else if ((*quoted & BACKSLASH) && (*current_token = strappend(current_token, **str))) //Change to ASCII value of character a/k/a \n instead of "\n"
+	else if (*quoted & BACKSLASH && (*current_token = strappend(current_token, **str))) //Change to ASCII value of character a/k/a \n instead of "\n"
 		*quoted &= ~BACKSLASH;
 	else
 		return (EXIT_FAILURE);

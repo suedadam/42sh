@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/03 15:01:18 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/03 15:25:03 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,16 +115,11 @@ int					parser(char *input_str)
 	init_parser(&par);
 	while (*input_str)
 	{
+		ret = UNUSED_CHAR;
 		if (!par.quoted && (ret = unquoted_conds(&par, *input_str)) == EXIT_FAILURE)
-		{
-			printf("here\n");
 			return (EXIT_FAILURE);
-		}
 		if (ret == UNUSED_CHAR && (ret = conds_extended(&par, &input_str)) == EXIT_FAILURE)
-		{
-			printf("boobs\n");
 			return (EXIT_FAILURE);
-		}
 		if (ret == CONTINUE)
 			continue ;
 		else if (ret == BREAK)
@@ -132,11 +127,7 @@ int					parser(char *input_str)
 		input_str++;
 	}
 	if (add_token(par.current_token, &(par.current_type), &(par.tokens), &(par.types)) == EXIT_FAILURE)
-	{
-		printf("tits\n");
 		return (EXIT_FAILURE);
-	}
-	printf("here\n");
 	print_toks(par.tokens, par.types);
 	return (EXIT_SUCCESS);
 }
