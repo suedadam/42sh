@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ast.h"
+
 //check size for simplifcations
 int					is_op(char *token, char c)
 {
@@ -34,41 +35,53 @@ int					is_op(char *token, char c)
 	return (0);
 }
 
-static char			*strappend(char *str, char c)
+static char			*strappend(char **str, char c)
 {
-	if (!(str = ft_realloc(str, ft_strlen(str) + 2)))
+	int				length;
+
+	length = ft_strlen(*str);
+	if (!(*str = realloc(*str, length + 2)))
 		return (NULL);
-	str = ft_strncat(str, &c, 1);
-	return (str);
+
+	*str = ft_strncat(*str, &c, 1);
+	(*str)[length + 1] = 0;
+	return (*str);
 }
 
 static int			add_token(char *curr_token, t_token_type *curr_type,
-	t_token_type *types, char **tokens)
+	char ***tokens , t_token_type **types)
 {
 	int				i;
 
 	if (!curr_token || !curr_type)
 		return (EXIT_FAILURE);
-	i = -1;
-	while (tokens[++i])
-		;
-	if (i > 0)
+	i = 0;
+	while ((*tokens)[i])
 	{
-		if (!(tokens = ft_realloc(tokens, sizeof(char *) * (i + 2)))
-			|| !(types = ft_realloc(types, sizeof(t_token_type) * (i + 2))))
+		// printf("i : %d\n", i);
+		++i;
+	}
+	// if (i >= 0)
+	// {
+		// printf("%s\n", "boobs2");
+		if (!(*tokens = (char **)realloc(*tokens, sizeof(char *) * (i + 2)))
+			|| !(*types = realloc(*types, sizeof(t_token_type) * (i + 2))))
+			return (EXIT_FAILURE);
+	// }
+	// else if (!(tokens = ft_memalloc(sizeof(char *) * 2)) // this elif may be deleted depending on implementation of realloc
+	// 	|| !(types = ft_memalloc(sizeof(t_token_type) * 2)))
+	// 	return (EXIT_FAILURE);
+	if (!((*tokens)[i] = ft_strdup(curr_token))
+		|| !ft_memcpy(&((*types)[i]), curr_type, sizeof(t_token_type)))
+	{
+			// printf("%s\n", "boobs3");
 			return (EXIT_FAILURE);
 	}
-	else if (!(tokens = ft_memalloc(sizeof(char *) * 2)) // this elif may be deleted depending on implementation of realloc
-		|| !(types = ft_memalloc(sizeof(t_token_type * 2))))
-		return (EXIT_FAILURE);
-	if (!(tokens[i] = ft_strdup(curr_token))
-		|| !ft_memcpy(types[i], curr_type, sizeof(t_token_type)))
-			return (EXIT_FAILURE);
-	tokens[i + 1] = NULL;
-	types[i + 1] = null;
+	(*tokens)[i + 1] = NULL;
+	(*types)[i + 1] = null;
 	if (*curr_token != ';')
 	{
-		ft_bzero(curr_token, ft_strlen(curr_token));
+		ft_memset(curr_token, 0, ft_strlen(curr_token));
 		*curr_type = null;
 	}
 	return (EXIT_SUCCESS);
@@ -82,38 +95,39 @@ static uint8_t			quoted_flags(char c)
 		return (DOUBLE_QUOTE);
 	else if (c == '\\')
 		return (BACKSLASH);
+	return (0);
 }
 
 static void			handle_embedded_quotes(uint8_t *quoted,
 	char **str, char **current_token)
 {
-	if (quoted & DOUBLE_QUOTE)
+	if (*quoted & DOUBLE_QUOTE)
 	{
-		if (quoted & BACKSLASH)
+		if (*quoted & BACKSLASH)
 		{
 			if (!(**str == '\\' || **str == '\"'))
-				*current_token = strappend(*current_token, '\\');
-			*current_token = strappend(*current_token, **str);
-			quoted &= ~BACKSLASH;
+				*current_token = strappend(current_token, '\\');
+			*current_token = strappend(current_token, **str);
+			*quoted &= ~BACKSLASH;
 		}
 		else if (**str == '\\')
-			quoted |= BACKSLASH;
+			*quoted |= BACKSLASH;
 		else if (**str == '\"')
-			quoted &= ~DOUBLE_QUOTE;
+			*quoted &= ~DOUBLE_QUOTE;
 		else if (**str == '\'')
-			*current_token = strappend(*current_token, **str);
+			*current_token = strappend(current_token, **str);
 	}
-	else if (quoted & SINGLE_QUOTE)
+	else if (*quoted & SINGLE_QUOTE)
 	{		
 		if (**str == '\'')
-			quoted &= ~SINGLE_QUOTE;
+			*quoted &= ~SINGLE_QUOTE;
 		else
-			*current_token = strappend(*current_token, **str);
+			*current_token = strappend(current_token, **str);
 	}
-	else if (quoted & BACKSLASH) //Change to ASCII value of character a/k/a \n instead of "\n"
+	else if (*quoted & BACKSLASH) //Change to ASCII value of character a/k/a \n instead of "\n"
 	{
-		*current_token = strappend(*current_token, **str);
-		quoted &= ~BACKSLASH;
+		*current_token = strappend(current_token, **str);
+		*quoted &= ~BACKSLASH;
 	}
 }
 
@@ -125,13 +139,24 @@ static void 	skip_whitespace(char **input_str)
 		(*input_str)++;
 }
 
-void				end_statement(char *curr_token, char **tokens, t_token_type *current_type, t_token_type *types)
+void				end_statement(char *curr_token, char ***tokens, t_token_type *current_type, t_token_type **types)
 {
 	t_token_type	tmp;
 
 	tmp = operator;
-	add_token(current_token, &current_type, tokens, types);
+	add_token(curr_token, current_type, tokens, types);
 	add_token(";", &tmp, tokens, types);
+}
+
+void				print_toks(char **tokens, t_token_type *types)
+{
+	int 			i;
+
+	i = -1;
+	while (tokens[++i])
+	{
+		printf("%s\t%d\n", tokens[i], types[i]);
+	}
 }
 
 void				parser(char *input_str)
@@ -143,20 +168,22 @@ void				parser(char *input_str)
 	t_token_type	current_type;
 
 	//allocate pointers dummy
-	*tokens = NULL;
-	current_token = NULL;
+	tokens = ft_memalloc(sizeof(char *));
+	current_token = ft_memalloc(sizeof(char));
+	// current_token = NULL;
 	types = NULL;
 	current_type = null;
 	quoted = 0;
 	while (*input_str)
 	{
+		// printf("<%s>\n", current_token);
 		if (!quoted && *input_str == ';')
-			end_statement(current_token, tokens, &current_type, types);
+			end_statement(current_token, &tokens, &current_type, &types);
 		else if (current_type && current_type == operator && !quoted && is_op(current_token, *input_str))
-			current_token = strappend(current_token, *input_str);
+			current_token = strappend(&current_token, *input_str);
 		else if (current_type && !quoted && current_type == operator)
 		{
-			add_token(current_token, current_type, tokens, types);
+			add_token(current_token, &current_type, &tokens, &types);
 			continue ;
 		}
 		else if (IS_QUOTE(*input_str) && !quoted)
@@ -165,30 +192,37 @@ void				parser(char *input_str)
 			handle_embedded_quotes(&quoted, &input_str, &current_token);
 		else if (!quoted && is_op("", *input_str))
 		{
-			add_token(current_token, &current_type, tokens, types);
+			add_token(current_token, &current_type, &tokens, &types);
 			current_type = operator;
-			strappend(current_token, *input_str);
+			strappend(&current_token, *input_str);
 		}
 		else if (!quoted && IS_WHITESPACE(*input_str))
 		{
-			add_token(current_token, current_type, tokens, types);
+			add_token(current_token, &current_type, &tokens, &types);
 			skip_whitespace(&input_str);
+			continue ;
 		}
-		else if (*current_type == word)
-			current_token = strappend(current_token, *input_str);
+		else if (current_type == word)
+		{
+			// printf("|%c|\n", *input_str);
+			current_token = strappend(&current_token, *input_str);
+		}
 		else if (*input_str == '#')
 			break ;
 		else
 		{
-			*current_type = word;
-			current_token = strappend(current_token, *input_str);
+			// printf("|%c|\n", *input_str);
+			current_type = word;
+			current_token = strappend(&current_token, *input_str);
 		}
+		// printf("%s\n", "boobs");
 		input_str++;
 	}
-	add_token(current_token, current_type, tokens, types);
+	add_token(current_token, &current_type, &tokens, &types);
+	print_toks(tokens, types);
 }
 
-int main(char **argv, int argc)
+int main(int argc, char **argv)
 {
 	if (argc < 2)
 		return (0);

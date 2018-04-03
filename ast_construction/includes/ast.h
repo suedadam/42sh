@@ -13,6 +13,8 @@
 #ifndef AST_H
 # define AST_H
 
+#include <stdlib.h>
+#include "libft.h"
 typedef enum			e_token_type	
 {
 						null,
@@ -41,7 +43,7 @@ typedef struct				s_ast
 # define BACKSLASH 4
 # define IS_QUOTE(c) (c == '\'' || c == '\"' || c == '\\' ? 1 : 0)
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
-# define OPS 7
-static const char			*ops[ OPS ] = {"&&", "||", ">>", ">", "&", "|", ">|"};
+# define OPS 8
+static const char			*ops[ OPS ] = {"&&", "||", ">>", ">", "&", "|", ">|", "<", "<<"};
 
 #endif
