@@ -24,6 +24,12 @@ typedef enum			e_token_type
 
 }						t_token_type;
 
+/*
+** ToDo:
+** 	- Change token -> tokens (t_ast)
+**	- Change type  -> types (t_ast)
+*/
+
 typedef struct				s_ast
 {
 	char					**token;
@@ -34,10 +40,10 @@ typedef struct				s_ast
 
 typedef struct				s_parser
 {
-	char					*current_token;
 	char					**tokens;
-	uint8_t					quoted;
 	t_token_type			*types;
+	char					*current_token;
+	uint8_t					quoted;
 	t_token_type			current_type;
 }							t_parser;
 
