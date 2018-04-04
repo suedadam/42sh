@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:38:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/03 21:42:01 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/04 13:12:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void		resize_prompt(void)
 	temp = 0;
 
 	cursor_to_home(&g_shell_env.cursor);
+/*	cursor_to_home(&g_shell_env.cursor);
 	temp = tgetstr("dl", 0);
 	tputs(temp, 1, &my_putchar);
 	temp = tgetstr("cl", 0);
 	tputs(temp, 1, my_putchar);
 	get_window_size();
-	new_prompt(0);
-	reprint_buffer();
+	*/
 }

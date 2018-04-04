@@ -117,7 +117,7 @@ typedef	struct		s_terminf
 	t_cursor			cursor;
 	t_tokens			tokens;
 	// t_hashtable		*hashtable;
-	int					prompt_length;
+	size_t				prompt_length;
 	char				*term_name; /* no free */
 	char				*term_buff; /* FREE */
 }					t_terminf;
@@ -215,6 +215,7 @@ void		cursor_to_right(t_cursor *cursor);
 void		cursor_to_left(t_cursor *cursor);
 void		cursor_to_home(t_cursor *cursor);
 void		cursor_to_end(t_cursor *cursor);
+void		locate_cursor(void);
 
 /* ft_linemove */
 
@@ -281,5 +282,6 @@ int			del_lines(void);
 */
 void		init_tokens(void);
 
+int			count_lines(void);
 
 #endif

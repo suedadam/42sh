@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 10:59:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 17:26:58 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 11:04:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,23 @@ int		scroll_down(void)
 	return (EXIT_SUCCESS);
 }
 
-int		del_lines(void)
+int		count_lines(void)
 {
-	char	*temp;
 	int		nln;
 
 	nln = 0;
 	if (g_shell_env.buffer->length)
 		nln =  (g_shell_env.buffer->length + g_shell_env.cursor.og_position.x) /
 			g_shell_env.cursor.og_screen.x;
+	return (nln);	
+}
+
+int		del_lines(void)
+{
+	char	*temp;
+	int		nln;
+
+	nln = count_lines();
 	cursor_to_end(&g_shell_env.cursor);
 	while (nln > 0)
 	{
