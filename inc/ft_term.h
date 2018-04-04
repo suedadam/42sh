@@ -36,7 +36,7 @@
 
 #define T_BSLASH (g_shell_env.tokens.bslash)
 #define T_MPASS (g_shell_env.tokens.mpass)
-#define T_QUOTE (g_shell_env.tokens.quote) 
+#define T_QUOTE (g_shell_env.tokens.quote)
 #define T_DQUOTE (g_shell_env.tokens.dquote)
 
 int					g_ft_errnum;
@@ -82,7 +82,7 @@ typedef struct	s_cursor
 	t_vertex		og_position;
 	t_vertex		og_screen;
 	size_t			position;
-
+	char			*buffer;
 }				t_cursor;
 
 typedef struct	s_errstr
@@ -177,7 +177,7 @@ int		read_loop(void);
 **		prompt_utils
 */
 
-void		new_prompt(void);
+void		new_prompt(char *prompt);
 void		reset_prompt(void);
 void		back_prompt(void);
 
@@ -275,6 +275,11 @@ void		invisible_cursor(void);
 void		visible_cursor(void);
 
 int			del_lines(void);
+
+/*
+**		initialize tokens
+*/
+void		init_tokens(void);
 
 
 #endif

@@ -31,11 +31,12 @@ SRC += read_loop
 SRC += set_signal
 SRC += scrn_info
 SRC += utils
-SRC += update_screen_utils 
-SRC += quote_mode 
-SRC += screen_scroll 
-SRC += cursor_actions 
-SRC += cursor_visibility 
+SRC += update_screen_utils
+SRC += quote_mode
+SRC += screen_scroll
+SRC += cursor_actions
+SRC += cursor_visibility
+SRC += init_tokens 
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch

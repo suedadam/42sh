@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/02 17:26:21 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/03 21:34:49 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				read_loop(void)
 
 	T_MPASS = 0;
 	T_BSLASH = 0;
-	new_prompt();
+	new_prompt(0);
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
 		if (byte == 4 && !(*g_shell_env.buffer->buff))

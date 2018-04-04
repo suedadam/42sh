@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_mode.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 11:25:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 17:27:20 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/03 21:31:19 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void		quote_mode(char byte)
 	temp = tgetstr("do", 0);
 	tputs(temp, 1, my_putchar);
 	if (T_QUOTE)
-		ft_printf("quote> ");
+		new_prompt("quote> ");
+		// ft_printf("quote> ");
 	else if (T_DQUOTE)
-		ft_printf("dquote> ");
+		new_prompt("dquote> ");
+		// ft_printf("dquote> ");
 	get_cursor_first_position();
 }

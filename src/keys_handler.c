@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 19:24:04 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/03 21:39:59 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static int		regular_text(char byte)
 	int			ret;
 
 	ret = EXIT_SUCCESS;
-	buffer = g_shell_env.buffer->buff;
 	cursor = &(g_shell_env.cursor);
+	buffer = cursor->buffer;
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 		ret = resize_buffer();
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
-			g_shell_env.buffer->max_size - cursor->position - 1);
+			g_shell_env.buffer->length - cursor->position);
 	buffer[cursor->position] = byte;
 	g_shell_env.buffer->length++;
 	update_buffer(buffer + cursor->position);
@@ -72,6 +72,7 @@ static int		one_byte(char byte)
 	int		ret;
 
 	ret = EXIT_SUCCESS;
+	// ft_printf("voici byte et t quote : |%c| & |%d|\n", byte, T_QUOTE);
 	if (T_BSLASH)
 		T_BSLASH = 0;
 	if (byte == '\\')
