@@ -58,6 +58,7 @@ enum {
 	C_L,
 	C_M,
 	C_O,
+	C_U,
 	C_V,
 	C_W
 };
@@ -79,6 +80,7 @@ typedef struct	s_vertex
 typedef struct	s_cursor
 {
 	t_vertex		og_position;
+	t_vertex		og_screen;
 	size_t			position;
 
 }				t_cursor;
@@ -244,6 +246,7 @@ int			control_h(void);
 int			control_j(void);
 int			control_m(void);
 int			control_o(void);
+int			control_u(void);
 int			control_v(void);
 int			control_w(void);
 int			ft_backspace(void);
@@ -262,5 +265,16 @@ int		backslash_char(void);
 void		update_end_of_screen(void);
 void		update_buffer(char *buffer);
 void		quote_mode(char byte);
+void		window_resize(int c);
+void		relative_move_cursor(t_cursor *cursor);
+int			scroll_up(void);
+int			scroll_down(void);
+void		resize_prompt(void);
+
+void		invisible_cursor(void);
+void		visible_cursor(void);
+
+int			del_lines(void);
+
 
 #endif

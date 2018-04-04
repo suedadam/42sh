@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_mode.c                                       :+:      :+:    :+:   */
+/*   control_u.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/02 11:25:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 17:27:20 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/03 15:40:34 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/03 17:27:06 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		quote_mode(char byte)
+int		control_u(void)
 {
-	char	*temp;
-
-	byte = 0;
-	temp = tgetstr("do", 0);
-	tputs(temp, 1, my_putchar);
-	if (T_QUOTE)
-		ft_printf("quote> ");
-	else if (T_DQUOTE)
-		ft_printf("dquote> ");
-	get_cursor_first_position();
+	del_lines();
+	reset_buffer();
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/31 19:19:21 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/03 14:25:08 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static int	init_shellenv(void)
 		|| (!(ft_memcpy(g_shell_env.shell_tty, &g_shell_env.original_tty,
 					sizeof(struct termios))))
 		|| (ft_setty() == EXIT_FAILURE)
-		|| ((init_buffer() == EXIT_FAILURE)))
+		|| (init_buffer() == EXIT_FAILURE)
+		|| (get_window_size() == EXIT_FAILURE))
 	{
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);

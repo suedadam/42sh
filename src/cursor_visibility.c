@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_mode.c                                       :+:      :+:    :+:   */
+/*   cursor_visibility.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/02 11:25:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 17:27:20 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/03 14:30:55 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/03 17:27:14 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		quote_mode(char byte)
+void		invisible_cursor(void)
 {
 	char	*temp;
 
-	byte = 0;
-	temp = tgetstr("do", 0);
+	temp = tgetstr("mk", 0);
 	tputs(temp, 1, my_putchar);
-	if (T_QUOTE)
-		ft_printf("quote> ");
-	else if (T_DQUOTE)
-		ft_printf("dquote> ");
-	get_cursor_first_position();
+}
+
+void		visible_cursor(void)
+{
+	char	*temp;
+
+	temp = tgetstr("mk", 0);
+	tputs(temp, 1, my_putchar);
 }

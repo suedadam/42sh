@@ -28,6 +28,7 @@ static int		(*control_jump[])() = {
 	control_l,
 	control_m,
 	control_o,
+	control_u,
 	control_v,
 	control_w
 };

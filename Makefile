@@ -33,6 +33,9 @@ SRC += scrn_info
 SRC += utils
 SRC += update_screen_utils 
 SRC += quote_mode 
+SRC += screen_scroll 
+SRC += cursor_actions 
+SRC += cursor_visibility 
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch
@@ -45,6 +48,7 @@ SRC += control_codes/control_h
 SRC += control_codes/control_j
 SRC += control_codes/control_m
 SRC += control_codes/control_o
+SRC += control_codes/control_u
 SRC += control_codes/control_v
 SRC += control_codes/control_w
 SRC += control_codes/control_newline
