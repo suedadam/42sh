@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/01 20:03:57 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/03 17:11:33 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int				read_loop(void)
 
 	g_shell_env.tokens.mpass = 0;
 	g_shell_env.tokens.bslash = 0;
-	new_prompt();
+	new_prompt(0);
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
 		if (byte == 10 && !g_shell_env.tokens.bslash)
 		{
 			if (ft_carriage_return() == EXIT_FAILURE)
-				new_prompt();
+				new_prompt(0);
 		}
 		else if (byte == 10 && g_shell_env.tokens.bslash)
 			backslash_char();

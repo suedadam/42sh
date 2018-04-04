@@ -75,6 +75,7 @@ typedef struct	s_cursor
 {
 	t_vertex		og_position;
 	size_t			position;
+	char			*buffer;
 
 }				t_cursor;
 
@@ -168,8 +169,8 @@ int		read_loop(void);
 **		prompt_utils
 */
 
-void		new_prompt(void);
-void		reset_prompt(void);
+void		new_prompt(char *prompt);
+void		reset_prompt();
 void		back_prompt(void);
 
 /*

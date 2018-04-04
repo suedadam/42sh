@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:47:11 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/01 20:01:29 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/03 17:15:58 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,14 @@ int		quote_mode(char byte)
 
 	temp = tgetstr("do", 0);
 	tputs(temp, 1, my_putchar);
+	ft_printf("ici");
 	if (byte == '\'')
-		ft_printf("quote> ");
+	{
+		// ft_printf("quote> ");
+		new_prompt("quote> ");
+	}
 	else
-		ft_printf("dquote> ");
+		new_prompt("dquote> ");
+		// ft_printf("dquote> ");
 	return (EXIT_SUCCESS);
 }
