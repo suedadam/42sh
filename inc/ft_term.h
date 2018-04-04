@@ -83,6 +83,7 @@ typedef struct	s_cursor
 	t_vertex		og_screen;
 	size_t			position;
 	char			*buffer;
+	int				highlighted;
 }				t_cursor;
 
 typedef struct	s_errstr
@@ -216,6 +217,14 @@ void		cursor_to_left(t_cursor *cursor);
 void		cursor_to_home(t_cursor *cursor);
 void		cursor_to_end(t_cursor *cursor);
 void		locate_cursor(void);
+
+/*
+**		cursor navigation
+*/
+int			move_prev_word(t_cursor *cursor);
+int			move_next_word(t_cursor *cursor);
+int			move_next_line(t_cursor *cursor);
+int			move_prev_line(t_cursor *cursor);
 
 /* ft_linemove */
 
