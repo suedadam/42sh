@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 18:46:20 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 19:10:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,17 @@ static int		multibyte(char byte)
 		(T_MPASS)++;
 		return (EXIT_SUCCESS);
 	}
-	else if (T_MPASS == 1 && (byte != '['))
+	else if (T_MPASS == 1 && (byte != '[' && byte != 27))
 	{
 		one_byte(byte);
 		T_MPASS = 0;
 		return (EXIT_SUCCESS);
 	}
-//	if (T_MPASS == 1 && byte == 27)
-//		T_DBLESC = 1;
+	if (T_MPASS == 1 && byte == 27)
+	{
+		ft_printf("bdl");
+		T_DBLESC = 1;
+	}
 	if ((ret = multibyte_dispatch(byte)) >= 0)
 		multibyte_jump[ret](byte);
 	else
