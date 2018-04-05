@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:57:37 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 17:27:23 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 14:20:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		control_dispatch(char byte)
 		return (C_H);
 	else if (byte == 10)
 		return (C_J);
+	else if (byte == 11)
+		return (C_K);
 	else if (byte == 12)
 		return (C_L);
 	else if (byte == 13)
@@ -36,5 +38,11 @@ int		control_dispatch(char byte)
 		return (C_V);
 	else if (byte == 23)
 		return (C_W);
+	else if (byte == 25)
+	{
+		ft_printf("go");
+		return (C_Y);
+	}
+	ft_printf("fail");
 	return (-1);
 }

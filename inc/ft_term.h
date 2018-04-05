@@ -57,12 +57,14 @@ enum {
 	C_G,
 	C_H,
 	C_J,
+	C_K,
 	C_L,
 	C_M,
 	C_O,
 	C_U,
 	C_V,
-	C_W
+	C_W,
+	C_Y
 };
 
 enum {
@@ -254,6 +256,8 @@ void		get_cursor_first_position(void);
 
 void		control_c(int c);
 int			control_a(void);
+int			control_y(void);
+int			control_k(void);
 int			control_e(void);
 int			control_l(void);
 int			control_newline(void);
@@ -312,5 +316,6 @@ void		get_cursor_current_position(void);
 int		ft_shift(char byte);
 int		ft_jumpwords(char byte);
 int		ft_alt(char byte);
+int		regular_text(char byte);
 
 #endif

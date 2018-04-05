@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:15:12 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 13:51:12 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/05 14:07:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,6 @@ static int	ft_jumps(char *temp)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_edit(char byte)
-{
-	if (byte == 'w')
-		cut_word_before_cursor();
-	else if (byte == 'k')
-		cut_line_after_cursor();
-	else if (byte == 'u')
-		cut_line_before_cursor();
-	else if (byte == 'y')
-		ft_printf(" OH YEAH");
-	else
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
 int		ft_alt(char byte)
 {
 	char	temp[3];
@@ -52,7 +37,5 @@ int		ft_alt(char byte)
 	temp[2] = 0;
 	if (temp[0] == '[')
 		ret = ft_jumps(temp);
-	else
-		ret = ft_edit(byte);
 	return (ret);
 }

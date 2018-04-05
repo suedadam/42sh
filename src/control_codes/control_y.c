@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_w.c                                        :+:      :+:    :+:   */
+/*   control_y.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 11:37:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 14:01:01 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 14:03:00 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 14:05:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_w(void)
+int		control_y(void)
 {
-	cut_word_before_cursor();
+	yank(g_shell_env.paperweight.buff);
 	return (EXIT_SUCCESS);
 }

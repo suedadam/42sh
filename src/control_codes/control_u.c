@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 15:40:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/03 17:27:06 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 14:01:41 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		control_u(void)
 {
-	del_lines();
-	reset_buffer();
+	cut_line_before_cursor();
 	return (EXIT_SUCCESS);
 }

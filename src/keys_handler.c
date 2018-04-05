@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 19:35:52 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/05 14:24:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,29 @@ static int		(*control_jump[])() = {
 	control_g,
 	control_h,
 	control_j,
+	control_k,
 	control_l,
 	control_m,
 	control_o,
 	control_u,
 	control_v,
-	control_w
+	control_w,
+	control_y
 };
 
 static int		control_char(char byte)
 {
 	int	ret;
 
+	ret = EXIT_SUCCESS;
 	if ((ret = control_dispatch(byte)) < 0)
 		return (EXIT_FAILURE);
 	else
 		ret = control_jump[ret]();
-  return (ret == EXIT_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
+  return (ret);
 }
 
-static int		regular_text(char byte)
+int		regular_text(char byte)
 {
 	t_cursor	*cursor;
 	char		*buffer;
@@ -77,7 +80,7 @@ static int		one_byte(char byte)
 	if (byte == '\\')
 		T_BSLASH = 1;
 	else if (byte == '\'')
-		(T_QUOTE == 1) ? (T_QUOTE = 0) : (T_QUOTE = 1);
+		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
 	else if (byte == '\"')
 		(T_DQUOTE == 1) ? (T_DQUOTE = 0) : (T_DQUOTE = 1);
 	if (byte >= 32 && byte <= 126)
@@ -91,6 +94,7 @@ static int		multibyte(char byte)
 {
 	int	ret;
 
+	ft_printf("cntrl");
 	if (T_MPASS == 0
 		|| (T_MPASS == 1 && byte == '['))
 	{
@@ -122,6 +126,7 @@ int				handle_keys(char byte)
 	int		ret;
 	int		token;
 
+	ft_printf("cntrl2");
 	ret = EXIT_SUCCESS;
 	token = 0;
 	if (byte == 27 || T_MPASS)
