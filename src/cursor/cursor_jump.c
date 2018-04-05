@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor_navigation.c                                :+:      :+:    :+:   */
+/*   cursor_jump.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/04 15:18:41 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 21:06:11 by tle-huu-         ###   ########.fr       */
+/*   Created: 2018/04/05 11:37:39 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 12:11:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void			move_prev_word(t_cursor *cursor)
+void			jump_prev_word(t_cursor *cursor)
 {
 	if ((cursor->position && (cursor->buffer[cursor->position]) != ' '
 		&& cursor->buffer[cursor->position - 1] == ' ')
@@ -26,7 +26,7 @@ void			move_prev_word(t_cursor *cursor)
 		cursor_to_right(cursor);
 }
 
-void			move_next_word(t_cursor *cursor)
+void			jump_next_word(t_cursor *cursor)
 {
 	while ((cursor->buffer[cursor->position]) != ' ' && cursor->position !=
 			g_shell_env.buffer->length)
@@ -36,7 +36,7 @@ void			move_next_word(t_cursor *cursor)
 				cursor_to_right(cursor);
 }
 
-void			move_next_line(t_cursor *cursor)
+void			jump_next_line(t_cursor *cursor)
 {
 	if ((cursor->position + g_shell_env.window.ws_col) < g_shell_env.buffer->length)
 		cursor->position += g_shell_env.window.ws_col;
@@ -45,7 +45,7 @@ void			move_next_line(t_cursor *cursor)
 	move_cursor(cursor);
 }
 
-void			move_prev_line(t_cursor *cursor)
+void			jump_prev_line(t_cursor *cursor)
 {
 	if (cursor->position < g_shell_env.window.ws_col)
 		cursor->position = 0;

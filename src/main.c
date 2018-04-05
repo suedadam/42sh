@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 20:17:08 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 11:59:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			main(void)
 	if (init_shellenv() == EXIT_FAILURE
 		|| shsignal_handlers() == EXIT_FAILURE
 		|| init_termcaps() == EXIT_FAILURE
-		|| read_loop() == EXIT_FAILURE
+		|| ft_read_loop() == EXIT_FAILURE
 		|| ft_restoretty() == EXIT_FAILURE)
 		ft_terror();
 	return (0);

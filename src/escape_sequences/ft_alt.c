@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:15:12 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 19:23:52 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/05 11:38:08 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int		ft_alt(char byte)
 	byte = 0;
 	read(STDIN_FILENO, temp, 2);
 	if (temp[1] == 'A')
-		move_prev_line(&g_shell_env.cursor);
+		jump_prev_line(&g_shell_env.cursor);
 	else if (temp[1] == 'B')
-		move_next_line(&g_shell_env.cursor);
+		jump_next_line(&g_shell_env.cursor);
 	else if (temp[1] == 'D')
-		move_prev_word(&g_shell_env.cursor);
+		jump_prev_word(&g_shell_env.cursor);
 	else if (temp[1] == 'C')
-		move_next_word(&g_shell_env.cursor);
+		jump_next_word(&g_shell_env.cursor);
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

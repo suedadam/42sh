@@ -176,7 +176,7 @@ int		control_dispatch(char byte);
 **		read_loop
 */
 
-int		read_loop(void);
+int		ft_read_loop(void);
 
 
 /*
@@ -190,7 +190,7 @@ void		back_prompt(void);
 /*
 **		prompt_utils
 */
-int			ft_carriage_return(void);
+int			ft_linefeed(void);
 
 /*
 **		buffer_utils
@@ -221,16 +221,16 @@ void		cursor_to_right(t_cursor *cursor);
 void		cursor_to_left(t_cursor *cursor);
 void		cursor_to_home(t_cursor *cursor);
 void		cursor_to_end(t_cursor *cursor);
-void		locate_cursor(void);
+void		cursor_locate(void);
 
 /*
 **		cursor navigation
 */
 
-void	move_prev_word(t_cursor *cursor);
-void	move_next_word(t_cursor *cursor);
-void	move_next_line(t_cursor *cursor);
-void	move_prev_line(t_cursor *cursor);
+void	jump_prev_word(t_cursor *cursor);
+void	jump_next_word(t_cursor *cursor);
+void	jump_next_line(t_cursor *cursor);
+void	jump_prev_line(t_cursor *cursor);
 
 /* ft_linemove */
 

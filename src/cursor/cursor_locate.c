@@ -1,41 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor_moves.c                                     :+:      :+:    :+:   */
+/*   cursor_locate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 18:39:56 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 11:38:18 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 11:38:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_term.h"
 
-void	move_cursor(t_cursor *cursor)
-{
-	int		og_col;
-	int		og_line;
-	int		new_col;
-	int		new_line;
-
-	og_line = cursor->og_position.y;
-	og_col = cursor->og_position.x;
-	new_col = og_col + cursor->position;
-	new_line = og_line + new_col / (g_shell_env.window.ws_col);
-	new_col %= g_shell_env.window.ws_col;
-	tputs(tgoto(tgetstr("cm", NULL),
-		new_col, new_line), 0, &my_putchar);
-}
-
-/* 
-** Function to set true original positions after window resize events,
-** and make sure that the way the cursor will react is the buffer is normal,
-** wrapped and all
-*/
-
-void		locate_cursor(void)
+void		cursor_locate(void)
 {
 	char	*temp;
 	int		nln;

@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_screen_utils.c                              :+:      :+:    :+:   */
+/*   update_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/31 23:35:13 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 18:39:55 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 12:00:49 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 12:01:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
-
-void		update_end_of_screen(void)
-{
-	if (g_shell_env.cursor.og_position.y + (g_shell_env.cursor.og_position.x  +
-		g_shell_env.buffer->length) / g_shell_env.window.ws_col
-			>= g_shell_env.window.ws_row)
-	{
-		g_shell_env.cursor.og_position.y--;
-		ft_putchar_fd('\n', 0);
-	}
-}
 
 void		update_buffer(char *buffer)
 {

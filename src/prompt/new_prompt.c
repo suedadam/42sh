@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_utils.c                                     :+:      :+:    :+:   */
+/*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 21:38:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 20:18:37 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 11:55:41 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,4 @@ void		new_prompt(char *prompt)
 	cursor->position = 0;
 	get_cursor_first_position();
 //	init_tokens();
-}
-
-void		reset_prompt(void)
-{
-	char	*temp;
-
-	temp = tgetstr("do", 0);
-	tputs(temp, 1, my_putchar);
-	new_prompt(0);
-	get_cursor_first_position();
-}
-
-void		back_prompt(void)
-{
-	char	*temp;
-	// int		n;
-
-	temp = tgetstr("do", 0);
-	tputs(temp, 1, my_putchar);
-	new_prompt("> ");
-	// n = ft_printf("> ");
-	// g_shell_env.prompt_length = n;
-	get_cursor_first_position();
-}
-
-void		resize_prompt(void)
-{
-	char	*temp;
-
-	temp = 0;
-
-	cursor_to_home(&g_shell_env.cursor);
-/*	cursor_to_home(&g_shell_env.cursor);
-	temp = tgetstr("dl", 0);
-	tputs(temp, 1, &my_putchar);
-	temp = tgetstr("cl", 0);
-	tputs(temp, 1, my_putchar);
-	get_window_size();
-	*/
 }

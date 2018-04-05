@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 20:24:02 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 12:20:10 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int		reset_terminal(void)
 	return (EXIT_SUCCESS);
 }
 
-int				read_loop(void)
+int				ft_read_loop(void)
 {
 	char	byte;
 
@@ -45,7 +45,7 @@ int				read_loop(void)
 			quote_mode(byte);
 		else if (byte == 10)
 		{
-			if (ft_carriage_return() == EXIT_FAILURE
+			if (ft_linefeed() == EXIT_FAILURE
 				|| checktty() == EXIT_FAILURE)
 				reset_terminal();
 		}

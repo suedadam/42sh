@@ -13,31 +13,24 @@ YELLOW = \033[1;33m
 CYAN = \033[1;36m
 RES = \033[0m
 
-
 # FILEIO SOURCE
 SRC += backslash_char
-SRC += buffer_utils
-SRC += carriage_return
 SRC += change_terminal
-SRC += cursor_moves
-SRC += exec_handlers
 SRC += error
-SRC += history
+SRC += init_tokens 
 SRC += keys_handler
 SRC += main
 SRC += my_putchar
-SRC += prompt_utils
 SRC += read_loop
 SRC += set_signal
-SRC += scrn_info
-SRC += utils
-SRC += update_screen_utils
-SRC += quote_mode
-SRC += screen_scroll
-SRC += cursor_actions
-SRC += cursor_visibility
-SRC += init_tokens 
-SRC += cursor_navigation 
+
+# BUFFER
+SRC += buffer/init_buffer
+SRC += buffer/reprint_buffer
+SRC += buffer/reset_buffer
+SRC += buffer/resize_buffer
+SRC += buffer/shift_buffer
+SRC += buffer/update_buffer
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch
@@ -58,11 +51,43 @@ SRC += control_codes/control_execute
 SRC += control_codes/ft_backspace
 SRC += control_codes/ft_delete
 
+# CURSOR
+SRC += cursor/cursor_actions
+SRC += cursor/cursor_jump
+SRC += cursor/cursor_locate
+SRC += cursor/cursor_move
+SRC += cursor/cursor_position
+SRC += cursor/cursor_visibility
+
+# EDITING
+SRC += editing/cut_line
+SRC += editing/cut_word
+SRC += editing/yank
+
 # ESCAPE SEQUENCES
 SRC += escape_sequences/multibyte_dispatch
 SRC += escape_sequences/ft_linemove
 SRC += escape_sequences/ft_shift
 SRC += escape_sequences/ft_alt
+
+# LINEFEED
+SRC += linefeed/linefeed
+SRC += linefeed/linefeed_disatch
+SRC += linefeed/quote_mode
+
+# PROMPT
+SRC += prompt/back_prompt
+SRC += prompt/new_prompt
+SRC += prompt/reset_prompt
+SRC += prompt/resize_prompt
+ 
+# SCREEN
+SRC += screen/count_lines
+SRC += screen/del_lines
+SRC += screen/screen_scroll
+SRC += screen/update_screen
+SRC += screen/get_window_size
+SRC += screen/window_resize
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen

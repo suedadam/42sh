@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_o.c                                        :+:      :+:    :+:   */
+/*   resize_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 11:36:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 12:20:34 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 10:46:38 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 10:48:06 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_o(void)
+int			resize_buffer(void)
 {
-	ft_linefeed();
+	// realloc buffer twize the size;
 	return (EXIT_SUCCESS);
+
 }

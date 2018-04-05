@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_o.c                                        :+:      :+:    :+:   */
+/*   linefeed.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 11:36:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 12:20:34 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 11:52:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_o(void)
+int			ft_linefeed(void)
 {
-	ft_linefeed();
-	return (EXIT_SUCCESS);
+	int		ret;
+
+	ret = EXIT_SUCCESS;
+	ret = reset_buffer();
+	if (ret == EXIT_SUCCESS)
+		reset_prompt();
+	// history_handler
+	// satkins_parser(shell_env->line_buffer);
+	// reset the buffer
+	return (ret);
 }

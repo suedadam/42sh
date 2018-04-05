@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:35:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 18:09:49 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 12:20:47 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int		control_m(void)
 {
-	ft_carriage_return();
+	ft_linefeed();
 	return (EXIT_SUCCESS);
 }

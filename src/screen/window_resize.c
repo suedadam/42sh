@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scrn_info.c                                        :+:      :+:    :+:   */
+/*   window_resize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/23 13:02:56 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 18:39:55 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 12:08:43 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 12:21:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		get_window_size(void)
-{
-	if ((ioctl(0, TIOCGWINSZ, &g_shell_env.window)) < 0)
-		return (EXIT_FAILURE);
-	g_shell_env.cursor.og_screen.x = g_shell_env.window.ws_col;
-	g_shell_env.cursor.og_screen.y = g_shell_env.window.ws_row;
-	return (EXIT_SUCCESS);
-}
-
 void	window_resize(int c)
 {
 	c = 0;
 	//get_window_size();
-	locate_cursor();
+	cursor_locate();
 //	resize_prompt();
 }

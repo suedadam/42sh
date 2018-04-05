@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_o.c                                        :+:      :+:    :+:   */
+/*   get_window_size.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 11:36:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 12:20:34 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 12:07:54 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 12:08:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_o(void)
+int		get_window_size(void)
 {
-	ft_linefeed();
+	if ((ioctl(0, TIOCGWINSZ, &g_shell_env.window)) < 0)
+		return (EXIT_FAILURE);
+	g_shell_env.cursor.og_screen.x = g_shell_env.window.ws_col;
+	g_shell_env.cursor.og_screen.y = g_shell_env.window.ws_row;
 	return (EXIT_SUCCESS);
 }
