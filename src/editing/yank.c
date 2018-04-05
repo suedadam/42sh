@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   yank.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:45:49 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 11:46:14 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 14:04:30 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 void			yank(char *buffer)
 {
-	ft_putstr_fd(buffer, 0);
+	int		i;
+
+	i = 0;
+	while (buffer[i])
+	{
+		regular_text(buffer[i]);
+		i++;
+	}
 }
