@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/03 00:30:47 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/04 17:34:58 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <strings.h>
 #include <errno.h>
 
-t_environ	*g_environ;
-
 struct s_ophandlers	op_handlers[] = {
 	{&op_pipe_check, &op_pipe_exec},
 	{&op_or_check, &op_or_exec},
@@ -25,14 +23,17 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-int		run_operation(t_ast *curr, uint8_t wait, __attribute__((unused)) t_environ *environ)
+int		run_operation(t_ast *curr, uint8_t wait)
 {
 	pid_t	pid;
 	int 	res;
+
 	if (!curr || *(curr->type) == operator)
-		return (-1);
+		return (EXIT_FAILURE);
+	if ((res = builtin_handler(curr)) != -1)
+		return (res);
 	if ((pid = fork()) == -1)
-		return (-1);
+		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
 		if (handle_redirection(curr))
@@ -156,7 +157,7 @@ void	build_default(t_ast *curr)
 ** 	-> stdout = curr->p_info->stdout[0];
 */
 
-int		build_info(t_ast *prev, t_ast *curr, t_environ *environ)
+int		build_info(t_ast *prev, t_ast *curr)
 {
 	if (!curr)
 		return (-1);
@@ -173,13 +174,13 @@ int		build_info(t_ast *prev, t_ast *curr, t_environ *environ)
 	else if (!prev)
 	{
 		build_default(curr);
-		run_operation(curr, 0, environ);
+		run_operation(curr, 0);
 	}
-	build_info(curr, curr->right_child, environ);
+	build_info(curr, curr->right_child);
 	return (0);
 }
 
-int		run_tree(t_ast *curr, t_environ *environ)
+int		run_tree(t_ast *curr)
 {
 	int	i;
 
@@ -191,23 +192,25 @@ int		run_tree(t_ast *curr, t_environ *environ)
 		while (op_handlers[i].check)
 		{
 			if (!op_handlers[i].check(*(curr->token)))
-				return (op_handlers[i].exec(curr, environ));
+				return (op_handlers[i].exec(curr));
 			i++;
 		}
 	}
+	else
+		return (run_operation(curr, 0));
 	return (EXIT_FAILURE);
 }
 
-int		run_forest(t_ast **asts, t_environ *environ)
+int		run_forest(t_ast **asts)
 {
 	int	i;
 
 	i = 0;
 	while (asts[i])
 	{
-		if (build_info(NULL, asts[i], environ))
+		if (build_info(NULL, asts[i]))
 			return (-1);
-		if (run_tree(asts[i], environ))
+		if (run_tree(asts[i]))
 			return (-1);
 		return (255);
 		i++;

@@ -6,45 +6,63 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/03 00:15:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/04 16:45:50 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
+#include "exec.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-int	cmd_env(__attribute__((unused)) char *argv[], t_environ *environ)
+/*
+** Custom builtin
+*/
+
+int	builtin_getenv(char *argv[])
+{
+	int	i;
+	int	len;
+	int	ret;
+
+	i = 0;
+	if (!arv[1] || !(len = argv[1]))
+		return (EXIT_FAILURE);
+	while ((g_environ->environ)[i])
+	{
+		if ((ret = strcmp(argv[1], g_environ->environ[i])) <= 0 && 
+			(!ret || -ret == '='))
+		{
+			printf("Found it!\n");
+		}
+		// ft_putstr((g_environ->environ)[i++]);
+		write(STDOUT_FILENO, "\n", 1);
+	}
+	return (EXIT_SUCCESS);
+}
+
+
+int	builtin_env(__attribute__((unused)) char *argv[])
 {
 	int	i;
 
 	i = 0;
-	while ((environ->environ)[i])
-		ft_putstr((environ->environ)[i++]);
+	while ((g_environ->environ)[i])
+	{
+		ft_putstr((g_environ->environ)[i++]);
+		write(STDOUT_FILENO, "\n", 1);
+	}
 	return (EXIT_SUCCESS);
 }
 
-int	cmd_setenv(char *argv[], t_environ *environ)
+int	builtin_setenv(char *argv[])
 {
-	int		i;
-	char	*val;
-
-	i = 0;
-	while (argv[1][i])
-	{
-		if (IS_WHITESPACE(argv[1][i]))
-		{
-			val = strdup(&(argv[1][i]));
-			break ;
-		}
-		i++;
-	}
-	if (!(environ->environ = realloc(environ->environ, (environ->size + 1) * sizeof(char **))))
-	{
-		free(val);
+	if (!argv[1] || !strchr(argv[1], '='))
 		return (EXIT_FAILURE);
-	}
-	environ->size++;
-	environ->environ[environ->size] = val;
+	if (!(g_environ->environ = realloc(g_environ->environ, (g_environ->size + 1) * sizeof(char **))))
+		return (EXIT_FAILURE);
+	g_environ->size++;
+	g_environ->environ[g_environ->size - 1] = argv[1];
+	printf("%zu = %s\n", g_environ->size, g_environ->environ[g_environ->size - 1]);
 	return (EXIT_SUCCESS);
 }
 
@@ -54,24 +72,24 @@ int	cmd_setenv(char *argv[], t_environ *environ)
 ** My realloc doesn't change sizes when its smaller than the block's size so the realloc won't be doing anything. 
 */
 
-int	cmd_unsetenv(char *argv[], t_environ *environ)
+int	builtin_unsetenv(char *argv[])
 {
 	int		i;
 	int		res;
 	int		len;
 
 	i = 0;
-
 	len = strlen(argv[1]);
-	while (environ->environ[i])
+	while (g_environ->environ[i])
 	{
-		if ((res = ft_strcmp(argv[1], environ->environ[i])) <= 0 &&
-			(!res || -environ->environ[i][len] == res))
+		if ((res = ft_strcmp(argv[1], g_environ->environ[i])) <= 0 &&
+			(!res || -res == '='))
 		{
-			free(environ->environ[i]);
-			memcpy(&(environ->environ[i]), &(environ->environ[i + 1]), ((environ->size - i) - 1) * sizeof(char *));
-			environ->environ = realloc(environ->environ, (environ->size - 1 * sizeof(char *)));
-			environ->size--;
+			free(g_environ->environ[i]);
+			memcpy(&(g_environ->environ[i]), &(g_environ->environ[i + 1]), ((g_environ->size - i) - 1) * sizeof(char *));
+			g_environ->environ = realloc(g_environ->environ, (g_environ->size - 1 * sizeof(char *)));
+			g_environ->environ[g_environ->size - 1] = NULL;
+			g_environ->size--;
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/03 00:29:55 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/04 17:34:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct	s_environ
 /*
 ** lol remove me.
 */
-int				run_forest(t_ast **asts, t_environ *environ);
+
+int				run_forest(t_ast **asts);
 t_queue			*build_forest(char **tokens, t_token_type *type);
 
 /*

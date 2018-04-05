@@ -28,14 +28,14 @@ MALLOC = deps/malloc/libft_malloc_${HOSTTYPE}.so
 	ops/op_execs/op_and \
 	ops/op_execs/op_or \
 	ops/op_execs/op_pipe \
-	builtins/env
+	builtins/env \
+	builtins/handler
 42SH_ASTCONSTRUCTION_SRC = \
 	srcs/ast \
 	srcs/ast_free_utils \
 	srcs/debugging \
 	srcs/new_ast_utils \
-	srcs/utils \
-
+	srcs/utils 
 42SH_MANAGER_OBJ = $(patsubst %, obj/%.o, $(42SH_MANAGER_SRC))
 42SH_EXECUTION_OBJ = $(patsubst %, obj/%.o, $(42SH_EXECUTION_SRC))
 42SH_ASTCONSTRUCTION_OBJ = $(patsubst %, obj/%.o, $(42SH_ASTCONSTRUCTION_SRC))
@@ -101,7 +101,7 @@ clean:
 fclean: clean
 	@make -C deps/libft fclean
 	@make -C deps/malloc fclean
-	@rm -f $(42SH)
+	@rm -rf $(42SH) DEBUG DEBUG.dSYM
 	@echo "$(BLUE) $(42SH) removed$(NC)"
 
 re: fclean all

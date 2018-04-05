@@ -64,6 +64,10 @@ int		ops_append_to(t_ast *curr, int pos)
 	return (EXIT_SUCCESS);
 }
 
+/*
+** Free everything after curr->token[pos - 1] (NULL terminated array) ^^^^
+*/
+
 int		ops_redir_to(t_ast *curr, int pos)
 {
 	int		ftmp;
