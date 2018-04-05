@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_shift.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:37:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 18:39:51 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 19:13:32 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		ft_shift(char byte)
 {
-	char	temp[3];
-
+	// char	temp[3];
+    //
 	byte = 0;
 /*	read(STDIN_FILENO, &temp, 3);
 	if (temp[1] == 2)
