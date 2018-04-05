@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 14:24:56 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 15:00:15 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ static int		multibyte(char byte)
 {
 	int	ret;
 
-	ft_printf("cntrl");
 	if (T_MPASS == 0
 		|| (T_MPASS == 1 && byte == '['))
 	{
@@ -126,7 +125,6 @@ int				handle_keys(char byte)
 	int		ret;
 	int		token;
 
-	ft_printf("cntrl2");
 	ret = EXIT_SUCCESS;
 	token = 0;
 	if (byte == 27 || T_MPASS)
