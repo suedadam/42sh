@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:15:12 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 13:42:47 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 13:51:12 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ static int	ft_edit(char byte)
 
 int		ft_alt(char byte)
 {
-	char	temp[2];
+	char	temp[3];
 	int		ret;
 
 	T_DBLESC = 0;
-	if (byte == '[')
-	{
-		read(STDIN_FILENO, temp, 2);
+	read(STDIN_FILENO, temp, 3);
+	temp[2] = 0;
+	if (temp[0] == '[')
 		ret = ft_jumps(temp);
-	}
 	else
 		ret = ft_edit(byte);
 	return (ret);
