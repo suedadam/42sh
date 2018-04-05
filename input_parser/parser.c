@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 19:38:34 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:54:01 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+
+static inline __attribute__((always_inline)) void	free_segs(t_parser **par)
+{
+	int	i;
+
+	if (*par)
+	{
+		if ((*par)->current_token)
+			free((*par)->current_token);
+		if ((*par)->tokens)
+		{
+			i = 0;
+			while ((*par)->tokens[i])
+				free((*par)->tokens[i++]);
+		}
+		if ((*par)->types)
+			free((*par)->types);
+		free(*par);
+	}
+}
 
 static inline __attribute__((always_inline)) void	*init_parser(void)
 {
@@ -25,15 +45,12 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 	}
 	if (!(parser->current_token = malloc(sizeof(char))))
 	{
-		free(parser->tokens);
-		free(parser);
+		free_segs(&parser);
 		return (NULL);
 	}
 	if (!(parser->types = malloc(sizeof(t_token_type))))
 	{
-		free(parser->tokens);
-		free(parser->current_token);
-		free(parser);
+		free_segs(&parser);
 		return (NULL);
 	}
 	parser->types = NULL;
@@ -61,10 +78,7 @@ t_ast				*parser(char *input_str)
 			(ret == UNUSED_CHAR && !(ret = is_comment(par, *input_str))) ||
 			(ret == UNUSED_CHAR && !(ret = start_word(par, *input_str))))
 		{
-			free(par->current_token);
-			free(par->tokens);
-			free(par->types);
-			free(par);
+			free_segs(&par);
 			return (NULL);
 		}
 		if (ret == CONTINUE)
@@ -73,21 +87,12 @@ t_ast				*parser(char *input_str)
 			break ;
 		input_str++;
 	}
-	if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
+	if (add_token(par->current_token, &(par->current_type), par)
+		== EXIT_FAILURE)
 	{
-		free(par->current_token);
-		free(par->tokens);
-		free(par->types);
-		free(par);
+		free_segs(&par);
 		return (NULL);
 	}
 	free(par->current_token);
 	return ((t_ast *)par);
 }
-
-/*
-**	int main(void)
-**	{
-**		parser("this is a final test \"in quotes \\\" \\t \" \'single quotes \\\" all good \' \\\" ");
-**	}
-*/

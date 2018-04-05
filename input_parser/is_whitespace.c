@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   is_whitespace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:19:02 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 19:38:44 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:15:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-static void 	skip_whitespace(char **input_str)
+static void	skip_whitespace(char **input_str)
 {
 	if (!input_str)
 		return ;
@@ -20,11 +20,12 @@ static void 	skip_whitespace(char **input_str)
 		(*input_str)++;
 }
 
-int 			is_whitespc(t_parser *par, char **input_str)
+int			is_whitespc(t_parser *par, char **input_str)
 {
 	if (!par->quoted && IS_WHITESPACE(**input_str))
 	{
-		if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
+		if (add_token(par->current_token, &(par->current_type), par)
+			== EXIT_FAILURE)
 			return (0);
 		skip_whitespace(input_str);
 		return (CONTINUE);

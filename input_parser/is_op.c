@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   is_op.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:15:15 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 19:39:22 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:44:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
- 
+
 #include "ast.h"
 
 int	is_op(t_parser *par, char cur_char)
@@ -18,7 +18,8 @@ int	is_op(t_parser *par, char cur_char)
 	{
 		if (is_op_append(par->current_token, cur_char))
 		{
-			if (!(par->current_token = strappend(&(par->current_token), cur_char)))
+			if (!(par->current_token =
+				strappend(&(par->current_token), cur_char)))
 				return (0);
 			return (USED_CHAR);
 		}
@@ -37,8 +38,8 @@ int	is_start_op(t_parser *par, char cur_char)
 {
 	if (!par->quoted && is_op_append("", cur_char))
 	{
-		if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE
-			|| !strappend(&(par->current_token), cur_char))
+		if (add_token(par->current_token, &(par->current_type), par)
+			== EXIT_FAILURE || !strappend(&(par->current_token), cur_char))
 			return (0);
 		par->current_type = operator;
 		return (USED_CHAR);

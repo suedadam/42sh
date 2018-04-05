@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 18:23:58 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:53:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int 						is_word(t_parser *par, char cur_char);
 /*
 ** quoted flags
 */
-
 # define SINGLE_QUOTE 1
 # define DOUBLE_QUOTE 2
 # define BACKSLASH 4

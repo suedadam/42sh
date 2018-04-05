@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   is_semicolon.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:16:05 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 18:22:55 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:16:47 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-static int			end_statement(char *curr_token, t_token_type *current_type,
+static int		end_statement(char *curr_token, t_token_type *current_type,
 	t_parser *par)
 {
 	t_token_type	tmp;
@@ -24,7 +24,7 @@ static int			end_statement(char *curr_token, t_token_type *current_type,
 	return (EXIT_SUCCESS);
 }
 
-int 				is_semi(t_parser *par, char cur_char)
+int				is_semi(t_parser *par, char cur_char)
 {
 	if (!par->quoted && cur_char == ';')
 	{

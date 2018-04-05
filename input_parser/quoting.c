@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quoting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 10:41:08 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 19:39:56 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:32:10 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,19 @@ int				handle_embedded_quotes(uint8_t *quoted,
 			*quoted |= BACKSLASH;
 		else if (cur_char == '\"')
 			*quoted &= ~DOUBLE_QUOTE;
-		else if (cur_char == '\'' && !(*current_token = strappend(current_token, cur_char)))
+		else if (cur_char == '\'' &&
+				!(*current_token = strappend(current_token, cur_char)))
 			return (EXIT_FAILURE);
 	}
 	else if (*quoted & SINGLE_QUOTE)
-	{		
+	{
 		if (cur_char == '\'')
 			*quoted &= ~SINGLE_QUOTE;
 		else if (!(*current_token = strappend(current_token, cur_char)))
 			return (EXIT_FAILURE);
 	}
-	else if (*quoted & BACKSLASH && (*current_token = strappend(current_token, cur_char)))
+	else if (*quoted & BACKSLASH &&
+			(*current_token = strappend(current_token, cur_char)))
 		*quoted &= ~BACKSLASH;
 	else
 		return (EXIT_FAILURE);
