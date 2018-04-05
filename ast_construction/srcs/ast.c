@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/27 15:41:06 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/04 21:37:38 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,14 @@
 
 #define END_PARSING -1
 
-static int			is_operator(char *token_char)
-{
-	int		res;
-	int		i;
-	char	*operators[6];
-
-	res = 0;
-	operators[0] = ft_strdup("|");
-	operators[1] = ft_strdup("&");
-	operators[2] = ft_strdup("||");
-	operators[3] = ft_strdup("&&");
-	operators[4] = ft_strdup(";");
-	operators[5] = NULL;
-	res = str_search(operators, token_char);
-	i = 0;
-	while (operators[i])
-	{
-		if (operators[i])
-		{
-			free(operators[i]);
-			operators[i] = NULL;
-		}
-		i++;
-	}
-	return (res);
-}
+char	*g_operators[] = {
+	"|",
+	"&",
+	"||",
+	"&&",
+	";",
+	NULL
+};
 
 static int			parse_tokens(char **tokens, t_token_type *type)
 {
@@ -49,7 +31,7 @@ static int			parse_tokens(char **tokens, t_token_type *type)
 	i = 0;
 	while (tokens[i])
 	{
-		if (type[i] == operator && is_operator(tokens[i]))
+		if (type[i] == operator && str_search(g_operators, tokens[i]))
 			return (i);
 		i++;
 	}
@@ -93,7 +75,7 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	pos = 0;
 	while (tokens && type && (ast = build_ast(tokens + pos, type, &pos)))
 	{
-		new_list = ft_lstnew(ast, sizeof(*ast));
+		new_list = ft_lstnew(ast, sizeof(t_ast));
 		enqueue(forest, new_list);
 		free(ast);
 	}
