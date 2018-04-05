@@ -115,6 +115,7 @@ typedef	struct		s_terminf
 	struct termios		*shell_tty; /* FREE */
 	struct winsize		window;
 	t_buffer			*buffer;
+	t_buffer			paperweight;
 	t_cursor			cursor;
 	t_tokens			tokens;
 	// t_hashtable		*hashtable;
@@ -292,5 +293,14 @@ int			del_lines(void);
 void		init_tokens(void);
 
 int			count_lines(void);
+
+/*
+**		Advanced editing
+*/
+void			yank(char *buffer);
+void 			cut_line_after_cursor(void);
+void 			cut_line_before_cursor(void);
+void 			cut_word_before_cursor(void);
+
 
 #endif
