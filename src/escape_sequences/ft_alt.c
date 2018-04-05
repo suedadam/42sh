@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_alt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:15:12 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 19:10:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 19:23:52 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		ft_alt(char byte)
 	char	temp[2];
 
 	T_DBLESC = 0;
+	byte = 0;
 	read(STDIN_FILENO, temp, 2);
 	if (temp[1] == 'A')
 		move_prev_line(&g_shell_env.cursor);

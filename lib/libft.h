@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:23:57 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/15 11:44:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 19:17:30 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ typedef struct		s_ffqueue
 }					t_ffqueue;
 
 void				ft_bzero(void *s, size_t n);
-int					ft_isalpha(int c);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
-int					ft_isalnum(int c);
+int					ft_isalpha(char c);
+int					ft_isalnum(char c);
 int					ft_isascii(int c);
-int					ft_isdigit(int c);
+int					ft_isdigit(char c);
 int					ft_isprint(int c);
 void				*ft_malloc(size_t size);
 void				ft_memdel(void **ap);
