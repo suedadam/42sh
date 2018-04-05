@@ -1,0 +1,4 @@
+[submodule "libft"]
+	path = libft
+	url = https://github.com/suedadam/42sh
+	branch = libft
