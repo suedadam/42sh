@@ -41,7 +41,7 @@
 
 int					g_ft_errnum;
 
-enum g_multi{
+enum {
 	CURSOR_MOVE,
 	DEL_KEY,
 	SHIFT,
@@ -116,6 +116,7 @@ typedef	struct		s_terminf
 	struct termios		*shell_tty; /* FREE */
 	struct winsize		window;
 	t_buffer			*buffer;
+	t_buffer			paperweight;
 	t_cursor			cursor;
 	t_tokens			tokens;
 	// t_hashtable		*hashtable;
@@ -295,10 +296,17 @@ void		init_tokens(void);
 
 int			count_lines(void);
 
+/*
+**		Advanced editing
+*/
+void			yank(char *buffer);
+void 			cut_line_after_cursor(void);
+void 			cut_line_before_cursor(void);
+void 			cut_word_before_cursor(void);
+
 void		get_cursor_current_position(void);
 
 int		ft_shift(char byte);
 int		ft_jumpwords(char byte);
-
 
 #endif
