@@ -80,6 +80,7 @@ typedef struct	s_vertex
 typedef struct	s_cursor
 {
 	t_vertex		og_position;
+	t_vertex		res_position;
 	t_vertex		og_screen;
 	size_t			position;
 	char			*buffer;
@@ -301,6 +302,8 @@ void			yank(char *buffer);
 void 			cut_line_after_cursor(void);
 void 			cut_line_before_cursor(void);
 void 			cut_word_before_cursor(void);
+
+void		get_cursor_current_position(void);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 15:57:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 11:55:14 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 16:21:18 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,24 @@ void	move_cursor(t_cursor *cursor)
 		new_col, new_line), 0, &my_putchar);
 }
 
+/* 
+** Function to set true original positions after window resize events,
+** and make sure that the way the cursor will react is the buffer is normal,
+** wrapped and all
+*/
+
 void		locate_cursor(void)
 {
 	char	*temp;
 	int		nln;
-	int		o_winx;
-	int		o_winy;
+	int		o_curpos;
 
 	temp = 0;
-	o_winx = g_shell_env.cursor.og_screen.x;
-	o_winy = g_shell_env.cursor.og_screen.y;
-	nln = count_lines();
+	o_curpos = g_shell_env.cursor.position;
 	get_window_size();
-	get_cursor_first_position();
-	g_shell_env.cursor.og_position.x = g_shell_env.cursor.og_position.x -
-		((g_shell_env.buffer->length > (g_shell_env.prompt_length - o_winx)) ?
-		 g_shell_env.prompt_length : g_shell_env.buffer->length);
-	g_shell_env.cursor.og_position.y = g_shell_env.cursor.og_position.y - nln;
+	nln = count_lines();
+	o_curpos = g_shell_env.cursor.og_screen.x / (o_curpos + g_shell_env.prompt_length);
+	get_cursor_current_position();
+	g_shell_env.cursor.og_position.x = g_shell_env.prompt_length;
+	g_shell_env.cursor.og_position.y = g_shell_env.cursor.res_position.y - o_curpos;
 }
