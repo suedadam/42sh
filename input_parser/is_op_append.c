@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   is_op_append.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/03 10:43:33 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 17:57:31 by satkins          ###   ########.fr       */
+/*   Created: 2018/04/03 10:36:32 by satkins           #+#    #+#             */
+/*   Updated: 2018/04/04 18:14:03 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-void				print_toks(char **tokens, t_token_type *types)
+int					is_op_append(char *token, char c)
 {
-	int 			i;
+	char			tmp[3];
+	size_t			len;
+	int				i;
 
-	i = -1;
-	while (tokens[++i])
+	len = ft_strlen(token);
+	if (len > 1)
+		return (0);
+	else if (len == 0)
 	{
-		printf("%s\n", tokens[i]);
+		tmp[0] = c;
+		tmp[1] = '\0';
 	}
+	else
+	{
+		tmp[0] = *token;
+		tmp[1] = c;
+		tmp[2] = '\0';
+	}
+	i = -1;
+	while (++i < OPS)
+		if (!ft_strncmp(ops[i], tmp, len + 1))
+			return (1);
+	return (0);
 }

@@ -5,36 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/03 10:36:32 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/03 10:36:57 by satkins          ###   ########.fr       */
+/*   Created: 2018/04/04 18:15:15 by satkins           #+#    #+#             */
+/*   Updated: 2018/04/04 18:18:44 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+ 
 #include "ast.h"
 
-int					is_op(char *token, char c)
+int 				is_op(t_parser *par, char cur_char)
 {
-	char			tmp[3];
-	size_t			len;
-	int				i;
+	if (!par->quoted && par->current_type == operator)
+	{
+		if (is_op_append(par->current_token, cur_char))
+		{
+			if (!(par->current_token = strappend(&(par->current_token), cur_char)))
+				return (0);
+			return (USED_CHAR);
+		}
+		else
+		{
+			if (add_token(par->current_token, &(par->current_type),
+			par) == EXIT_FAILURE)
+				return (0);
+			return (CONTINUE);
+		}
+	}
+	return (UNUSED_CHAR);
+}
 
-	len = ft_strlen(token);
-	if (len > 1)
-		return (0);
-	else if (len == 0)
+int 				is_start_op(t_parser *par, char cur_char)
+{
+	if (!par->quoted && is_op_append("", cur_char))
 	{
-		tmp[0] = c;
-		tmp[1] = '\0';
+		if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE
+			|| !strappend(&(par->current_token), cur_char))
+			return (0);
+		par->current_type = operator;
+		return (USED_CHAR);
 	}
-	else
-	{
-		tmp[0] = *token;
-		tmp[1] = c;
-		tmp[2] = '\0';
-	}
-	i = -1;
-	while (++i < OPS)
-		if (!ft_strncmp(ops[i], tmp, len + 1))
-			return (1);
-	return (0);
+	return (UNUSED_CHAR);
 }

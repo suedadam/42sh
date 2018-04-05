@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   is_whitespace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/03 10:43:33 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 17:57:31 by satkins          ###   ########.fr       */
+/*   Created: 2018/04/04 18:19:02 by satkins           #+#    #+#             */
+/*   Updated: 2018/04/04 18:23:24 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-void				print_toks(char **tokens, t_token_type *types)
+static void 	skip_whitespace(char **input_str)
 {
-	int 			i;
+	if (!input_str)
+		return ;
+	while (IS_WHITESPACE(**input_str))
+		(*input_str)++;
+}
 
-	i = -1;
-	while (tokens[++i])
+int 				is_whitespc(t_parser *par, char **input_str)
+{
+	if (!par->quoted && IS_WHITESPACE(**input_str))
 	{
-		printf("%s\n", tokens[i]);
+		if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
+			return (0);
+		skip_whitespace(input_str);
+		return (CONTINUE);
 	}
+	return (UNUSED_CHAR);
 }
