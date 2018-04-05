@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:57:37 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 14:20:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 15:30:19 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ int		control_dispatch(char byte)
 	else if (byte == 23)
 		return (C_W);
 	else if (byte == 25)
-	{
-		ft_printf("go");
 		return (C_Y);
-	}
-	ft_printf("fail");
 	return (-1);
 }
