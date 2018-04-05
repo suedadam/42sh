@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 19:10:57 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 20:24:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ int				read_loop(void)
 {
 	char	byte;
 
-	T_MPASS = 0;
-	T_BSLASH = 0;
 	new_prompt(0);
+	init_tokens();
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
 		if (byte == 4 && !(*g_shell_env.buffer->buff))
@@ -36,6 +35,10 @@ int				read_loop(void)
 			reset_prompt();
 			break ;
 		}
+		/*
+		else if (byte == 10)
+			ft_carriage_dispatch(byte);
+			*/
 		else if (byte == 10 && T_BSLASH)
 			backslash_char();
 		else if (byte == 10 && (T_QUOTE | T_DQUOTE))
@@ -44,9 +47,7 @@ int				read_loop(void)
 		{
 			if (ft_carriage_return() == EXIT_FAILURE
 				|| checktty() == EXIT_FAILURE)
-				// new_prompt();
 				reset_terminal();
-
 		}
 		else if (handle_keys(byte) == EXIT_FAILURE)
 			reset_terminal();
