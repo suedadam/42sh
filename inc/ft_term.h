@@ -38,6 +38,7 @@
 #define T_MPASS (g_shell_env.tokens.mpass)
 #define T_QUOTE (g_shell_env.tokens.quote)
 #define T_DQUOTE (g_shell_env.tokens.dquote)
+#define T_DBLESC (g_shell_env.tokens.dblesc)
 
 int					g_ft_errnum;
 
@@ -45,6 +46,7 @@ enum {
 	CURSOR_MOVE,
 	DEL_KEY,
 	SHIFT,
+	ALT,
 	SCROLL,
 	HISTORY
 };
@@ -108,6 +110,7 @@ typedef struct		s_tokens
 	int				control_v;
 	int				quote;
 	int				dquote;
+	int				dblesc;
 }					t_tokens;
 
 typedef	struct		s_terminf
@@ -308,5 +311,6 @@ void		get_cursor_current_position(void);
 
 int		ft_shift(char byte);
 int		ft_jumpwords(char byte);
+int		ft_alt(char byte);
 
 #endif

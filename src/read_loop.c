@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 17:05:41 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 18:51:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int				read_loop(void)
 	new_prompt(0);
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
-		//ft_printf("|%c|", byte);
 		if (byte == 4 && !(*g_shell_env.buffer->buff))
 		{
 			reset_prompt();
