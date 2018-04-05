@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 18:30:28 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 19:38:34 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,24 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 {
 	t_parser	*parser;
 
-	if (!(parser = malloc(sizeof(t_ast))) || !ft_memset(parser, 0, sizeof(t_parser)))
+	if (!(parser = malloc(sizeof(t_ast))))
 		return (NULL);
-	if (!(parser->tokens = malloc(sizeof(char *))) || !ft_memset(parser->tokens, 0, sizeof(char *)))
+	if (!(parser->tokens = malloc(sizeof(char *))))
 	{
 		free(parser);
 		return (NULL);
 	}
-	if (!(parser->current_token = malloc(sizeof(char))) || !ft_memset(parser->current_token, 0, sizeof(char)))
+	if (!(parser->current_token = malloc(sizeof(char))))
 	{
-		free(parser);
 		free(parser->tokens);
+		free(parser);
+		return (NULL);
+	}
+	if (!(parser->types = malloc(sizeof(t_token_type))))
+	{
+		free(parser->tokens);
+		free(parser->current_token);
+		free(parser);
 		return (NULL);
 	}
 	parser->types = NULL;
@@ -53,7 +60,13 @@ t_ast				*parser(char *input_str)
 			(ret == UNUSED_CHAR && !(ret = is_word(par, *input_str))) ||
 			(ret == UNUSED_CHAR && !(ret = is_comment(par, *input_str))) ||
 			(ret == UNUSED_CHAR && !(ret = start_word(par, *input_str))))
+		{
+			free(par->current_token);
+			free(par->tokens);
+			free(par->types);
+			free(par);
 			return (NULL);
+		}
 		if (ret == CONTINUE)
 			continue ;
 		else if (ret == BREAK)
@@ -61,13 +74,20 @@ t_ast				*parser(char *input_str)
 		input_str++;
 	}
 	if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
+	{
+		free(par->current_token);
+		free(par->tokens);
+		free(par->types);
+		free(par);
 		return (NULL);
-	print_toks(par->tokens, par->types);
+	}
 	free(par->current_token);
 	return ((t_ast *)par);
 }
 
-int main(void)
-{
-	parser("this is a final test \"in quotes \\\" \\t \" \'single quotes \\\" all good \' \\\" ");
-}
+/*
+**	int main(void)
+**	{
+**		parser("this is a final test \"in quotes \\\" \\t \" \'single quotes \\\" all good \' \\\" ");
+**	}
+*/

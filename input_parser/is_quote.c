@@ -6,13 +6,13 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:17:02 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 18:17:36 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/04 19:39:28 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
  
 #include "ast.h"
 
-int 				is_quote(t_parser *par, char cur_char)
+int	is_quote(t_parser *par, char cur_char)
 {
 	if (IS_QUOTE(cur_char))
 	{
