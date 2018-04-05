@@ -41,12 +41,12 @@
 
 int					g_ft_errnum;
 
-enum {
+enum g_multi{
 	CURSOR_MOVE,
 	DEL_KEY,
+	SHIFT,
 	SCROLL,
-	HISTORY,
-	SHIFT
+	HISTORY
 };
 
 enum {
@@ -222,10 +222,11 @@ void		locate_cursor(void);
 /*
 **		cursor navigation
 */
-int			move_prev_word(t_cursor *cursor);
-int			move_next_word(t_cursor *cursor);
-int			move_next_line(t_cursor *cursor);
-int			move_prev_line(t_cursor *cursor);
+
+void	move_prev_word(t_cursor *cursor);
+void	move_next_word(t_cursor *cursor);
+void	move_next_line(t_cursor *cursor);
+void	move_prev_line(t_cursor *cursor);
 
 /* ft_linemove */
 
@@ -295,5 +296,9 @@ void		init_tokens(void);
 int			count_lines(void);
 
 void		get_cursor_current_position(void);
+
+int		ft_shift(char byte);
+int		ft_jumpwords(char byte);
+
 
 #endif

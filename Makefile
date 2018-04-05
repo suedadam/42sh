@@ -37,6 +37,7 @@ SRC += screen_scroll
 SRC += cursor_actions
 SRC += cursor_visibility
 SRC += init_tokens 
+SRC += cursor_navigation 
 
 # CONTROL CHARACTERS
 SRC += control_codes/control_dispatch
@@ -60,6 +61,7 @@ SRC += control_codes/ft_delete
 # ESCAPE SEQUENCES
 SRC += escape_sequences/multibyte_dispatch
 SRC += escape_sequences/ft_linemove
+SRC += escape_sequences/ft_shift
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen

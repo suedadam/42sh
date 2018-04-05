@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/01 20:01:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/04 17:21:41 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int		multibyte_dispatch(char byte)
 {
 	if (byte == 51)
 		return (DEL_KEY);
-	else if ((byte == 70 || byte <= 72) || (byte == 'C' || byte == 'D'))
+	else if ((byte == 'C' || byte == 'D'))
 		return (CURSOR_MOVE);
 	else if (byte == 53 || byte == 54)
 		return (SCROLL);
-	else if (byte == 'A' && byte == 'B')
+	else if (byte == 'A' || byte == 'B')
 		return (HISTORY);
-	else if (byte == 1)
+	else if (byte == '1')
 		return (SHIFT);
 	return (-1);
 }

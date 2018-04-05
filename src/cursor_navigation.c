@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 15:18:41 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 15:39:58 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/04 16:57:34 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void			move_next_word(t_cursor *cursor)
 
 void			move_next_line(t_cursor *cursor)
 {
-	if (cursor->position + g_shell_env.window.wd_col >
+	if (cursor->position + g_shell_env.window.ws_col >
 			g_shell_env.buffer->length)
-		cursor->position += g_shell_env.window.wd_col;
+		cursor->position += g_shell_env.window.ws_col;
 	else
 		cursor->position = g_shell_env.buffer->length;
 	move_cursor(cursor);
@@ -50,9 +50,9 @@ void			move_next_line(t_cursor *cursor)
 
 void			move_prev_line(t_cursor *cursor)
 {
-	if (cursor->position + cursor->og_position.x < g_shell_env.window.wd_col)
+	if (cursor->position + cursor->og_position.x < g_shell_env.window.ws_col)
 		cursor->position = 0;
 	else
-		cursor->position -= g_shell_env.window.wd_col;
+		cursor->position -= g_shell_env.window.ws_col;
 	move_cursor(cursor);
 }
