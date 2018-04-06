@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 15:00:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 20:53:33 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int		(*multibyte_jump[])(char byte) = {
 	ft_linemove,
 	ft_delete,
 	ft_shift,
-	ft_alt
+	ft_alt,
+	ft_scroll
 };
 
 static int		(*control_jump[])() = {

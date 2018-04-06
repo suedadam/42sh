@@ -319,5 +319,6 @@ int		ft_alt(char byte);
 int		regular_text(char byte);
 void	clear_below(void);
 void	cursor_to_left_margin(void);
+int		ft_scroll(char byte);
 
 #endif
