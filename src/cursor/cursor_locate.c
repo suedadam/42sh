@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_locate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:38:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 19:24:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 19:40:14 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void		cursor_locate(void)
 	char	*temp;
 	int		og_ln;
 	int		res_ln;
-	int		o_curpos;
-	
+	int		og_curpos;
+
+	og_curpos = g_shell_env.cursor.position;
 	cursor_to_home(&g_shell_env.cursor);
 	get_window_size();
 	get_cursor_first_position();
@@ -26,8 +27,10 @@ void		cursor_locate(void)
 	cursor_to_left_margin();
 	new_prompt(0);
 	reprint_buffer();
-
-	/* OLD 
+	g_shell_env.cursor.position = og_curpos;
+	move_cursor(&g_shell_env.cursor);
+	terminal_limit
+	/* OLD
 	temp = 0;
 	og_ln = count_lines();
 	get_window_size();
