@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 14:59:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 11:25:06 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		_y(int c)
 {
+	c = 0;
 	yank(g_shell_env.paperweight.buff);
 }
 

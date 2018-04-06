@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:46:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 10:52:06 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 11:21:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int			resize_buffer(void)
 	ft_memcpy(newbuff, g_shell_env.buffer->buff, max_size);
 	free(g_shell_env.buffer->buff);
 	g_shell_env.buffer->buff = newbuff;
+	g_shell_env.cursor.buffer = g_shell_env.buffer->buff;
 	g_shell_env.buffer->max_size = max_size + BUFF_SIZE;
 	return (EXIT_SUCCESS);
 }

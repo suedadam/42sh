@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 11:16:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 11:27:37 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int		regular_text(char byte)
 	cursor = &(g_shell_env.cursor);
 	buffer = cursor->buffer;
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
+	{
 		ret = resize_buffer();
+		buffer = cursor->buffer;
+	}
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
 			g_shell_env.buffer->length - cursor->position);
 	buffer[cursor->position] = byte;
