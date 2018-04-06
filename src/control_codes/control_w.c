@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_w.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:37:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 14:01:01 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 20:05:05 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		control_w(void)
 {
-	cut_word_before_cursor();
+	if (g_shell_env.cursor.position)
+		cut_word_before_cursor();
 	return (EXIT_SUCCESS);
 }

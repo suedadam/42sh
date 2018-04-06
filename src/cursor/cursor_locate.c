@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:38:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 19:40:14 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/05 19:52:56 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void		cursor_locate(void)
 	reprint_buffer();
 	g_shell_env.cursor.position = og_curpos;
 	move_cursor(&g_shell_env.cursor);
-	terminal_limit
 	/* OLD
 	temp = 0;
 	og_ln = count_lines();

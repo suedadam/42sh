@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_u.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 15:40:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 14:01:41 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 20:05:14 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		control_u(void)
 {
-	cut_line_before_cursor();
+	if (g_shell_env.cursor.position)
+		cut_line_before_cursor();
 	return (EXIT_SUCCESS);
 }
