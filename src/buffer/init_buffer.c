@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:43:44 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 10:46:04 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 10:48:11 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			init_buffer(void)
 {
 	if (!(g_shell_env.buffer = (t_buffer *)ft_memalloc(sizeof(t_buffer)))
-		|| !(g_shell_env.buffer->buff = (char *)ft_memalloc(BUFF_SIZE + 1)))
+		|| !(g_shell_env.buffer->buff = (char *)ft_strnew(BUFF_SIZE)))
 		return (EXIT_FAILURE);
 	init_tokens();
 	g_shell_env.paperweight.buff = 0;

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 20:53:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/06 11:16:35 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int		regular_text(char byte)
 	buffer[cursor->position] = byte;
 	g_shell_env.buffer->length++;
 	update_buffer(buffer + cursor->position);
-	// update_end_of_screen();
 	cursor->position++;
 	move_cursor(cursor);
 	return (ret);
