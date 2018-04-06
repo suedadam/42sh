@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reprint_buffer.c                                   :+:      :+:    :+:   */
+/*   clear_below.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 10:47:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 19:24:10 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/05 17:02:01 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/05 17:14:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int			reprint_buffer(void)
+void		clear_below(void)
 {
-	ft_putstr_fd(g_shell_env.buffer->buff, STDIN_FILENO);
-	move_cursor(&g_shell_env.cursor);
-	return (EXIT_SUCCESS);
+	char	*temp;
+
+	temp = tgetstr("cd", 0);
+	tputs(temp, 1, &my_putchar);
+	temp = tgetstr("dl", 0);
+	tputs(temp, 1, &my_putchar);
 }

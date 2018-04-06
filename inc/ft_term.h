@@ -317,5 +317,7 @@ int		ft_shift(char byte);
 int		ft_jumpwords(char byte);
 int		ft_alt(char byte);
 int		regular_text(char byte);
+void	clear_below(void);
+void	cursor_to_left_margin(void);
 
 #endif

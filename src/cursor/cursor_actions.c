@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 13:59:21 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 18:39:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/05 17:21:34 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,9 @@ void		cursor_to_end(t_cursor *cursor)
 {
 	cursor->position = g_shell_env.buffer->length;
 	move_cursor(cursor);
+}
+
+void		cursor_to_left_margin(void)
+{
+	tputs(tgoto(tgetstr("cm", 0), 0, g_shell_env.cursor.og_position.y), 1, &my_putchar);
 }

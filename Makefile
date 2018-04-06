@@ -90,6 +90,7 @@ SRC += screen/screen_scroll
 SRC += screen/update_screen
 SRC += screen/get_window_size
 SRC += screen/window_resize
+SRC += screen/clear_below
 
 # GENERAL LIBFT FUNCTIONS
 LIB += ft_strlen
