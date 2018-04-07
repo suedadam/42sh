@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:46:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 15:28:17 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 16:51:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			resize_buffer(void)
 	size_t		offset;
 
 	max_size = g_shell_env.buffer->max_size;
-	old_buffer = 0;
+	old_buffer = g_shell_env.buffer->buff;
 	if (!(new_buffer = (char *)ft_memalloc(sizeof(char) * (max_size * 2 + 1))))
 		return (EXIT_FAILURE);
 	ft_memmove(new_buffer, g_shell_env.buffer->buff, max_size);
