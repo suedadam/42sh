@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:45:49 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 17:31:26 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 16:06:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void			yank(char *buffer)
 	i = 0;
 	while (buffer && buffer[i])
 	{
-		regular_text(buffer[i]);
+		if (regular_text(buffer[i]) == EXIT_FAILURE)
+			return ;
 		i++;
 	}
 }

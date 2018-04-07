@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:46:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 14:43:17 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 15:38:28 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void 			cut_line_after_cursor(void)
 		g_shell_env.paperweight.buff = ft_strdup(buffer + cursor->position);
 		g_shell_env.paperweight.length = ft_strlen(g_shell_env.paperweight.buff);
 		g_shell_env.paperweight.max_size = g_shell_env.paperweight.length;
-		while (g_shell_env.buffer->length != cursor->position)
+		while (cursor->buffer_length != cursor->position)
 			ft_delete(-1);
 	}
 }

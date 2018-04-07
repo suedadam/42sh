@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/07 14:49:31 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 15:28:59 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ typedef struct	s_cursor
 	size_t			position;
 	char			*buffer;
 	size_t			buffer_length;
-	// t_buffer		buffer;
-	int				highlighted;
 }				t_cursor;
 
 typedef struct	s_errstr
@@ -133,7 +131,7 @@ typedef	struct		s_terminf
 	char				*term_buff; /* FREE */
 }					t_terminf;
 
-void				__attribute__((deprecated)) *ft_memalloc(size_t size);
+//void				__attribute__((deprecated)) *ft_memalloc(size_t size);
 
 //
 // typedef struct		s_env

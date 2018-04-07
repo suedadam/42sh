@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/06 21:31:12 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/07 15:26:58 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	init_termcaps(void)
 {
 	int		ret;
 
-	if (!(g_shell_env.term_buff = (char *)malloc(3096))
+	if (!(g_shell_env.term_buff = (char *)ft_memalloc(3096))
 		|| !(g_shell_env.term_name = getenv("TERM")))
 		return (EXIT_FAILURE);
 	ret = tgetent(g_shell_env.term_buff, g_shell_env.term_name);
@@ -41,7 +41,7 @@ static int	init_termcaps(void)
 
 int			init_shellenv(void)
 {
-	if (!(g_shell_env.shell_tty = malloc(sizeof(struct termios)))
+	if (!(g_shell_env.shell_tty = ft_memalloc(sizeof(struct termios)))
 		|| (!(isatty(STDIN_FILENO)))
 		|| ((tcgetattr(STDIN_FILENO, &g_shell_env.original_tty)) < 0)
 		|| (!(ft_memcpy(g_shell_env.shell_tty, &g_shell_env.original_tty,

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 14:48:04 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 16:02:29 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int			new_prompt(char *prompt)
 	if (prompt)
 	{
 		length = g_shell_env.buffer->length;
-		cursor->buffer = cursor->buffer + length;
-		g_shell_env.buffer->length = 0;
-		cursor->buffer.length = 0;
+		cursor->buffer += cursor->buffer_length;
+		cursor->buffer_length = 0;
 		n = ft_printf("%s", prompt);
 	}
 	else
@@ -38,7 +37,10 @@ int			new_prompt(char *prompt)
 			return (EXIT_FAILURE);
 		}
 		n = ft_printf("42sh [%s] %% ", pwd);
+		g_shell_env.cursor.buffer_length = g_shell_env.buffer->length;
+		cursor->buffer = g_shell_env.buffer->buff;
 		free(pwd);
+		pwd = NULL;
 	}
 	g_shell_env.prompt_length = n;
 	cursor->position = 0;

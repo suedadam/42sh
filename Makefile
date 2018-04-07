@@ -1,6 +1,6 @@
 NAME = 42sh
 STAT = lib/libft.a
-CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
+CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
 CC = gcc
 SRCDIR = src/
@@ -12,7 +12,7 @@ GREEN = \033[1;32m
 YELLOW = \033[1;33m
 CYAN = \033[1;36m
 RES = \033[0m
-MALLOC = 
+MALLOC =
 
 # FILEIO SOURCE
 SRC += backslash_char
@@ -81,7 +81,7 @@ SRC += prompt/back_prompt
 SRC += prompt/new_prompt
 SRC += prompt/reset_prompt
 SRC += prompt/resize_prompt
- 
+
 # SCREEN
 SRC += screen/count_lines
 SRC += screen/del_lines
@@ -150,8 +150,7 @@ $(NAME): $(MALLOC) $(OBJLIB) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	ar -rcs $(STAT) $(OBJLIB)
 	@ echo "$(YELLOW)Compiling ftls program$(RES)"
-	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap ft_malloc/libft_malloc_x86_64_Darwin.so $(OBJSRC) -o $(NAME)
-	@install_name_tool -change libft_malloc_x86_64_Darwin.so $(PWD)/ft_malloc/libft_malloc_x86_64_Darwin.so 42sh
+	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap $(OBJSRC) -o $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 %.o: %.c

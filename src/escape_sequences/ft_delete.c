@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/07 14:48:03 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 15:39:02 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		delete_last(int starting_position, t_cursor *cursor)
 {
 	size_t		length;
 
-	length = g_shell_env.buffer->length;
+	length = cursor->buffer_length;
 	cursor->position = length;
 	g_shell_env.buffer->buff[length] = 0;
 	move_cursor(cursor);
@@ -42,12 +42,13 @@ int			ft_delete(char byte)
 	cursor = &(g_shell_env.cursor);
 	if (!(buffer = cursor->buffer))
 		return (EXIT_FAILURE);
-	if (g_shell_env.buffer->length != cursor->position)
+	if (cursor->buffer_length != cursor->position)
 	{
 		ft_memmove(buffer + cursor->position, buffer + cursor->position + 1,
-				g_shell_env.buffer->length - cursor->position);
+				cursor->buffer_length - cursor->position);
 		tputs(cache, 1, &my_putchar);
 		g_shell_env.buffer->length--;
+		cursor->buffer_length--;
 		delete_last(cursor->position, cursor);
 		update_buffer(buffer + cursor->position, 0);
 	}

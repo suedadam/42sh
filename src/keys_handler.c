@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 14:48:11 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 15:59:37 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int		(*control_jump[])() = {
 	control_y,
 };
 
-static inline __attribute__((always_inline)) int	control_char(char byte)
+static inline __attribute__((always_inline)) int control_char(char byte)
 {
 	int	(*f)();
 
@@ -71,15 +71,17 @@ int		regular_text(char byte)
 		return (EXIT_FAILURE);
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 	{
-		// ft_printf("\nhey guys\n");
+		// printf("\nhey guys\n");
+		if (resize_buffer() == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		tputs(tgetstr("bl", 0), 1, my_putchar);
-		ret = resize_buffer();
 		buffer = cursor->buffer;
 	}
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
-			g_shell_env.buffer->length - cursor->position);
+			cursor->buffer_length - cursor->position);
 	buffer[cursor->position] = byte;
-	g_shell_env.buffer->length++;
+		g_shell_env.buffer->length++;
+	cursor->buffer_length++;
 	update_buffer(buffer + cursor->position, 1);
 	return (EXIT_SUCCESS);
 }
