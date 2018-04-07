@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/06 19:23:26 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 19:39:08 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef	struct		s_terminf
 	char				*term_buff; /* FREE */
 }					t_terminf;
 
+void				__attribute__((deprecated)) *ft_memalloc(size_t size);
 
 //
 // typedef struct		s_env
