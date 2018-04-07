@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/24 16:47:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/25 00:01:51 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/06 17:11:14 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 # define ERROR_H
 # include "libft.h"
 
-# define FATAL_ERROR(x)	fatal_error(x)
-# define DEFAULT_ERROR	default_error()
+# define NONFATAL			0
+# define FATAL				!NONFATAL
+# define FATAL_ERROR(x)		fatal_error(x)
+# define DEFAULT_ERROR(x)	default_error(x)
 
 /*
 ** error.c
 */
 
-void	default_error(void);
+void	default_error(t_bool fatal);
 void	fatal_error(const char *msg);
 void	sh_error(const char *prefix, const char *err, const char *param);
 
