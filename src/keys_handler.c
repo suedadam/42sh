@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:27:23 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 21:39:15 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int		regular_text(char byte)
 	char		*buffer;
 
 	cursor = &(g_shell_env.cursor);
-	buffer = cursor->buffer;
-	if (!buffer)
+	if (!(buffer = cursor->buffer))
 		return (EXIT_FAILURE);
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 	{
@@ -118,11 +117,11 @@ static int		multibyte(char byte)
 	if (T_MPASS == 1 && byte == 27)
 		T_DBLESC = 1;
 	if ((ret = multibyte_dispatch(byte)) >= 0)
-		multibyte_jump[ret](byte);
-	else
-		return (EXIT_FAILURE);
-	T_MPASS = 0;
-	return (EXIT_SUCCESS);
+	{
+		T_MPASS = 0;
+		return (multibyte_jump[ret](byte));
+	}
+	return (EXIT_FAILURE);
 }
 
 int				handle_keys(char byte)

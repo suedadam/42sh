@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/06 19:27:06 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 22:29:51 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,27 @@ static int		checktty(void)
 
 static int		reset_terminal(void)
 {
-	return (EXIT_SUCCESS);
+	if (g_shell_env.shell_tty)
+	{
+		free(g_shell_env.shell_tty);
+		g_shell_env.shell_tty = NULL;
+	}
+	return (init_shellenv());
 }
 
-static inline __attribute__((always_inline)) void ft_c_dispatch()
+static inline __attribute__((always_inline)) int ft_c_dispatch()
 {
 	if (T_BSLASH)
-		backslash_char();
+		return (backslash_char());
 	else if (T_QUOTE | T_DQUOTE)
-		quote_mode();
+		return (quote_mode());
 	else
 	{
 		if (ft_linefeed() == EXIT_FAILURE
 			|| checktty() == EXIT_FAILURE)
-			reset_terminal();
+			return (reset_terminal());
 	}
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -49,7 +55,6 @@ int				ft_read_loop(void)
 		return (EXIT_FAILURE);
 	while ((ret = read(STDIN_FILENO, &byte, 1)) == 1)
 	{
-/*	ft_printf("byte : <%d>\n", byte); */
 		if (byte == 4 && !(*g_shell_env.buffer->buff))
 		{
 			if (reset_prompt())
@@ -57,9 +62,15 @@ int				ft_read_loop(void)
 			break ;
 		}
 		else if (byte == 10)
-			ft_c_dispatch();
+		{
+			if (ft_c_dispatch() == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 		else if (handle_keys(byte) == EXIT_FAILURE)
-			reset_terminal();
+		{
+			if (reset_terminal() == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 	}
 	if (ret < 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_j.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:34:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 12:20:07 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 22:48:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 int		control_j(void)
 {
-	ft_linefeed();
-	return (EXIT_SUCCESS);
+	return (ft_linefeed());
 }

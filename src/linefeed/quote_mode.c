@@ -6,21 +6,29 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 11:25:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 18:32:41 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 21:20:09 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		quote_mode(void)
+int		quote_mode(void)
 {
-	char	*temp;
+	static char	*cache;
 
-	temp = tgetstr("do", NULL);
-	tputs(temp, 1, my_putchar);
+	if (!cache)
+		cache = tgetstr("do", NULL);
+	tputs(cache, 1, my_putchar);
 	if (T_QUOTE)
-		new_prompt("quote> ");
+	{
+		if (new_prompt("quote> ") == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
 	else if (T_DQUOTE)
-		new_prompt("dquote> ");
+	{
+		if (new_prompt("dquote> ") == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
 	get_cursor_first_position();
+	return (EXIT_SUCCESS);
 }

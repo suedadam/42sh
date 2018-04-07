@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/06 15:45:36 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 21:31:12 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	init_termcaps(void)
 **	Cursor is already initialized to zero with the ft_memalloc in shell_env
 */
 
-static int	init_shellenv(void)
+int			init_shellenv(void)
 {
 	if (!(g_shell_env.shell_tty = malloc(sizeof(struct termios)))
 		|| (!(isatty(STDIN_FILENO)))

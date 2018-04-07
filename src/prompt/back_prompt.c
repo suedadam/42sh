@@ -6,20 +6,21 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:56:33 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 18:28:25 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 21:31:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		back_prompt(void)
+int		back_prompt(void)
 {
-	char	*temp;
+	static char	*cache = NULL;
 
-	temp = tgetstr("do", NULL);
-	tputs(temp, 1, my_putchar);
-	new_prompt("> ");
-	// n = ft_printf("> ");
-	// g_shell_env.prompt_length = n;
+	if (!cache)
+		cache = tgetstr("do", NULL);
+	tputs(cache, 1, my_putchar);
+	if (new_prompt("> ") == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	get_cursor_first_position();
+	return (EXIT_SUCCESS);
 }

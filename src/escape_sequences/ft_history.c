@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:06:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 16:28:33 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 22:24:39 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		ft_history(char byte)
+int		ft_history(__attribute__((unused)) char byte)
 {
-	byte = 0;
-
 	return (EXIT_SUCCESS);
 }

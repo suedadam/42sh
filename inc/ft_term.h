@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/06 19:39:08 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 22:12:22 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,12 @@ void				__attribute__((deprecated)) *ft_memalloc(size_t size);
 // }					t_env;
 
 /*
+** main
+*/
+
+int		init_shellenv(void);
+
+/*
 **		Error handling (error.c)
 */
 
@@ -189,7 +195,7 @@ int		ft_read_loop(void);
 
 int		new_prompt(char *prompt);
 int		reset_prompt(void);
-void	back_prompt(void);
+int		back_prompt(void);
 
 /*
 **		prompt_utils
@@ -286,24 +292,22 @@ int		backslash_char(void);
 */
 void		update_end_of_screen(void);
 void		update_buffer(char *buffer, int inc);
-void		quote_mode(void);
-void		window_resize(int c);
+int			quote_mode(void);
 void		relative_move_cursor(t_cursor *cursor);
 int			scroll_up(void);
 int			scroll_down(void);
-void		resize_prompt(void);
+void		__attribute__((deprecated)) resize_prompt(void);
 
 void		invisible_cursor(void);
 void		visible_cursor(void);
 
-int			del_lines(void);
+int			__attribute__((deprecated)) del_lines(void);
 
 /*
 **		initialize tokens
 */
-void		init_tokens(void);
 
-int			count_lines(void);
+int			__attribute__((deprecated)) count_lines(void);
 
 /*
 **		Advanced editing

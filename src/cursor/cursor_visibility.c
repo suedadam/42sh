@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_visibility.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 14:30:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/04 20:24:10 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:52:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 void		invisible_cursor(void)
 {
-	char	*temp;
+	static char	*cache = NULL;
 
-	temp = tgetstr("vi", 0);
-	tputs(temp, 1, my_putchar);
+	if (!cache)
+		cache = tgetstr("vi", 0);
+	tputs(cache, 1, my_putchar);
 }
 
 void		visible_cursor(void)
 {
-	char	*temp;
+	static char	*cache = NULL;
 
-	temp = tgetstr("ve", 0);
-	tputs(temp, 1, my_putchar);
+	if (!cache)
+		cache = tgetstr("ve", 0);
+	tputs(cache, 1, my_putchar);
 }

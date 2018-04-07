@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_actions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 13:59:21 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 17:21:34 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:51:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,9 @@ void		cursor_to_end(t_cursor *cursor)
 
 void		cursor_to_left_margin(void)
 {
-	tputs(tgoto(tgetstr("cm", 0), 0, g_shell_env.cursor.og_position.y), 1, &my_putchar);
+	static char	*cache = NULL;
+
+	if (!cache)
+		cache = tgetstr("cm", NULL);
+	tputs(tgoto(cache, 0, g_shell_env.cursor.og_position.y), 1, &my_putchar);
 }

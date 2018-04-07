@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_page.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:30:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 16:32:02 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:53:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		ft_page(__attribute__((unused))char byte)
+int		ft_page(__attribute__((unused)) char byte)
 {
-	byte = 0;
-
 	return (EXIT_SUCCESS);
 }

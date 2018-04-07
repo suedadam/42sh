@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   multibyte_dispatch.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 16:25:30 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 21:39:43 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		multibyte_dispatch(char byte)
+inline __attribute__((always_inline)) int	multibyte_dispatch(char byte)
 {
 	if (byte == 67 || byte == 68 || byte == 70 || byte == 72)
 		return (CURSOR_MOVE);

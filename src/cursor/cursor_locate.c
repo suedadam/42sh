@@ -6,11 +6,15 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:38:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:27:47 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 21:06:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
+
+/*
+** Handle failures. Print to stderr if failure.
+*/
 
 void		cursor_locate(void)
 {
@@ -23,7 +27,6 @@ void		cursor_locate(void)
 	clear_below();
 	cursor_to_left_margin();
 	new_prompt(0);
-	reprint_buffer();
 	g_shell_env.cursor.position = og_curpos;
-	move_cursor(&g_shell_env.cursor);
+	reprint_buffer();
 }

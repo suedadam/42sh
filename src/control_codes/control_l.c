@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 10:58:23 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 18:45:18 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 22:52:56 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int		control_l(void)
 {
-	char	*temp;
+	static char	*cache = NULL;
 
-	temp = tgetstr("cl", 0);
-	tputs(temp, 1, my_putchar);
-	new_prompt(0);
-	reprint_buffer();
-	return (EXIT_SUCCESS);
+	if (!cache)
+		cache = tgetstr("cl", 0);
+	tputs(cache, 1, my_putchar);
+	if (new_prompt(0) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (reprint_buffer());
 }

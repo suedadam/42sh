@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 10:00:39 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:23:18 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 22:48:03 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int		control_c(void)
 {
 	cursor_to_end(&g_shell_env.cursor);
-	reset_buffer();
-	reset_prompt();
+	if (reset_buffer() == EXIT_FAILURE
+		|| reset_prompt() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

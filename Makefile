@@ -1,6 +1,6 @@
 NAME = 42sh
 STAT = lib/libft.a
-CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I inc/
 CC = gcc
 SRCDIR = src/
@@ -17,7 +17,6 @@ RES = \033[0m
 SRC += backslash_char
 SRC += change_terminal
 SRC += error
-SRC += init_tokens 
 SRC += keys_handler
 SRC += main
 SRC += my_putchar
@@ -29,7 +28,6 @@ SRC += buffer/init_buffer
 SRC += buffer/reprint_buffer
 SRC += buffer/reset_buffer
 SRC += buffer/resize_buffer
-SRC += buffer/shift_buffer
 SRC += buffer/update_buffer
 
 # CONTROL CHARACTERS
@@ -75,7 +73,6 @@ SRC += escape_sequences/screen_scroll
 
 # LINEFEED
 SRC += linefeed/linefeed
-SRC += linefeed/linefeed_disatch
 SRC += linefeed/quote_mode
 
 # PROMPT
@@ -89,7 +86,6 @@ SRC += screen/count_lines
 SRC += screen/del_lines
 SRC += screen/update_screen
 SRC += screen/get_window_size
-SRC += screen/window_resize
 SRC += screen/clear_below
 
 # GENERAL LIBFT FUNCTIONS
@@ -150,7 +146,7 @@ $(NAME): $(OBJLIB) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	ar -rcs $(STAT) $(OBJLIB)
 	@ echo "$(YELLOW)Compiling ftls program$(RES)"
-	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap $(OBJSRC) -o $(NAME)
+	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap ft_malloc/libft_malloc_x86_64_Darwin.so $(OBJSRC) -o $(NAME)
 	@install_name_tool -change libft_malloc_x86_64_Darwin.so $(PWD)/ft_malloc/libft_malloc_x86_64_Darwin.so 42sh
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_screen_utils.c                              :+:      :+:    :+:   */
+/*   update_screen.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 23:35:13 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/05 12:01:28 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 21:29:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void		update_end_of_screen(void)
 			>= g_shell_env.window.ws_row)
 	{
 		g_shell_env.cursor.og_position.y--;
-		ft_putchar_fd('\n', 0);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	}
 }

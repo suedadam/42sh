@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:27:44 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 18:47:09 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 22:53:53 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 int		control_newline(void)
 {
-	control_c();
-	return (EXIT_SUCCESS);
+	return (control_c());
 }
