@@ -12,6 +12,7 @@ GREEN = \033[1;32m
 YELLOW = \033[1;33m
 CYAN = \033[1;36m
 RES = \033[0m
+MALLOC = 
 
 # FILEIO SOURCE
 SRC += backslash_char
@@ -142,7 +143,10 @@ LIB += ft_printf/ulitobase
 
 all: $(NAME)
 
-$(NAME): $(OBJLIB) $(OBJSRC)
+$(MALLOC):
+	@make -C ft_malloc
+
+$(NAME): $(MALLOC) $(OBJLIB) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	ar -rcs $(STAT) $(OBJLIB)
 	@ echo "$(YELLOW)Compiling ftls program$(RES)"
