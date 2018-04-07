@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   ft_getopt.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/24 16:47:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/06 17:11:14 by sgardner         ###   ########.fr       */
+/*   Created: 2018/04/04 18:43:33 by sgardner          #+#    #+#             */
+/*   Updated: 2018/04/04 18:54:21 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
-# include "libft.h"
+#ifndef FT_GETOPT_H
+# define FT_GETOPT_H
 
-# define NONFATAL			0
-# define FATAL				!NONFATAL
-# define FATAL_ERROR(x)		fatal_error(x)
-# define DEFAULT_ERROR(x)	default_error(x)
+int	ft_getopt(int ac, char *const av[], const char *optstring);
 
-/*
-** error.c
-*/
-
-void	default_error(t_bool fatal);
-void	fatal_error(const char *msg);
-void	sh_error(const char *prefix, const char *err, const char *param);
-
-extern char	*g_pname;
+extern char	*g_optarg;
+extern int	g_optind;
+extern int	g_opterr;
+extern int	g_optopt;
 #endif
