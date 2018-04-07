@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:41:20 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/06 23:04:02 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/07 02:11:14 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	hist_resize(t_hist *hist, int nsize)
 	if (!(hist->arr = ft_memalloc(sizeof(t_log) * nsize)))
 		DEFAULT_ERROR(FATAL);
 	i = 0;
-	max = (nsize >= hist->len) ? hist->len : nsize;
+	max = (nsize > hist->len) ? hist->len : nsize;
 	while (i < max)
 	{
 		offset = HPOS(hist->tail, -(max - 1) + i, hist->size);

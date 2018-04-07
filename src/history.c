@@ -6,14 +6,14 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/06 22:45:48 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/07 05:01:29 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "history.h"
 
-void	hist_add(char *raw, int len)
+t_log	*hist_add(char *raw, int len)
 {
 	t_hist	*hist;
 	t_log	*log;
@@ -32,6 +32,7 @@ void	hist_add(char *raw, int len)
 	log->saved = FALSE;
 	if (hist->len < hist->size)
 		++hist->len;
+	return (log);
 }
 
 void	hist_clear(void)
@@ -72,7 +73,7 @@ void	hist_delete(int offset)
 	hist->tail = HPOS(hist->head, --hist->len - 1, hist->size);
 }
 
-char	*hist_get(int offset)
+t_log	*hist_get(int offset)
 {
 	t_hist	*hist;
 
@@ -83,7 +84,7 @@ char	*hist_get(int offset)
 		return (NULL);
 	}
 	offset = HPOS(hist->head, offset, hist->size);
-	return (hist->arr[offset].data);
+	return (&hist->arr[offset]);
 }
 
 t_hist	*hist_getall(void)

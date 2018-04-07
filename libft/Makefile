@@ -12,6 +12,7 @@ SRC_DIR = src
 SRC = \
 	atoi\
 	getopt\
+	gnl\
 	itoa\
 	memalloc\
 	memccpy\
