@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/06 15:53:20 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 19:27:06 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int				ft_read_loop(void)
 		return (EXIT_FAILURE);
 	while ((ret = read(STDIN_FILENO, &byte, 1)) == 1)
 	{
+/*	ft_printf("byte : <%d>\n", byte); */
 		if (byte == 4 && !(*g_shell_env.buffer->buff))
 		{
 			if (reset_prompt())

@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reset_buffer.c                                     :+:      :+:    :+:   */
+/*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 10:45:25 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:29:12 by asyed            ###   ########.fr       */
+/*   Created: 2018/04/06 13:06:48 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/06 16:28:33 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int			reset_buffer(void)
+int		ft_history(char byte)
 {
-	free(g_shell_env.buffer->buff);
-	g_shell_env.buffer->buff = NULL;
-	free(g_shell_env.buffer);
-	g_shell_env.buffer = NULL;
-	return (init_buffer());
+	byte = 0;
+
+	return (EXIT_SUCCESS);
 }

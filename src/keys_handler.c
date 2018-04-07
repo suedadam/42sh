@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:17:15 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/06 19:27:23 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static int		(*multibyte_jump[])(char byte) = {
 	ft_delete,
 	ft_shift,
 	ft_alt,
-	ft_scroll
+	ft_scroll,
+	ft_history,
+	ft_page
 };
 
 static int		(*control_jump[])() = {
@@ -66,6 +68,8 @@ int		regular_text(char byte)
 
 	cursor = &(g_shell_env.cursor);
 	buffer = cursor->buffer;
+	if (!buffer)
+		return (EXIT_FAILURE);
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 	{
 		if (resize_buffer() == EXIT_FAILURE)
