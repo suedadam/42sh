@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reset_buffer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:45:25 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 10:48:01 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 15:11:16 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 int			reset_buffer(void)
 {
-	int	ret;
-
 	free(g_shell_env.buffer->buff);
 	free(g_shell_env.buffer);
-	ret = init_buffer();
-	return (ret);
+	return (init_buffer());
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_buffer.c                                   :+:      :+:    :+:   */
+/*   init_buffer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:43:44 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 10:48:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 15:38:36 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int			init_buffer(void)
 {
 	if (!(g_shell_env.buffer = (t_buffer *)ft_memalloc(sizeof(t_buffer)))
-		|| !(g_shell_env.buffer->buff = (char *)ft_strnew(BUFF_SIZE)))
+		|| !(g_shell_env.buffer->buff = (char *)ft_memalloc(BUFF_SIZE + 1)))
 		return (EXIT_FAILURE);
-	init_tokens();
+	bzero(&(g_shell_env.tokens), sizeof(t_tokens));
 	g_shell_env.paperweight.buff = 0;
 	g_shell_env.cursor.buffer = g_shell_env.buffer->buff;
 	g_shell_env.buffer->length = 0;

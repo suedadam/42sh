@@ -33,12 +33,10 @@ SRC += buffer/shift_buffer
 SRC += buffer/update_buffer
 
 # CONTROL CHARACTERS
-SRC += control_codes/control_dispatch
 SRC += control_codes/control_a
 SRC += control_codes/control_c
 SRC += control_codes/control_e
 SRC += control_codes/control_l
-SRC += control_codes/control_g
 SRC += control_codes/control_h
 SRC += control_codes/control_j
 SRC += control_codes/control_k
@@ -151,6 +149,7 @@ $(NAME): $(OBJLIB) $(OBJSRC)
 	ar -rcs $(STAT) $(OBJLIB)
 	@ echo "$(YELLOW)Compiling ftls program$(RES)"
 	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap $(OBJSRC) -o $(NAME)
+	@install_name_tool -change libft_malloc_x86_64_Darwin.so $(PWD)/ft_malloc/libft_malloc_x86_64_Darwin.so 42sh
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 %.o: %.c

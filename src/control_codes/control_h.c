@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_h.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:32:54 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/01 20:01:32 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:14:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 int		control_h(void)
 {
-	ft_backspace();
-	return (EXIT_SUCCESS);
+	return (ft_backspace());
 }

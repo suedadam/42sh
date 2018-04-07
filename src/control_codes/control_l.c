@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_l.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 10:58:23 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 12:22:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 18:45:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ int		control_l(void)
 	tputs(temp, 1, my_putchar);
 	new_prompt(0);
 	reprint_buffer();
-	move_cursor(&g_shell_env.cursor);
 	return (EXIT_SUCCESS);
 }

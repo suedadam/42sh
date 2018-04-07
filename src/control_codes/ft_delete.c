@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/02 15:03:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 18:40:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			ft_delete(char byte)
 		g_shell_env.buffer->length--;
 		delete_last(cursor->position, cursor);
 		// cursor->position--;
-		update_buffer(buffer + cursor->position);
+		update_buffer(buffer + cursor->position, 0);
 	}
 	return (ret == ERR ? EXIT_FAILURE : EXIT_SUCCESS);
 }

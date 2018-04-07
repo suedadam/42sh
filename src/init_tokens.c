@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:16:29 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 20:16:44 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:19:01 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,5 @@
 
 void		init_tokens(void)
 {
-	g_shell_env.tokens.mpass = 0;
-	g_shell_env.tokens.bslash = 0;
-	g_shell_env.tokens.control_v = 0;
-	g_shell_env.tokens.quote = 0;
-	g_shell_env.tokens.dquote = 0;
-	g_shell_env.tokens.dblesc = 0;
+	bzero(&(g_shell_env.tokens), sizeof(t_tokens));
 }

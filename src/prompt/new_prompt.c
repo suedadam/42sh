@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 11:55:41 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:20:01 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-void		new_prompt(char *prompt)
+int			new_prompt(char *prompt)
 {
-	char		pwd[4096];
+	char		*pwd;
 	t_cursor	*cursor;
 	size_t		length;
 	int			n;
 
-	getcwd(pwd, 4096);
-	get_window_size();
+	if (get_window_size() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	cursor = &(g_shell_env.cursor);
 	if (prompt)
 	{
@@ -30,9 +30,17 @@ void		new_prompt(char *prompt)
 		n = ft_printf("%s", prompt);
 	}
 	else
+	{
+		if (!(pwd = getcwd(NULL, 0)))
+		{
+			g_ft_errnum = TERMGET;
+			return (EXIT_FAILURE);
+		}
 		n = ft_printf("42sh [%s] %% ", pwd);
+		free(pwd);
+	}
 	g_shell_env.prompt_length = n;
 	cursor->position = 0;
 	get_cursor_first_position();
-//	init_tokens();
+	return (EXIT_SUCCESS);
 }

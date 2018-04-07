@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_term.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Updated: 2018/03/29 16:24:10 by tle-huu-         ###   ########.fr       */
+/*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
+/*   Updated: 2018/04/06 19:23:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TERM_H
 # define FT_TERM_H
-
-
 # include <curses.h>
 # include <fcntl.h>
 # include <sys/uio.h>
@@ -34,6 +33,7 @@
 # define BUFF_SIZE 1024
 # define UNSET (void *)
 
+# define PRINTABLE(c) (c >= 32 && c <= 126)
 #define T_BSLASH (g_shell_env.tokens.bslash)
 #define T_MPASS (g_shell_env.tokens.mpass)
 #define T_QUOTE (g_shell_env.tokens.quote)
@@ -185,14 +185,14 @@ int		ft_read_loop(void);
 **		prompt_utils
 */
 
-void		new_prompt(char *prompt);
-void		reset_prompt(void);
-void		back_prompt(void);
+int		new_prompt(char *prompt);
+int		reset_prompt(void);
+void	back_prompt(void);
 
 /*
 **		prompt_utils
 */
-int			ft_linefeed(void);
+int		ft_linefeed(void);
 
 /*
 **		buffer_utils
@@ -254,7 +254,7 @@ void		get_cursor_first_position(void);
 **		utils
 */
 
-void		control_c(int c);
+int			control_c(void);
 int			control_a(void);
 int			control_y(void);
 int			control_k(void);
@@ -283,8 +283,8 @@ int		backslash_char(void);
 **		update screen utils
 */
 void		update_end_of_screen(void);
-void		update_buffer(char *buffer);
-void		quote_mode(char byte);
+void		update_buffer(char *buffer, int inc);
+void		quote_mode(void);
 void		window_resize(int c);
 void		relative_move_cursor(t_cursor *cursor);
 int			scroll_up(void);

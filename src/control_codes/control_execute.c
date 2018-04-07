@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   control_execute.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:41:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 18:09:52 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 18:47:29 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 
-int		control_execute(char byte)
+int		control_execute()
 {
-	byte = 0;
 	return (EXIT_SUCCESS);
 }

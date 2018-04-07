@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 11:27:37 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 19:17:15 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,75 +22,78 @@ static int		(*multibyte_jump[])(char byte) = {
 
 static int		(*control_jump[])() = {
 	control_a,
+	NULL,
+	NULL,
+	NULL,
 	control_e,
-	control_g,
+	NULL,
+	control_c,
 	control_h,
+	NULL,
 	control_j,
 	control_k,
 	control_l,
 	control_m,
+	NULL,
 	control_o,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
 	control_u,
 	control_v,
 	control_w,
-	control_y
+	NULL,
+	control_y,
 };
 
-static int		control_char(char byte)
+static inline __attribute__((always_inline)) int	control_char(char byte)
 {
-	int	ret;
+	int	(*f)();
 
-	ret = EXIT_SUCCESS;
-	if ((ret = control_dispatch(byte)) < 0)
-		return (EXIT_FAILURE);
-	else
-		ret = control_jump[ret]();
-  return (ret);
+	if (byte == 127)
+		byte = 8;
+	if (!(f = control_jump[(int)byte - 1]))
+		return (EXIT_SUCCESS);
+ 	return ((*f)());
 }
 
 int		regular_text(char byte)
 {
 	t_cursor	*cursor;
 	char		*buffer;
-	int			ret;
 
-	ret = EXIT_SUCCESS;
 	cursor = &(g_shell_env.cursor);
 	buffer = cursor->buffer;
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 	{
-		ret = resize_buffer();
+		if (resize_buffer() == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		buffer = cursor->buffer;
 	}
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
 			g_shell_env.buffer->length - cursor->position);
 	buffer[cursor->position] = byte;
 	g_shell_env.buffer->length++;
-	update_buffer(buffer + cursor->position);
-	cursor->position++;
-	move_cursor(cursor);
-	return (ret);
+	update_buffer(buffer + cursor->position, 1);
+	return (EXIT_SUCCESS);
 }
 
 static int		one_byte(char byte)
 {
-	int		ret;
-
-	ret = EXIT_SUCCESS;
-	// ft_printf("voici byte et t quote : |%c| & |%d|\n", byte, T_QUOTE);
-	if (T_BSLASH)
-		T_BSLASH = 0;
+	T_BSLASH = 0;
 	if (byte == '\\')
 		T_BSLASH = 1;
 	else if (byte == '\'')
 		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
 	else if (byte == '\"')
-		(T_DQUOTE == 1) ? (T_DQUOTE = 0) : (T_DQUOTE = 1);
-	if (byte >= 32 && byte <= 126)
-		ret = regular_text(byte);
-	else if (byte < 32 || byte == 127)
-		ret = control_char(byte);
-	return (ret);
+		T_DQUOTE = (T_DQUOTE == 1) ? 0 : 1;
+	if (PRINTABLE(byte))
+		return (regular_text(byte));
+	else if (!PRINTABLE(byte))
+		return (control_char(byte));
+	return (EXIT_SUCCESS);
 }
 
 static int		multibyte(char byte)
@@ -105,16 +108,11 @@ static int		multibyte(char byte)
 	}
 	else if (T_MPASS == 1 && (byte != '[' && byte != 27))
 	{
-		one_byte(byte);
 		T_MPASS = 0;
-		return (EXIT_SUCCESS);
+		return (one_byte(byte));
 	}
 	if (T_MPASS == 1 && byte == 27)
-	{
-		// ft_printf("bdl");
 		T_DBLESC = 1;
-	}
-	// ft_printf("\n\nbyte : |%d|\n", byte);
 	if ((ret = multibyte_dispatch(byte)) >= 0)
 		multibyte_jump[ret](byte);
 	else
@@ -125,14 +123,7 @@ static int		multibyte(char byte)
 
 int				handle_keys(char byte)
 {
-	int		ret;
-	int		token;
-
-	ret = EXIT_SUCCESS;
-	token = 0;
 	if (byte == 27 || T_MPASS)
-		ret = multibyte(byte);
-	else
-		ret = one_byte(byte);
-	return (ret);
+		return (multibyte(byte));
+	return (one_byte(byte));
 }
