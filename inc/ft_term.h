@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/06 22:12:22 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/07 14:49:31 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 5
 # define UNSET (void *)
 
 # define PRINTABLE(c) (c >= 32 && c <= 126)
@@ -89,6 +89,8 @@ typedef struct	s_cursor
 	t_vertex		og_screen;
 	size_t			position;
 	char			*buffer;
+	size_t			buffer_length;
+	// t_buffer		buffer;
 	int				highlighted;
 }				t_cursor;
 

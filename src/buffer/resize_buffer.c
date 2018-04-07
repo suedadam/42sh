@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resize_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:46:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 16:28:32 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/07 14:48:05 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,47 @@
 
 int			resize_buffer(void)
 {
-	char	*newbuff;
-	size_t	max_size;
+	t_cursor	*cursor;
+	char		*new_buffer;
+	char		*old_buffer;
+	size_t		max_size;
+	size_t		offset;
 
 	max_size = g_shell_env.buffer->max_size;
 	if (!(newbuff = (char *)malloc(sizeof(char) * (max_size + BUFF_SIZE + 1))))
 		return (EXIT_FAILURE);
-	ft_memcpy(newbuff, g_shell_env.buffer->buff, max_size);
-	free(g_shell_env.buffer->buff);
-	g_shell_env.buffer->buff = newbuff;
-	g_shell_env.cursor.buffer = g_shell_env.buffer->buff;
-	g_shell_env.buffer->max_size = max_size + BUFF_SIZE;
+	ft_memmove(new_buffer, g_shell_env.buffer->buff, max_size);
+	g_shell_env.buffer->max_size *= 2;
+	cursor = &(g_shell_env.cursor);
+	offset = cursor->buffer - g_shell_env.buffer->buff;
+	free(old_buffer);
+	old_buffer = 0;
+	g_shell_env.buffer->buff = new_buffer;
+	cursor->buffer = new_buffer + offset;
 	return (EXIT_SUCCESS);
 }
+
+
+// int			resize_buffer(void)
+// {
+// 	char		*newbuff;
+// 	char		*oldbuff;
+// 	t_cursor	*cursor;
+// 	size_t		max_size;
+// 	size_t		length;
+//
+// 	cursor = g_shell_env.cursor;
+// 	if (!(oldbuff = cursor->buffer))
+// 		return (EXIT_FAILURE);
+// 	max_size = g_shell_env.buffer->max_size;
+// 	length = g_shell_env.buffer->length;
+// 	if (!(newbuff = (char *)ft_memalloc(sizeof(char) * (2 * length))))
+// 		return (EXIT_FAILURE);
+// 	ft_memcpy(newbuff, g_shell_env.buffer->buff, length);
+// 	free(g_shell_env.buffer->buff);
+// 	g_shell_env.buffer->buff = 0;
+// 	g_shell_env.buffer->buff = newbuff;
+// 	 = g_shell_env.buffer->buff;
+// 	g_shell_env.buffer->max_size += length;
+// 	return (EXIT_SUCCESS);
+// }

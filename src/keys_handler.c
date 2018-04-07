@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 21:39:15 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/07 14:48:11 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int		regular_text(char byte)
 		return (EXIT_FAILURE);
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 	{
-		if (resize_buffer() == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		// ft_printf("\nhey guys\n");
+		tputs(tgetstr("bl", 0), 1, my_putchar);
+		ret = resize_buffer();
 		buffer = cursor->buffer;
 	}
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,

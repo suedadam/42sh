@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:20:01 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/07 14:48:04 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			new_prompt(char *prompt)
 		length = g_shell_env.buffer->length;
 		cursor->buffer = cursor->buffer + length;
 		g_shell_env.buffer->length = 0;
+		cursor->buffer.length = 0;
 		n = ft_printf("%s", prompt);
 	}
 	else
