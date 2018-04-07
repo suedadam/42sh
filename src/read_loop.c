@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/05 13:57:54 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/06 16:34:10 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,14 @@ int				ft_read_loop(void)
 	init_tokens();
 	while (read(STDIN_FILENO, &byte, 1) == 1)
 	{
+/*	ft_printf("byte : <%d>\n", byte); */
 		if (byte == 4 && !(*g_shell_env.buffer->buff))
 		{
 			reset_prompt();
 			break ;
 		}
-		/*
-		else if (byte == 10)
-			ft_carriage_dispatch(byte);
-			*/
+/*		else if (byte == 10)
+			ft_carriage_dispatch(byte); */
 		else if (byte == 10 && T_BSLASH)
 			backslash_char();
 		else if (byte == 10 && (T_QUOTE | T_DQUOTE))

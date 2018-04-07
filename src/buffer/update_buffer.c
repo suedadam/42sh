@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 12:00:49 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/05 12:01:26 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 17:21:58 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ void		update_buffer(char *buffer)
 	/*
 	** putstr ?
 	*/
-	while (buffer[i])
+	if (buffer)
 	{
-		ft_putchar_fd(buffer[i], 0);
-		i++;
+		while (buffer && buffer[i])
+		{
+			ft_putchar_fd(buffer[i], 0);
+			i++;
+		}
+		update_end_of_screen();
+		g_shell_env.cursor.position = position;
+		move_cursor(&g_shell_env.cursor);
 	}
-	update_end_of_screen();
-	g_shell_env.cursor.position = position;
-	move_cursor(&g_shell_env.cursor);
 }

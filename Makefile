@@ -50,8 +50,6 @@ SRC += control_codes/control_w
 SRC += control_codes/control_y
 SRC += control_codes/control_newline
 SRC += control_codes/control_execute
-SRC += control_codes/ft_backspace
-SRC += control_codes/ft_delete
 
 # CURSOR
 SRC += cursor/cursor_actions
@@ -71,6 +69,11 @@ SRC += escape_sequences/multibyte_dispatch
 SRC += escape_sequences/ft_linemove
 SRC += escape_sequences/ft_shift
 SRC += escape_sequences/ft_alt
+SRC += escape_sequences/ft_backspace
+SRC += escape_sequences/ft_delete
+SRC += escape_sequences/ft_history
+SRC += escape_sequences/ft_page
+SRC += escape_sequences/screen_scroll
 
 # LINEFEED
 SRC += linefeed/linefeed
@@ -86,7 +89,6 @@ SRC += prompt/resize_prompt
 # SCREEN
 SRC += screen/count_lines
 SRC += screen/del_lines
-SRC += screen/screen_scroll
 SRC += screen/update_screen
 SRC += screen/get_window_size
 SRC += screen/window_resize

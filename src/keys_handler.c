@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 11:27:37 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/06 17:12:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static int		(*multibyte_jump[])(char byte) = {
 	ft_delete,
 	ft_shift,
 	ft_alt,
-	ft_scroll
+	ft_scroll,
+	ft_history,
+	ft_page
 };
 
 static int		(*control_jump[])() = {
@@ -57,6 +59,8 @@ int		regular_text(char byte)
 	ret = EXIT_SUCCESS;
 	cursor = &(g_shell_env.cursor);
 	buffer = cursor->buffer;
+	if (!buffer)
+		return (EXIT_FAILURE);
 	if (g_shell_env.buffer->length == g_shell_env.buffer->max_size)
 	{
 		ret = resize_buffer();
@@ -110,11 +114,7 @@ static int		multibyte(char byte)
 		return (EXIT_SUCCESS);
 	}
 	if (T_MPASS == 1 && byte == 27)
-	{
-		// ft_printf("bdl");
 		T_DBLESC = 1;
-	}
-	// ft_printf("\n\nbyte : |%d|\n", byte);
 	if ((ret = multibyte_dispatch(byte)) >= 0)
 		multibyte_jump[ret](byte);
 	else

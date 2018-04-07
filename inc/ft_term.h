@@ -48,7 +48,8 @@ enum {
 	SHIFT,
 	ALT,
 	SCROLL,
-	HISTORY
+	HISTORY,
+	PAGE
 };
 
 enum {
@@ -320,5 +321,7 @@ int		regular_text(char byte);
 void	clear_below(void);
 void	cursor_to_left_margin(void);
 int		ft_scroll(char byte);
+int		ft_history(char byte);
+int		ft_page(char byte);
 
 #endif
