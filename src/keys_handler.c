@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 16:40:50 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 18:10:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ static int		one_byte(char byte)
 	T_BSLASH = 0;
 	if (byte == '\\')
 		T_BSLASH = 1;
-	else if (byte == '\'')
+	else if (byte == '\''  && !T_DQUOTE)
 		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
-	else if (byte == '\"')
+	else if (byte == '\"' && !T_QUOTE)
 		T_DQUOTE = (T_DQUOTE == 1) ? 0 : 1;
 	if (PRINTABLE(byte))
 		return (regular_text(byte));
