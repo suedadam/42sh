@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 17:37:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 17:57:55 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int		different_prompt(char *prompt)
 	{
 		cursor->buffer += cursor->buffer_length;
 		cursor->buffer_length = 0;
-		n = ft_printf("%s", prompt);
+		n = ft_printf("%s%s%s", YEL, prompt, NRM);
 	}
 	return (n);
 }
