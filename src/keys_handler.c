@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 18:10:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/07 18:29:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static inline __attribute__((always_inline)) int control_char(char byte)
 {
 	int	(*f)();
 
+	if (byte > 127 || byte < 0)
+		return (EXIT_FAILURE);
 	if (byte == 127)
 		byte = 8;
 	if (!(f = control_jump[(int)byte - 1]))
