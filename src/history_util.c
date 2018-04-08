@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:41:20 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 02:11:14 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/07 23:13:10 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ void	hist_resize(t_hist *hist, int nsize)
 	max = (nsize > hist->len) ? hist->len : nsize;
 	while (i < max)
 	{
-		offset = HPOS(hist->tail, -(max - 1) + i, hist->size);
-		if (!tmp[offset].data)
+		if (!tmp[(offset = HPOS(hist->tail, -(max - 1) + i, hist->size))].data)
 			break ;
 		hist->arr[i++] = tmp[offset];
 	}
-	free(tmp);
+	max = hist->len - i;
 	hist->len = i;
+	i = 0;
+	while (i < max)
+		free(tmp[HPOS(hist->head, i++, hist->size)].data);
+	free(tmp);
 	hist->size = nsize;
 	hist->head = 0;
 	hist->tail = (hist->len) ? hist->len - 1 : 0;

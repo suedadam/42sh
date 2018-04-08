@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 17:02:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 05:16:21 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/07 23:36:04 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 */
 
 # define HISTSIZE		500
+# define GROWTH_PAD		150
 # define HISTFILE		".shella_history"
 # define HISTFILESIZE	0
 
@@ -55,6 +56,7 @@ typedef struct	s_hist
 	t_log		*arr;
 	int			len;
 	int			size;
+	int			maxsize;
 	int			head;
 	int			tail;
 }				t_hist;

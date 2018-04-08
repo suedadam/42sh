@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 05:10:30 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/07 23:33:25 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		hist_save(char *path, t_hist *hist, int lines, t_bool append)
 	max = (HISTFILESIZE) ? HISTFILESIZE : hist->len;
 	while (i < hist->len && i < max)
 	{
-		if ((log = hist_get(i++)) || !append)
+		if (!(log = hist_get(i++))->saved || !append)
 		{
 			write(fd, log->data, log->len);
 			write(fd, "\n", 1);

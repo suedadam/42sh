@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 05:01:29 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/07 18:39:56 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ t_log	*hist_add(char *raw, int len)
 	t_log	*log;
 
 	hist = hist_getall();
+	if (hist->size < hist->maxsize && hist->len == hist->size)
+	{
+		if (hist->size * 2 > hist->maxsize)
+			hist_resize(hist, hist->maxsize);
+		else
+			hist_resize(hist, hist->size * 2);
+	}
 	if (hist->len > 0)
 		hist->tail = HPOS(hist->tail, 1, hist->size);
 	log = &hist->arr[hist->tail];
@@ -38,15 +45,23 @@ t_log	*hist_add(char *raw, int len)
 void	hist_clear(void)
 {
 	t_hist	*hist;
+	int		nsize;
 	int		i;
 
-	i = 0;
 	hist = hist_getall();
-	while (i < hist->size)
-		ft_memset(&hist->arr[i++], 0, sizeof(t_log));
+	if (hist->len > GROWTH_PAD)
+	{
+		nsize = (hist->maxsize < GROWTH_PAD) ? hist->maxsize : GROWTH_PAD;
+		hist_resize(hist, nsize);
+	}
+	while (hist->len)
+	{
+		i = HPOS(hist->head, --hist->len, hist->size);
+		free(hist->arr[i].data);
+		ft_memset(&hist->arr[i], 0, sizeof(t_log));
+	}
 	hist->head = 0;
 	hist->tail = 0;
-	hist->len = 0;
 }
 
 void	hist_delete(int offset)
@@ -90,18 +105,26 @@ t_log	*hist_get(int offset)
 t_hist	*hist_getall(void)
 {
 	static t_hist	hist;
-	int				hsize;
+	int				size;
 
-	if (!(hsize = HISTSIZE))
-		hsize = 500;
+	if (!(hist.maxsize = HISTSIZE))
+		hist.maxsize = 500;
 	if (!hist.arr)
 	{
-		if (!(hist.arr = ft_memalloc(sizeof(t_log) * hsize)))
+		size = (hist.maxsize < GROWTH_PAD) ? hist.maxsize : GROWTH_PAD;
+		if (!(hist.arr = ft_memalloc(sizeof(t_log) * size)))
 			DEFAULT_ERROR(FATAL);
-		hist.size = hsize;
+		hist.size = size;
 		hist_load(HISTFILE, &hist);
 	}
-	if (hist.size != hsize)
-		hist_resize(&hist, hsize);
+	if (hist.size > hist.maxsize)
+		hist_resize(&hist, hist.maxsize);
+	size = hist.size / 2;
+	if (hist.len < size - GROWTH_PAD)
+	{
+		while (hist.len < (size / 2) - GROWTH_PAD)
+			size /= 2;
+		hist_resize(&hist, size);
+	}
 	return (&hist);
 }
