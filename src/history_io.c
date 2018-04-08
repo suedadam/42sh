@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 23:33:25 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 02:53:03 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ void		hist_load(char *path, t_hist *hist)
 	}
 }
 
+static void	write_endl(int fd, char *data, size_t len)
+{
+	data[len] = '\n';
+	write(fd, data, len + 1);
+	data[len] = '\0';
+}
+
 void		hist_save(char *path, t_hist *hist, int lines, t_bool append)
 {
 	t_log	*log;
@@ -84,15 +91,12 @@ void		hist_save(char *path, t_hist *hist, int lines, t_bool append)
 	flags = O_WRONLY | O_CREAT | ((append) ? O_APPEND : O_TRUNC);
 	if ((fd = open(path, flags, 0600)) < 0)
 		return (DEFAULT_ERROR(NONFATAL));
-	i = (lines) ? hist->len - lines : 0;
+	i = (lines && lines < hist->len) ? hist->len - lines : 0;
 	max = (HISTFILESIZE) ? HISTFILESIZE : hist->len;
 	while (i < hist->len && i < max)
 	{
 		if (!(log = hist_get(i++))->saved || !append)
-		{
-			write(fd, log->data, log->len);
-			write(fd, "\n", 1);
-		}
+			write_endl(fd, log->data, log->len);
 	}
 	if (close(fd) < 0)
 		DEFAULT_ERROR(NONFATAL);

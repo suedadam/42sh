@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 17:02:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 23:36:04 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 02:31:42 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ typedef struct	s_hist
 
 t_log			*hist_add(char *raw, int len);
 void			hist_clear(void);
-void			hist_delete(int offset);
+t_bool			hist_delete(int offset);
 t_log			*hist_get(int offset);
-t_hist			*hist_getall(void);
 
 /*
 ** history_io.c
@@ -83,5 +82,6 @@ void			hist_save(char *path, t_hist *hist, int lines, t_bool append);
 */
 
 void			hist_error(int errnum, void *param, t_bool isnum);
+t_hist			*hist_getall(void);
 void			hist_resize(t_hist *hist, int nsize);
 #endif

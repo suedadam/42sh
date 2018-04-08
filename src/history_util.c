@@ -6,14 +6,14 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:41:20 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 23:13:10 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 02:59:27 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "history.h"
 
-void	hist_error(int errnum, void *param, t_bool isnum)
+void			hist_error(int errnum, void *param, t_bool isnum)
 {
 	static const char *errmsg[] = {
 		"history position out of range"
@@ -26,7 +26,41 @@ void	hist_error(int errnum, void *param, t_bool isnum)
 		free(param);
 }
 
-void	hist_resize(t_hist *hist, int nsize)
+static t_hist	*hist_scale(t_hist *hist)
+{
+	int	size;
+
+	if (hist->size > hist->maxsize)
+		hist_resize(hist, hist->maxsize);
+	size = hist->size / 2;
+	if (hist->len < size - GROWTH_PAD)
+	{
+		while (hist->len < (size / 2) - GROWTH_PAD)
+			size /= 2;
+		hist_resize(hist, size);
+	}
+	return (hist);
+}
+
+t_hist			*hist_getall(void)
+{
+	static t_hist	hist;
+	int				size;
+
+	if (!(hist.maxsize = HISTSIZE))
+		hist.maxsize = 500;
+	if (!hist.arr)
+	{
+		size = (hist.maxsize < GROWTH_PAD) ? hist.maxsize : GROWTH_PAD;
+		if (!(hist.arr = ft_memalloc(sizeof(t_log) * size)))
+			DEFAULT_ERROR(FATAL);
+		hist.size = size;
+		hist_load(HISTFILE, &hist);
+	}
+	return (hist_scale(&hist));
+}
+
+void			hist_resize(t_hist *hist, int nsize)
 {
 	t_log	*tmp;
 	int		max;

@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/07 18:39:56 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 02:30:55 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,20 @@ void	hist_clear(void)
 	hist->tail = 0;
 }
 
-void	hist_delete(int offset)
+t_bool	hist_delete(int offset)
 {
 	t_hist	*hist;
 	int		forward;
 
 	hist = hist_getall();
 	if (offset < 0 || offset >= hist->len)
-		return (hist_error(ERR_HIST_OOR, &offset, TRUE));
+		return (FALSE);
 	offset = HPOS(hist->head, offset, hist->size);
 	free(hist->arr[offset].data);
 	ft_memset(&hist->arr[offset], 0, sizeof(t_log));
 	if (hist->head == offset)
 		hist->head = HPOS(hist->head, 1, hist->size);
-	else if (hist->len > 1)
+	else
 	{
 		while ((forward = HPOS(offset, 1, hist->size)) != hist->head)
 		{
@@ -86,6 +86,7 @@ void	hist_delete(int offset)
 		}
 	}
 	hist->tail = HPOS(hist->head, --hist->len - 1, hist->size);
+	return (TRUE);
 }
 
 t_log	*hist_get(int offset)
@@ -100,31 +101,4 @@ t_log	*hist_get(int offset)
 	}
 	offset = HPOS(hist->head, offset, hist->size);
 	return (&hist->arr[offset]);
-}
-
-t_hist	*hist_getall(void)
-{
-	static t_hist	hist;
-	int				size;
-
-	if (!(hist.maxsize = HISTSIZE))
-		hist.maxsize = 500;
-	if (!hist.arr)
-	{
-		size = (hist.maxsize < GROWTH_PAD) ? hist.maxsize : GROWTH_PAD;
-		if (!(hist.arr = ft_memalloc(sizeof(t_log) * size)))
-			DEFAULT_ERROR(FATAL);
-		hist.size = size;
-		hist_load(HISTFILE, &hist);
-	}
-	if (hist.size > hist.maxsize)
-		hist_resize(&hist, hist.maxsize);
-	size = hist.size / 2;
-	if (hist.len < size - GROWTH_PAD)
-	{
-		while (hist.len < (size / 2) - GROWTH_PAD)
-			size /= 2;
-		hist_resize(&hist, size);
-	}
-	return (&hist);
 }
