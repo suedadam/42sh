@@ -6,11 +6,20 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 16:02:29 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 17:04:34 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
+
+#define NRM  "\x1B[0m"
+#define RED  "\x1B[31m"
+#define GRN  "\x1B[32m"
+#define YEL  "\x1B[33m"
+#define BLU  "\x1B[34m"
+#define MAG  "\x1B[35m"
+#define CYN  "\x1B[36m"
+#define WHT  "\x1B[37m"
 
 int			new_prompt(char *prompt)
 {
@@ -36,7 +45,8 @@ int			new_prompt(char *prompt)
 			g_ft_errnum = TERMGET;
 			return (EXIT_FAILURE);
 		}
-		n = ft_printf("42sh [%s] %% ", pwd);
+		n = ft_printf("%s42sh %s[%s%s%s]%s %%%s ", BLU, GRN, RED, pwd, 
+					GRN, YEL, NRM);
 		g_shell_env.cursor.buffer_length = g_shell_env.buffer->length;
 		cursor->buffer = g_shell_env.buffer->buff;
 		free(pwd);
