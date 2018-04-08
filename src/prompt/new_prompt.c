@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 17:04:34 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/07 17:05:44 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			new_prompt(char *prompt)
 			g_ft_errnum = TERMGET;
 			return (EXIT_FAILURE);
 		}
-		n = ft_printf("%s42sh %s[%s%s%s]%s %%%s ", BLU, GRN, RED, pwd, 
+		n = ft_printf("%s42sh %s[%s%s%s]%s %%%s ", CYN, GRN, RED, pwd, 
 					GRN, YEL, NRM);
 		g_shell_env.cursor.buffer_length = g_shell_env.buffer->length;
 		cursor->buffer = g_shell_env.buffer->buff;
