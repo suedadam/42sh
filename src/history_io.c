@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 02:53:03 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 04:43:44 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,34 @@ static void	write_endl(int fd, char *data, size_t len)
 	data[len] = '\n';
 	write(fd, data, len + 1);
 	data[len] = '\0';
+}
+
+void		hist_print(int start, int len)
+{
+	t_hist	*hist;
+	t_log	*log;
+	char	*pre;
+	char	*pos;
+	int		n;
+
+	if (!len)
+		return ;
+	hist = hist_getall();
+	pre = hist_get_prefix(hist, start + len);
+	while (len)
+	{
+		n = start + 1;
+		pos = ft_strrchr(pre, '\0') - 3;
+		while (n)
+		{
+			*pos-- = (n % 10) + '0';
+			n /= 10;
+		}
+		log = hist_get(start++);
+		write(STDOUT_FILENO, pre, ft_strlen(pre));
+		write_endl(STDOUT_FILENO, log->data, ft_strlen(log->data));
+		--len;
+	}
 }
 
 void		hist_save(char *path, t_hist *hist, int lines, t_bool append)

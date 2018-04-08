@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 17:02:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 02:31:42 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 04:45:29 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ t_log			*hist_add(char *raw, int len);
 void			hist_clear(void);
 t_bool			hist_delete(int offset);
 t_log			*hist_get(int offset);
+t_hist			*hist_getall(void);
 
 /*
 ** history_io.c
 */
 
 void			hist_load(char *path, t_hist *hist);
+void			hist_print(int start, int len);
 void			hist_save(char *path, t_hist *hist, int lines, t_bool append);
 
 /*
@@ -82,6 +84,7 @@ void			hist_save(char *path, t_hist *hist, int lines, t_bool append);
 */
 
 void			hist_error(int errnum, void *param, t_bool isnum);
-t_hist			*hist_getall(void);
+char			*hist_get_prefix(t_hist *hist, int max);
 void			hist_resize(t_hist *hist, int nsize);
+t_hist			*hist_scale(t_hist *hist);
 #endif

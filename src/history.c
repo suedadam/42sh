@@ -6,11 +6,12 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 02:30:55 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 04:42:37 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "history.h"
 
 t_log	*hist_add(char *raw, int len)
@@ -95,10 +96,24 @@ t_log	*hist_get(int offset)
 
 	hist = hist_getall();
 	if (offset < 0 || offset >= hist->len)
-	{
-		hist_error(ERR_HIST_OOR, &offset, TRUE);
 		return (NULL);
+	return (&hist->arr[HPOS(hist->head, offset, hist->size)]);
+}
+
+t_hist	*hist_getall(void)
+{
+	static t_hist	hist;
+	int				size;
+
+	if (!(hist.maxsize = HISTSIZE))
+		hist.maxsize = 500;
+	if (!hist.arr)
+	{
+		size = (hist.maxsize < GROWTH_PAD) ? hist.maxsize : GROWTH_PAD;
+		if (!(hist.arr = ft_memalloc(sizeof(t_log) * size)))
+			DEFAULT_ERROR(FATAL);
+		hist.size = size;
+		hist_load(HISTFILE, &hist);
 	}
-	offset = HPOS(hist->head, offset, hist->size);
-	return (&hist->arr[offset]);
+	return (hist_scale(&hist));
 }
