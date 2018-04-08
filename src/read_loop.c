@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/06 22:29:51 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/07 17:58:33 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ static int		reset_terminal(void)
 
 static inline __attribute__((always_inline)) int ft_c_dispatch()
 {
-	if (T_BSLASH)
+	if (g_shell_env.buffer->buff[g_shell_env.buffer.buffer_length] == '"'
+		&& T_BSLASH)
 		return (backslash_char());
+//	if (T_BSLASH)
+//		return (backslash_char());
 	else if (T_QUOTE | T_DQUOTE)
 		return (quote_mode());
 	else
