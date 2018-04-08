@@ -112,6 +112,7 @@ LIB += ft_dblistnew
 LIB += ft_mergesort
 LIB += ft_strdup
 LIB += ft_strchr
+LIB += ft_strstr
 LIB += ft_numlen
 LIB += ft_atoi_base
 LIB += ft_strnstr
