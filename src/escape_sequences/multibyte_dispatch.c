@@ -6,11 +6,11 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 21:39:43 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 13:46:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_escape.h"
 
 inline __attribute__((always_inline)) int	multibyte_dispatch(char byte)
 {

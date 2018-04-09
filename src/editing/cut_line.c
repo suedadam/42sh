@@ -6,11 +6,11 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:46:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 16:31:02 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 13:25:48 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_editing.h"
 
 void 			cut_line_after_cursor(void)
 {

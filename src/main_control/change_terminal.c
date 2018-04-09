@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_signal.c                                       :+:      :+:    :+:   */
+/*   change_terminal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 20:55:02 by asyed            ###   ########.fr       */
+/*   Created: 2018/03/29 14:21:04 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/09 15:57:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_maincontrol.h"
 
-void		_y(__attribute__((unused)) int c)
+int		ft_setty(void)
 {
-	yank(g_shell_env.paperweight.buff);
+	g_shell_env.shell_tty->c_lflag ^= (ECHO | ICANON);
+	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, g_shell_env.shell_tty)) < 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-int		shsignal_handlers(void)
+int		ft_restoretty(void)
 {
-	signal(SIGINT, (void (*)(int))&control_c);
-	signal(SIGTSTP, &_y);
-	signal(SIGCONT, SIG_IGN);
-	signal(SIGWINCH, (void (*)(int))&cursor_locate);
+	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell_env.original_tty)) < 0)
+	{
+		g_ft_errnum = SYSERR;
+		return (EXIT_FAILURE);
+	}
+	ft_printf("exit\n");
 	return (EXIT_SUCCESS);
 }

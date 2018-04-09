@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_cursor.h"
 
 /*
 ** Handle failures. Print to stderr if failure.

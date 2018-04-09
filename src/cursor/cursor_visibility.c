@@ -6,11 +6,11 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 14:30:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 19:52:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 13:21:06 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_cursor.h"
 
 void		invisible_cursor(void)
 {

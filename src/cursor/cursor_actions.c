@@ -6,11 +6,11 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 13:59:21 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 15:37:48 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 13:01:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_cursor.h"
 
 void		cursor_to_right(t_cursor *cursor)
 {

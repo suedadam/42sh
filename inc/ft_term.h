@@ -6,12 +6,13 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/07 15:28:59 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:48:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TERM_H
 # define FT_TERM_H
+
 # include <curses.h>
 # include <fcntl.h>
 # include <sys/uio.h>
@@ -131,202 +132,18 @@ typedef	struct		s_terminf
 	char				*term_buff; /* FREE */
 }					t_terminf;
 
+t_terminf		g_shell_env;
+
 //void				__attribute__((deprecated)) *ft_memalloc(size_t size);
 
-//
-// typedef struct		s_env
-// {
-// 	t_terminf		*terminfo;
-// 	t_hashtable		*hashtable;
-// 	char			**envron
-// }					t_env;
-
-/*
-** main
-*/
-
-int		init_shellenv(void);
-
-/*
-**		Error handling (error.c)
-*/
-
-void				ft_terror(void);
-
-/*
-**		Execution and tty handlers (exec_handlers.c)
-*/
-
-int		shsignal_handlers(void);
-int		ft_setty(void);
-int		ft_resetty(void);
-int		ft_restoretty(void);
-
-/*
-**		ANSI sequences for cursor movement (cursor_moves.c)
-*/
-
-int		ft_curight(void);
-int		ft_curleft(void);
-int		ft_clearscreen(void);
-void	ft_clearline(int clr);
-int		ft_curhome(void);
-int		my_putchar(int chrr);
-int		ft_passinput(void);
-
-/*
-**		dispatcher for interpreting escape sequence (multibyte_dispatch.c)
-*/
-
-int		multibyte_dispatch(char byte);
-int		control_dispatch(char byte);
-
-
-/*
-**		read_loop
-*/
-
-int		ft_read_loop(void);
-
-
-/*
-**		prompt_utils
-*/
-
-int		new_prompt(char *prompt);
-int		reset_prompt(void);
-int		back_prompt(void);
-
-/*
-**		prompt_utils
-*/
-int		ft_linefeed(void);
-
-/*
-**		buffer_utils
-*/
-int			init_buffer(void);
-int			reset_buffer(void);
-int			resize_buffer(void);
-int			reprint_buffer(void);
-
-
-/*
-**		keys_handler
-*/
-
-int				handle_keys(char byte);
-
-/*
-**		history
-*/
-int			add_buff_to_history(char *buffer);
-int			open_history(void);
-
-/*
-**		cursor motions=
-*/
-void		move_cursor(t_cursor *cursor);
-void		cursor_to_right(t_cursor *cursor);
-void		cursor_to_left(t_cursor *cursor);
-void		cursor_to_home(t_cursor *cursor);
-void		cursor_to_end(t_cursor *cursor);
-void		cursor_locate(void);
-
-/*
-**		cursor navigation
-*/
-
-void	jump_prev_word(t_cursor *cursor);
-void	jump_next_word(t_cursor *cursor);
-void	jump_next_line(t_cursor *cursor);
-void	jump_prev_line(t_cursor *cursor);
-
-/* ft_linemove */
-
-int		ft_linemove(char byte);
-
-/*
-**		screen info
-*/
-
-int		get_window_size(void);
-
-/*
-**		utils
-*/
-
-void		get_cursor_first_position(void);
-
-/*
-**		utils
-*/
-
-int			control_c(void);
-int			control_a(void);
-int			control_y(void);
-int			control_k(void);
-int			control_e(void);
-int			control_l(void);
-int			control_newline(void);
-int			control_g(void);
-int			control_h(void);
-int			control_j(void);
-int			control_m(void);
-int			control_o(void);
-int			control_u(void);
-int			control_v(void);
-int			control_w(void);
-int			ft_backspace(void);
-int			ft_delete(char byte);
-
-t_terminf	g_shell_env;
-
-/*
-**		backslash handler
-*/
-int		backslash_char(void);
-
-/*
-**		update screen utils
-*/
-void		update_end_of_screen(void);
-void		update_buffer(char *buffer, int inc);
-int			quote_mode(void);
-void		relative_move_cursor(t_cursor *cursor);
-int			scroll_up(void);
-int			scroll_down(void);
-void		__attribute__((deprecated)) resize_prompt(void);
-
-void		invisible_cursor(void);
-void		visible_cursor(void);
-
-int			__attribute__((deprecated)) del_lines(void);
-
-/*
-**		initialize tokens
-*/
-
-int			__attribute__((deprecated)) count_lines(void);
-
-/*
-**		Advanced editing
-*/
-void			yank(char *buffer);
-void 			cut_line_after_cursor(void);
-void 			cut_line_before_cursor(void);
-void 			cut_word_before_cursor(void);
-
-void		get_cursor_current_position(void);
-
-int		ft_shift(char byte);
-int		ft_jumpwords(char byte);
-int		ft_alt(char byte);
-int		regular_text(char byte);
-void	clear_below(void);
-void	cursor_to_left_margin(void);
-int		ft_scroll(char byte);
-int		ft_history(char byte);
-int		ft_page(char byte);
+# include "ft_buffer.h"
+# include "ft_control.h"
+# include "ft_cursor.h"
+# include "ft_editing.h"
+# include "ft_escape.h"
+# include "ft_linefeed.h"
+# include "ft_maincontrol.h"
+# include "ft_prompt.h"
+# include "ft_screen.h"
 
 #endif

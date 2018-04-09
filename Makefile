@@ -12,17 +12,6 @@ GREEN = \033[1;32m
 YELLOW = \033[1;33m
 CYAN = \033[1;36m
 RES = \033[0m
-MALLOC =
-
-# FILEIO SOURCE
-SRC += backslash_char
-SRC += change_terminal
-SRC += error
-SRC += keys_handler
-SRC += main
-SRC += my_putchar
-SRC += read_loop
-SRC += set_signal
 
 # BUFFER
 SRC += buffer/init_buffer
@@ -76,11 +65,22 @@ SRC += escape_sequences/screen_scroll
 SRC += linefeed/linefeed
 SRC += linefeed/quote_mode
 
+# MAIN CONTROL
+SRC += main_control/change_terminal
+SRC += main_control/error
+SRC += main_control/jump_defs
+SRC += main_control/keys_handler
+SRC += main_control/main
+SRC += main_control/my_putchar
+SRC += main_control/read_loop
+SRC += main_control/regular_text
+SRC += main_control/set_signal
+
 # PROMPT
 SRC += prompt/back_prompt
 SRC += prompt/new_prompt
 SRC += prompt/reset_prompt
-SRC += prompt/resize_prompt
+SRC += prompt/backslash_char
 
 # SCREEN
 SRC += screen/count_lines
@@ -144,8 +144,8 @@ LIB += ft_printf/ulitobase
 
 all: $(NAME)
 
-$(MALLOC):
-	@make -C ft_malloc
+#$(MALLOC):
+#	@make -C ft_malloc
 
 $(NAME): $(MALLOC) $(OBJLIB) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_maincontrol.h"
 
 int		my_putchar(int chrr)
 {

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resize_prompt.c                                    :+:      :+:    :+:   */
+/*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 11:57:28 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 22:12:07 by asyed            ###   ########.fr       */
+/*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/09 16:22:58 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_maincontrol.h"
 
-void		resize_prompt(void)
+static void	_y(__attribute__((unused)) int c)
 {
-	cursor_to_home(&g_shell_env.cursor);
-/*	cursor_to_home(&g_shell_env.cursor);
-	temp = tgetstr("dl", 0);
-	tputs(temp, 1, &my_putchar);
-	temp = tgetstr("cl", 0);
-	tputs(temp, 1, my_putchar);
-	get_window_size();
-	*/
+	yank(g_shell_env.paperweight.buff);
+}
+
+int			shsignal_handlers(void)
+{
+	signal(SIGINT, (void (*)(int))&control_c);
+	signal(SIGTSTP, &_y);
+	signal(SIGCONT, SIG_IGN);
+	signal(SIGWINCH, (void (*)(int))&cursor_locate);
+	return (EXIT_SUCCESS);
 }

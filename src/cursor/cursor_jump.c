@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_cursor.h"
 
 void			jump_prev_word(t_cursor *cursor)
 {

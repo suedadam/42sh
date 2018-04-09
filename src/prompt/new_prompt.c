@@ -6,20 +6,12 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 18:00:33 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 13:55:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_prompt.h"
 
-#define NRM  "\x1B[0m"
-#define RED  "\x1B[31m"
-#define GRN  "\x1B[32m"
-#define YEL  "\x1B[33m"
-#define BLU  "\x1B[34m"
-#define MAG  "\x1B[35m"
-#define CYN  "\x1B[36m"
-#define WHT  "\x1B[37m"
 
 static int		normal_prompt(void)
 {

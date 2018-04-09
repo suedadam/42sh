@@ -6,11 +6,11 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:46:38 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 16:51:03 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:09:09 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_buffer.h"
 
 int			resize_buffer(void)
 {
@@ -34,28 +34,3 @@ int			resize_buffer(void)
 	cursor->buffer = new_buffer + offset;
 	return (EXIT_SUCCESS);
 }
-
-
-// int			resize_buffer(void)
-// {
-// 	char		*newbuff;
-// 	char		*oldbuff;
-// 	t_cursor	*cursor;
-// 	size_t		max_size;
-// 	size_t		length;
-//
-// 	cursor = g_shell_env.cursor;
-// 	if (!(oldbuff = cursor->buffer))
-// 		return (EXIT_FAILURE);
-// 	max_size = g_shell_env.buffer->max_size;
-// 	length = g_shell_env.buffer->length;
-// 	if (!(newbuff = (char *)ft_memalloc(sizeof(char) * (2 * length))))
-// 		return (EXIT_FAILURE);
-// 	ft_memcpy(newbuff, g_shell_env.buffer->buff, length);
-// 	free(g_shell_env.buffer->buff);
-// 	g_shell_env.buffer->buff = 0;
-// 	g_shell_env.buffer->buff = newbuff;
-// 	 = g_shell_env.buffer->buff;
-// 	g_shell_env.buffer->max_size += length;
-// 	return (EXIT_SUCCESS);
-// }

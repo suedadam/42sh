@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   change_terminal.c                                  :+:      :+:    :+:   */
+/*   ft_control.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/29 14:21:04 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 20:53:06 by asyed            ###   ########.fr       */
+/*   Created: 2018/04/06 13:12:11 by asyed             #+#    #+#             */
+/*   Updated: 2018/04/09 11:37:34 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FT_CONTROL_H
+#define FT_CONTROL_H
+
 #include "ft_term.h"
 
-int		ft_setty(void)
-{
-	g_shell_env.shell_tty->c_lflag ^= (ECHO | ICANON);
-	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, g_shell_env.shell_tty)) < 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
+int		control_a(void); 
+int		control_c(void);
+int		control_e(void);
+int		control_h(void);
+int		control_j(void);
+int		control_k(void);
+int		control_l(void);
+int		control_m(void);
+int		control_o(void);
+int		control_u(void);
+int		control_v(void);
+int		control_w(void);
+int		control_y(void);
 
-int		ft_restoretty(void)
-{
-	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell_env.original_tty)) < 0)
-	{
-		g_ft_errnum = SYSERR;
-		return (EXIT_FAILURE);
-	}
-	ft_printf("exit\n");
-	return (EXIT_SUCCESS);
-}
+#endif

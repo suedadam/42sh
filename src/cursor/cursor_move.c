@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_cursor.h"
 
 void	move_cursor(t_cursor *cursor)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_buffer.h"
 
 void		update_buffer(char *buffer, int inc)
 {

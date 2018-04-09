@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_escape.h"
 
 int		ft_shift(__attribute__((unused)) char byte)
 {

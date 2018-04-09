@@ -6,11 +6,11 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 22:53:15 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 16:33:58 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_linefeed.h"
 
 int			ft_linefeed(void)
 {

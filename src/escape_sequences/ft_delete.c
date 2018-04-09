@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_escape.h"
 
 void		delete_last(int starting_position, t_cursor *cursor)
 {

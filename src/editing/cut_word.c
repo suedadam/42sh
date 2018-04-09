@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_editing.h"
 
 void 			cut_word_before_cursor(void)
 {

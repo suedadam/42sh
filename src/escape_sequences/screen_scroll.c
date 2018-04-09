@@ -6,13 +6,11 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/31 10:59:34 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 22:14:37 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 13:48:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
-
-
+#include "ft_escape.h"
 
 int		scroll_up(void)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_maincontrol.h"
 
 /*
 ** Termcaps database is initialized here and reference to it is saved

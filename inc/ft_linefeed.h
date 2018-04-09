@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_v.c                                        :+:      :+:    :+:   */
+/*   ft_linefeed.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 11:37:03 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/30 18:09:38 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/09 16:29:22 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/09 16:34:15 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_control.h"
+#ifndef FT_LINEFEED_H
+#define FT_LINEFEED_H
 
-int		control_v(void)
-{
-	return (EXIT_SUCCESS);
-}
+#include "ft_term.h"
+
+/*
+**	pass off all buffer to lexer, ast creation and execution
+**	(linefeed.c)
+*/
+
+int		ft_linefeed(void);
+
+/*
+**	quote mode handling on linefeed
+**	(quote_mode.c)
+*/
+
+int		quote_mode(void);
+
+#endif

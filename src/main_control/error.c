@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_maincontrol.h"
 
 t_errstr g_errtable[6] =
 {
