@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/04 21:37:38 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 13:58:38 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ static int			parse_tokens(char **tokens, t_token_type *type)
 	i = 0;
 	while (tokens[i])
 	{
-		if (type[i] == operator && str_search(g_operators, tokens[i]))
+		if (type[i] == OPERATOR && str_search(g_operators, tokens[i]))
 			return (i);
+		printf("not : |%s|[%d]\n", tokens[i], type[i]);
 		i++;
 	}
 	return (!i ? END_PARSING : i - 1);
@@ -52,6 +53,7 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 	*position += i + 1;
 	sub_string = sub_token_char(tokens, 0, i + 1);
 	sub_types = sub_token_type(type, 0, i + 1);
+	printf("ici : |%s|\n", tokens[i]);
 	if (ft_strequ(tokens[i], ";") || !tokens[i + 1])
 		return (new_ast_leaf(sub_string, sub_types));
 	ast = new_ast_node(sub_token_char(sub_string, i, 1),
@@ -65,6 +67,7 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 
 t_queue				*build_forest(char **tokens, t_token_type *type)
 {
+	static int bs = 0;
 	t_queue		*forest;
 	t_list		*new_list;
 	t_ast		*ast;
@@ -73,9 +76,13 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	if (!(forest = new_queue()))
 		return (NULL);
 	pos = 0;
-	while (tokens && type && (ast = build_ast(tokens + pos, type, &pos)))
+	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
-		new_list = ft_lstnew(ast, sizeof(t_ast));
+		if (bs++ == 3 || !(new_list = ft_lstnew(ast, sizeof(t_ast))))
+		{
+			free_forest(forest);
+			return (NULL);
+		}
 		enqueue(forest, new_list);
 		free(ast);
 	}

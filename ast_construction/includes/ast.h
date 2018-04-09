@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/27 15:42:47 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 13:53:33 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 typedef enum	e_token_type
 {
-	token,
-	operator
+	TOKEN,
+	OPERATOR
 }				t_token_type;
 
 typedef struct	s_ast
@@ -62,5 +62,6 @@ void			print_ast(t_ast *ast, int spaces);
 void			free_argv(char **argv);
 void			free_types(t_token_type *types);
 void			free_ast(t_ast *ast);
+void			free_forest(t_queue *forest);
 
 #endif
