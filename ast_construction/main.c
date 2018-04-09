@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:24:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 13:55:40 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 15:30:16 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int main(int argc, char **argv) {
 	{
 
 		printf("\nnew tree\n\n");
-		print_ast((t_ast *)(forest->head->content), 0);
-		queue_pop(forest);
+		print_ast((t_ast *)(vasy->content), 0);
 		vasy = vasy->next;
 	}
 	while(1);

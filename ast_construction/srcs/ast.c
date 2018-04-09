@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 13:58:38 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 15:30:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,24 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 	*position += i + 1;
 	sub_string = sub_token_char(tokens, 0, i + 1);
 	sub_types = sub_token_type(type, 0, i + 1);
-	printf("ici : |%s|\n", tokens[i]);
 	if (ft_strequ(tokens[i], ";") || !tokens[i + 1])
+	{
+		sub_string[i] = 0;
 		return (new_ast_leaf(sub_string, sub_types));
+	}
 	ast = new_ast_node(sub_token_char(sub_string, i, 1),
 			sub_token_type(sub_types, i, 1),
-			new_ast_leaf(sub_token_char(sub_string, 0, i), sub_types),
+			new_ast_leaf(sub_token_char(sub_string, 0, i),
+			 				sub_token_type(sub_types, 0, i)),
 			build_ast(tokens + i + 1, type + i + 1, position));
 	free(sub_string);
+	free(sub_types);
 	sub_string = NULL;
 	return (ast);
 }
 
 t_queue				*build_forest(char **tokens, t_token_type *type)
 {
-	static int bs = 0;
 	t_queue		*forest;
 	t_list		*new_list;
 	t_ast		*ast;
@@ -78,7 +81,7 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	pos = 0;
 	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
-		if (bs++ == 3 || !(new_list = ft_lstnew(ast, sizeof(t_ast))))
+		if (!(new_list = ft_lstnew(ast, sizeof(t_ast))))
 		{
 			free_forest(forest);
 			return (NULL);

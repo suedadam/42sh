@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 13:54:47 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 14:03:44 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 15:26:36 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		free_ast(t_ast *ast)
 	if (ast)
 	{
 		free_argv(ast->token);
-		free_types(ast->type);
+		// free_types(ast->type);
 		free_ast(ast->left_child);
 		free_ast(ast->right_child);
 		free(ast);
