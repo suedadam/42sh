@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 16:20:06 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 04:23:49 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 07:09:04 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 char		*g_optarg;
 int			g_optind = 1;
 int			g_opterr = 1;
-int			g_fderr = 2;
+int			g_fderr = STDERR_FILENO;
 int			g_optopt;
 
 static int		opt_error(char *pname, const char *err, const char *optstring)

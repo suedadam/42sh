@@ -6,11 +6,12 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:41:20 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 06:25:38 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 07:05:40 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -104,14 +105,19 @@ t_hist	*hist_scale(t_hist *hist)
 
 t_bool	param_atoi(char *arg, int *n)
 {
-	*n = 0;
+	long	i;
+
+	i = 0;
 	if (!*arg)
 		return (FALSE);
 	while (*arg)
 	{
 		if (!IS_DIGIT(*arg))
 			return (FALSE);
-		*n = (*n * 10) + (*arg++ - '0');
+		i = (i * 10) + (*arg++ - '0');
+		if (i > INT_MAX)
+			return (FALSE);
 	}
-	return (*n > 0);
+	*n = (int)i;
+	return (i > 0);
 }
