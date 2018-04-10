@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 20:54:01 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 19:18:01 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,26 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 	return (parser);
 }
 
+static int			check_char(t_parser **par, char **input_str)
+{
+	int				ret;
+
+	ret = UNUSED_CHAR;
+	if (!(ret = is_semi(*par, *input_str)) ||
+		(ret == UNUSED_CHAR && !(ret = is_op(*par, **input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = is_quote(*par, **input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = is_start_op(*par, **input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = is_whitespc(*par, input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = is_word(*par, **input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = is_comment(*par, **input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = start_word(*par, **input_str))))
+	{
+		free_segs(par);
+		return (0);
+	}
+	return (ret);
+}
+
 t_ast				*parser(char *input_str)
 {
 	t_parser		*par;
@@ -68,19 +88,8 @@ t_ast				*parser(char *input_str)
 		return (NULL);
 	while (*input_str)
 	{
-		ret = UNUSED_CHAR;
-		if (!(ret = is_semi(par, *input_str)) ||
-			(ret == UNUSED_CHAR && !(ret = is_op(par, *input_str))) ||
-			(ret == UNUSED_CHAR && !(ret = is_quote(par, *input_str))) ||
-			(ret == UNUSED_CHAR && !(ret = is_start_op(par, *input_str))) ||
-			(ret == UNUSED_CHAR && !(ret = is_whitespc(par, &input_str))) ||
-			(ret == UNUSED_CHAR && !(ret = is_word(par, *input_str))) ||
-			(ret == UNUSED_CHAR && !(ret = is_comment(par, *input_str))) ||
-			(ret == UNUSED_CHAR && !(ret = start_word(par, *input_str))))
-		{
-			free_segs(&par);
+		if (!(ret = check_char(par, &input_str)))
 			return (NULL);
-		}
 		if (ret == CONTINUE)
 			continue ;
 		else if (ret == BREAK)
