@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:23:55 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 01:16:40 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 06:54:48 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # define MIN(x, y)		((x < y) ? x : y)
 # define FALSE			0
 # define TRUE			!FALSE
-
-
 
 typedef int				t_bool;
 typedef unsigned char	t_byte;

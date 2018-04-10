@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 06:21:27 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 06:51:39 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,10 @@ void			hist_save(char *path, t_hist *hist, int lines, t_bool append)
 	while (i < hist->len)
 	{
 		if (!(log = hist_get(i++))->saved || !append)
+		{
 			ft_mlappend(mchain, log->data, log->len);
+			log->saved = TRUE;
+		}
 	}
 	hist_truncate(path, mchain, hist);
 	mlink = mchain->start;

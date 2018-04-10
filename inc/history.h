@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 17:02:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 06:22:34 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 06:39:57 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct	s_histopt
 	char		**args;
 	char		*del;
 	char		*save_target;
-	char		save_mode;
+	char		io_mode;
 	t_bool		clear;
 }				t_histopt;
 
