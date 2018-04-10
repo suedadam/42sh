@@ -6,18 +6,18 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/07 18:17:58 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:51:10 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
 
-static int		checktty(void)
+static int											checktty(void)
 {
 	return (EXIT_SUCCESS);
 }
 
-static int		reset_terminal(void)
+static int											reset_terminal(void)
 {
 	if (g_shell_env.shell_tty)
 	{
@@ -27,7 +27,7 @@ static int		reset_terminal(void)
 	return (init_shellenv());
 }
 
-static inline __attribute__((always_inline)) int ft_c_dispatch()
+static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 {
 	if (T_BSLASH)
 		return (backslash_char());
@@ -46,7 +46,7 @@ static inline __attribute__((always_inline)) int ft_c_dispatch()
 ** init_buffer() already zero'd out the tokens.
 */
 
-int				ft_read_loop(void)
+int													ft_read_loop(void)
 {
 	char	byte;
 	int		ret;

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:51:52 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/25 19:16:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:46:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,4 @@ void		ft_terror(void)
 		perror(strerror(errno));
 	else
 		write(2, g_errtable[g_ft_errnum].str, g_errtable[g_ft_errnum].len);
-}	
+}

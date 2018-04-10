@@ -6,13 +6,13 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 15:45:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 15:49:50 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:41:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
 
-int		(*multibyte_jump[])(char byte) = {
+int		(*g_multibyte_jump[])(char byte) = {
 	ft_linemove,
 	ft_delete,
 	ft_shift,
@@ -22,7 +22,7 @@ int		(*multibyte_jump[])(char byte) = {
 	ft_page
 };
 
-int		(*control_jump[])() = {
+int		(*g_control_jump[])() = {
 	control_a,
 	NULL,
 	NULL,

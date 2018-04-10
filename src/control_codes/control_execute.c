@@ -6,13 +6,13 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:41:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 18:47:29 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/09 19:20:35 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_control.h"
 
-int		control_execute()
+int		control_execute(void)
 {
 	return (EXIT_SUCCESS);
 }

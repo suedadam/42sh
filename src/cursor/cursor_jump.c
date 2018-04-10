@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:37:39 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 15:38:03 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:34:10 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void			jump_next_word(t_cursor *cursor)
 {
 	while ((cursor->buffer[cursor->position]) != ' ' && cursor->position !=
 			cursor->buffer_length)
-				cursor_to_right(cursor);
+		cursor_to_right(cursor);
 	while (cursor->buffer[cursor->position] == ' ' && cursor->position !=
 			cursor->buffer_length)
-				cursor_to_right(cursor);
+		cursor_to_right(cursor);
 }
 
 void			jump_next_line(t_cursor *cursor)

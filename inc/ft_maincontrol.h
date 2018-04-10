@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:16:03 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 16:48:41 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:42:00 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void		ft_terror(void);
 **	(jump_defs.c)
 */
 
-int		(*multibyte_jump[7])(char byte);
-int		(*control_jump[25])();
+int		(*g_multibyte_jump[7])(char byte);
+int		(*g_control_jump[25])();
 
 /*
 **	Key handling, byte by byte, only strict ascii supported now

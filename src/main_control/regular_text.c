@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 15:44:21 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 16:50:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:46:50 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		regular_text(char byte)
 	ft_memmove(buffer + cursor->position + 1, buffer + cursor->position,
 			cursor->buffer_length - cursor->position);
 	buffer[cursor->position] = byte;
-		g_shell_env.buffer->length++;
+	g_shell_env.buffer->length++;
 	cursor->buffer_length++;
 	update_buffer(buffer + cursor->position, 1);
 	return (EXIT_SUCCESS);

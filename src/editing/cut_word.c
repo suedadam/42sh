@@ -6,13 +6,13 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:47:52 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 14:48:07 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:31:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_editing.h"
 
-void 			cut_word_before_cursor(void)
+void		cut_word_before_cursor(void)
 {
 	char		*buffer;
 	t_cursor	*cursor;
@@ -31,10 +31,10 @@ void 			cut_word_before_cursor(void)
 			cursor_to_left(cursor);
 		if (cursor->position)
 			cursor_to_right(cursor);
-		g_shell_env.paperweight.buff = ft_strsub(buffer, cursor->position,
+		PAPER.buff = ft_strsub(buffer, cursor->position,
 			og_pos - cursor->position);
-		g_shell_env.paperweight.length = ft_strlen(g_shell_env.paperweight.buff);
-		g_shell_env.paperweight.max_size = g_shell_env.paperweight.length;
+		PAPER.length = ft_strlen(PAPER.buff);
+		PAPER.max_size = PAPER.length;
 		while (cursor->position != og_pos)
 		{
 			ft_delete(-1);

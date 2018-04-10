@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/07 16:30:43 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:34:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int			ft_delete(char byte)
 	t_cursor	*cursor;
 	char		*buffer;
 	static char	*cache = NULL;
-
 
 	if (!cache)
 		cache = tgetstr("dc", NULL);

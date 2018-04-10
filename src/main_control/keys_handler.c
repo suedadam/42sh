@@ -6,13 +6,13 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 15:49:57 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:52:52 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
 
-static inline __attribute__((always_inline)) int control_char(char byte)
+static inline __attribute__((always_inline)) int	control_char(char byte)
 {
 	int	(*f)();
 
@@ -20,17 +20,17 @@ static inline __attribute__((always_inline)) int control_char(char byte)
 		return (EXIT_SUCCESS);
 	if (byte == 127)
 		byte = 8;
-	if (!(f = control_jump[(int)byte - 1]))
+	if (!(f = g_control_jump[(int)byte - 1]))
 		return (EXIT_SUCCESS);
- 	return ((*f)());
+	return ((*f)());
 }
 
-static int		one_byte(char byte)
+static int											one_byte(char byte)
 {
 	T_BSLASH = 0;
 	if (byte == '\\')
 		T_BSLASH = 1;
-	else if (byte == '\''  && !T_DQUOTE)
+	else if (byte == '\'' && !T_DQUOTE)
 		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
 	else if (byte == '\"' && !T_QUOTE)
 		T_DQUOTE = (T_DQUOTE == 1) ? 0 : 1;
@@ -41,7 +41,7 @@ static int		one_byte(char byte)
 	return (EXIT_SUCCESS);
 }
 
-static int		multibyte(char byte)
+static int											multibyte(char byte)
 {
 	int	ret;
 
@@ -61,12 +61,12 @@ static int		multibyte(char byte)
 	if ((ret = multibyte_dispatch(byte)) >= 0)
 	{
 		T_MPASS = 0;
-		return (multibyte_jump[ret](byte));
+		return (g_multibyte_jump[ret](byte));
 	}
 	return (EXIT_FAILURE);
 }
 
-int				handle_keys(char byte)
+int													handle_keys(char byte)
 {
 	if (byte == 27 || T_MPASS)
 		return (multibyte(byte));

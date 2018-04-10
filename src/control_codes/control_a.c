@@ -6,14 +6,14 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 16:38:16 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 11:44:12 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:21:34 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_control.h"
 
-int            control_a(void)
+int		control_a(void)
 {
-       cursor_to_home(&g_shell_env.cursor);
-       return (EXIT_SUCCESS);
+	cursor_to_home(&g_shell_env.cursor);
+	return (EXIT_SUCCESS);
 }

@@ -6,12 +6,11 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 13:55:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 19:35:07 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_prompt.h"
-
 
 static int		normal_prompt(void)
 {
