@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:23:55 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/19 17:19:15 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/08 18:02:20 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,29 @@ typedef unsigned char	t_byte;
 ** Reproduction of <ctype.h>
 */
 
-# define IS_ASCII(c) (!(c >> 7))
-# define IS_BLANK(c) (c == ' ' || c == '\t')
-# define IS_DIGIT(c) ((unsigned int)(c - '0') < 10)
-# define IS_GRAPH(c) (c >= '!' && c <= '~')
-# define IS_LOWER(c) ((unsigned int)(c - 'a') < 26)
-# define IS_PRINT(c) ((unsigned int)(c - ' ') < 126)
-# define IS_CNTRL(c) (!IS_PRINT(c))
-# define IS_UPPER(c) ((unsigned int)(c - 'A') < 26)
-# define IS_ALPHA(c) (IS_LOWER(c) || IS_UPPER(c))
-# define IS_ALNUM(c) (IS_ALPHA(c) || IS_DIGIT(c))
-# define IS_PUNCT(c) (IS_PRINT(c) && !FT_ISALNUM(c) && c != ' ')
-# define IS_SPACE(c) ((unsigned int)(c - '\t') < 5)
-# define TO_ASCII(c) (c & 0x7F)
-# define TO_LOWER(c) (IS_UPPER(c) ? c + ' ' : c)
-# define TO_UPPER(c) (IS_LOWER(c) ? c - ' ' : c)
+# define IS_ASCII(c)	(!(c >> 7))
+# define IS_BLANK(c)	(c == ' ' || c == '\t')
+# define IS_DIGIT(c)	((unsigned int)(c - '0') < 10)
+# define IS_GRAPH(c)	(c >= '!' && c <= '~')
+# define IS_LOWER(c)	((unsigned int)(c - 'a') < 26)
+# define IS_PRINT(c)	((unsigned int)(c - ' ') < 126)
+# define IS_CNTRL(c)	(!IS_PRINT(c))
+# define IS_UPPER(c)	((unsigned int)(c - 'A') < 26)
+# define IS_ALPHA(c)	(IS_LOWER(c) || IS_UPPER(c))
+# define IS_ALNUM(c)	(IS_ALPHA(c) || IS_DIGIT(c))
+# define IS_PUNCT(c)	(IS_PRINT(c) && !FT_ISALNUM(c) && c != ' ')
+# define IS_SPACE(c)	((unsigned int)(c - '\t') < 5)
+# define TO_ASCII(c)	(c & 0x7F)
+# define TO_LOWER(c)	(IS_UPPER(c) ? c + ' ' : c)
+# define TO_UPPER(c)	(IS_LOWER(c) ? c - ' ' : c)
 
 t_bool	ft_isxdigit(int c);
 
 /*
 ** Reproduction of <stdlib.h>
 */
+
+# define ABS(x)			((x < 0) ? -x : x)
 
 int		ft_atoi(const char *str);
 

@@ -6,79 +6,98 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 04:43:44 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/09 21:34:22 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "ft_memmgr.h"
 #include "get_next_line.h"
 #include "history.h"
 
-static void	hist_truncate(char *path)
+static void		hist_truncate(char *path, t_mchain *mchain, t_hist *hist)
 {
-	char	*line;
-	int		fd;
-	int		count;
-	off_t	total;
-	int		res;
+	t_mlink		*mlink;
+	int			fd;
 
-	if ((fd = open(path, O_RDWR, 0600)) < 0)
-		return (DEFAULT_ERROR(NONFATAL));
-	count = 0;
-	total = 0;
-	while ((res = get_next_line(fd, &line)) > 0)
+	if (HISTFILESIZE)
 	{
-		total += ft_strlen(line) + 1;
-		free(line);
-		if (++count == HISTFILESIZE)
-			break ;
+		while (mchain->link_count > HISTFILESIZE)
+		{
+			if (mchain->link_count > hist->maxsize)
+				ft_mlpop(mchain);
+			else
+				ft_mlremove(mchain->start);
+		}
 	}
-	if (res < 0)
-		DEFAULT_ERROR(NONFATAL);
-	if (!res && count == HISTFILESIZE && ftruncate(fd, total) < 0)
-		DEFAULT_ERROR(NONFATAL);
+	if ((fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, 0600)) < 0)
+		return (DEFAULT_ERROR(NONFATAL));
+	mlink = mchain->start;
+	while (mlink)
+	{
+		((char *)mlink->ptr)[mlink->size] = '\n';
+		write(fd, mlink->ptr, mlink->size + 1);
+		((char *)mlink->ptr)[mlink->size] = '\0';
+		mlink = mlink->next;
+	}
 	if (close(fd) < 0)
 		DEFAULT_ERROR(NONFATAL);
 }
 
-void		hist_load(char *path, t_hist *hist)
+static t_bool	hist_read(char *path, t_mchain *mchain)
 {
-	char	*line;
-	int		fd;
-	int		res;
+	char		*line;
+	int			res;
+	int			fd;
 
-	if (!path)
-		return ;
 	if ((fd = open(path, O_RDONLY | O_CREAT, 0600)) < 0)
-		return (DEFAULT_ERROR(NONFATAL));
+	{
+		DEFAULT_ERROR(NONFATAL);
+		return (FALSE);
+	}
 	while ((res = get_next_line(fd, &line)) > 0)
-		hist_add(line, ft_strlen(line))->saved = TRUE;
+	{
+		if (!ft_mlappend(mchain, line, ft_strlen(line)))
+			DEFAULT_ERROR(FATAL);
+	}
 	if (res < 0)
 	{
 		close(fd);
-		return (DEFAULT_ERROR(NONFATAL));
+		ft_mcdel(mchain);
+		DEFAULT_ERROR(NONFATAL);
+		return (FALSE);
 	}
 	if (close(fd) < 0)
 		DEFAULT_ERROR(NONFATAL);
-	if (HISTFILESIZE > 0
-		&& hist->len > HISTFILESIZE
-		&& !ft_strcmp(path, HISTFILE))
+	return (TRUE);
+}
+
+void			hist_load(char *path, t_hist *hist)
+{
+	t_mchain	*mchain;
+	t_mlink		*mlink;
+	t_bool		truncate;
+
+	if (!(mchain = ft_mcget("histfile")))
+		DEFAULT_ERROR(FATAL);
+	if (!hist_read(path, mchain))
+		return ;
+	mchain = ft_mcget("histfile");
+	if (HISTFILESIZE && mchain->link_count > HISTFILESIZE)
+		hist_truncate(path, mchain, hist);
+	while (mchain->link_count > hist->maxsize)
+		ft_mlpop(mchain);
+	mlink = mchain->start;
+	while (mlink)
 	{
-		hist_save(path, hist, HISTFILESIZE, FALSE);
-		hist_truncate(path);
+		hist_add(mlink->ptr, mlink->size)->saved = TRUE;
+		mlink = ft_mlremove(mlink);
 	}
 }
 
-static void	write_endl(int fd, char *data, size_t len)
-{
-	data[len] = '\n';
-	write(fd, data, len + 1);
-	data[len] = '\0';
-}
-
-void		hist_print(int start, int len)
+void			hist_print(int fd, int start, int len)
 {
 	t_hist	*hist;
 	t_log	*log;
@@ -90,44 +109,43 @@ void		hist_print(int start, int len)
 		return ;
 	hist = hist_getall();
 	pre = hist_get_prefix(hist, start + len);
-	while (len)
+	while (len--)
 	{
-		n = start + 1;
+		log = hist_get(start++);
+		n = start;
 		pos = ft_strrchr(pre, '\0') - 3;
 		while (n)
 		{
 			*pos-- = (n % 10) + '0';
 			n /= 10;
 		}
-		log = hist_get(start++);
-		write(STDOUT_FILENO, pre, ft_strlen(pre));
-		write_endl(STDOUT_FILENO, log->data, ft_strlen(log->data));
-		--len;
+		write(fd, pre, ft_strlen(pre));
+		log->data[log->len] = '\n';
+		write(fd, log->data, log->len + 1);
+		log->data[log->len] = '\0';
 	}
 }
 
-void		hist_save(char *path, t_hist *hist, int lines, t_bool append)
+void			hist_save(char *path, t_hist *hist, int lines, t_bool append)
 {
-	t_log	*log;
-	int		fd;
-	int		flags;
-	int		max;
-	int		i;
+	t_mchain	*mchain;
+	t_mlink		*mlink;
+	t_log		*log;
+	int			max;
+	int			i;
 
-	if (!path)
+	if (!(mchain = ft_mcget("histfile")))
+		DEFAULT_ERROR(FATAL);
+	if (append && !hist_read(path, mchain))
 		return ;
-	flags = O_WRONLY | O_CREAT | ((append) ? O_APPEND : O_TRUNC);
-	if ((fd = open(path, flags, 0600)) < 0)
-		return (DEFAULT_ERROR(NONFATAL));
 	i = (lines && lines < hist->len) ? hist->len - lines : 0;
-	max = (HISTFILESIZE) ? HISTFILESIZE : hist->len;
-	while (i < hist->len && i < max)
+	while (i < hist->len)
 	{
 		if (!(log = hist_get(i++))->saved || !append)
-			write_endl(fd, log->data, log->len);
+			ft_mlappend(mchain, log->data, log->len);
 	}
-	if (close(fd) < 0)
-		DEFAULT_ERROR(NONFATAL);
-	if (append)
-		hist_truncate(path);
+	hist_truncate(path, mchain, hist);
+	mlink = mchain->start;
+	while (mlink)
+		mlink = ft_mlremove(mlink);
 }

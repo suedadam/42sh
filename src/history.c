@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 04:42:37 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/09 20:57:09 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,26 @@ t_log	*hist_add(char *raw, int len)
 void	hist_clear(void)
 {
 	t_hist	*hist;
+	t_bool	resize;
 	int		nsize;
 	int		i;
 
 	hist = hist_getall();
-	if (hist->len > GROWTH_PAD)
-	{
-		nsize = (hist->maxsize < GROWTH_PAD) ? hist->maxsize : GROWTH_PAD;
-		hist_resize(hist, nsize);
-	}
+	nsize = (hist->maxsize < GROWTH_PAD) ? hist->maxsize : GROWTH_PAD;
+	resize = (hist->size > nsize);
 	while (hist->len)
 	{
 		i = HPOS(hist->head, --hist->len, hist->size);
 		free(hist->arr[i].data);
-		ft_memset(&hist->arr[i], 0, sizeof(t_log));
+		if (!resize)
+			ft_memset(&hist->arr[i], 0, sizeof(t_log));
+	}
+	if (resize)
+	{
+		free(hist->arr);
+		if (!(hist->arr = ft_memalloc(sizeof(t_log) * nsize)))
+			DEFAULT_ERROR(FATAL);
+		hist->size = nsize;
 	}
 	hist->head = 0;
 	hist->tail = 0;
@@ -113,7 +119,8 @@ t_hist	*hist_getall(void)
 		if (!(hist.arr = ft_memalloc(sizeof(t_log) * size)))
 			DEFAULT_ERROR(FATAL);
 		hist.size = size;
-		hist_load(HISTFILE, &hist);
+		if (HISTFILE)
+			hist_load(HISTFILE, &hist);
 	}
 	return (hist_scale(&hist));
 }

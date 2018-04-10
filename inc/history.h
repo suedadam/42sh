@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 17:02:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 04:45:29 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/09 21:30:13 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 */
 
 # define HISTSIZE		500
-# define GROWTH_PAD		150
+# define GROWTH_PAD		125
 # define HISTFILE		".shella_history"
 # define HISTFILESIZE	0
 
@@ -43,6 +43,15 @@ enum			e_histerr
 {
 	ERR_HIST_OOR
 };
+
+typedef struct	s_histopt
+{
+	char		**args;
+	char		*del;
+	char		*save_target;
+	char		save_mode;
+	t_bool		clear;
+}				t_histopt;
 
 typedef struct	s_log
 {
@@ -76,7 +85,7 @@ t_hist			*hist_getall(void);
 */
 
 void			hist_load(char *path, t_hist *hist);
-void			hist_print(int start, int len);
+void			hist_print(int fd, int start, int len);
 void			hist_save(char *path, t_hist *hist, int lines, t_bool append);
 
 /*
