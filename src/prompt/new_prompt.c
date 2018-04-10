@@ -13,6 +13,10 @@
 #include "ft_prompt.h"
 #include "ft_proto.h"
 
+/*
+** Swap to our internal environ API.
+*/
+
 static int		normal_prompt(void)
 {
 	char		*raw_pwd;

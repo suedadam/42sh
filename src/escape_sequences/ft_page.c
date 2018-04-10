@@ -13,6 +13,10 @@
 #include "ft_escape.h"
 #include "ft_proto.h"
 
+/*
+** Function doesn't do anything?
+*/
+
 int		ft_page(__attribute__((unused)) char byte)
 {
 	return (EXIT_SUCCESS);

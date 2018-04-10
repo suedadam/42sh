@@ -13,8 +13,11 @@
 #include "ft_maincontrol.h"
 #include "ft_proto.h"
 
+/*
+** putchar is supposed to return the value that is written or an EOF on error.
+*/
+
 int		my_putchar(int chrr)
 {
-	write(1, &chrr, 1);
-	return (EXIT_SUCCESS);
+	return (write(1, &chrr, 1) ? chrr : EOF);
 }

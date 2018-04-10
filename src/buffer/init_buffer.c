@@ -13,6 +13,10 @@
 #include "ft_buffer.h"
 #include "ft_proto.h"
 
+/*
+** Forbidden function bzero
+*/
+
 int			init_buffer(void)
 {
 	if (!(g_shell_env.buffer = (t_buffer *)ft_memalloc(sizeof(t_buffer)))
