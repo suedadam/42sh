@@ -6,11 +6,12 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 19:51:10 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 12:02:52 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 static int											checktty(void)
 {
@@ -57,25 +58,18 @@ int													ft_read_loop(void)
 	{
 		if (byte == 4 && !(*g_shell_env.buffer->buff))
 		{
-			if (reset_prompt())
+			if (reset_prompt() == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			break ;
 		}
 		else if (byte == 10)
-		{
-			if (ft_c_dispatch() == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-		else if (handle_keys(byte) == EXIT_FAILURE)
-		{
-			if (reset_terminal() == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
+			ret = ft_c_dispatch();
+		else if ((ret = handle_keys(byte)) == EXIT_FAILURE)
+			ret = reset_terminal();
+		if (ret == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
 	if (ret < 0)
-	{
 		g_ft_errnum = SYSERR;
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+	return (g_ft_errnum ? EXIT_FAILURE : EXIT_SUCCESS);
 }

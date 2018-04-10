@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_buffer.h"
+#include "ft_proto.h"
 
 void		update_buffer(char *buffer, int inc)
 {

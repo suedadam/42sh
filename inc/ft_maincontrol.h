@@ -6,17 +6,17 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:16:03 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 19:42:00 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 12:08:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MAINCONTROL
-#define FT_MAINCONTROL
+#ifndef FT_MAINCONTROL_H
+# define FT_MAINCONTROL_H
 
 # include "ft_term.h"
 
 /*
-**	tty settings and resetting	
+**	tty settings and resetting
 **	(change_termial.c)
 */
 
@@ -28,10 +28,10 @@ int		ft_restoretty(void);
 **	(error.c)
 */
 
-void		ft_terror(void);
+void	ft_terror(void);
 
 /*
-**	Function jump arrays	
+**	Function jump arrays
 **	(jump_defs.c)
 */
 
@@ -50,7 +50,7 @@ int		handle_keys(char byte);
 **	(main.c)
 */
 
-int			init_shellenv(void);
+int		init_shellenv(void);
 
 /*
 **	Termcaps sucks
@@ -64,7 +64,7 @@ int		my_putchar(int chrr);
 **	(read_loop.c)
 */
 
-int				ft_read_loop(void);
+int		ft_read_loop(void);
 
 /*
 **	Regular printing, cursor and buffer movement

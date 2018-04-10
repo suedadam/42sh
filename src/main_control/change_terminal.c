@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 int		ft_setty(void)
 {

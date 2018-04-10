@@ -6,11 +6,12 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 19:34:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 11:52:10 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_escape.h"
+#include "ft_proto.h"
 
 void		delete_last(int starting_position, t_cursor *cursor)
 {
@@ -38,6 +39,7 @@ int			ft_delete(char byte)
 		if (read(STDIN_FILENO, &byte, 1) < 0)
 			return (EXIT_FAILURE);
 	}
+	/* recognize utf8 encoding */
 	cursor = &(g_shell_env.cursor);
 	if (!(buffer = cursor->buffer))
 		return (EXIT_FAILURE);

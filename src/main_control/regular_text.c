@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 int		regular_text(char byte)
 {

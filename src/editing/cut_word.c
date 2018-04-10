@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_editing.h"
+#include "ft_proto.h"
 
 void		cut_word_before_cursor(void)
 {

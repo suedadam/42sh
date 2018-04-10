@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_screen.h"
+#include "ft_proto.h"
 
 /*
 ** Not sure if its still being used?

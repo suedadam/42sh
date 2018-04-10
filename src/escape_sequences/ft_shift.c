@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_escape.h"
+#include "ft_proto.h"
 
 int		ft_shift(__attribute__((unused)) char byte)
 {

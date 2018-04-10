@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "ft_prompt.h"
+#include "ft_proto.h"
+#include "ft_proto.h"
 
 int		back_prompt(void)
 {

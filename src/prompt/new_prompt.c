@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_prompt.h"
+#include "ft_proto.h"
 
 static int		normal_prompt(void)
 {

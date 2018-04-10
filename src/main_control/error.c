@@ -6,14 +6,16 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 09:51:52 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 19:46:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 11:27:52 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
-t_errstr g_errtable[6] =
+t_errstr g_errtable[7] =
 {
+	{0, NULL, 0},
 	{0, NULL, 0},
 	{TGETN, "Terminfo database not found\n", 28},
 	{TGETZ, "No such entry\n", 14},

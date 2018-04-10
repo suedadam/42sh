@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_control.h"
+#include "ft_proto.h"
 
 int		control_e(void)
 {

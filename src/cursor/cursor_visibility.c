@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_cursor.h"
+#include "ft_proto.h"
 
 void		invisible_cursor(void)
 {

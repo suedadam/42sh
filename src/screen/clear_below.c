@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_screen.h"
+#include "ft_proto.h"
 
 void		clear_below(void)
 {

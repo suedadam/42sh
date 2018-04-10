@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 static void	_y(__attribute__((unused)) int c)
 {

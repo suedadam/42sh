@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_escape.h"
+#include "ft_proto.h"
 
 inline __attribute__((always_inline)) int	multibyte_dispatch(char byte)
 {

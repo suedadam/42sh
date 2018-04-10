@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_prompt.h"
+#include "ft_proto.h"
 
 int			reset_prompt(void)
 {

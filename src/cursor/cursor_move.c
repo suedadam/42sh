@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_cursor.h"
+#include "ft_proto.h"
 
 void	move_cursor(t_cursor *cursor)
 {

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_escape.h"
+#include "ft_proto.h"
 
 static int	ft_jumps(char *temp)
 {

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_cursor.h"
+#include "ft_proto.h"
 
 void		cursor_to_right(t_cursor *cursor)
 {

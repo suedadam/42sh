@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 /*
 ** Termcaps database is initialized here and reference to it is saved

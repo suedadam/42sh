@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 /*
 **	byte == 127 reassaign for redirect to backspace

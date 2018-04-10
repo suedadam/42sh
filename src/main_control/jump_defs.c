@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+#include "ft_proto.h"
 
 int		(*g_multibyte_jump[])(char byte) = {
 	ft_linemove,

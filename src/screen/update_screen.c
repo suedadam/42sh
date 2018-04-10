@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_screen.h"
+#include "ft_proto.h"
 
 void		update_end_of_screen(void)
 {

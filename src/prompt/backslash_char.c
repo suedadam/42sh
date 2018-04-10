@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_term.h"
+#include "ft_proto.h"
 
 int		backslash_char(void)
 {

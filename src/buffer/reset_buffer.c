@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_buffer.h"
+#include "ft_proto.h"
 
 int			reset_buffer(void)
 {

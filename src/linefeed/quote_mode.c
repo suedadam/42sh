@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_linefeed.h"
+#include "ft_proto.h"
 
 int		quote_mode(void)
 {

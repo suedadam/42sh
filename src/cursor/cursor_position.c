@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_cursor.h"
+#include "ft_proto.h"
 
 void		get_cursor_first_position(void)
 {

@@ -6,11 +6,12 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 10:43:44 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 16:54:32 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/10 12:41:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_buffer.h"
+#include "ft_proto.h"
 
 int			init_buffer(void)
 {

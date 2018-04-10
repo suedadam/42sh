@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_linefeed.h"
+#include "ft_proto.h"
 
 int			ft_linefeed(void)
 {

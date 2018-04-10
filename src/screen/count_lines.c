@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_screen.h"
+#include "ft_proto.h"
 
 int		count_lines(void)
 {
