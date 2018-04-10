@@ -6,13 +6,15 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 17:02:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/09 21:30:13 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 06:22:34 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HISTORY_H
 # define HISTORY_H
 # include "error.h"
+# include "exec.h"
+# include "ft_getopt.h"
 # include "libft.h"
 
 /*
@@ -37,12 +39,8 @@
 # define HISTFILE		".shella_history"
 # define HISTFILESIZE	0
 
+# define HDEF_ERROR(x)	hist_error(-1, FALSE, x)
 # define HPOS(x, y, z)	((x + y) + z) % z
-
-enum			e_histerr
-{
-	ERR_HIST_OOR
-};
 
 typedef struct	s_histopt
 {
@@ -71,6 +69,12 @@ typedef struct	s_hist
 }				t_hist;
 
 /*
+** builtin_history.c
+*/
+
+int				builtin_history(char **av, t_process *pinfo);
+
+/*
 ** history.c
 */
 
@@ -85,15 +89,16 @@ t_hist			*hist_getall(void);
 */
 
 void			hist_load(char *path, t_hist *hist);
-void			hist_print(int fd, int start, int len);
+void			hist_print(int fd, int start, int len, t_bool rev);
 void			hist_save(char *path, t_hist *hist, int lines, t_bool append);
 
 /*
 ** history_util.c
 */
 
-void			hist_error(int errnum, void *param, t_bool isnum);
+void			hist_error(int errnum, char *param, t_bool fatal);
 char			*hist_get_prefix(t_hist *hist, int max);
 void			hist_resize(t_hist *hist, int nsize);
 t_hist			*hist_scale(t_hist *hist);
+t_bool			param_atoi(char *arg, int *n);
 #endif

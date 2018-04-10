@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/09 20:57:09 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 06:20:16 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	hist_clear(void)
 	{
 		free(hist->arr);
 		if (!(hist->arr = ft_memalloc(sizeof(t_log) * nsize)))
-			DEFAULT_ERROR(FATAL);
+			HDEF_ERROR(FATAL);
 		hist->size = nsize;
 	}
 	hist->head = 0;
@@ -101,8 +101,10 @@ t_log	*hist_get(int offset)
 	t_hist	*hist;
 
 	hist = hist_getall();
-	if (offset < 0 || offset >= hist->len)
+	if (offset >= hist->len || (offset < 0 && ABS(offset) > hist->len))
 		return (NULL);
+	if (offset < 0)
+		offset = hist->len + (offset + 1);
 	return (&hist->arr[HPOS(hist->head, offset, hist->size)]);
 }
 
@@ -117,7 +119,7 @@ t_hist	*hist_getall(void)
 	{
 		size = (hist.maxsize < GROWTH_PAD) ? hist.maxsize : GROWTH_PAD;
 		if (!(hist.arr = ft_memalloc(sizeof(t_log) * size)))
-			DEFAULT_ERROR(FATAL);
+			HDEF_ERROR(FATAL);
 		hist.size = size;
 		if (HISTFILE)
 			hist_load(HISTFILE, &hist);

@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:43:33 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/04 18:54:21 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 04:24:09 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ int	ft_getopt(int ac, char *const av[], const char *optstring);
 extern char	*g_optarg;
 extern int	g_optind;
 extern int	g_opterr;
+extern int	g_fderr;
 extern int	g_optopt;
 #endif

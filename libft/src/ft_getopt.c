@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 16:20:06 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/05 02:36:01 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 04:23:49 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 char		*g_optarg;
 int			g_optind = 1;
 int			g_opterr = 1;
+int			g_fderr = 2;
 int			g_optopt;
 
 static int		opt_error(char *pname, const char *err, const char *optstring)
@@ -38,7 +39,7 @@ static int		opt_error(char *pname, const char *err, const char *optstring)
 		tmp = ft_stpcpy(tmp, " -- ");
 		*tmp++ = g_optopt;
 		*tmp = '\n';
-		write(STDERR_FILENO, msg, len);
+		write(g_fderr, msg, len);
 		free(msg);
 	}
 	return ((*optstring == ':') ? ':' : '?');
@@ -52,7 +53,7 @@ static t_bool	set_arg(char *const av[], char **pos, const char *op)
 	if (*(op + 1) != ':')
 		return (TRUE);
 	g_optarg = (**pos) ? *pos : av[g_optind];
-	optional = (*(op + 2) == ':');
+	optional = (*op && *(op + 2) == ':');
 	if (optional && g_optarg && *g_optarg == '-')
 		g_optarg = NULL;
 	else

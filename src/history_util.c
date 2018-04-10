@@ -6,24 +6,38 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:41:20 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/08 04:44:58 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 06:25:38 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "history.h"
 
-void	hist_error(int errnum, void *param, t_bool isnum)
+void	hist_error(int errnum, char *param, t_bool fatal)
 {
-	static const char *errmsg[] = {
-		"history position out of range"
+	const char			*prefix;
+	const char			*msg;
+	static const char	*histerr[] = {
+		"history position out of range",
+		"history [-c] [-d] <offset> [-arw] [filename] [start] [end]"
 	};
 
-	if (isnum)
-		param = ft_itoa(*(int *)param + 1);
-	sh_error("history", errmsg[errnum], (const char *)param);
-	if (isnum)
-		free(param);
+	prefix = (errnum == 1) ? "usage" : "history";
+	msg = (errnum < 0) ? sys_errlist[errno] : histerr[errnum];
+	write(g_fderr, prefix, ft_strlen(prefix));
+	write(g_fderr, ": ", 2);
+	write(g_fderr, msg, ft_strlen(msg));
+	if (param)
+	{
+		write(g_fderr, ": ", 2);
+		write(g_fderr, param, ft_strlen(param));
+	}
+	write(g_fderr, "\n", 1);
+	if (fatal)
+		exit(1);
 }
 
 char	*hist_get_prefix(t_hist *hist, int max)
@@ -52,7 +66,7 @@ void	hist_resize(t_hist *hist, int nsize)
 
 	tmp = hist->arr;
 	if (!(hist->arr = ft_memalloc(sizeof(t_log) * nsize)))
-		DEFAULT_ERROR(FATAL);
+		HDEF_ERROR(FATAL);
 	i = 0;
 	max = (nsize > hist->len) ? hist->len : nsize;
 	while (i < max)
@@ -86,4 +100,18 @@ t_hist	*hist_scale(t_hist *hist)
 		hist_resize(hist, size);
 	}
 	return (hist);
+}
+
+t_bool	param_atoi(char *arg, int *n)
+{
+	*n = 0;
+	if (!*arg)
+		return (FALSE);
+	while (*arg)
+	{
+		if (!IS_DIGIT(*arg))
+			return (FALSE);
+		*n = (*n * 10) + (*arg++ - '0');
+	}
+	return (*n > 0);
 }
