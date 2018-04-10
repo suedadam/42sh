@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   back_prompt.c                                      :+:      :+:    :+:   */
+/*   quote_mode.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 11:56:33 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/07 18:21:29 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/02 11:25:38 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/10 15:29:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_prompt.h"
-#include "ft_proto.h"
+#include "ft_hangingbyte.h"
 #include "ft_proto.h"
 
-int		back_prompt(void)
+int		quote_mode(void)
 {
-	static char *cache = NULL;
-
-	if (!cache)
-		cache = tgetstr("do", NULL);
-	tputs(cache, 1, my_putchar);
-	if (new_prompt("> ") == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	if (T_QUOTE)
+	{
+		if (drop_prompt("quote> ") == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
+	else if (T_DQUOTE)
+	{
+		if (drop_prompt("dquote> ") == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
 	get_cursor_first_position();
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:52:16 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 12:16:12 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 14:31:15 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,11 @@
 # define WHT "\x1B[37m"
 
 /*
-**	backslash send
-**	(backslash_char.c)
+**	Called when there is a "hanging byte" at the end of a line buffer
+**	(drop_prompt.c)
 */
 
-int		backslash_char(void);
-
-/*
-**	Called when a '\' is at the end of a line buffer
-**	(back_prompt.c)
-*/
-
-int		back_prompt(void);
+int		drop_prompt(char *str);
 
 /*
 **	How a new prompt is created, calls to other required termcap and buffer

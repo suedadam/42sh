@@ -61,9 +61,14 @@ SRC += escape_sequences/ft_history
 SRC += escape_sequences/ft_page
 SRC += escape_sequences/screen_scroll
 
+# HANGING BYTE
+SRC += hanging_byte/curly_mode
+SRC += hanging_byte/hanging_byte
+SRC += hanging_byte/paren_mode
+SRC += hanging_byte/quote_mode
+
 # LINEFEED
 SRC += linefeed/linefeed
-SRC += linefeed/quote_mode
 
 # MAIN CONTROL
 SRC += main_control/change_terminal
@@ -77,10 +82,9 @@ SRC += main_control/regular_text
 SRC += main_control/set_signal
 
 # PROMPT
-SRC += prompt/back_prompt
+SRC += prompt/drop_prompt
 SRC += prompt/new_prompt
 SRC += prompt/reset_prompt
-SRC += prompt/backslash_char
 
 # SCREEN
 SRC += screen/count_lines

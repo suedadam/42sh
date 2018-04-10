@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   hanging_byte.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 12:23:02 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 14:28:53 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/10 15:56:21 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
+#include "ft_hangingbyte.h"
+#include "ft_proto.h"
 
-# include "ft_buffer.h"
-# include "ft_control.h"
-# include "ft_cursor.h"
-# include "ft_editing.h"
-# include "ft_escape.h"
-# include "ft_hangingbyte.h"
-# include "ft_linefeed.h"
-# include "ft_maincontrol.h"
-# include "ft_prompt.h"
-# include "ft_screen.h"
-
-#endif
+void	hanging_byte(char byte)
+{
+	if (byte == '\'' && !T_DQUOTE)
+		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
+	else if (byte == '\"' && !T_QUOTE)
+		T_DQUOTE = (T_DQUOTE == 1) ? 0 : 1;
+	else if (byte == '(' || byte == ')')
+		paren_check(byte);
+	else if (byte == '{' || byte == '}')
+		curly_check(byte);
+	else if (byte == '|')
+		T_PIPE = 1;
+}

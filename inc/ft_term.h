@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/10 12:30:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 16:08:30 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,19 @@
 # define BUFF_SIZE 1024
 # define UNSET (void *)
 
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v'\
+		|| c == '\f' || c == '\r')
 # define PRINTABLE(c) (c >= 32 && c <= 126)
 # define T_BSLASH (g_shell_env.tokens.bslash)
 # define T_MPASS (g_shell_env.tokens.mpass)
 # define T_QUOTE (g_shell_env.tokens.quote)
 # define T_DQUOTE (g_shell_env.tokens.dquote)
 # define T_DBLESC (g_shell_env.tokens.dblesc)
+# define T_OPAREN (g_shell_env.tokens.oparen)
+# define T_CPAREN (g_shell_env.tokens.cparen)
+# define T_OCURLY (g_shell_env.tokens.ocurly)
+# define T_CCURLY (g_shell_env.tokens.ccurly)
+# define T_PIPE (g_shell_env.tokens.pipe)
 
 int						g_ft_errnum;
 
@@ -110,11 +117,15 @@ typedef struct			s_buffer
 typedef struct			s_tokens
 {
 	int					mpass;
-	int					bslash;
 	int					control_v;
 	int					quote;
 	int					dquote;
+	int					oparen;
+	int					cparen;
+	int					ocurly;
+	int					ccurly;
 	int					dblesc;
+	int					pipe;
 }						t_tokens;
 
 typedef	struct			s_terminf

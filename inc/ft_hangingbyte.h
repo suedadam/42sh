@@ -1,25 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_linefeed.h                                      :+:      :+:    :+:   */
+/*   ft_hangingbyte.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/09 16:29:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 14:22:45 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/10 14:16:46 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/10 15:54:34 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LINEFEED_H
-# define FT_LINEFEED_H
+#ifndef FT_HANGINGBYTE_H
+# define FT_HANGINGBYTE_H
 
 # include "ft_term.h"
 
 /*
-**	pass off all buffer to lexer, ast creation and execution
-**	(linefeed.c)
+**	For proper handling of hanging curlies
+**	(curly_mode.c)
 */
 
-int		ft_linefeed(void);
+void	curly_check(char byte);
+
+/*
+**	Catch for hanging chars that should wrap <", ', [, (, {>
+**	(hanging_byte.c)
+*/
+
+void	hanging_byte(char byte);
+
+/*
+**	For proper handling of hanging parens
+**	(paren_mode.c)
+*/
+
+void	paren_check(char byte);
+
+/*
+**	quote mode handling on linefeed
+**	(quote_mode.c)
+*/
+
+int		quote_mode(void);
 
 #endif

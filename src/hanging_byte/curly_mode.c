@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   curly_mode.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 12:23:02 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 14:28:53 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/10 15:47:44 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/10 15:53:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
 
-# include "ft_buffer.h"
-# include "ft_control.h"
-# include "ft_cursor.h"
-# include "ft_editing.h"
-# include "ft_escape.h"
-# include "ft_hangingbyte.h"
-# include "ft_linefeed.h"
-# include "ft_maincontrol.h"
-# include "ft_prompt.h"
-# include "ft_screen.h"
+#include "ft_hangingbyte.h"
+#include "ft_proto.h"
 
-#endif
+void	curly_check(char byte)
+{
+	if (byte == '{' && !(T_QUOTE | T_DQUOTE))
+		T_OCURLY++;
+	else if (byte == '}' && T_OPAREN)
+	{
+		T_OCURLY--;
+		T_CCURLY = (T_OCURLY == 0) ? 1 : 0;
+	}
+}

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   paren_mode.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 12:23:02 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 14:28:53 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/10 14:33:08 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/10 15:51:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
+#include "ft_hangingbyte.h"
+#include "ft_proto.h"
 
-# include "ft_buffer.h"
-# include "ft_control.h"
-# include "ft_cursor.h"
-# include "ft_editing.h"
-# include "ft_escape.h"
-# include "ft_hangingbyte.h"
-# include "ft_linefeed.h"
-# include "ft_maincontrol.h"
-# include "ft_prompt.h"
-# include "ft_screen.h"
-
-#endif
+void	paren_check(char byte)
+{
+	if (byte == '(' && !(T_QUOTE | T_DQUOTE))
+		T_OPAREN++;
+	else if (byte == ')' && T_OPAREN)
+	{
+		T_OPAREN--;
+		T_CPAREN = (T_OPAREN == 0) ? 1 : 0;
+	}
+}

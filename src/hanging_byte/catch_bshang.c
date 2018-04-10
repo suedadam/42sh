@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   backslash_char.c                                   :+:      :+:    :+:   */
+/*   catch_bshang.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/31 10:29:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 21:16:02 by asyed            ###   ########.fr       */
+/*   Created: 2018/04/10 15:01:21 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/10 15:05:13 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_term.h"
+#include "ft_hangingbyte.h"
 #include "ft_proto.h"
 
-int		backslash_char(void)
+int		catch_bshang(char byte)
 {
-	g_shell_env.tokens.bslash = 0;
-	return (back_prompt());
+	if (byte == '\\')
+		return (drop_prompt("> "));
+	hanging_byte(byte);
+	return (EXIT_SUCCESS);
 }
