@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_terminal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:21:04 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 15:57:26 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/09 20:12:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_setty(void)
 {
-	g_shell_env.shell_tty->c_lflag ^= (ECHO | ICANON);
+	g_shell_env.shell_tty->c_lflag &= ~(ECHO | ICANON);
 	if ((tcsetattr(STDIN_FILENO, TCSAFLUSH, g_shell_env.shell_tty)) < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
