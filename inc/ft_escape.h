@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:50:21 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 16:38:33 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 11:08:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #define FT_ESCAPE_H
 
 #include "ft_term.h"
+
+#define ARROWS_LEFTRIGHT(x) (x == 67 || x == 68) 
+#define HOME_END_KEY(x) (x == 70 || x == 72)
+#define DELETE_KEY(x) (x == 51)
+#define SHIFTMOD(x) (x == 49)
+#define PGKEYS(x) (x == 53 || x == 54)
+#define ARROWS_UPDOWN(x) (x == 65 || x == 66)
+
 
 /*
 **	Alt key control capture and requisite dispatcher to action functions

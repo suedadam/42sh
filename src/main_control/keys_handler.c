@@ -6,11 +6,15 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 19:52:52 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 11:08:01 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
+
+/*
+**	byte == 127 reassaign for redirect to backspace
+*/
 
 static inline __attribute__((always_inline)) int	control_char(char byte)
 {

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 16:26:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 19:32:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/10 11:08:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 inline __attribute__((always_inline)) int	multibyte_dispatch(char byte)
 {
-	if (byte == 67 || byte == 68 || byte == 70 || byte == 72)
+	if (ARROWS_LEFTRIGHT(byte) || HOME_END_KEY(byte))
 		return (CURSOR_MOVE);
-	else if (byte == 51)
+	else if (DELETE_KEY(byte))
 		return (DEL_KEY);
-	else if (byte == 49)
+	else if (SHIFTMOD(byte))
 		return (SHIFT);
 	else if (T_DBLESC)
 		return (ALT);
-	else if (byte == 53 || byte == 54)
+	else if (PGKEYS(byte))
 		return (SCROLL);
-	else if (byte == 65 || byte == 66)
+	else if (ARROWS_UPDOWN(byte))
 		return (HISTORY);
-	else if (byte == 126)
-		return (PAGE);
 	return (-1);
 }
