@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/08 18:04:57 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 06:47:52 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 07:24:47 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void		save_history(char *path, char mode)
 
 static void		process_opt(t_process *pinfo, t_histopt *opt)
 {
-	int	n;
+	t_hist	*hist;
+	int		n;
 
 	if (opt->clear)
 		hist_clear();
@@ -69,6 +70,12 @@ static void		process_opt(t_process *pinfo, t_histopt *opt)
 		save_history(opt->save_target, opt->io_mode);
 	if (opt->args)
 		print_history(pinfo, opt->args, *(opt->args + 1) != NULL);
+	else if (g_optind == 1)
+	{
+		hist = hist_getall();
+		n = (hist->len >= 16) ? hist->len - 16 : 0;
+		hist_print(*pinfo->stdout, n, 16, FALSE);
+	}
 }
 
 int				builtin_history(char **av, t_process *pinfo)
