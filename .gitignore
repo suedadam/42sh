@@ -6,3 +6,6 @@
 .nfs*
 *.o
 *.a
+*.swp
+42sh
+tags
