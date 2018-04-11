@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 18:06:59 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/11 00:09:05 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void			hist_load(char *path, t_hist *hist)
 		HDEF_ERROR(FATAL);
 	if (!hist_read(path, mchain))
 		return ;
-	mchain = ft_mcget("histfile");
 	if (HISTFILESIZE && mchain->link_count > HISTFILESIZE)
 		hist_truncate(path, mchain, hist);
 	while (mchain->link_count > hist->maxsize)
