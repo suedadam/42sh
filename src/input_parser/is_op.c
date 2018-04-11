@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:15:15 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/04 20:44:35 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/11 16:16:47 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_op(t_parser *par, char cur_char)
 {
-	if (!par->quoted && par->current_type == operator)
+	if (!par->quoted && par->current_type == OPERATOR)
 	{
 		if (is_op_append(par->current_token, cur_char))
 		{
@@ -41,7 +41,7 @@ int	is_start_op(t_parser *par, char cur_char)
 		if (add_token(par->current_token, &(par->current_type), par)
 			== EXIT_FAILURE || !strappend(&(par->current_token), cur_char))
 			return (0);
-		par->current_type = operator;
+		par->current_type = OPERATOR;
 		return (USED_CHAR);
 	}
 	return (UNUSED_CHAR);

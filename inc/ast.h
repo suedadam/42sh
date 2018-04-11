@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/11 16:01:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/11 16:13:01 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 typedef enum	e_token_type
 {
-	TOKEN,
+	null,
+	WORD,
 	OPERATOR
 }				t_token_type;
 
