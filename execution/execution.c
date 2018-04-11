@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/04 17:34:58 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/10 22:49:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	build_leafs(t_ast *curr)
 	*(info->stdout) = curr->p_info->comm[1];
 	*(info->stderr) = *(curr->p_info->stderr);
 	curr->left_child->p_info = info;
-	if (!(info = init_process()))
+	if (!curr->right_child || !(info = init_process()))
 		return ;
 	*(info->stdin) = curr->p_info->comm[0];
 	*(info->stdout) = curr->p_info->stdout[1];
@@ -111,7 +111,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 {
 	int fds[2];
 
-	if (!curr)
+	if (!curr || !curr->right_child)
 		return ;
 	if (!curr->p_info && !(curr->p_info = init_process()))
 		return ;
@@ -119,7 +119,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 	pipe(fds);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
 	pipe(fds);
-	if (!(curr->right_child->right_child)) //Right child should *ALWAYS* be allocated
+	if (!(curr->right_child->right_child))
 	{
 		fds[0] = STDOUT_FILENO;
 		fds[1] = STDOUT_FILENO;
@@ -201,19 +201,18 @@ int		run_tree(t_ast *curr)
 	return (EXIT_FAILURE);
 }
 
-int		run_forest(t_ast **asts)
+int		run_forest(t_queue *forest)
 {
-	int	i;
+	t_ast	*asts;
 
-	i = 0;
-	while (asts[i])
+	if (!forest)
+		return (EXIT_FAILURE);
+	while ((asts = queue_pop(forest)))
 	{
-		if (build_info(NULL, asts[i]))
-			return (-1);
-		if (run_tree(asts[i]))
-			return (-1);
-		return (255);
-		i++;
+		if (build_info(NULL, (t_ast *)asts))
+			return (EXIT_FAILURE);
+		if (run_tree((t_ast *)asts))
+			return (EXIT_FAILURE);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

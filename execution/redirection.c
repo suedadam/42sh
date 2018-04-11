@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 22:01:47 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/10 22:43:21 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int		handle_redirection(t_ast *curr)
 	int	i;
 	int	j;
 
+	if (!curr)
+		return (EXIT_FAILURE);
 	i = 0;
 	while (curr->token[i])
 	{
@@ -110,7 +112,7 @@ int		handle_redirection(t_ast *curr)
 		{
 			if (!strcmp(curr->token[i], redir_ops[j].opflag))
 			{
-				if (redir_ops[j].func(curr, i))
+				if (!curr || redir_ops[j].func(curr, i))
 				{
 					printf("Failing.\n");
 					return (EXIT_FAILURE);
