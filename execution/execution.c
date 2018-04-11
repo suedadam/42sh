@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/10 22:49:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/10 23:53:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	build_leafs(t_ast *curr)
 {
 	t_process *info;
 
-	if (!(info = init_process()))
+	if (!curr || !curr->left_child || !(info = init_process()))
 		return ;
 	*(info->stdin) = *(curr->p_info->stdin);
 	*(info->stdout) = curr->p_info->comm[1];
