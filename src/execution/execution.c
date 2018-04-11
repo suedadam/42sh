@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/10 23:53:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/11 15:41:10 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	pid_t	pid;
 	int 	res;
 
-	if (!curr || *(curr->type) == operator)
+	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
-	if ((res = builtin_handler(curr)) != -1)
-		return (res);
+	// if ((res = builtin_handler(curr)) != -1)
+	// 	return (res);
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
-		printf("[In: %d, Out: %d, Err: %d]\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr));
+		printf("[In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
 		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
@@ -111,7 +111,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 {
 	int fds[2];
 
-	if (!curr || !curr->right_child)
+	if (!curr)
 		return ;
 	if (!curr->p_info && !(curr->p_info = init_process()))
 		return ;
@@ -134,7 +134,7 @@ void	build_default(t_ast *curr)
 {
 	t_process *info;
 
-	if (!curr || *(curr->type) == operator)
+	if (!curr || *(curr->type) == OPERATOR)
 		return ;
 	if (!(info = init_process()))
 		return ;
@@ -161,7 +161,7 @@ int		build_info(t_ast *prev, t_ast *curr)
 {
 	if (!curr)
 		return (-1);
-	if (*(curr->type) == operator)
+	if (*(curr->type) == OPERATOR)
 	{
 		if (!strcmp(*(curr->token), "|"))
 			pipe_carry(prev, curr);
@@ -186,7 +186,7 @@ int		run_tree(t_ast *curr)
 
 	if (!curr || !curr->left_child)
 		return (0);
-	if (*(curr->type) == operator)
+	if (*(curr->type) == OPERATOR)
 	{
 		i = 0;
 		while (op_handlers[i].check)
@@ -207,10 +207,12 @@ int		run_forest(t_queue *forest)
 
 	if (!forest)
 		return (EXIT_FAILURE);
-	while ((asts = queue_pop(forest)))
+	while ((asts = (t_ast *)queue_pop(forest)) && (asts = ((t_list *)asts)->content))
 	{
+		printf("ast = \"%s\"\n", *(asts->token));
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
+		printf("Left %s right %s\n", *(asts->left_child->token), *(asts->right_child->token));
 		if (run_tree((t_ast *)asts))
 			return (EXIT_FAILURE);
 	}

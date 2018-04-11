@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/04 16:45:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/11 15:28:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 int	builtin_getenv(char *argv[])
 {
 	int	i;
-	int	len;
 	int	ret;
 
 	i = 0;
-	if (!arv[1] || !(len = argv[1]))
+	if (!argv[1])
 		return (EXIT_FAILURE);
 	while ((g_environ->environ)[i])
 	{

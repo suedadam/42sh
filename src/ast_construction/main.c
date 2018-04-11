@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:24:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 15:30:16 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:54:34 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 	type[5] = 0;
 	type[6] = 1;
 	type[7] = 0;
-	type[8] = 1;
+	type[8] = 0;
 	type[9] = 0;
 	type[10] = 0;
 	type[11] = 0;
@@ -39,6 +39,7 @@ int main(int argc, char **argv) {
 		printf("poop\n");
 		return (EXIT_FAILURE);
 	}
+	// run_forest(forest);
 	t_list *vasy = forest->head;
 	while (vasy)
 	{

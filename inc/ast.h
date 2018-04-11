@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/11 15:51:45 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/11 16:01:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct	s_environ
 ** lol remove me.
 */
 
-int				run_forest(t_ast **asts);
+int				run_forest(t_queue *forest);
 t_queue			*build_forest(char **tokens, t_token_type *type);
 
 /*
