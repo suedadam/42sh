@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 19:45:51 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 06:51:39 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 18:06:59 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void			hist_print(int fd, int start, int len, t_bool rev)
 	char	*pos;
 	int		n;
 
-	if (!len)
-		return ;
 	hist = hist_getall();
 	pre = hist_get_prefix(hist, start + len);
 	while (len--)
@@ -119,6 +117,8 @@ void			hist_print(int fd, int start, int len, t_bool rev)
 			*pos-- = (n % 10) + '0';
 			n /= 10;
 		}
+		while (pos != pre - 1)
+			*pos-- = ' ';
 		write(fd, pre, ft_strlen(pre));
 		log->data[log->len] = '\n';
 		write(fd, log->data, log->len + 1);

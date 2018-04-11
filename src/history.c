@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:00:11 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 06:20:16 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/10 19:05:35 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_log	*hist_get(int offset)
 	if (offset >= hist->len || (offset < 0 && ABS(offset) > hist->len))
 		return (NULL);
 	if (offset < 0)
-		offset = hist->len + (offset + 1);
+		offset += hist->len;
 	return (&hist->arr[HPOS(hist->head, offset, hist->size)]);
 }
 
