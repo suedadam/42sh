@@ -1,3 +1,0 @@
-[submodule "malloc"]
-	path = ft_malloc
-	url = https://github.com/suedadam/ft_malloc
