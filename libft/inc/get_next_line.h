@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/24 16:47:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/06 17:11:14 by sgardner         ###   ########.fr       */
+/*   Created: 2017/01/19 13:06:04 by sgardner          #+#    #+#             */
+/*   Updated: 2018/01/31 16:54:37 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 # include "libft.h"
+# define BUFF_SIZE 4096
 
-# define NONFATAL			0
-# define FATAL				!NONFATAL
-# define FATAL_ERROR(x)		fatal_error(x)
-# define DEFAULT_ERROR(x)	default_error(x)
+typedef struct	s_file
+{
+	int				fd;
+	size_t			offset;
+	char			*buffer;
+	struct s_file	*next;
+}				t_file;
 
-/*
-** error.c
-*/
-
-void	default_error(t_bool fatal);
-void	fatal_error(const char *msg);
-void	sh_error(const char *prefix, const char *err, const char *param);
-
-extern char	*g_pname;
+int				get_next_line(const int fd, char **line);
 #endif

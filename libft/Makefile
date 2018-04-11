@@ -6,11 +6,13 @@
 
 NAME = libft.a
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
 INC = -I inc
 SRC_DIR = src
 SRC = \
 	atoi\
+	getopt\
+	gnl\
 	itoa\
 	memalloc\
 	memccpy\
