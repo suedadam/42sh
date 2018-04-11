@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:15:19 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/26 14:05:29 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:52:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_ast		*new_ast_node(char **tokens, t_token_type *types,
 	t_ast *left, t_ast *right)
 {
-	int			i;
 	t_ast		*node;
 
 	if (!(node = (t_ast *)ft_memalloc(sizeof(t_ast))))

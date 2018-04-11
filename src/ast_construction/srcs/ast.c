@@ -6,12 +6,11 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 19:07:56 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:51:15 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-#include <stdlib.h>
 
 #define END_PARSING -1
 
@@ -33,7 +32,7 @@ static int			parse_tokens(char **tokens, t_token_type *type)
 	{
 		if (type[i] == OPERATOR && str_search(g_operators, tokens[i]))
 			return (i);
-		printf("not : |%s|[%d]\n", tokens[i], type[i]);
+		ft_printf("not : |%s|[%d]\n", tokens[i], type[i]);
 		i++;
 	}
 	return (!i ? END_PARSING : i - 1);

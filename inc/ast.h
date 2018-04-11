@@ -6,15 +6,16 @@
 /*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/11 00:07:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/11 15:51:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "libft/inc/libft.h"
-# include "libft/inc/queue.h"
+# include "libft.h"
+# include "queue.h"
+# include "ft_printf.h"
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 # include <unistd.h>
 
