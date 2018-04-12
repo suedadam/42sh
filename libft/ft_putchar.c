@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:16:09 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/11 18:00:58 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/11 18:15:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putchar(char c)
 {
-	ft_putstr_fd(s, STDOUT_FILENO);
+	ft_putchar_fd(c, STDOUT_FILENO);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: satkins <satkins@student.42.fr>            +#+  +:+       +#+         #
+#    By: asyed <asyed@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/11 17:54:18 by satkins          ###   ########.fr        #
+#    Updated: 2018/04/11 18:26:53 by asyed            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_strnjoin.c \
 		  libft/get_next_line.c \
 		  libft/ft_putnstr.c \
+		  libft/ft_putnstr_fd.c \
 		  libft/ft_handle_error.c \
 		  libft/ft_toupper_str.c \
 		  libft/ft_ullitoa_base.c \
@@ -110,8 +111,8 @@ LIBTARG = $(LIBFT:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIBFT)
-	@$(CC) $(CFLAGS) -I$(HEADER) $^ && mv *.o libft/
-	@$(CC) $(CFLAGS) -I$(HEADER) $(PRINTF) && mv *.o 'printf/'
+	$(CC) $(CFLAGS) -I$(HEADER) $^ && mv *.o libft/
+	$(CC) $(CFLAGS) -I$(HEADER) $(PRINTF) && mv *.o 'printf/'
 	@ar rc $(NAME) $(TARG)
 
 
