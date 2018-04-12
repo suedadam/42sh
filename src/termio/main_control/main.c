@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/07 17:55:26 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/11 16:38:58 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int			init_shellenv(void)
 
 int			main(void)
 {
-	ft_bzero(&g_shell_env, sizeof(t_terminf));
+	bzero(&g_shell_env, sizeof(t_terminf));
 	if (init_shellenv() == EXIT_FAILURE
 		|| shsignal_handlers() == EXIT_FAILURE
 		|| init_termcaps() == EXIT_FAILURE

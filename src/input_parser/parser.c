@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/09 19:18:01 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/11 16:26:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int			check_char(t_parser **par, char **input_str)
 	int				ret;
 
 	ret = UNUSED_CHAR;
-	if (!(ret = is_semi(*par, *input_str)) ||
+	if (!(ret = is_semi(*par, **input_str)) ||
 		(ret == UNUSED_CHAR && !(ret = is_op(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_quote(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_start_op(*par, **input_str))) ||
@@ -88,7 +88,7 @@ t_ast				*parser(char *input_str)
 		return (NULL);
 	while (*input_str)
 	{
-		if (!(ret = check_char(par, &input_str)))
+		if (!(ret = check_char(&par, &input_str)))
 			return (NULL);
 		if (ret == CONTINUE)
 			continue ;

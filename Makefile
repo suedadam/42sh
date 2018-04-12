@@ -1,9 +1,14 @@
 NAME = 42sh
-STAT = lib/libft.a
+STAT = deps/libft/libft.a
 CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
 INCLUDES = -I deps/libft/inc -I deps/malloc/deps/ft_printf \
 		   -I src/ -I inc/
 CC = gcc
+LIBFT = deps/libft/libft.a
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+MALLOC = libft_malloc_${HOSTTYPE}.so
 
 ################################################################################
 # Source directories identifiers                                               #
@@ -231,31 +236,31 @@ all: $(NAME)
 #$(MALLOC):
 #	@make -C ft_malloc
 
-$(NAME): $(MALLOC) $(OBJLIB) $(OBJSRC)
+$(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
-	ar -rcs $(STAT) $(OBJLIB)
-	@ echo "$(YELLOW)Compiling ftls program$(RES)"
-	$(CC) $(CFLAGS) -L lib/ -lft -ltermcap $(OBJSRC) -o $(NAME)
+	@ echo "$(YELLOW)Compiling program$(RES)"
+	$(CC) $(CFLAGS) -L deps/libft -lft -L deps/malloc/deps/ft_printf -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
-$(MALLOC):
-	@make -C deps/malloc
+
+$(MALLOC): $(LIBFT)
+	make -C deps/malloc
 
 $(LIBFT):
-	@make -C deps/libft
+	make -C deps/libft
 
 %.o: %.c
 	@ echo "$(YELLOW)Compiling $<...$(RES)"
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@ /bin/rm -f $(OBJSRC)
-	@ /bin/rm -f $(OBJLIB)
+	/bin/rm -f $(OBJSRC)
+	/bin/rm -f $(OBJLIB)
 	@ echo "$(RED)Cleaning folders of object files...$(RES)"
 
 fclean: clean
-	@ /bin/rm -f $(NAME)
-	@ /bin/rm -f $(STAT)
+	/bin/rm -f $(NAME)
+	/bin/rm -f $(STAT)
 	@ echo "$(RED)Removing library file and binary...$(RES)"
 
 re: fclean all
