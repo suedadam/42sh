@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/11 15:41:10 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/12 04:43:22 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <errno.h>
+#include <fcntl.h>
 
 struct s_ophandlers	op_handlers[] = {
 	{&op_pipe_check, &op_pipe_exec},
@@ -22,6 +23,39 @@ struct s_ophandlers	op_handlers[] = {
 	{&op_and_check, &op_and_exec},
 	{NULL, NULL},
 };
+
+void	testhandle(int test)
+{
+	test = open("test.txt", O_RDWR | O_APPEND);
+
+	ft_printf_fd(test, "wtf\n");
+}
+
+int		create_monitor(pid_t pid)
+{
+	pid_t	newpid;
+	int		res;
+
+	if ((newpid = fork()) == -1)
+		return (EXIT_FAILURE);
+	if (newpid == 0)
+	{
+		waitpid(pid, &res, 0);
+		// testhandle(0);
+		// if (res == EXIT_SUCCESS)
+		// {
+		// 	close(STDOUT_FILENO);
+		// 	close(STDIN_FILENO);
+		// }
+		// else
+		// 	return (EXIT_FAILURE);
+		close(STDOUT_FILENO);
+		close(STDIN_FILENO);
+			//
+		exit(EXIT_SUCCESS);
+	}
+	return (EXIT_SUCCESS);
+}
 
 int		run_operation(t_ast *curr, uint8_t wait)
 {
@@ -32,22 +66,31 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (EXIT_FAILURE);
 	// if ((res = builtin_handler(curr)) != -1)
 	// 	return (res);
+	// if (fcntl(*(curr->p_info->stdin), F_SETFD, FD_CLOEXEC) < 0 || fcntl(*(curr->p_info->stdout), F_SETFD, FD_CLOEXEC) < 0
+	// 	|| fcntl(*(curr->p_info->stderr), F_SETFD, FD_CLOEXEC) < 0)
+	// 	printf("one of them failed :C \"%s\"\n", strerror(errno));
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
+		if (create_monitor(pid) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		signal(SIGCHLD, &testhandle);
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
 		printf("[In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
 		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
+			// printf("one of them failed :C \"%s\"\n", strerror(errno));
 		execvP(*(curr->token), getenv("PATH"), curr->token);
 		exit(EXIT_FAILURE);
 	}
 	if (wait)
 	{
+		printf("Waiting\n");
 		waitpid(pid, &res, 0);
+		printf("Done waiting\n");
 		if (!res)
 			return (EXIT_SUCCESS);
 		else
@@ -94,17 +137,56 @@ void	build_leafs(t_ast *curr)
 	t_process *info;
 
 	if (!curr || !curr->left_child || !(info = init_process()))
+	{
+		printf("++++++++++ failed? %p %p %p\n", curr, curr->left_child, info);
 		return ;
+	}
 	*(info->stdin) = *(curr->p_info->stdin);
 	*(info->stdout) = curr->p_info->comm[1];
 	*(info->stderr) = *(curr->p_info->stderr);
 	curr->left_child->p_info = info;
+	printf("======= left = %d\n", *(info->stdout));
 	if (!curr->right_child || !(info = init_process()))
 		return ;
 	*(info->stdin) = curr->p_info->comm[0];
 	*(info->stdout) = curr->p_info->stdout[1];
 	*(info->stderr) = *(curr->p_info->stderr);
 	curr->right_child->p_info = info;
+}
+
+void	build_carry(t_ast *curr)
+{
+	t_process	*info;
+
+	if (!curr || !(info = init_process()))
+		return ;
+	*(info->stdin) = *(curr->p_info->stdin);
+	*(info->stdout) = *(curr->p_info->stdout);
+	*(info->stderr) = *(curr->p_info->stderr);
+	curr->left_child->p_info = info;
+}
+
+/*
+** -> 1. This is only set when a pipe created it and the operator isn't a pipe.
+**			This in turn needs to carry it over to the left leaf and reverse execute and wait
+*/
+
+void	build_operator(t_ast *prev, t_ast *curr)
+{
+	if (!curr)
+		return ;
+	if (curr->p_info) // (->1)
+	{
+		printf("Call build carry\n");
+		build_carry(curr);
+		// build_leafs(curr->left_child);
+		// *(curr->left_child->p_info->stdout) = curr->p_info->comm[1];
+		printf("Left stdout = \"%d\"\n", *(curr->left_child->p_info->stdout));
+		build_default(curr->right_child);
+		return ;
+	}
+	build_default(curr->left_child);
+	build_default(curr->right_child);
 }
 
 void	pipe_carry(t_ast *prev, t_ast *curr)
@@ -117,17 +199,30 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		return ;
 	*(curr->p_info->stdin) = (prev ? *(prev->p_info->stdout) : STDIN_FILENO);
 	pipe(fds);
+	fcntl(fds[0], F_SETFD, FD_CLOEXEC);
+	fcntl(fds[1], F_SETFD, FD_CLOEXEC);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
 	pipe(fds);
-	if (!(curr->right_child->right_child))
+	fcntl(fds[0], F_SETFD, FD_CLOEXEC);
+	fcntl(fds[1], F_SETFD, FD_CLOEXEC);
+	// printf("-----> %s\n", *(curr->right_child->right_child->token));
+	if (!(curr->right_child->right_child) ||
+		 (*(curr->right_child->type) == OPERATOR && strcmp(*(curr->right_child->token), "|")))
 	{
+		printf("-----> thanks\n");
+		printf("set default stdout\n");
 		fds[0] = STDOUT_FILENO;
 		fds[1] = STDOUT_FILENO;
 	}
+	printf("------> type == %d char = %s\n", *(curr->right_child->type), *(curr->right_child->token));
 	memcpy(curr->p_info->stdout, fds, sizeof(int) * 2);
+	printf("---------> stdout = %d\n", *(curr->p_info->stdout));
 	*(curr->p_info->stderr) = STDERR_FILENO;
 	if (curr->left_child && curr->right_child)
+	{
 		build_leafs(curr);
+		build_info(curr, curr->right_child);
+	}
 }
 
 void	build_default(t_ast *curr)
@@ -160,15 +255,15 @@ void	build_default(t_ast *curr)
 int		build_info(t_ast *prev, t_ast *curr)
 {
 	if (!curr)
-		return (-1);
+		return (EXIT_FAILURE);
 	if (*(curr->type) == OPERATOR)
 	{
 		if (!strcmp(*(curr->token), "|"))
 			pipe_carry(prev, curr);
 		else
 		{
-			build_default(curr->left_child);
-			build_default(curr->right_child);
+			printf("Called build_operator op = \"%s\"\n", *(curr->token));
+			build_operator(prev, curr);
 		}
 	}
 	else if (!prev)
@@ -176,23 +271,31 @@ int		build_info(t_ast *prev, t_ast *curr)
 		build_default(curr);
 		run_operation(curr, 0);
 	}
-	build_info(curr, curr->right_child);
-	return (0);
+	else
+		build_info(curr, curr->right_child);
+	return (EXIT_SUCCESS);
 }
+
+/*
+** Left will always be present, if not then its a failure.
+*/
 
 int		run_tree(t_ast *curr)
 {
 	int	i;
 
 	if (!curr || !curr->left_child)
-		return (0);
+		return (EXIT_FAILURE);
 	if (*(curr->type) == OPERATOR)
 	{
 		i = 0;
 		while (op_handlers[i].check)
 		{
 			if (!op_handlers[i].check(*(curr->token)))
+			{
+				printf("Running op |%d|\n", i);
 				return (op_handlers[i].exec(curr));
+			}
 			i++;
 		}
 	}
@@ -207,12 +310,12 @@ int		run_forest(t_queue *forest)
 
 	if (!forest)
 		return (EXIT_FAILURE);
-	while ((asts = (t_ast *)queue_pop(forest)) && (asts = ((t_list *)asts)->content))
+	while (forest && (asts = (t_ast *)queue_pop(forest)) && (asts = ((t_list *)asts)->content))
 	{
 		printf("ast = \"%s\"\n", *(asts->token));
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
-		printf("Left %s right %s\n", *(asts->left_child->token), *(asts->right_child->token));
+		// printf("Left %s right %s\n", *(asts->left_child->token), ((asts->right_child) ? *(asts->right_child->token) : NULL));
 		if (run_tree((t_ast *)asts))
 			return (EXIT_FAILURE);
 	}
