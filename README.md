@@ -1,2 +1,2 @@
-# 42sh
-A complete shell built
+# ft_malloc
+Recreation of malloc with the mindset to keep system calls at a minimal
