@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:36:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/11 16:35:48 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/11 18:50:20 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		get_cursor_first_position(void)
 	temp[i] = '\0';
 	i = 2;
 	g_shell_env.cursor.og_position.y = ft_atoi(temp + i) - 1;
-	while (IS_DIGIT(temp[i]))
+	while (ft_isdigit(temp[i]))
 		i++;
 	g_shell_env.cursor.og_position.x = ft_atoi(temp + i + 1) - 1;
 }

@@ -1,7 +1,7 @@
 NAME = 42sh
 STAT = deps/libft/libft.a
 CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
-INCLUDES = -I deps/libft/inc -I deps/malloc/deps/ft_printf \
+INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc
 LIBFT = deps/libft/libft.a
@@ -239,7 +239,7 @@ all: $(NAME)
 $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
-	$(CC) $(CFLAGS) -L deps/libft -lft -L deps/malloc/deps/ft_printf -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
+	$(CC) $(CFLAGS) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 
@@ -248,7 +248,7 @@ $(MALLOC): $(LIBFT)
 
 $(LIBFT):
 	@git submodule init
-	@git submodule update --force
+	@git submodule update
 	make -C deps/libft
 
 %.o: %.c

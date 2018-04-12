@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/11 16:38:30 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/11 18:49:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@
 # include <sys/ioctl.h>
 
 # include "libft.h"
-# include "ft_printf.h"
 # include "error.h"
 
-# define BUFF_SIZE 1024
 # define UNSET (void *)
 
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v'\
