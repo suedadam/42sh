@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/11 18:01:02 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/11 18:44:14 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ typedef struct		s_node
 	struct s_node	*previous;
 }					t_node;
 
-typedef struct		s_queue
-{
-	t_node			*first;
-	t_node			*last;
-}					t_queue;
-
 typedef struct		s_pqueue
 {
 	t_node			*first;
@@ -82,12 +76,6 @@ void				*ft_stackpop(t_stack *stack);
 void				ft_stackpush(t_stack *stack, void *content, size_t c_size);
 t_stack				*init_stack(void);
 int					isempty_stack(t_stack *stack);
-
-t_queue				*init_queue(void);
-void				ft_enqueue(t_queue *queue, void *content, size_t c_size);
-void				*ft_dequeue(t_queue *queue);
-void				*peek_queue(t_queue *queue);
-void				ft_queuepush(t_queue *queue, void *content, size_t c_size);
 
 void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 	int (*comparer)(void *, void *));
