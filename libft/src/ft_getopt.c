@@ -6,7 +6,7 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 16:20:06 by sgardner          #+#    #+#             */
-/*   Updated: 2018/04/10 19:36:38 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/11 17:02:25 by sgardner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int				ft_getopt(int ac, char *const av[], const char *optstring)
 		{
 			g_optopt = '-';
 			++g_optind;
-			break ;
+			return (-1);
 		}
 		return (process_arg(av, optstring));
 	}
