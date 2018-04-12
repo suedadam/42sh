@@ -59,6 +59,8 @@ obj/%.o: $(SOURCE_DIR)/%.c
 
 $(LIBFT):
 	@printf "$(YELLOW)%-50s$(NC)" "Building $@... "
+	@git submodule init
+	@git submodule update --force
 	make -C deps/libft
 
 clean:
