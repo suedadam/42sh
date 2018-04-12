@@ -247,6 +247,8 @@ $(MALLOC): $(LIBFT)
 	make -C deps/malloc
 
 $(LIBFT):
+	@git submodule init
+	@git submodule update --force
 	make -C deps/libft
 
 %.o: %.c
