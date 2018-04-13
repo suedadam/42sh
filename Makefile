@@ -194,6 +194,7 @@ SRC_TERMIO_ESCAPE_SEQUENCES =	\
 SRC_TERMIO_HANGING_BYTE =	\
 					curly_mode \
 					hanging_byte \
+					hanging_delete \
 					paren_mode \
 					quote_mode
 

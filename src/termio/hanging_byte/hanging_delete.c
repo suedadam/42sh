@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hanging_byte.c                                     :+:      :+:    :+:   */
+/*   hanging_delete.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 20:09:06 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/12 16:01:45 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/12 20:22:44 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hangingbyte.h"
 #include "ft_proto.h"
 
-void	hanging_byte(char byte)
+void		hanging_delete(char *byte)
 {
-	if (byte == '\'' && !T_DQUOTE)
+	size_t	pos;
+	char	*temp;
+
+	temp = byte;
+	pos = g_shell_env.cursor.position;
+	if (*byte == '\'' && !T_DQUOTE)
 		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
-	else if (byte == '\"' && !T_QUOTE)
+	else if (*byte == '\"' && !T_QUOTE)
 		T_DQUOTE = (T_DQUOTE == 1) ? 0 : 1;
-	else if (byte == '(' || byte == ')')
-		paren_check(byte);
-	else if (byte == '{' || byte == '}')
-		curly_check(byte);
-	else if (byte == '|')
-		T_PIPE ? (T_PIPE = 0) : (T_PIPE = 1);
+	else if (g_shell_env.cursor.position) 
+	{
+		while (IS_WHITESPACE(*(temp - 1)))
+			temp--;
+		if (*(temp - 1) == '|')
+			T_PIPE ? (T_PIPE = 0) : (T_PIPE = 1);
+	}
+	else if (paren_delete(*byte) == EXIT_SUCCESS)
+		return ;
+	else if (curly_delete(*byte) == EXIT_SUCCESS)
+		return ;
 }

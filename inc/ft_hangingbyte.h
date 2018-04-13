@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:16:46 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 15:54:34 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/12 16:10:49 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 */
 
 void	curly_check(char byte);
+int		curly_delete(char byte);
 
 /*
 **	Catch for hanging chars that should wrap <", ', [, (, {>
@@ -30,11 +31,19 @@ void	curly_check(char byte);
 void	hanging_byte(char byte);
 
 /*
+**	Catch for hanging chars that should wrap <", ', [, (, {> when deleted
+**	(hanging_delete.c)
+*/
+
+void	hanging_delete(char *byte);
+
+/*
 **	For proper handling of hanging parens
 **	(paren_mode.c)
 */
 
 void	paren_check(char byte);
+int		paren_delete(char byte);
 
 /*
 **	quote mode handling on linefeed
