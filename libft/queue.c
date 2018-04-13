@@ -3,31 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ztisnes <ztisnes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 01:11:16 by ztisnes           #+#    #+#             */
-/*   Updated: 2018/01/14 15:15:58 by ztisnes          ###   ########.fr       */
+/*   Updated: 2018/04/13 16:23:10 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_queue				*init_queue(void)
+t_queue				*new_queue(void)
 {
 	t_queue			*node;
 
-	node = (t_queue *)malloc(sizeof(t_queue));
+	if (!(node = (t_queue *)ft_memalloc(sizeof(t_queue))))
+		return (NULL);
 	node->first = NULL;
 	node->last = NULL;
 	return (node);
 }
 
-void				ft_enqueue(t_queue *queue, void *content, size_t c_size)
+int					ft_enqueue(t_queue *queue, void *content, size_t c_size)
 {
 	t_node			*node;
 
-	node = (t_node *)malloc(sizeof(t_node));
-	node->content = ft_memalloc(c_size);
+	if (!queue || !content ||
+		!(node = (t_node *)ft_memalloc(sizeof(t_node))) ||
+		!(node->content = ft_memalloc(c_size)))
+		return (EXIT_FAILURE);
 	node->content = ft_memmove(node->content, content, c_size);
 	node->next = NULL;
 	if (!queue->last)
@@ -41,45 +44,39 @@ void				ft_enqueue(t_queue *queue, void *content, size_t c_size)
 		node->previous = queue->last;
 		queue->last = node;
 	}
-	return ;
+	return (EXIT_SUCCESS);
 }
 
 void				*ft_dequeue(t_queue *queue)
 {
 	t_node			*tmp;
+	void			*content;
 
+	if (!queue)
+		return (NULL);
 	tmp = queue->first;
 	if (tmp)
 	{
 		queue->first = tmp->next;
-		if (!tmp->next)
+		if (!queue->first)
 			queue->last = NULL;
 		else
-			tmp->previous = NULL;
-		return (tmp->content);
+			queue->first->previous = NULL;
+		content = tmp->content;
+		free(tmp);
+		return (content);
 	}
 	return (NULL);
 }
 
 void				*peek_queue(t_queue *queue)
 {
-	if (queue->first == NULL)
+	if (!queue || queue->first == NULL)
 		return (NULL);
 	return (queue->first->content);
 }
 
-void				ft_queuepush(t_queue *queue, void *content, size_t c_size)
+int					isempty_queue(t_queue *queue)
 {
-	t_node			*node;
-
-	node = (t_node *)malloc(sizeof(t_node));
-	node->content = ft_memalloc(c_size);
-	node->content = ft_memmove(node->content, content, c_size);
-	if (!queue->last)
-		queue->last = node;
-	node->previous = NULL;
-	node->next = queue->first;
-	if (queue->first)
-		queue->first->previous = node;
-	queue->first = node;
+	return (!queue || !queue->first);
 }
