@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/12 04:43:22 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 14:24:22 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <strings.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <signal.h>
 
 struct s_ophandlers	op_handlers[] = {
 	{&op_pipe_check, &op_pipe_exec},
@@ -31,31 +32,102 @@ void	testhandle(int test)
 	ft_printf_fd(test, "wtf\n");
 }
 
-int		create_monitor(pid_t pid)
+int		create_monitor(t_ast *prev, t_ast *curr)
 {
-	pid_t	newpid;
+	pid_t	exec;
+	pid_t	next_monitor;
+	t_ast	*process;
 	int		res;
 
-	if ((newpid = fork()) == -1)
-		return (EXIT_FAILURE);
-	if (newpid == 0)
+	if (!curr)
 	{
-		waitpid(pid, &res, 0);
-		// testhandle(0);
-		// if (res == EXIT_SUCCESS)
-		// {
-		// 	close(STDOUT_FILENO);
-		// 	close(STDIN_FILENO);
-		// }
-		// else
-		// 	return (EXIT_FAILURE);
-		close(STDOUT_FILENO);
-		close(STDIN_FILENO);
-			//
-		exit(EXIT_SUCCESS);
+		printf("Defensive %d || \n", !curr);
+		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	if (prev && *(prev->type) == OPERATOR && *(curr->type) != OPERATOR)
+		process = curr;
+	else
+		process = curr->left_child;
+	if ((exec = fork()) == -1)
+	{
+		printf("Exec failed to fork.\n");
+		abort();
+		exit(EXIT_FAILURE);
+	}
+	if (!exec)
+	{
+		if (handle_redirection(process))
+			exit(EXIT_FAILURE);
+		printf("(%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
+		dup2(*(process->p_info->stdin), STDIN_FILENO);
+		dup2(*(process->p_info->stdout), STDOUT_FILENO);
+		dup2(*(process->p_info->stderr), STDERR_FILENO);
+		execvP(*(process->token), getenv("PATH"), process->token);
+		exit(EXIT_FAILURE);
+	}
+	if (curr->right_child)
+	{
+		if ((next_monitor = fork()) == -1)
+		{
+			printf("Failed to fork! :( \n");
+			kill(exec, SIGKILL);
+			exit (EXIT_FAILURE);
+			abort();
+		}
+		if (!next_monitor)
+		{
+			create_monitor(curr, curr->right_child);
+			printf("End case ;c\n");
+		}		
+	}
+	while ((res = wait(NULL)))
+	{
+		if (res == exec || res == next_monitor)
+		{
+			printf("One of the processes died! %d (%d || %d)\n", res, exec, next_monitor);
+			kill(exec, SIGKILL);
+			kill(next_monitor, SIGKILL);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			printf("Left = %s right = %s\n", *(process->token), *(curr->right_child->token));
+			printf("%d changed states %s\n", res, strerror(errno));
+		}
+	}
+	printf("Should never get here....\n");
+	exit(EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
+
+// int		run_pipe_command(t_ast *curr, uint8_t wait)
+// {
+// 	pid_t	pid;
+// 	int 	res;
+
+// 	if (!curr || *(curr->type) == OPERATOR)
+// 		return (EXIT_FAILURE);
+// 	// if ((res = builtin_handler(curr)) != -1)
+// 	// 	return (res);
+// 	if ((pid = fork()) == -1)
+// 		return (EXIT_FAILURE);
+// 	if (pid == 0)
+// 	{
+// 		if (create_monitor(curr) == EXIT_FAILURE)
+// 			exit(EXIT_FAILURE);
+// 	}
+// 	// if (wait)
+// 	// {
+// 	// 	printf("Waiting\n");
+// 	// 	waitpid(pid, &res, 0);
+// 	// 	printf("Done waiting\n");
+// 	// 	if (!res)
+// 	// 		return (EXIT_SUCCESS);
+// 	// 	else
+// 	// 		return (EXIT_FAILURE);
+// 	// }
+// 	return (EXIT_SUCCESS);
+// }
 
 int		run_operation(t_ast *curr, uint8_t wait)
 {
@@ -73,29 +145,25 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		if (create_monitor(pid) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		signal(SIGCHLD, &testhandle);
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
 		printf("[In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
 		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
-			// printf("one of them failed :C \"%s\"\n", strerror(errno));
 		execvP(*(curr->token), getenv("PATH"), curr->token);
 		exit(EXIT_FAILURE);
 	}
-	if (wait)
-	{
-		printf("Waiting\n");
-		waitpid(pid, &res, 0);
-		printf("Done waiting\n");
-		if (!res)
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
-	}
+	// if (wait)
+	// {
+	// 	printf("Waiting\n");
+	// 	waitpid(pid, &res, 0);
+	// 	printf("Done waiting\n");
+	// 	if (!res)
+	// 		return (EXIT_SUCCESS);
+	// 	else
+	// 		return (EXIT_FAILURE);
+	// }
 	return (EXIT_SUCCESS);
 }
 
@@ -199,12 +267,12 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		return ;
 	*(curr->p_info->stdin) = (prev ? *(prev->p_info->stdout) : STDIN_FILENO);
 	pipe(fds);
-	fcntl(fds[0], F_SETFD, FD_CLOEXEC);
-	fcntl(fds[1], F_SETFD, FD_CLOEXEC);
+	// fcntl(fds[0], F_SETFD, FD_CLOEXEC);
+	// fcntl(fds[1], F_SETFD, FD_CLOEXEC);
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
 	pipe(fds);
-	fcntl(fds[0], F_SETFD, FD_CLOEXEC);
-	fcntl(fds[1], F_SETFD, FD_CLOEXEC);
+	// fcntl(fds[0], F_SETFD, FD_CLOEXEC);
+	// fcntl(fds[1], F_SETFD, FD_CLOEXEC);
 	// printf("-----> %s\n", *(curr->right_child->right_child->token));
 	if (!(curr->right_child->right_child) ||
 		 (*(curr->right_child->type) == OPERATOR && strcmp(*(curr->right_child->token), "|")))
