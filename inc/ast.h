@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/11 18:39:32 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 13:14:13 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,22 @@
 # include "libft.h"
 # include "queue.h"
 # include <unistd.h>
+# include <sys/mman.h>
 
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 /*
 ** quoted flags
 */
-# define SINGLE_QUOTE 1
-# define DOUBLE_QUOTE 2
-# define BACKSLASH 4
-# define IS_QUOTE(c) (c == '\'' || c == '\"' || c == '\\' ? 1 : 0)
+# define SINGLE_QUOTE 0x1
+# define DOUBLE_QUOTE 0x2
+# define BACKSLASH 0x4
+# define COMMENT 0x8
+# define ERROR_BIT 0x10
+
+# define BACKT 96
+# define IS_ESCAPED(c) (c == '\\' || c == '$' || c == BACKT)
+
+# define IS_QUOTE(c) (c == '\'' || c == '\"' || c == '\\') ? 1 : 0
 
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 
@@ -35,6 +42,8 @@
 
 # define OPS 9
 static const char			*ops[ OPS ] = {"&&", "||", ">>", ">", "&", "|", ">|", "<", "<<"};
+
+# define EXIT_FAILURE_SOFT -1
 
 typedef enum	e_token_type
 {
@@ -67,6 +76,8 @@ typedef struct				s_parser
 	t_token_type			current_type;
 }							t_parser;
 
+
+int							is_command_sub(t_parser *par, char **input_str);
 int							is_op_append(char *token, char c);
 char						*strappend(char **str, char c);
 int							add_token(char *curr_token,
@@ -77,7 +88,7 @@ uint8_t						quoted_flags(char c);
 void						print_toks(char **tokens, t_token_type *types);
 int 						is_op(t_parser *par, char cur_char);
 int 						is_semi(t_parser *par, char cur_char);
-int 						is_quote(t_parser *par, char cur_char);
+int 						quotes(t_parser *par, char cur_char);
 int 						is_start_op(t_parser *par, char cur_char);
 int 						is_whitespc(t_parser *par, char **input_str);
 int 						start_word(t_parser *par, char cur_char);
