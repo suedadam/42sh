@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/11 18:49:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/12 22:08:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@
 
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v'\
 		|| c == '\f' || c == '\r')
+#define IS_OPERATOR(c) (c == '(' || c == '&' || c == '|')
 # define PRINTABLE(c) (c >= 32 && c <= 126)
 # define T_BSLASH (g_shell_env.tokens.bslash)
 # define T_MPASS (g_shell_env.tokens.mpass)
+# define T_WORD (g_shell_env.tokens.spcdelim)
 # define T_QUOTE (g_shell_env.tokens.quote)
 # define T_DQUOTE (g_shell_env.tokens.dquote)
 # define T_DBLESC (g_shell_env.tokens.dblesc)
@@ -97,6 +99,7 @@ typedef struct			s_cursor
 	size_t				position;
 	char				*buffer;
 	size_t				buffer_length;
+	int					wordloc;
 }						t_cursor;
 
 typedef struct			s_errstr
@@ -117,6 +120,7 @@ typedef struct			s_tokens
 {
 	int					mpass;
 	int					control_v;
+	int					spcdelim;
 	int					quote;
 	int					dquote;
 	int					oparen;

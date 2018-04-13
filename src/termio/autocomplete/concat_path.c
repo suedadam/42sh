@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   concat_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 12:23:02 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 22:06:47 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/13 15:18:45 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/13 16:05:51 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
+#include "ft_autocomplete.h"
+#include "ft_proto.h"
 
-# include "ft_autocomplete.h"
-# include "ft_buffer.h"
-# include "ft_control.h"
-# include "ft_cursor.h"
-# include "ft_editing.h"
-# include "ft_escape.h"
-# include "ft_hangingbyte.h"
-# include "ft_linefeed.h"
-# include "ft_maincontrol.h"
-# include "ft_prompt.h"
-# include "ft_screen.h"
+char	*concatpath(char *fin, char *add)
+{
+	char	*temp;
+	size_t	len;
 
-#endif
+	len = ft_strlen(fin) + ft_strlen(add);
+	if (!(temp = ft_strnew(len)))
+		exit(0);
+	ft_strcpy(temp, add);
+	ft_strcat(temp, fin);
+	return (temp);
+}

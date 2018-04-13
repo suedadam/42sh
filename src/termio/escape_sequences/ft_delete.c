@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/12 16:04:17 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 12:21:04 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int			ft_delete(char byte)
 		cursor->buffer_length--;
 		delete_last(cursor->position, cursor);
 		update_buffer(buffer + cursor->position, 0);
+		wcount_backword(*(buffer + cursor->position));
 	}
 	return (EXIT_SUCCESS);
 }

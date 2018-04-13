@@ -24,6 +24,7 @@ SRCDIR_EXEC_OPS_EXECS = op_execs/
 SRCDIR_IPARSE = src/input_parser/
 
 SRCDIR_TERMIO = src/termio/
+SRCDIR_TERMIO_AUTOCOMPLETE = autocomplete/
 SRCDIR_TERMIO_BUFFER = buffer/
 SRCDIR_TERMIO_CONTROL_CODES = control_codes/
 SRCDIR_TERMIO_CURSOR = cursor/
@@ -46,6 +47,9 @@ OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_EXECS))), \
 		  $(SRC_EXEC_OPS_EXECS)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_IPARSE), $(SRC_IPARSE)))
+OBJSRC += $(patsubst %, %.o, $(addprefix \
+		  $(addprefix $(SRCDIR_TERMIO), $(SRCDIR_TERMIO_AUTOCOMPLETE)), \
+		  $(SRC_TERMIO_AUTOCOMPLETE)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_TERMIO), $(SRCDIR_TERMIO_BUFFER)), \
 		  $(SRC_TERMIO_BUFFER)))
@@ -135,6 +139,10 @@ SRC_IPARSE =	\
 ################################################################################
 # TERMIO SOURCE FILES                                                          #
 ################################################################################
+
+# AUTOCOMPLETE
+SRC_TERMIO_AUTOCOMPLETE = \
+					count_word
 
 # BUFFER
 SRC_TERMIO_BUFFER =	\

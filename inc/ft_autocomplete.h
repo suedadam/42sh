@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   ft_autocomplete.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 12:23:02 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 22:06:47 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/12 22:07:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
+#ifndef FT_AUTOCOMPLETE_H
+# define FT_AUTOCOMPLETE_H
 
-# include "ft_autocomplete.h"
-# include "ft_buffer.h"
-# include "ft_control.h"
-# include "ft_cursor.h"
-# include "ft_editing.h"
-# include "ft_escape.h"
-# include "ft_hangingbyte.h"
-# include "ft_linefeed.h"
-# include "ft_maincontrol.h"
-# include "ft_prompt.h"
-# include "ft_screen.h"
+# include "ft_term.h"
+# include "ft_proto.h"
+
+/*
+**	For finding relative word location / count on the terminal, which will
+**	then dictate the type of trie that needs to be built
+**	(count_word.c)
+*/
+
+void		wcount_forword(char byte);
+void		wcount_backword(char byte);
+void		find_backwords(void);
 
 #endif

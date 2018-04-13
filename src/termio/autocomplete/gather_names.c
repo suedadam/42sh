@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_proto.h                                         :+:      :+:    :+:   */
+/*   gather_names.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 12:23:02 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 22:06:47 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/13 13:56:39 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/13 16:07:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PROTO_H
-# define FT_PROTO_H
+#include "ft_autocomplete.h"
+#include "ft_proto.h"
 
-# include "ft_autocomplete.h"
-# include "ft_buffer.h"
-# include "ft_control.h"
-# include "ft_cursor.h"
-# include "ft_editing.h"
-# include "ft_escape.h"
-# include "ft_hangingbyte.h"
-# include "ft_linefeed.h"
-# include "ft_maincontrol.h"
-# include "ft_prompt.h"
-# include "ft_screen.h"
+char	**gather_path(int word, char **basepath)
+{
+	char	**mul_path;
 
-#endif
+	use = 0;
+	if (word == 1)
+		*basepath = "PATH";
+	else
+		*basepath = possible_dir();
+	if (!(path = getenv(*basepath)))
+		return (EXIT_FAILURE);
+	if (word == 1)
+	{
+		if (!(mul_path = ft_strsplit(*basepath, ':')))
+			return (NULL);
+	}
+	else
+	{
+//		if (!mul_path = 
+	}
+	return (mul_path);
+}

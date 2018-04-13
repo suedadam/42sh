@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 16:09:51 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 09:56:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int											one_byte(char byte)
 {
 	if (!IS_WHITESPACE(byte))
 		T_PIPE = 0;
-	hanging_byte(byte);
 	if (PRINTABLE(byte))
 		return (regular_text(byte));
 	else if (!PRINTABLE(byte))
