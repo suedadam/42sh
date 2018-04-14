@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:15 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 18:04:27 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 01:10:07 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 typedef struct s_trie
 {
-	struct s_trie	*children[129];
+	struct s_trie	*children[128];
 	char			key;
 	int				nbr_children;
 }				t_trie;
