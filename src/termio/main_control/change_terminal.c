@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:21:04 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 20:12:36 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 14:30:44 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int		ft_restoretty(void)
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);
 	}
-	ft_printf("exit\n");
+//	ft_printf("exit\n");
 	return (EXIT_SUCCESS);
 }

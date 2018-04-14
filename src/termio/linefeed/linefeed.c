@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 13:32:33 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 15:10:47 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int			ft_linefeed(void)
 **	satkins_parser(g_shell_env->line_buffer)
 **	reset the buffer
 */
+	write(1, "\n", 1);
+	ft_restoretty();
 	ret = manager(g_shell_env.buffer->buff, NULL);
 	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
@@ -30,6 +32,7 @@ int			ft_linefeed(void)
 		ft_printf("error exiting...\n");
 		exit(0);
 	}
+	ft_setty();
 	if (reset_buffer() == EXIT_SUCCESS)
 		return (reset_prompt());
 	return (EXIT_SUCCESS);

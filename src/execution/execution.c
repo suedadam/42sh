@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 13:25:11 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 15:14:59 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int		run_tree(t_ast *curr)
 		}
 	}
 	else
-		return (run_operation(curr, 0));
+		return (run_operation(curr, 1));
 	return (EXIT_FAILURE);
 }
 
