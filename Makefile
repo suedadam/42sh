@@ -6,7 +6,7 @@
 #    By: asyed <asyed@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/11 18:53:24 by asyed            ###   ########.fr        #
+#    Updated: 2018/04/13 17:46:16 by asyed            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_toupper_str.c \
 		  libft/ft_ullitoa_base.c \
 		  libft/pqueue.c \
-		  libft/ft_queue.c \
+		  libft/queue.c \
 		  libft/ft_lstnew.c 
 
 PRINTF = printf/ft_printf.c \
