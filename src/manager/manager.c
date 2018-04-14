@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 12:27:21 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 13:28:06 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /*
 **
-** Free input_str after parser().
+** Free input_str after parser(). -> Failed?
 */
 
 int	manager(char *input_str, char **substr)

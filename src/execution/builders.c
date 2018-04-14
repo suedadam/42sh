@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:46:16 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 12:51:53 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 13:23:43 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		build_info(t_ast *prev, t_ast *curr)
 	else if (!prev)
 	{
 		build_default(curr);
-		run_operation(curr, 1);
+		// run_operation(curr, 1);
 	}
 	else
 		build_info(curr, curr->right_child);

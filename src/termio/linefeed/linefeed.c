@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linefeed.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 12:45:44 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 13:27:54 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ int			ft_linefeed(void)
 **	reset the buffer
 */
 	ret = manager(g_shell_env.buffer->buff, NULL);
+	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
 		//handle manager failure
+		printf("Got here?\n");
 		exit(0);
 	}
 	if (reset_buffer() == EXIT_SUCCESS)

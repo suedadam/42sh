@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 13:02:07 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 13:25:11 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		run_tree(t_ast *curr)
 {
 	int	i;
 
-	if (!curr || !curr->left_child)
+	if (!curr)
 		return (EXIT_FAILURE);
 	if (*(curr->type) == OPERATOR)
 	{
@@ -213,7 +213,7 @@ int		run_forest(t_queue *forest, char **substr)
 	{
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
-		if (run_tree((t_ast *)asts))
+		if (run_tree((t_ast *)asts) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}		
 	return (EXIT_SUCCESS);
