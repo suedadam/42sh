@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 01:39:40 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 00:30:41 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 03:28:50 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int		is_command_sub(t_parser *par, char **input_str)
 	char	close_char;
 	char	*command;
 	char	**words;
+	char	*str_ret;
+	int		ret;
 
 	if ((par->quoted & ~DOUBLE_QUOTE) ||
 		!(**input_str == '$' || **input_str == BACKT))
@@ -120,10 +122,14 @@ int		is_command_sub(t_parser *par, char **input_str)
 	if (!(command = create_subs_command(input_str, close_char)) ||
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);
-	ft_printf("CALL TO MANAGER WITH ... REQUEST STDOUT:\n%s\n", command);
 	//Send to manager with subshell flag
 	//command = manager(command, 1);
-	if (split_into_tokens(par, command) == EXIT_FAILURE)
+	if ((ret = manager(command, &str_ret)))
+	{
+		free(str_ret);
+		return (ret);
+	}
+	if (!str_ret || split_into_tokens(par, str_ret) == EXIT_FAILURE)
 		return (0);
 	return (CONTINUE);
 }

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 18:35:42 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 00:17:26 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 03:28:26 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char		*literal_command(char **input_str, int i)
 int		is_subshell(t_parser *par, char **input_str)
 {
 	char	*command;
+	char	*str_ret;
+	int		ret;
 
 	if (par->quoted || **input_str != '(')
 		return (UNUSED_CHAR);
@@ -64,7 +66,11 @@ int		is_subshell(t_parser *par, char **input_str)
 		return (EXIT_FAILURE_SOFT);
 	else if (command == NULL)
 		return (0);
-	ft_printf("CALL TO MANAGER WITH: \n%s\n", command);
 	//hook into manager
+	if (!(ret = manager(command, &str_ret)) || ret == EXIT_FAILURE_SOFT)
+	{
+		free(str_ret);
+		return (ret);
+	}
 	return (CONTINUE);
 }
