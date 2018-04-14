@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 14:24:22 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 21:48:04 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,109 +25,39 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-void	testhandle(int test)
+int			run_pipecmds(t_stack *cmd, t_queue *pids)
 {
-	test = open("test.txt", O_RDWR | O_APPEND);
-
-	ft_printf_fd(test, "wtf\n");
-}
-
-int		create_monitor(t_ast *prev, t_ast *curr)
-{
-	pid_t	exec;
-	pid_t	next_monitor;
+	int		pid;
 	t_ast	*process;
-	int		res;
 
-	if (!curr)
+	if (!cmd || isempty_stack(cmd))
+		return (EXIT_SUCCESS);
+	process = ft_stackpop(cmd); //Always okay?
+	if ((pid = fork()) == -1)
 	{
-		printf("Defensive %d || \n", !curr);
-		return (EXIT_FAILURE);
-	}
-	if (prev && *(prev->type) == OPERATOR && *(curr->type) != OPERATOR)
-		process = curr;
-	else
-		process = curr->left_child;
-	if ((exec = fork()) == -1)
-	{
-		printf("Exec failed to fork.\n");
+		printf("Failed to fork\n");
 		abort();
-		exit(EXIT_FAILURE);
 	}
-	if (!exec)
+	if (!pid)
 	{
 		if (handle_redirection(process))
 			exit(EXIT_FAILURE);
 		printf("(%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
+		printf("(%d) Closing %d %d\n", getpid(), process->p_info->stdin[1], process->p_info->stdout[1]);
 		dup2(*(process->p_info->stdin), STDIN_FILENO);
 		dup2(*(process->p_info->stdout), STDOUT_FILENO);
 		dup2(*(process->p_info->stderr), STDERR_FILENO);
 		execvP(*(process->token), getenv("PATH"), process->token);
 		exit(EXIT_FAILURE);
 	}
-	if (curr->right_child)
-	{
-		if ((next_monitor = fork()) == -1)
-		{
-			printf("Failed to fork! :( \n");
-			kill(exec, SIGKILL);
-			exit (EXIT_FAILURE);
-			abort();
-		}
-		if (!next_monitor)
-		{
-			create_monitor(curr, curr->right_child);
-			printf("End case ;c\n");
-		}		
-	}
-	while ((res = wait(NULL)))
-	{
-		if (res == exec || res == next_monitor)
-		{
-			printf("One of the processes died! %d (%d || %d)\n", res, exec, next_monitor);
-			kill(exec, SIGKILL);
-			kill(next_monitor, SIGKILL);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			printf("Left = %s right = %s\n", *(process->token), *(curr->right_child->token));
-			printf("%d changed states %s\n", res, strerror(errno));
-		}
-	}
-	printf("Should never get here....\n");
-	exit(EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+	printf("Parent closed %d %d\n", process->p_info->stdin[0], process->p_info->stdout[0]);
+	close(process->p_info->stdin[0]);
+	if (*(process->p_info->stdout) != STDOUT_FILENO)
+		close(process->p_info->stdout[0]);
+	ft_enqueue(pids, &pid, sizeof(int));
+	run_pipecmds(cmd, pids);
+	return (EXIT_SUCCESS);
 }
-
-// int		run_pipe_command(t_ast *curr, uint8_t wait)
-// {
-// 	pid_t	pid;
-// 	int 	res;
-
-// 	if (!curr || *(curr->type) == OPERATOR)
-// 		return (EXIT_FAILURE);
-// 	// if ((res = builtin_handler(curr)) != -1)
-// 	// 	return (res);
-// 	if ((pid = fork()) == -1)
-// 		return (EXIT_FAILURE);
-// 	if (pid == 0)
-// 	{
-// 		if (create_monitor(curr) == EXIT_FAILURE)
-// 			exit(EXIT_FAILURE);
-// 	}
-// 	// if (wait)
-// 	// {
-// 	// 	printf("Waiting\n");
-// 	// 	waitpid(pid, &res, 0);
-// 	// 	printf("Done waiting\n");
-// 	// 	if (!res)
-// 	// 		return (EXIT_SUCCESS);
-// 	// 	else
-// 	// 		return (EXIT_FAILURE);
-// 	// }
-// 	return (EXIT_SUCCESS);
-// }
 
 int		run_operation(t_ast *curr, uint8_t wait)
 {
@@ -138,9 +68,6 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (EXIT_FAILURE);
 	// if ((res = builtin_handler(curr)) != -1)
 	// 	return (res);
-	// if (fcntl(*(curr->p_info->stdin), F_SETFD, FD_CLOEXEC) < 0 || fcntl(*(curr->p_info->stdout), F_SETFD, FD_CLOEXEC) < 0
-	// 	|| fcntl(*(curr->p_info->stderr), F_SETFD, FD_CLOEXEC) < 0)
-	// 	printf("one of them failed :C \"%s\"\n", strerror(errno));
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
@@ -154,16 +81,16 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		execvP(*(curr->token), getenv("PATH"), curr->token);
 		exit(EXIT_FAILURE);
 	}
-	// if (wait)
-	// {
-	// 	printf("Waiting\n");
-	// 	waitpid(pid, &res, 0);
-	// 	printf("Done waiting\n");
-	// 	if (!res)
-	// 		return (EXIT_SUCCESS);
-	// 	else
-	// 		return (EXIT_FAILURE);
-	// }
+	if (wait)
+	{
+		printf("Waiting\n");
+		waitpid(pid, &res, 0);
+		printf("Done waiting\n");
+		if (!res)
+			return (EXIT_SUCCESS);
+		else
+			return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -173,11 +100,11 @@ static inline __attribute__((always_inline)) void	*init_process(void)
 
 	if (!(new = ft_memalloc(sizeof(t_process))))
 		return (NULL);
-	else if (!(new->stdin = ft_memalloc(sizeof(int))))
+	else if (!(new->stdin = ft_memalloc(sizeof(int) * 2)))
 	{
 		free(new);
 	}
-	else if (!(new->stderr = ft_memalloc(sizeof(int))))
+	else if (!(new->stderr = ft_memalloc(sizeof(int) * 2)))
 	{
 		free(new);
 		free(new->stdin);
@@ -210,15 +137,20 @@ void	build_leafs(t_ast *curr)
 		return ;
 	}
 	*(info->stdin) = *(curr->p_info->stdin);
+	info->stdin[1] = curr->p_info->stdin[1];
 	*(info->stdout) = curr->p_info->comm[1];
+	info->stdout[1] = curr->p_info->comm[0];
 	*(info->stderr) = *(curr->p_info->stderr);
+	info->stderr[1] = curr->p_info->stderr[1];
 	curr->left_child->p_info = info;
-	printf("======= left = %d\n", *(info->stdout));
 	if (!curr->right_child || !(info = init_process()))
 		return ;
 	*(info->stdin) = curr->p_info->comm[0];
+	info->stdin[1] = curr->p_info->comm[1];
 	*(info->stdout) = curr->p_info->stdout[1];
+	info->stdout[1] = curr->p_info->stdout[0];
 	*(info->stderr) = *(curr->p_info->stderr);
+	info->stderr[1] = curr->p_info->stderr[1];
 	curr->right_child->p_info = info;
 }
 
@@ -228,9 +160,13 @@ void	build_carry(t_ast *curr)
 
 	if (!curr || !(info = init_process()))
 		return ;
-	*(info->stdin) = *(curr->p_info->stdin);
-	*(info->stdout) = *(curr->p_info->stdout);
-	*(info->stderr) = *(curr->p_info->stderr);
+	memcpy(info, curr, sizeof(t_process));
+	// *(info->stdin) = *(curr->p_info->stdin);
+	// info->stdin[1] = curr->p_info->stdin[1];
+	// *(info->stdout) = *(curr->p_info->stdout);
+	// info->stdout[1] = curr->p_info->stdout[1];
+	// *(info->stderr) = *(curr->p_info->stderr);
+	// info->stderr[1] = curr->p_info->stderr[1];
 	curr->left_child->p_info = info;
 }
 
@@ -245,17 +181,17 @@ void	build_operator(t_ast *prev, t_ast *curr)
 		return ;
 	if (curr->p_info) // (->1)
 	{
-		printf("Call build carry\n");
 		build_carry(curr);
-		// build_leafs(curr->left_child);
-		// *(curr->left_child->p_info->stdout) = curr->p_info->comm[1];
-		printf("Left stdout = \"%d\"\n", *(curr->left_child->p_info->stdout));
 		build_default(curr->right_child);
 		return ;
 	}
 	build_default(curr->left_child);
 	build_default(curr->right_child);
 }
+
+/*
+** Introduce error handling.
+*/
 
 void	pipe_carry(t_ast *prev, t_ast *curr)
 {
@@ -265,26 +201,22 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		return ;
 	if (!curr->p_info && !(curr->p_info = init_process()))
 		return ;
-	*(curr->p_info->stdin) = (prev ? *(prev->p_info->stdout) : STDIN_FILENO);
+	*(curr->p_info->stdin) = (prev ? *(curr->p_info->stdin) : STDIN_FILENO);
+	curr->p_info->stdin[1] = (prev ? curr->p_info->stdin[1] : -1);
 	pipe(fds);
-	// fcntl(fds[0], F_SETFD, FD_CLOEXEC);
-	// fcntl(fds[1], F_SETFD, FD_CLOEXEC);
+	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 || fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+		return ;
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
 	pipe(fds);
-	// fcntl(fds[0], F_SETFD, FD_CLOEXEC);
-	// fcntl(fds[1], F_SETFD, FD_CLOEXEC);
-	// printf("-----> %s\n", *(curr->right_child->right_child->token));
+	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 || fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+		return ;
 	if (!(curr->right_child->right_child) ||
 		 (*(curr->right_child->type) == OPERATOR && strcmp(*(curr->right_child->token), "|")))
 	{
-		printf("-----> thanks\n");
-		printf("set default stdout\n");
 		fds[0] = STDOUT_FILENO;
 		fds[1] = STDOUT_FILENO;
 	}
-	printf("------> type == %d char = %s\n", *(curr->right_child->type), *(curr->right_child->token));
 	memcpy(curr->p_info->stdout, fds, sizeof(int) * 2);
-	printf("---------> stdout = %d\n", *(curr->p_info->stdout));
 	*(curr->p_info->stderr) = STDERR_FILENO;
 	if (curr->left_child && curr->right_child)
 	{
@@ -329,10 +261,7 @@ int		build_info(t_ast *prev, t_ast *curr)
 		if (!strcmp(*(curr->token), "|"))
 			pipe_carry(prev, curr);
 		else
-		{
-			printf("Called build_operator op = \"%s\"\n", *(curr->token));
 			build_operator(prev, curr);
-		}
 	}
 	else if (!prev)
 	{
@@ -378,14 +307,12 @@ int		run_forest(t_queue *forest)
 
 	if (!forest)
 		return (EXIT_FAILURE);
-	while (forest && (asts = (t_ast *)queue_pop(forest)) && (asts = ((t_list *)asts)->content))
+	while (!isempty_queue(forest) && (asts = ft_dequeue(forest)))
 	{
-		printf("ast = \"%s\"\n", *(asts->token));
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
-		// printf("Left %s right %s\n", *(asts->left_child->token), ((asts->right_child) ? *(asts->right_child->token) : NULL));
 		if (run_tree((t_ast *)asts))
-			return (EXIT_FAILURE);
+			return (EXIT_FAILURE);		
 	}
 	return (EXIT_SUCCESS);
 }

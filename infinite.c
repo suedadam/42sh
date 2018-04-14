@@ -7,7 +7,7 @@ int	main(void)
 {
 	char c;
 
-	while (read(STDIN_FILENO, &c, 1))
+	while (read(STDIN_FILENO, &c, 1) > 0)
 		printf("-> %c\n", c);
 	printf("EOF!\n");
 }

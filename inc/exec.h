@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 14:07:46 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 21:47:10 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_process
 	int		*comm;
 	int		*stdout;
 	int		*stderr;
-	uint8_t	ret;
 }				t_process;
 
 typedef struct	s_ophandlers
@@ -83,6 +82,7 @@ int				op_and_exec(t_ast *curr);
 ** execution.c
 */
 
+int				run_pipecmds(t_stack *cmd, t_queue *pids);
 int				create_monitor(t_ast *prev, t_ast *curr);
 int				run_operation(t_ast *curr, uint8_t wait);
 void			build_leafs(t_ast *curr);

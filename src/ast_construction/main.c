@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:24:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/12 04:34:30 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 21:41:15 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int main(int argc, char **argv) {
 	type[1] = 1;
 	type[2] = 2;
 	type[3] = 1;
-	type[4] = 2;
-	type[5] = 1;
+	type[4] = 1;
+	type[5] = 2;
 	type[6] = 1;
-	type[7] = 0;
-	type[8] = 0;
-	type[9] = 0;
-	type[10] = 0;
+	type[7] = 2;
+	type[8] = 1;
+	type[9] = 2;
+	type[10] = 1;
 	type[11] = 0;
 	type[12] = 0;
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 		printf("poop\n");
 		return (EXIT_FAILURE);
 	}
-	t_list *vasy = forest->head;
+	t_node *vasy = forest->first;
 	while (vasy)
 	{
 
