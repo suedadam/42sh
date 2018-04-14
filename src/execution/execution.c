@@ -153,7 +153,7 @@ int		run_tree(t_ast *curr)
 		}
 	}
 	else
-		return (run_operation(curr, 0));
+		return (run_operation(curr, 1));
 	return (EXIT_FAILURE);
 }
 
