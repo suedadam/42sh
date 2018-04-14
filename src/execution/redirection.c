@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 00:57:56 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 13:03:38 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ struct s_redir_op	redir_ops[] = {
 
 int		ops_read_from(t_ast *curr, int pos)
 {
-	int	ftmp;
 	int	**src;
 
-	if (!(ftmp = ft_atoi(curr->token[pos - 1]) && curr->token[pos - 1][0] != '0') || ftmp == 0)
-		src = &(curr->p_info->stdin);
-	else
+	if (curr->token[pos - 1])
+	{
+		free(curr->token[pos - 1]);
+		curr->token[pos - 1] = NULL;
+	}
+	if (!curr->token[pos + 1])
 		return (EXIT_FAILURE);
+	src = &(curr->p_info->stdin);
 	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
+	free(curr->token[pos + 1]);
+	free(curr->token[pos]);
 	curr->token[pos] = NULL;
-	// curr->token[(ftmp || curr->token[pos - 1][0] == '0') ? pos - 1 : pos] = NULL;
 	return (EXIT_SUCCESS);
 }
 
@@ -111,12 +115,11 @@ int		handle_redirection(t_ast *curr)
 		j = 0;
 		while (redir_ops[j].opflag)
 		{
-			if (!strcmp(curr->token[i], redir_ops[j].opflag))
+			if (!strcmp(curr->token[i], redir_ops[j].opflag) && curr->type[i] == REDIR)
 			{
 				if (!curr || redir_ops[j].func(curr, i))
 					return (EXIT_FAILURE);
 				break ;
-				// return (EXIT_SUCCESS);
 			}
 			j++;
 		}

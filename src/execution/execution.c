@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 02:09:32 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 13:02:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int		stringify(int fd, char **str)
 		}
 		strlen++;
 	}
-	printf("str = \"%s\"\n", *str);
+	// printf("str = \"%s\"\n", *str);
 	return (res);
 }
 
