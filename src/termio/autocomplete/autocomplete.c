@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 01:08:48 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 02:10:10 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ static int		next_child(t_trie *trie, int start)
 	return (NO_CHILD);
 }
 
-static void			no_child(t_trie *trie, t_stack *stack)
-{
-	regular_text(trie->key);
-}
-
 static void	one_child(t_trie *trie)
 {
 	int		child;
@@ -44,7 +39,7 @@ static void	one_child(t_trie *trie)
 	trie_dfs(trie->array[child]);
 }
 
-static void	bottleneck(t_trie *trie, t_stack **stack)
+static void	bottleneck(t_trie *trie, t_stack *stack)
 {
 	int			child;
 	t_cursor	*cursor;
@@ -65,8 +60,8 @@ static void	bottleneck(t_trie *trie, t_stack **stack)
 	}
 	else if (child == NO_CHILD)
 	{
-		free(ft_stackpop(*stack));
-		trie_dfs((t_trie *)((*stack)->top->content));
+		free(ft_stackpop(stack));
+		trie_dfs((t_trie *)((stack)->top->content));
 	}
 }
 
@@ -80,10 +75,8 @@ static void			resume_dfs(t_trie *trie)
 	trie_dfs(trie);
 }
 
-void				trie_dfs(t_trie *trie)
+void				trie_dfs(t_trie *trie, t_stack *stack)
 {
-	static t_stack		*stack = new_stack();
-
 	if (!trie && isempty_stack(stack))
 		return ;
 	else if (!trie)
@@ -91,7 +84,7 @@ void				trie_dfs(t_trie *trie)
 	if (trie->nbr_children == 1)
 		one_child(trie);
 	else if (trie->nbr_children > 1)
-		bottleneck(trie);
+		bottleneck(trie, stack);
 	else if (trie->nbr_children == 0)
-		no_child(trie);
+		regular_text(trie->key);
 }

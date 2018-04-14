@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 21:26:16 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 02:06:41 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ typedef	struct			s_terminf
 	t_buffer			paperweight;
 	t_cursor			cursor;
 	t_tokens			tokens;
+	t_trie				*trie;
+	t_stack				*trie_stack;
 	size_t				prompt_length;
 	char				*term_name;
 	char				*term_buff;
