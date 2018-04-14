@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 21:29:30 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 22:02:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,26 @@ void	itterate_pipes(t_stack *cmdstack, t_ast *curr)
 			return ;
 		}
 	}
-	// printf("Should've never gotten here....\n");
-	// abort();
+}
+
+int		compare(int *n1, int *n2)
+{
+	if (*n1 > *n2)
+		return (0);
+	return (1);
 }
 
 int		op_pipe_exec(t_ast *curr)
 {
-	t_queue	pids;
-	t_stack	cmdstack;
-	pid_t	res;
-	pid_t	*kpid;
+	t_pqueue	pids;
+	t_stack		cmdstack;
+	pid_t		res;
+	pid_t		*kpid;
 
 	if (!curr)
 		return (EXIT_FAILURE);
 	cmdstack.top = NULL;
 	pids.first = NULL;
-	pids.last = NULL;
 	itterate_pipes(&cmdstack, curr);
 	run_pipecmds(&cmdstack, &pids);
 	if (!(kpid = malloc(sizeof(int))))
@@ -57,15 +61,18 @@ int		op_pipe_exec(t_ast *curr)
 	{
 		if (WEXITSTATUS(*kpid))
 		{
-			printf("kpid = %d\n", WEXITSTATUS(*kpid));
 			free(kpid);
-			while (!isempty_queue(&pids))
+			while (pids.first)
 			{
-				if (!(kpid = ft_dequeue(&pids)))
+				if (!(kpid = ft_depqueue(&pids)))
 				{
-					printf("Test\n");
 					abort();
 					return (EXIT_FAILURE);
+				}
+				if (*kpid == res)
+				{
+					ft_enpqueue(&pids, &res, sizeof(int), (int (*)(void *, void *))&compare);
+					continue ;
 				}
 				kill(*kpid, SIGKILL);
 				free(kpid);

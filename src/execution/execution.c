@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 21:48:04 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 21:58:49 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-int			run_pipecmds(t_stack *cmd, t_queue *pids)
+int			run_pipecmds(t_stack *cmd, t_pqueue *pids)
 {
 	int		pid;
 	t_ast	*process;
@@ -54,7 +54,7 @@ int			run_pipecmds(t_stack *cmd, t_queue *pids)
 	close(process->p_info->stdin[0]);
 	if (*(process->p_info->stdout) != STDOUT_FILENO)
 		close(process->p_info->stdout[0]);
-	ft_enqueue(pids, &pid, sizeof(int));
+	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
 	run_pipecmds(cmd, pids);
 	return (EXIT_SUCCESS);
 }

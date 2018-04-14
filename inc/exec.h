@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 21:47:10 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 22:02:50 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int				op_and_exec(t_ast *curr);
 ** execution.c
 */
 
-int				run_pipecmds(t_stack *cmd, t_queue *pids);
-int				create_monitor(t_ast *prev, t_ast *curr);
+int				compare(int *n1, int *n2);
+int				run_pipecmds(t_stack *cmd, t_pqueue *pids);
 int				run_operation(t_ast *curr, uint8_t wait);
 void			build_leafs(t_ast *curr);
 void			pipe_carry(t_ast *prev, t_ast *curr);
