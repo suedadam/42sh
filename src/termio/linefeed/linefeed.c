@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 12:45:44 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 13:09:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int			ft_linefeed(void)
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
 		//handle manager failure
+		ft_printf("error exiting...\n");
 		exit(0);
 	}
 	if (reset_buffer() == EXIT_SUCCESS)
