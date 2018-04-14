@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:57:20 by ztisnes           #+#    #+#             */
-/*   Updated: 2018/04/13 16:23:03 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/13 18:43:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_stack				*new_stack(void)
 {
 	t_stack			*node;
 
-	if (!(node = (t_stack *)ft_malloc(sizeof(t_stack))))
+	if (!(node = (t_stack *)ft_memalloc(sizeof(t_stack))))
 		return (NULL);
 	node->top = NULL;
 	return (node);
