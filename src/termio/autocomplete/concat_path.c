@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_below.c                                      :+:      :+:    :+:   */
+/*   concat_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 17:02:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 17:52:56 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/13 15:18:45 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/13 20:44:49 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_screen.h"
+#include "ft_autocomplete.h"
 #include "ft_proto.h"
 
-void		clear_below(void)
+char	*concatpath(char *fin, char *add)
 {
-	static char *cachecd = NULL;
-	static char *cachedl = NULL;
+	char	*temp;
+	size_t	len;
 
-	if (!cachecd)
-		cachecd = tgetstr("cd", NULL);
-	if (!cachedl)
-		cachedl = tgetstr("dl", NULL);
-	tputs(cachecd, 1, &my_putchar);
-	tputs(cachedl, 1, &my_putchar);
+	len = ft_strlen(fin) + ft_strlen(add);
+	if (!(temp = (char *)ft_memalloc(len + 1)))
+		return (NULL);
+	ft_strcpy(temp, add);
+	ft_strcat(temp, fin);
+	return (temp);
 }

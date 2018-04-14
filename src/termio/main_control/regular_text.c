@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 15:44:21 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 19:46:50 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 23:16:12 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		regular_text(char byte)
 	t_cursor	*cursor;
 	char		*buffer;
 
+	hanging_byte(byte);
+//	wcount_forword(byte);
 	cursor = &(g_shell_env.cursor);
 	if (!(buffer = cursor->buffer))
 		return (EXIT_FAILURE);

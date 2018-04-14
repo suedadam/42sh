@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_below.c                                      :+:      :+:    :+:   */
+/*   del_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 17:02:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 17:52:56 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/13 20:36:11 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/13 22:10:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_screen.h"
+#include "ft_autocomplete.h"
 #include "ft_proto.h"
 
-void		clear_below(void)
+void	del_paths(char **mul_paths)
 {
-	static char *cachecd = NULL;
-	static char *cachedl = NULL;
+	char	**temp;
 
-	if (!cachecd)
-		cachecd = tgetstr("cd", NULL);
-	if (!cachedl)
-		cachedl = tgetstr("dl", NULL);
-	tputs(cachecd, 1, &my_putchar);
-	tputs(cachedl, 1, &my_putchar);
+	temp = mul_paths;
+	while (*temp)
+		free(*temp++);
+	free(mul_paths);
 }

@@ -27,6 +27,7 @@ SRCDIR_IPARSE = src/input_parser/
 SRCDIR_MANAGER = src/manager/
 
 SRCDIR_TERMIO = src/termio/
+SRCDIR_TERMIO_AUTOCOMPLETE = autocomplete/
 SRCDIR_TERMIO_BUFFER = buffer/
 SRCDIR_TERMIO_CONTROL_CODES = control_codes/
 SRCDIR_TERMIO_CURSOR = cursor/
@@ -53,6 +54,9 @@ OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_EXECS))), \
 		  $(SRC_EXEC_OPS_EXECS)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_IPARSE), $(SRC_IPARSE)))
+OBJSRC += $(patsubst %, %.o, $(addprefix \
+		  $(addprefix $(SRCDIR_TERMIO), $(SRCDIR_TERMIO_AUTOCOMPLETE)), \
+		  $(SRC_TERMIO_AUTOCOMPLETE)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_TERMIO), $(SRCDIR_TERMIO_BUFFER)), \
 		  $(SRC_TERMIO_BUFFER)))
@@ -157,6 +161,17 @@ SRC_IPARSE =	\
 # TERMIO SOURCE FILES                                                          #
 ################################################################################
 
+# AUTOCOMPLETE
+#SRC_TERMIO_AUTOCOMPLETE = \
+#					count_word \
+#					id_add_name \
+#					check_possible_dir \
+#					gather_paths \
+#					concat_path \
+#					autofind_pathnames \
+#					buildir_names \
+#					del_paths
+#
 # BUFFER
 SRC_TERMIO_BUFFER =	\
 					init_buffer \
@@ -215,6 +230,7 @@ SRC_TERMIO_ESCAPE_SEQUENCES =	\
 SRC_TERMIO_HANGING_BYTE =	\
 					curly_mode \
 					hanging_byte \
+					hanging_delete \
 					paren_mode \
 					quote_mode
 
@@ -253,9 +269,6 @@ SRC_TERMIO_SCREEN =	\
 ################################################################################
 
 all: $(NAME)
-
-#$(MALLOC):
-#	@make -C ft_malloc
 
 $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"

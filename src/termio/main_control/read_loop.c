@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/10 16:04:04 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 22:21:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 		return (quote_mode());
 	else if (T_OPAREN)
 		return (drop_prompt("subsh> "));
+	else if (T_OCURLY)
+		return (drop_prompt("curly> "));
 	else if (T_PIPE)
 		return (drop_prompt("pipe> "));
 	else
