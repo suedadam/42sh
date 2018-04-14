@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 01:20:22 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 02:15:47 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct	s_trie_with_level
 /*
 ** trie dfs autocomplete
 */
-void				trie_dfs(t_trie *trie);
+void		trie_dfs(t_trie *trie, t_stack *stack);
 
 /*
 **	For finding relative word location / count on the terminal, which will
