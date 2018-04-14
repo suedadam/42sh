@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 03:07:25 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 12:27:21 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 #include <stdlib.h>
 
 /*
-** Only builtins are ever going to require persistent modifications
-** ToDo:
-** 	Commands within a subshell we can run with a non-persistence flag
-** 	that carries through to the execution function. 
 **
 ** Free input_str after parser().
 */

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 23:03:00 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 12:52:05 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		compare(int *n1, int *n2);
 
 void		build_carry(t_ast *curr);
 void		build_leafs(t_ast *curr);
-void		build_operator(t_ast *prev, t_ast *curr);
+void		build_operator(t_ast *curr);
 void		build_default(t_ast *curr);
 int			build_info(t_ast *prev, t_ast *curr);
 

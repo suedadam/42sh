@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 11:55:19 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 13:01:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
 #define END_PARSING -1
-
-char	*g_operators[] = {
-	"|",
-	"&",
-	"||",
-	"&&",
-	";",
-	NULL
-};
-
-/*
-** Remove the check for g_operators.
-*/
 
 static int			parse_tokens(char **tokens, t_token_type *type)
 {
@@ -34,9 +21,8 @@ static int			parse_tokens(char **tokens, t_token_type *type)
 	i = 0;
 	while (tokens[i])
 	{
-		if (type[i] == OPERATOR && str_search(g_operators, tokens[i]))
+		if (type[i] == OPERATOR)
 			return (i);
-		ft_printf("not : |%s|[%d]\n", tokens[i], type[i]);
 		i++;
 	}
 	return (!i ? END_PARSING : i - 1);
@@ -74,7 +60,6 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 t_queue				*build_forest(char **tokens, t_token_type *type)
 {
 	t_queue		*forest;
-	// t_list		*new_list;
 	t_ast		*ast;
 	int			pos;
 
