@@ -74,8 +74,8 @@ LIBFT = libft/ft_atoi.c \
 		  libft/pqueue.c \
 		  libft/queue.c \
 		  libft/ft_lstnew.c \
-		  libft/ft_splitwhitespace.c
-		  libft/stack.c \
+		  libft/ft_splitwhitespace.c \
+		  libft/stack.c 
 
 PRINTF = printf/ft_printf.c \
 		 printf/ft_printf_fd.c \
