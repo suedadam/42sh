@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 10:41:08 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/09 19:19:59 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 00:47:21 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ static int	squote_mode(uint8_t *quoted,
 	return (EXIT_SUCCESS);
 }
 
-int			handle_embedded_quotes(uint8_t *quoted,
-	char cur_char, char **current_token)
+int			handle_embedded_quotes(t_parser *par, char cur_char)
 {
-	if (*quoted & DOUBLE_QUOTE)
-		return (dquote_mode(quoted, cur_char, current_token));
-	else if (*quoted & SINGLE_QUOTE)
-		return (squote_mode(quoted, cur_char, current_token));
-	else if (*quoted & BACKSLASH)
+	if (par->quoted & DOUBLE_QUOTE)
+		return (dquote_mode(&(par->quoted), cur_char, &(par->current_token)));
+	else if (par->quoted & SINGLE_QUOTE)
+		return (squote_mode(&(par->quoted), cur_char, &(par->current_token)));
+	else if (par->quoted & BACKSLASH)
 	{
-		if (!(*current_token = strappend(current_token, cur_char)))
+		par->current_type = WORD;
+		if (!(par->current_token = strappend(&(par->current_token), cur_char)))
 			return (EXIT_FAILURE);
-		*quoted &= ~BACKSLASH;
+		par->quoted &= ~BACKSLASH;
 		return (EXIT_SUCCESS);
 	}
 	else

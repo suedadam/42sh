@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linefeed.c                                         :+:      :+:    :+:   */
+/*   sh_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 00:07:53 by satkins          ###   ########.fr       */
+/*   Created: 2018/04/13 21:34:10 by satkins           #+#    #+#             */
+/*   Updated: 2018/04/13 21:44:44 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_linefeed.h"
-#include "ft_proto.h"
+#include "libft.h"
 
-int			ft_linefeed(void)
+char	*sh_strcat(char **front, char *back)
 {
-	// g_shell_env.buffer.buff; //string of line
-	if (reset_buffer() == EXIT_SUCCESS)
-		return (reset_prompt());
-/*	history_handler()
-**	satkins_parser(g_shell_env->line_buffer)
-**	reset the buffer
-*/
-	return (EXIT_SUCCESS);
+	size_t	len;
+
+	if (!front || !back)
+		return (NULL);
+	len = ft_strlen(*front) + ft_strlen(back) + 1;
+	if (!(*front = realloc(*front, len)))
+		return (NULL);
+	return (ft_strcat(*front, back));
 }
