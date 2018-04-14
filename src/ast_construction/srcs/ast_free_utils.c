@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 13:54:47 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/09 19:07:06 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/13 18:15:24 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void		free_ast(t_ast *ast)
 
 void		free_forest(t_queue *forest)
 {
-	t_list		*head;
+	t_ast		*head;
 
 	if (forest)
 	{
-		if (!(head = queue_pop(forest)))
+		if (!(head = ft_dequeue(forest)))
 			return ;
 		free_ast((t_ast *)(head->content));
 		free(head);
