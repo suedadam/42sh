@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 14:33:35 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 16:07:53 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 21:56:30 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 
 int		buildir_names(DIR *d_base, char *basepath)
 {
-	struct dirent	entry;
+	struct dirent	*entry;
 	struct stat		sbuf;
 	char			*smallpath;
 	char			*fullpath;
-	int				iswhat;
 
-	while (entry = readdir(d_base))
+	while ((entry = readdir(d_base)))
 	{
 		smallpath = concatpath("/", basepath);
-		fullpath = concatpath(entry.d_name, smallpath);
+		fullpath = concatpath(entry->d_name, smallpath);
 		if (lstat(fullpath, &sbuf) < 0)
 			return (EXIT_FAILURE);
-		id_add_name();
+		id_add_name(&sbuf, entry);
 		free(smallpath);
 		free(fullpath);
 	}

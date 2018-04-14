@@ -142,7 +142,14 @@ SRC_IPARSE =	\
 
 # AUTOCOMPLETE
 SRC_TERMIO_AUTOCOMPLETE = \
-					count_word
+					count_word \
+					id_add_name \
+					check_possible_dir \
+					gather_paths \
+					concat_path \
+					autofind_pathnames \
+					buildir_names \
+					del_paths
 
 # BUFFER
 SRC_TERMIO_BUFFER =	\
@@ -241,9 +248,6 @@ SRC_TERMIO_SCREEN =	\
 ################################################################################
 
 all: $(NAME)
-
-#$(MALLOC):
-#	@make -C ft_malloc
 
 $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"

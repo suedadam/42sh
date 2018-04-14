@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 16:01:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 10:53:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 22:03:07 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 void		hanging_delete(char *byte)
 {
-	size_t	pos;
 	char	*temp;
 
 	temp = byte;
-	pos = g_shell_env.cursor.position;
 	if (*byte == '\'' && !T_DQUOTE)
 		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
 	else if (*byte == '\"' && !T_QUOTE)
@@ -29,7 +27,6 @@ void		hanging_delete(char *byte)
 		while ((temp != g_shell_env.buffer->buff)
 				&& IS_WHITESPACE(*(temp - 1)))
 			temp--;
-		printf("\npipe? %d\n", ((*(temp - 1) == '|') ? 1 : 0));
 		if (*(temp - 1) == '|')
 			T_PIPE ? (T_PIPE = 0) : (T_PIPE = 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 15:45:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 11:08:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 21:56:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		(*g_control_jump[])() = {
 	NULL,
 	control_c,
 	control_h,
-	NULL,
+	autofind_pathnames,
 	control_j,
 	control_k,
 	control_l,

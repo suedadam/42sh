@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/12 22:08:56 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 21:26:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <unistd.h>
 # include <limits.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
+# include <dirent.h>
 
 # include "libft.h"
 # include "error.h"

@@ -1,37 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gather_names.c                                     :+:      :+:    :+:   */
+/*   gather_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 13:56:39 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 16:07:57 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/13 20:41:40 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/13 22:10:15 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_autocomplete.h"
 #include "ft_proto.h"
 
-char	**gather_path(int word, char **basepath)
+char	**gather_paths(int word, char **basepath)
 {
 	char	**mul_path;
 
-	use = 0;
-	if (word == 1)
-		*basepath = "PATH";
-	else
-		*basepath = possible_dir();
-	if (!(path = getenv(*basepath)))
-		return (EXIT_FAILURE);
+	mul_path = NULL;
 	if (word == 1)
 	{
+	// made to use g_environ, for now placeholder with PATH from getenv
+		*basepath = "PATH";
+		if (!(*basepath = getenv(*basepath)))
+			return (NULL);
 		if (!(mul_path = ft_strsplit(*basepath, ':')))
 			return (NULL);
 	}
 	else
 	{
-//		if (!mul_path = 
+		*basepath = check_possible_dir();
+		if (!(mul_path = (char **)ft_memalloc(sizeof(char *) * 2)))
+			return (NULL);
+		if (!(mul_path[0] = (char *)ft_memalloc(2)))
+		{
+			del_paths(mul_path);
+			return (NULL);
+		}
+		mul_path[0][0] = '.';
 	}
 	return (mul_path);
 }

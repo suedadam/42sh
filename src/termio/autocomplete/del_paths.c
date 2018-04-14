@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   concat_path.c                                      :+:      :+:    :+:   */
+/*   del_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 15:18:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 20:44:49 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/13 20:36:11 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/13 22:10:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_autocomplete.h"
 #include "ft_proto.h"
 
-char	*concatpath(char *fin, char *add)
+void	del_paths(char **mul_paths)
 {
-	char	*temp;
-	size_t	len;
+	char	**temp;
 
-	len = ft_strlen(fin) + ft_strlen(add);
-	if (!(temp = (char *)ft_memalloc(len + 1)))
-		return (NULL);
-	ft_strcpy(temp, add);
-	ft_strcat(temp, fin);
-	return (temp);
+	temp = mul_paths;
+	while (*temp)
+		free(*temp++);
+	free(mul_paths);
 }

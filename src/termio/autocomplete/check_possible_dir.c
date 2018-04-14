@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   id_add_name.c                                      :+:      :+:    :+:   */
+/*   check_possible_dir.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 16:07:32 by nkouris           #+#    #+#             */
+/*   Created: 2018/04/13 16:28:19 by nkouris           #+#    #+#             */
 /*   Updated: 2018/04/13 22:10:17 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,22 +13,31 @@
 #include "ft_autocomplete.h"
 #include "ft_proto.h"
 
-int		id_add_name(struct stat *sbuf, struct dirent *entry)
+char	*check_possible_dir(void)
 {
+	char	*dir;
+	char	*temp;
 	size_t	len;
-	char	*send;
 
-	len = ft_strlen(entry->d_name);
-	if (!(send = ft_memalloc(len + 2)))
-		return (EXIT_FAILURE);
-	ft_strcpy(send, entry->d_name);
-	if (S_ISLNK(sbuf->st_mode))
-		send[len] = '@';
-	else if (S_ISDIR(sbuf->st_mode))
-		send[len] = '/';
-	else if (S_IXUSR & sbuf->st_mode)
-		send[len] = '*';
-//	add_word_to_trie(g_shell_env.trie, send);
-	free(send);
-	return (EXIT_SUCCESS);
+	dir = NULL;
+	len = g_shell_env.cursor.position;
+	if (len && (g_shell_env.cursor.buffer[(len - 1)] == '/'))
+	{
+		temp = g_shell_env.cursor.buffer;
+		while (temp != g_shell_env.buffer->buff	&& !IS_WHITESPACE(*(temp - 1)))
+			temp--;
+		dir = ft_strchr(temp, '/');
+		len = (dir - temp) + 1;
+		if (!(dir = (char *)ft_memalloc(sizeof(char) * len)))
+			return (NULL);
+		if (!(ft_strncpy(dir, temp, len)))
+		{
+			free(dir);
+			return (NULL);
+		}
+		temp = concatpath(dir, "./");
+		free(dir);
+		return (temp);
+	}
+	return (".");
 }

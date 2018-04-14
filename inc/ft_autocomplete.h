@@ -6,13 +6,14 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 22:07:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 22:10:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_AUTOCOMPLETE_H
 # define FT_AUTOCOMPLETE_H
 
+# include <sys/stat.h>
 # include "ft_term.h"
 # include "ft_proto.h"
 
@@ -25,5 +26,54 @@
 void		wcount_forword(char byte);
 void		wcount_backword(char byte);
 void		find_backwords(void);
+
+/*
+**	
+**	(id_add_name.c)
+*/
+
+int		id_add_name(struct stat *sbuf, struct dirent *entry);
+
+/*
+**	
+**	(check_possible_dir.c)
+*/
+
+char	*check_possible_dir(void);
+
+/*
+**	
+**	(gather_paths.c)
+*/
+
+char	**gather_paths(int word, char **basepath);
+
+/*
+**	
+**	(concat_path.c)
+*/
+
+char	*concatpath(char *fin, char *add);
+
+/*
+**	
+**	(find_pathnames.c)
+*/
+
+int		autofind_pathnames(void);
+
+/*
+**	
+**	(build_dirnames.c)
+*/
+
+int		buildir_names(DIR *d_base, char *basepath);
+
+/*
+**	
+**	(build_dirnames.c)
+*/
+
+void	del_paths(char **mul_paths);
 
 #endif
