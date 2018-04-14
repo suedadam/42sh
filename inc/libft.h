@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/13 16:30:20 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/13 22:00:42 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define BUFF_SIZE 2048
 
 # define ABS(X) X > 0 ? X : -X
-
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 int	g_fd;
 
 typedef struct		s_btree
@@ -172,5 +172,6 @@ int					is_numstr(char *line);
 int					ft_strcmp_wlen(const char *str1, const char *str2);
 void				ft_lstappend(t_list **head, t_list *newl);
 void				del_node(t_node *node, t_node *prev);
+char				**ft_splitwhitespace(char const *s);
 
 #endif

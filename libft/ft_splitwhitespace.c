@@ -1,52 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_splitwhitespace.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/13 20:35:09 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/13 22:25:48 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		word_count(const char *s, char c)
+static int		word_count(const char *s)
 {
 	int			i;
 
 	i = 0;
 	while (*s != '\0')
 	{
-		while (*s != '\0' && *s == c)
+		while (*s != '\0' && IS_WHITESPACE(*s))
 			s++;
-		if (*s != '\0')
+		if (*s != '\0')	
 			i++;
-		while (*s != '\0' && *s != c)
+		while (*s != '\0' && !IS_WHITESPACE(*s))	
 			s++;
 	}
 	return (i);
 }
 
-static size_t	word_len(char const *s, char c)
+static size_t	word_len(char const *s)
 {
 	size_t		i;
 
 	i = 0;
-	while (s[i] != '\0' && s[i] != c)
+	while (s[i] != '\0' && !IS_WHITESPACE(s[i]))
 		i++;
 	return (i);
 }
 
-static char		*next_word(char const *s, char c)
+static char		*next_word(char const *s)
 {
-	while (*s != '\0' && *s == c)
+	while (*s != '\0' && IS_WHITESPACE(*s))
 		s++;
 	return ((char *)s);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_splitwhitespace(char const *s)
 {
 	char		**array;
 	int			count;
@@ -57,15 +57,15 @@ char			**ft_strsplit(char const *s, char c)
 	i = 0;
 	if (!s)
 		return (NULL);
-	count = word_count(s, c);
-	curr = next_word(s, c);
+	count = word_count(s);
+	curr = next_word(s);
 	curr_len = 0;
 	if (!(array = (char **)malloc(sizeof(char *) * (1 + count))))
 		return (NULL);
 	while (i < count)
 	{
-		curr = next_word(&curr[curr_len], c);
-		curr_len = word_len(curr, c);
+		curr = next_word(&(curr[curr_len]));
+		curr_len = word_len(curr);
 		if (!(array[i] = (char *)malloc(sizeof(char) * (1 + curr_len))))
 			return (NULL);
 		ft_strncpy(array[i], curr, curr_len);

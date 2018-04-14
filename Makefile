@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asyed <asyed@student.42.fr>                +#+  +:+       +#+         #
+#    By: satkins <satkins@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/13 17:46:16 by asyed            ###   ########.fr        #
+#    Updated: 2018/04/13 20:42:17 by satkins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,8 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_ullitoa_base.c \
 		  libft/pqueue.c \
 		  libft/queue.c \
-		  libft/ft_lstnew.c 
+		  libft/ft_lstnew.c \
+		  libft/ft_splitwhitespace.c
 
 PRINTF = printf/ft_printf.c \
 		 printf/ft_printf_fd.c \
