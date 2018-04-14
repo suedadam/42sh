@@ -4,7 +4,7 @@ CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
 INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc
-LIBFT = deps/libft/libft.a
+LIBFT = deps/libft/libftprintf.a
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
@@ -17,6 +17,7 @@ MALLOC = libft_malloc_${HOSTTYPE}.so
 SRCDIR_AST = src/ast_construction/srcs/
 
 SRCDIR_EXEC = src/execution/
+SRCDIR_EXEC_BUILTINS = builtins/
 SRCDIR_EXEC_OPS = ops/
 SRCDIR_EXEC_OPS_CHECKS = op_checks/
 SRCDIR_EXEC_OPS_EXECS = op_execs/
@@ -37,6 +38,9 @@ SRCDIR_TERMIO_SCREEN = screen/
 
 OBJSRC = $(patsubst %, %.o, $(addprefix $(SRCDIR_AST), $(SRC_AST)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_EXEC), $(SRC_EXEC)))
+# OBJSRC += $(patsubst %, %.o, $(addprefix \
+# 		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
+# 		  $(SRC_EXEC_BUILTINS)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_CHECKS))), \
@@ -104,7 +108,14 @@ SRC_AST =	\
 
 SRC_EXEC =	\
 			execution \
-			redirection
+			redirection \
+			builders \
+			utils
+
+SRC_EXEC_BUILTINS = \
+			cd \
+			env \
+			handler
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \

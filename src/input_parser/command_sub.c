@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 01:39:40 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 00:30:41 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 11:58:46 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int		is_command_sub(t_parser *par, char **input_str)
 {
 	char	close_char;
 	char	*command;
-	char	**words;
 
 	if ((par->quoted & ~DOUBLE_QUOTE) ||
 		!(**input_str == '$' || **input_str == BACKT))

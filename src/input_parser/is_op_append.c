@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 10:36:32 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 02:06:39 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 11:58:04 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int					is_op_append(char *token, char c)
 {
 	char			tmp[3];
 	size_t			len;
-	int				i;
 
 	len = ft_strlen(token);
 	if (len > 2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builders.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:46:16 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 23:00:09 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 11:57:17 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		build_leafs(t_ast *curr)
 **			execute and wait
 */
 
-void	build_operator(t_ast *prev, t_ast *curr)
+void	build_operator(__attribute__((unused))t_ast *prev, t_ast *curr)
 {
 	if (!curr)
 		return ;

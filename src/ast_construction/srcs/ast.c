@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 02:50:11 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 11:55:19 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 t_queue				*build_forest(char **tokens, t_token_type *type)
 {
 	t_queue		*forest;
-	t_list		*new_list;
+	// t_list		*new_list;
 	t_ast		*ast;
 	int			pos;
 
