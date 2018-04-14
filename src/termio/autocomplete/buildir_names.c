@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 14:33:35 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 21:56:30 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 02:13:28 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		buildir_names(DIR *d_base, char *basepath)
 		fullpath = concatpath(entry->d_name, smallpath);
 		if (lstat(fullpath, &sbuf) < 0)
 			return (EXIT_FAILURE);
+		if (!sbuf)
+			break ;
 		id_add_name(&sbuf, entry);
 		free(smallpath);
 		free(fullpath);

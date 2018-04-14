@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_c.c                                        :+:      :+:    :+:   */
+/*   modification_check.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/30 10:00:39 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 22:40:24 by nkouris          ###   ########.fr       */
+/*   Created: 2018/04/14 01:35:33 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/14 02:13:22 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_control.h"
+#include "ft_autocomplete.h"
 #include "ft_proto.h"
 
-int		control_c(void)
+int		modification_check(char *check)
 {
-	cursor_to_end(&g_shell_env.cursor);
-	if (reset_prompt() == EXIT_FAILURE || reset_buffer() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	struct stat	sbuf;
+
+	if (!(*check))
+		lstat(".", sbuf);
 }

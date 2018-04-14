@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:07:32 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 22:10:17 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 23:39:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ int		id_add_name(struct stat *sbuf, struct dirent *entry)
 	if (!(send = ft_memalloc(len + 2)))
 		return (EXIT_FAILURE);
 	ft_strcpy(send, entry->d_name);
-	if (S_ISLNK(sbuf->st_mode))
-		send[len] = '@';
-	else if (S_ISDIR(sbuf->st_mode))
+	if (S_ISDIR(sbuf->st_mode))
 		send[len] = '/';
-	else if (S_IXUSR & sbuf->st_mode)
-		send[len] = '*';
 //	add_word_to_trie(g_shell_env.trie, send);
 	free(send);
 	return (EXIT_SUCCESS);

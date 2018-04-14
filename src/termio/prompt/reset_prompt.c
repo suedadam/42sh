@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:59 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/11 16:39:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/13 22:36:07 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int			reset_prompt(void)
 		return (EXIT_FAILURE);
 	get_cursor_first_position();
 	bzero(&g_shell_env.tokens, sizeof(t_tokens));
+	g_shell_env.cursor.wordloc = 0;
 	return (EXIT_SUCCESS);
 }

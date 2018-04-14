@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 22:15:50 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 01:20:22 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*check_possible_dir(void);
 **	(gather_paths.c)
 */
 
-char	**gather_paths(int word, char **basepath);
+char	**gather_paths(int word);
 
 /*
 **

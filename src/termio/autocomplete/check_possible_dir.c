@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:28:19 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 22:10:17 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 01:03:11 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ char	*check_possible_dir(void)
 		free(dir);
 		return (temp);
 	}
-	return (".");
+	return (NULL);
 }
