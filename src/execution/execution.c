@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 21:58:49 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 23:30:32 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,31 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-int			run_pipecmds(t_stack *cmd, t_pqueue *pids)
+int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 {
 	int		pid;
 	t_ast	*process;
 
-	if (!cmd || isempty_stack(cmd))
+	if (!cmd || isempty_stack(cmd) || !(process = ft_stackpop(cmd)))
 		return (EXIT_SUCCESS);
-	process = ft_stackpop(cmd); //Always okay?
 	if ((pid = fork()) == -1)
-	{
-		printf("Failed to fork\n");
-		abort();
-	}
+		return (EXIT_FAILURE);
 	if (!pid)
 	{
+		ft_printf("-----> B (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
 		if (handle_redirection(process))
+		{
+			ft_printf("Failure????\n");
 			exit(EXIT_FAILURE);
-		printf("(%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
-		printf("(%d) Closing %d %d\n", getpid(), process->p_info->stdin[1], process->p_info->stdout[1]);
+		}
+		ft_printf("-----> A (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
+		ft_printf("(%d) Closing %d %d\n", getpid(), process->p_info->stdin[1], process->p_info->stdout[1]);
 		dup2(*(process->p_info->stdin), STDIN_FILENO);
 		dup2(*(process->p_info->stdout), STDOUT_FILENO);
 		dup2(*(process->p_info->stderr), STDERR_FILENO);
 		execvP(*(process->token), getenv("PATH"), process->token);
 		exit(EXIT_FAILURE);
 	}
-	printf("Parent closed %d %d\n", process->p_info->stdin[0], process->p_info->stdout[0]);
 	close(process->p_info->stdin[0]);
 	if (*(process->p_info->stdout) != STDOUT_FILENO)
 		close(process->p_info->stdout[0]);
@@ -62,7 +61,7 @@ int			run_pipecmds(t_stack *cmd, t_pqueue *pids)
 int		run_operation(t_ast *curr, uint8_t wait)
 {
 	pid_t	pid;
-	int 	res;
+	int		res;
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
@@ -72,9 +71,14 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
+		ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
 		if (handle_redirection(curr))
+		{
+			ft_printf("Failure....\n");
 			exit(EXIT_FAILURE);
-		printf("[In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
+		}
+		ft_printf(".......?\n");
+		ft_printf("-----> A [In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
 		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
@@ -83,110 +87,12 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	}
 	if (wait)
 	{
-		printf("Waiting\n");
+		ft_printf("Waiting\n");
 		waitpid(pid, &res, 0);
-		printf("Done waiting\n");
-		if (!res)
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
+		ft_printf("Done waiting\n");
+		return (res);
 	}
 	return (EXIT_SUCCESS);
-}
-
-static inline __attribute__((always_inline)) void	*init_process(void)
-{
-	t_process	*new;
-
-	if (!(new = ft_memalloc(sizeof(t_process))))
-		return (NULL);
-	else if (!(new->stdin = ft_memalloc(sizeof(int) * 2)))
-	{
-		free(new);
-	}
-	else if (!(new->stderr = ft_memalloc(sizeof(int) * 2)))
-	{
-		free(new);
-		free(new->stdin);
-	}
-	else if (!(new->stdout = ft_memalloc(sizeof(int) * 2)))
-	{
-		free(new);
-		free(new->stdin);
-		free(new->stderr);
-	}
-	else if (!(new->comm = ft_memalloc(sizeof(int) * 2)))
-	{
-		free(new);
-		free(new->stdin);
-		free(new->stderr);
-		free(new->stdout);
-	}
-	else
-		return (new);
-	return (NULL);
-}
-
-void	build_leafs(t_ast *curr)
-{
-	t_process *info;
-
-	if (!curr || !curr->left_child || !(info = init_process()))
-	{
-		printf("++++++++++ failed? %p %p %p\n", curr, curr->left_child, info);
-		return ;
-	}
-	*(info->stdin) = *(curr->p_info->stdin);
-	info->stdin[1] = curr->p_info->stdin[1];
-	*(info->stdout) = curr->p_info->comm[1];
-	info->stdout[1] = curr->p_info->comm[0];
-	*(info->stderr) = *(curr->p_info->stderr);
-	info->stderr[1] = curr->p_info->stderr[1];
-	curr->left_child->p_info = info;
-	if (!curr->right_child || !(info = init_process()))
-		return ;
-	*(info->stdin) = curr->p_info->comm[0];
-	info->stdin[1] = curr->p_info->comm[1];
-	*(info->stdout) = curr->p_info->stdout[1];
-	info->stdout[1] = curr->p_info->stdout[0];
-	*(info->stderr) = *(curr->p_info->stderr);
-	info->stderr[1] = curr->p_info->stderr[1];
-	curr->right_child->p_info = info;
-}
-
-void	build_carry(t_ast *curr)
-{
-	t_process	*info;
-
-	if (!curr || !(info = init_process()))
-		return ;
-	memcpy(info, curr, sizeof(t_process));
-	// *(info->stdin) = *(curr->p_info->stdin);
-	// info->stdin[1] = curr->p_info->stdin[1];
-	// *(info->stdout) = *(curr->p_info->stdout);
-	// info->stdout[1] = curr->p_info->stdout[1];
-	// *(info->stderr) = *(curr->p_info->stderr);
-	// info->stderr[1] = curr->p_info->stderr[1];
-	curr->left_child->p_info = info;
-}
-
-/*
-** -> 1. This is only set when a pipe created it and the operator isn't a pipe.
-**			This in turn needs to carry it over to the left leaf and reverse execute and wait
-*/
-
-void	build_operator(t_ast *prev, t_ast *curr)
-{
-	if (!curr)
-		return ;
-	if (curr->p_info) // (->1)
-	{
-		build_carry(curr);
-		build_default(curr->right_child);
-		return ;
-	}
-	build_default(curr->left_child);
-	build_default(curr->right_child);
 }
 
 /*
@@ -197,21 +103,22 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 {
 	int fds[2];
 
-	if (!curr)
-		return ;
-	if (!curr->p_info && !(curr->p_info = init_process()))
+	if (!curr || (!curr->p_info && !(curr->p_info = init_process())))
 		return ;
 	*(curr->p_info->stdin) = (prev ? *(curr->p_info->stdin) : STDIN_FILENO);
 	curr->p_info->stdin[1] = (prev ? curr->p_info->stdin[1] : -1);
 	pipe(fds);
-	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 || fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
+		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
 		return ;
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
 	pipe(fds);
-	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 || fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
+		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
 		return ;
 	if (!(curr->right_child->right_child) ||
-		 (*(curr->right_child->type) == OPERATOR && strcmp(*(curr->right_child->token), "|")))
+			(*(curr->right_child->type) == OPERATOR &&
+			strcmp(*(curr->right_child->token), "|")))
 	{
 		fds[0] = STDOUT_FILENO;
 		fds[1] = STDOUT_FILENO;
@@ -223,54 +130,6 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		build_leafs(curr);
 		build_info(curr, curr->right_child);
 	}
-}
-
-void	build_default(t_ast *curr)
-{
-	t_process *info;
-
-	if (!curr || *(curr->type) == OPERATOR)
-		return ;
-	if (!(info = init_process()))
-		return ;
-	*(info->stdin) = STDIN_FILENO;
-	*(info->stdout) = STDOUT_FILENO;
-	*(info->stderr) = STDERR_FILENO;
-	curr->p_info = info;
-}
-
-/* 
-** The program should read the AST operation node
-** Left:
-** 	-> stdin = ASTOP->stdin;
-**	-> stdout = ASTOP->comm[1];
-** Right:
-**  -> stdin = ASTOP->comm[0];
-**	-> stdout = ASTOP->stdout[1];
-**
-** Leafs communicate on single INT pointers a/k/a:
-** 	-> stdout = curr->p_info->stdout[0];
-*/
-
-int		build_info(t_ast *prev, t_ast *curr)
-{
-	if (!curr)
-		return (EXIT_FAILURE);
-	if (*(curr->type) == OPERATOR)
-	{
-		if (!strcmp(*(curr->token), "|"))
-			pipe_carry(prev, curr);
-		else
-			build_operator(prev, curr);
-	}
-	else if (!prev)
-	{
-		build_default(curr);
-		run_operation(curr, 0);
-	}
-	else
-		build_info(curr, curr->right_child);
-	return (EXIT_SUCCESS);
 }
 
 /*
@@ -289,10 +148,7 @@ int		run_tree(t_ast *curr)
 		while (op_handlers[i].check)
 		{
 			if (!op_handlers[i].check(*(curr->token)))
-			{
-				printf("Running op |%d|\n", i);
 				return (op_handlers[i].exec(curr));
-			}
 			i++;
 		}
 	}
@@ -312,7 +168,7 @@ int		run_forest(t_queue *forest)
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
 		if (run_tree((t_ast *)asts))
-			return (EXIT_FAILURE);		
+			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }

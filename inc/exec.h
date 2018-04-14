@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 22:02:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 23:03:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,23 @@ typedef struct	s_builtins
 	char	*name;
 	int		(*exec)(char **argv);
 }				t_builtins;
+
+/*
+** utils
+*/
+
+void	*init_process(void);
+int		compare(int *n1, int *n2);
+
+/*
+** builders
+*/
+
+void		build_carry(t_ast *curr);
+void		build_leafs(t_ast *curr);
+void		build_operator(t_ast *prev, t_ast *curr);
+void		build_default(t_ast *curr);
+int			build_info(t_ast *prev, t_ast *curr);
 
 /*
 ** builtins

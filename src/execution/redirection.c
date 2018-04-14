@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/10 22:43:21 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 00:57:56 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		ops_read_from(t_ast *curr, int pos)
 		return (EXIT_FAILURE);
 	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	curr->token[(ftmp || curr->token[pos - 1][0] == '0') ? pos - 1 : pos] = NULL;
+	curr->token[pos] = NULL;
+	// curr->token[(ftmp || curr->token[pos - 1][0] == '0') ? pos - 1 : pos] = NULL;
 	return (EXIT_SUCCESS);
 }
 
@@ -113,11 +114,8 @@ int		handle_redirection(t_ast *curr)
 			if (!strcmp(curr->token[i], redir_ops[j].opflag))
 			{
 				if (!curr || redir_ops[j].func(curr, i))
-				{
-					printf("Failing.\n");
 					return (EXIT_FAILURE);
-				}
-				printf("breaking\n");
+				break ;
 				// return (EXIT_SUCCESS);
 			}
 			j++;
