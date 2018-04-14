@@ -1,14 +1,21 @@
 NAME = 42sh
 STAT = deps/libft/libftprintf.a
-CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
+CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
 INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc
 LIBFT = libftprintf.a
+
+################################################################################
+# Malloc Hijacking                                                             #
+################################################################################
+
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 MALLOC = libft_malloc_${HOSTTYPE}.so
+MALLOC_DIR = deps/malloc/
+MALLOC_PATH = $(addprefix $(MALLOC_DIR), $(MALLOC))
 
 ################################################################################
 # Source directories identifiers                                               #
@@ -274,7 +281,7 @@ all: $(NAME)
 $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
-	$(CC) $(CFLAGS) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(MALLOC_PATH) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
 	install_name_tool -change $(MALLOC) $(PWD)/deps/malloc/$(MALLOC) $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
@@ -300,7 +307,7 @@ clean:
 fclean: clean
 	/bin/rm -f $(NAME)
 	/bin/rm -f $(STAT)
-	make -C deps/malloc fclean
+	/bin/rm -f $(MALLOC_PATH)
 	@ echo "$(RED)Removing library file and binary...$(RES)"
 
 re: fclean all
