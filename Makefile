@@ -1,10 +1,10 @@
 NAME = 42sh
-STAT = deps/libft/libft.a
+STAT = deps/libft/libftprintf.a
 CFLAGS += -Wall -Werror -Wextra #-g -fsanitize=address
 INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc
-LIBFT = deps/libft/libftprintf.a
+LIBFT = libftprintf.a
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
@@ -24,6 +24,8 @@ SRCDIR_EXEC_OPS_EXECS = op_execs/
 
 SRCDIR_IPARSE = src/input_parser/
 
+SRCDIR_MANAGER = src/manager/
+
 SRCDIR_TERMIO = src/termio/
 SRCDIR_TERMIO_BUFFER = buffer/
 SRCDIR_TERMIO_CONTROL_CODES = control_codes/
@@ -37,6 +39,7 @@ SRCDIR_TERMIO_PROMPT = prompt/
 SRCDIR_TERMIO_SCREEN = screen/
 
 OBJSRC = $(patsubst %, %.o, $(addprefix $(SRCDIR_AST), $(SRC_AST)))
+OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_MANAGER), $(SRC_MANAGER)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_EXEC), $(SRC_EXEC)))
 # OBJSRC += $(patsubst %, %.o, $(addprefix \
 # 		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
@@ -105,6 +108,9 @@ SRC_AST =	\
 ################################################################################
 # EXECUTION SOURCE FILES                                                       #
 ################################################################################
+
+SRC_MANAGER = \
+			manager
 
 SRC_EXEC =	\
 			execution \
@@ -255,6 +261,7 @@ $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
 	$(CC) $(CFLAGS) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
+	install_name_tool -change $(MALLOC) $(PWD)/deps/malloc/$(MALLOC) $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 
@@ -272,12 +279,14 @@ $(LIBFT):
 
 clean:
 	/bin/rm -f $(OBJSRC)
-	/bin/rm -f $(OBJLIB)
+	make -C deps/libft clean
+	make -C deps/malloc clean
 	@ echo "$(RED)Cleaning folders of object files...$(RES)"
 
 fclean: clean
 	/bin/rm -f $(NAME)
 	/bin/rm -f $(STAT)
+	make -C deps/malloc fclean
 	@ echo "$(RED)Removing library file and binary...$(RES)"
 
 re: fclean all
