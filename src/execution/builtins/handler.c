@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/11 15:26:15 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 14:11:47 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 struct s_builtins	builtins[] = {
 	{"cd", &builtin_cd},
-	// {"echo", &builtin_echo},
+	{"echo", &builtin_echo},
 	// {"exit", &builtin_exit},
 	{"env", &builtin_env},
 	{"history", &builtin_env},
