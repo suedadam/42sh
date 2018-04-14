@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 02:43:51 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 03:15:50 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ typedef struct				s_parser
 	t_token_type			current_type;
 }							t_parser;
 
+int							manager(char *input_str, char **substr);
 
+void						free_segs(t_parser *par);
 char						*sh_strcat(char **front, char *back);
 void						check_op_type(t_parser *par);
 int							is_subshell(t_parser *par, char **input_str);
@@ -102,6 +104,12 @@ int 						start_word(t_parser *par, char cur_char);
 int 						is_comment(t_parser *par, char cur_char);
 int 						is_word(t_parser *par, char cur_char);
 int							check_paren(char c);
+
+/*
+** parser
+*/
+
+t_ast				*parser(char *input_str);
 
 /*
 ** lol remove me.

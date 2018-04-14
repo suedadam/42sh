@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 18:11:00 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 02:50:11 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ char	*g_operators[] = {
 	";",
 	NULL
 };
+
+/*
+** Remove the check for g_operators.
+*/
 
 static int			parse_tokens(char **tokens, t_token_type *type)
 {

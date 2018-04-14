@@ -13,23 +13,23 @@
 
 #include "ast.h"
 
-static inline __attribute__((always_inline)) void	free_segs(t_parser **par)
+inline __attribute__((always_inline)) void	free_segs(t_parser *par)
 {
 	int	i;
 
-	if (*par)
+	if (par)
 	{
-		if ((*par)->current_token)
-			free((*par)->current_token);
-		if ((*par)->tokens)
+		if (par->current_token)
+			free(par->current_token);
+		if (par->tokens)
 		{
 			i = 0;
-			while ((*par)->tokens[i])
-				free((*par)->tokens[i++]);
+			while (par->tokens[i])
+				free(par->tokens[i++]);
 		}
-		if ((*par)->types)
-			free((*par)->types);
-		free(*par);
+		if (par->types)
+			free(par->types);
+		free(par);
 	}
 }
 
@@ -46,12 +46,12 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 	}
 	if (!(parser->current_token = malloc(sizeof(char))))
 	{
-		free_segs(&parser);
+		free_segs(parser);
 		return (NULL);
 	}
 	if (!(parser->types = malloc(sizeof(t_token_type))))
 	{
-		free_segs(&parser);
+		free_segs(parser);
 		return (NULL);
 	}
 	parser->types = NULL;
@@ -76,7 +76,7 @@ static int			check_char(t_parser **par, char **input_str)
 		(ret == UNUSED_CHAR && !(ret = is_comment(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = start_word(*par, **input_str))))
 	{
-		free_segs(par);
+		free_segs(*par);
 		if (ret == EXIT_FAILURE_SOFT)
 		{
 			ft_printf("Parse Error\n");
@@ -111,7 +111,7 @@ t_ast				*parser(char *input_str)
 	if (add_token(par->current_token, &(par->current_type), par)
 		== EXIT_FAILURE)
 	{
-		free_segs(&par);
+		free_segs(par);
 		return (NULL);
 	}
 	if (paren || par->quoted)
@@ -120,23 +120,24 @@ t_ast				*parser(char *input_str)
 	return ((t_ast *)par);
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	t_ast	*ast;
-	int		i;
+	// t_ast	*ast;
+	// int		i;
 
-	char *test_str = "\"this is not an op || or this && \"| this is a sub shell $(echo buuts) ";
-	ast = parser(test_str);
-	if (ast == MAP_FAILED)
-		ft_printf("SOFT FAILED ... LIKE Terrences dick\n");
-	else
-	{
-		i = 0;
-		while (ast->token[i])
-		{
-			ft_printf("%s (%d)\n", ast->token[i], ast->type[i]);
-			i++;
-		}
-	}
+	// char *test_str = ;
+	// ast = parser(test_str);
+	// if (ast == MAP_FAILED)
+	// 	ft_printf("SOFT FAILED ... LIKE Terrences dick\n");
+	// else
+	// {
+	// 	i = 0;
+	// 	while (ast->token[i])
+	// 	{
+	// 		ft_printf("%s (%d)\n", ast->token[i], ast->type[i]);
+	// 		i++;
+	// 	}
+	// }
+	manager(argv[1], NULL);
 	return (0);
 }
