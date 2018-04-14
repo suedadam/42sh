@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 15:24:14 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 23:41:58 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 02:03:31 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "ast.h"
 
 int main(int argc, char **argv) {
-
+	char	*res;
 
 	t_token_type *type = malloc(sizeof(t_token_type) * 13);
 	type[0] = 1;
 	type[1] = 1;
 	type[2] = 2;
 	type[3] = 1;
-	type[4] = 1;
+	type[4] = 2;
 	type[5] = 1;
 	type[6] = 1;
 	type[7] = 1;
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 		print_ast((t_ast *)(vasy->content), 0);
 		vasy = vasy->next;
 	}
-	run_forest(forest);
+	run_forest(forest, &res);
 	printf("Puthhh\n");
 	// while(1);
 	return 0;

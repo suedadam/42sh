@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 21:51:00 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 01:28:17 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int 						is_word(t_parser *par, char cur_char);
 ** lol remove me.
 */
 
-int				run_forest(t_queue *forest);
+int				run_forest(t_queue *forest, char **substr);
 t_queue			*build_forest(char **tokens, t_token_type *type);
 
 /*
