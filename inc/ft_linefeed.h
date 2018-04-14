@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_linefeed.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:29:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 14:22:45 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 12:44:56 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 **	pass off all buffer to lexer, ast creation and execution
 **	(linefeed.c)
 */
+# define EXIT_FAILURE_SOFT -1
 
 int		ft_linefeed(void);
+int		manager(char *input_str, char **substr);
 
 #endif
