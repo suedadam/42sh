@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 13:09:36 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 13:32:33 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int			ft_linefeed(void)
 **	reset the buffer
 */
 	ret = manager(g_shell_env.buffer->buff, NULL);
+	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
 		//handle manager failure
