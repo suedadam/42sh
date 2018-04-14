@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manager.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 14:11:02 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 15:44:30 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,12 @@ int	manager(char *input_str, char **substr)
 	if (!input_str)
 		return (EXIT_FAILURE);
 	if (!(res = parser(input_str)) || res == MAP_FAILED)
-	{
-		free(input_str);
 		return ((!res) ? EXIT_FAILURE : EXIT_FAILURE_SOFT);
-	}
 	if (!(forest = build_forest(res->token, res->type)))
 	{
-		free(input_str);
 		// free_segs(res);
 		return (EXIT_FAILURE);
 	}
 	ret = run_forest(forest, substr);
-	free(input_str);
 	return (ret);
 }

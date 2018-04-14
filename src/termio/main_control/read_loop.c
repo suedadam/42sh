@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 14:47:08 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 15:44:55 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 		if (ft_linefeed() == EXIT_FAILURE
 			|| checktty() == EXIT_FAILURE)
 		{
-			write(1, "\nfail\n", 6);
+			ft_printf("fail\n", 5);
 			return (reset_terminal());
 		}
 	}
