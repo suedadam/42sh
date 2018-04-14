@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/11 16:01:54 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 02:50:11 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ char	*g_operators[] = {
 	";",
 	NULL
 };
+
+/*
+** Remove the check for g_operators.
+*/
 
 static int			parse_tokens(char **tokens, t_token_type *type)
 {
@@ -79,12 +83,11 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	pos = 0;
 	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
-		if (!(new_list = ft_lstnew(ast, sizeof(t_ast))))
+		if (ft_enqueue(forest, ast, sizeof(t_ast)) == EXIT_FAILURE)
 		{
 			free_forest(forest);
 			return (NULL);
 		}
-		enqueue(forest, new_list);
 		free(ast);
 	}
 	return (forest);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 02:26:10 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 03:15:50 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ typedef struct				s_parser
 	t_token_type			current_type;
 }							t_parser;
 
+int							manager(char *input_str, char **substr);
 
+void						free_segs(t_parser *par);
 char						*sh_strcat(char **front, char *back);
 void						check_op_type(t_parser *par);
 int							is_subshell(t_parser *par, char **input_str);
@@ -104,10 +106,16 @@ int 						is_word(t_parser *par, char cur_char);
 int							check_paren(char c);
 
 /*
+** parser
+*/
+
+t_ast				*parser(char *input_str);
+
+/*
 ** lol remove me.
 */
 
-int				run_forest(t_queue *forest);
+int				run_forest(t_queue *forest, char **substr);
 t_queue			*build_forest(char **tokens, t_token_type *type);
 
 /*

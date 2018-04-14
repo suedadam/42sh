@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/04 17:32:17 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/13 23:03:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_process
 	int		*comm;
 	int		*stdout;
 	int		*stderr;
-	uint8_t	ret;
 }				t_process;
 
 typedef struct	s_ophandlers
@@ -52,6 +51,23 @@ typedef struct	s_builtins
 	char	*name;
 	int		(*exec)(char **argv);
 }				t_builtins;
+
+/*
+** utils
+*/
+
+void	*init_process(void);
+int		compare(int *n1, int *n2);
+
+/*
+** builders
+*/
+
+void		build_carry(t_ast *curr);
+void		build_leafs(t_ast *curr);
+void		build_operator(t_ast *prev, t_ast *curr);
+void		build_default(t_ast *curr);
+int			build_info(t_ast *prev, t_ast *curr);
 
 /*
 ** builtins
@@ -83,6 +99,8 @@ int				op_and_exec(t_ast *curr);
 ** execution.c
 */
 
+int				compare(int *n1, int *n2);
+int				run_pipecmds(t_stack *cmd, t_pqueue *pids);
 int				run_operation(t_ast *curr, uint8_t wait);
 void			build_leafs(t_ast *curr);
 void			pipe_carry(t_ast *prev, t_ast *curr);
