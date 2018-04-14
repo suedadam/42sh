@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 22:03:02 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 01:08:48 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int		next_child(t_trie *trie, int start)
 {
 	int		i;
 
-	i = start;
-	if (trie->nbr_c)
+	i = start + 1;
+	if (trie->nbr_children)
 		return (NO_CHILD);
 	while (i < 128)
 	{
@@ -32,7 +32,7 @@ static int		next_child(t_trie *trie, int start)
 
 static void			no_child(t_trie *trie, t_stack *stack)
 {
-	return ;
+	regular_text(trie->key);
 }
 
 static void	one_child(t_trie *trie)
@@ -40,7 +40,7 @@ static void	one_child(t_trie *trie)
 	int		child;
 
 	child = next_child(trie, 0);
-	regular_text((char)child);
+	regular_text(trie->key);
 	trie_dfs(trie->array[child]);
 }
 
@@ -55,7 +55,7 @@ static void	bottleneck(t_trie *trie, t_stack **stack)
 		ft_stackpush(stack, trie, sizeof(t_trie_with_level));
 		cursor = g_shell_env.cursor;
 		((t_trie_with_level *)(trie))->pos = cursor->position;
-		((t_trie_with_level *)(trie))->char = 0;
+		((t_trie_with_level *)(trie))->child = 0;
 		trie_dfs(trie);
 	}
 	else if ((child = next_child(trie, (int)(((t_trie_with_level *)(trie))->child))) != NO_CHILD)
@@ -77,7 +77,7 @@ static void			resume_dfs(t_trie *trie)
 	cursor = g_shell.cursor;
 	while (cursor->position != ((t_trie_with_level)(trie))->pos)
 		ft_delete(-1);
-	trie_dfs(parent);
+	trie_dfs(trie);
 }
 
 void				trie_dfs(t_trie *trie)
