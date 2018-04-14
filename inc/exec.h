@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 12:52:05 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 14:11:43 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int				builtin_env(char *argv[]);
 int				builtin_setenv(char *argv[]);
 int				builtin_unsetenv(char *argv[]);
 int				builtin_cd(char *argv[]);
+int				builtin_echo(char *argv[]);
 
 /*
 ** op_checks
