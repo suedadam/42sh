@@ -130,7 +130,11 @@ SRC_IPARSE =	\
         is_word \
         parser \
         quoting \
-        strappend
+        strappend \
+		command_sub \
+		sh_strcat \
+		subshell
+
 
 ################################################################################
 # TERMIO SOURCE FILES                                                          #
