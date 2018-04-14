@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 01:39:40 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/13 13:46:05 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 00:30:41 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,6 @@ static int	is_quoted(uint8_t *quoted, char c, char **command)
 	return (EXIT_SUCCESS);
 }
 
-static char	*litreal_command(char **input_str)
-{
-	int		i;
-	int		embedded_open_paren;
-	char	*command;
-
-	embedded_open_paren = 0;
-	command = NULL;
-	i = 2;
-	while ((*input_str)[i])
-	{
-		if ((*input_str)[i] == ')')
-		{
-			if (embedded_open_paren == 0)
-			{
-				*input_str = *input_str + i + 1;
-				return (command);
-			}
-			else
-				embedded_open_paren--;
-		}
-		else if ((*input_str)[i] == '(')
-			embedded_open_paren++;
-		if (!(command = strappend(&command, (*input_str)[i])))
-			return (NULL);
-		i++;
-	}
-	free(command);
-	return (MAP_FAILED);
-}
-
 static int	close_chck(uint8_t quoted, char c, char **command, int paren)
 {
 	if (!(quoted & BACKSLASH) && c == BACKT)
@@ -65,21 +34,11 @@ static int	close_chck(uint8_t quoted, char c, char **command, int paren)
 		{
 			free(*command);
 			*command = NULL;
-			return (EXIT_FAILURE_SOFT);
+			return (EXIT_FAILURE_SOFT); //parse error
 		}
 		return (EXIT_SUCCESS);
 	}
 	return (UNUSED_CHAR);
-}
-
-int	check_paren(char c)
-{
-	if (c == '(')
-		return (1);
-	else if (c == ')')
-		return (-1);
-	else
-		return (0);
 }
 
 static char	*bquote_command(char **input_str)
@@ -115,29 +74,56 @@ static char	*bquote_command(char **input_str)
 static char	*create_subs_command(char **input_str, char close_char)
 {
 	if (close_char == ')')
-		return (litreal_command(input_str));
+		return (literal_command(input_str, DOLLAR_OFFSET));
 	else if (close_char == BACKT)
 		return (bquote_command(input_str));
 	return (MAP_FAILED);
+}
+
+static int	split_into_tokens(t_parser *p, char *token_str)
+{
+	char	**words;
+
+	if (!(words = ft_splitwhitespace(token_str)) ||
+		(p->current_type != WORD &&
+		add_token(p->current_token, &(p->current_type), p) == EXIT_FAILURE))
+		return (EXIT_FAILURE);
+	free(token_str);
+	while (*words)
+	{
+		p->current_type = WORD;
+		if (!(p->current_token = sh_strcat(&(p->current_token), *words)) ||
+			(words[1] &&
+			add_token(p->current_token, &p->current_type, p) == EXIT_FAILURE))
+			return (EXIT_FAILURE);
+		free(*words);
+		words++;
+	}
+	free(words);
+	return (EXIT_SUCCESS);
 }
 
 int		is_command_sub(t_parser *par, char **input_str)
 {
 	char	close_char;
 	char	*command;
+	char	**words;
 
-	if ((par->quoted & ~DOUBLE_QUOTE) || !(**input_str == '$' || **input_str == BACKT))
+	if ((par->quoted & ~DOUBLE_QUOTE) ||
+		!(**input_str == '$' || **input_str == BACKT))
 		return (UNUSED_CHAR);
 	if (**input_str == '$' && (*input_str)[1] != '(')
 		return (EXIT_FAILURE_SOFT);
 	close_char = **input_str == '$' ? ')' : BACKT;
 	if (!ft_strchr(&((*input_str)[1]), close_char))
-		return (EXIT_FAILURE_SOFT);
+		return (EXIT_FAILURE_SOFT); //set ernno for parse error
 	if (!(command = create_subs_command(input_str, close_char)) ||
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);
-	ft_printf("this is the subshell command:\n%s\n", command);
+	ft_printf("CALL TO MANAGER WITH ... REQUEST STDOUT:\n%s\n", command);
 	//Send to manager with subshell flag
-
+	//command = manager(command, 1);
+	if (split_into_tokens(par, command) == EXIT_FAILURE)
+		return (0);
 	return (CONTINUE);
 }

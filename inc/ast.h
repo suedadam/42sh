@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 13:14:13 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 02:26:10 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define AST_H
 
 # include "libft.h"
-# include "queue.h"
 # include <unistd.h>
 # include <sys/mman.h>
 
@@ -30,6 +29,8 @@
 
 # define BACKT 96
 # define IS_ESCAPED(c) (c == '\\' || c == '$' || c == BACKT)
+# define DOLLAR_OFFSET 2
+# define SUBSHELL_OFFSET 1
 
 # define IS_QUOTE(c) (c == '\'' || c == '\"' || c == '\\') ? 1 : 0
 
@@ -40,8 +41,9 @@
 # define CONTINUE 42
 # define BREAK 69
 
-# define OPS 9
-static const char			*ops[ OPS ] = {"&&", "||", ">>", ">", "&", "|", ">|", "<", "<<"};
+# define OPS 8
+# define REDIR_LIMIT 4
+static const char			*ops[ OPS ] = {"&", "&&", "||", "|", ";", "<", ">", ">>"};
 
 # define EXIT_FAILURE_SOFT -1
 
@@ -49,7 +51,9 @@ typedef enum	e_token_type
 {
 	null,
 	WORD,
-	OPERATOR
+	OPERATOR,
+	REDIR,
+	DAEMON
 }				t_token_type;
 
 typedef struct	s_ast
@@ -77,13 +81,16 @@ typedef struct				s_parser
 }							t_parser;
 
 
+char						*sh_strcat(char **front, char *back);
+void						check_op_type(t_parser *par);
+int							is_subshell(t_parser *par, char **input_str);
 int							is_command_sub(t_parser *par, char **input_str);
+char						*literal_command(char **input_str, int i);
 int							is_op_append(char *token, char c);
 char						*strappend(char **str, char c);
 int							add_token(char *curr_token,
 	t_token_type *curr_type, t_parser *par);
-int							handle_embedded_quotes(uint8_t *quoted,
-	char cur_char, char **current_token);
+int							handle_embedded_quotes(t_parser *par, char cur_char);
 uint8_t						quoted_flags(char c);
 void						print_toks(char **tokens, t_token_type *types);
 int 						is_op(t_parser *par, char cur_char);
@@ -94,6 +101,7 @@ int 						is_whitespc(t_parser *par, char **input_str);
 int 						start_word(t_parser *par, char cur_char);
 int 						is_comment(t_parser *par, char cur_char);
 int 						is_word(t_parser *par, char cur_char);
+int							check_paren(char c);
 
 /*
 ** lol remove me.

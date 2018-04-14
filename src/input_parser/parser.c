@@ -69,6 +69,7 @@ static int			check_char(t_parser **par, char **input_str)
 		(ret == UNUSED_CHAR && !(ret = is_op(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = quotes(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && (ret = is_command_sub(*par, input_str)) <= 0) ||
+		(ret == UNUSED_CHAR && (ret = is_subshell(*par, input_str)) <= 0) ||
 		(ret == UNUSED_CHAR && !(ret = is_start_op(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_whitespc(*par, input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_word(*par, **input_str))) ||
@@ -90,11 +91,14 @@ t_ast				*parser(char *input_str)
 {
 	t_parser		*par;
 	int				ret;
+	int				paren;
 
+	paren = 0;
 	if (!(par = init_parser()))
 		return (NULL);
 	while (*input_str)
 	{
+		// paren += check_paren(*input_str);
 		if ((ret = check_char(&par, &input_str)) <= 0)
 			return (ret == 0 ? NULL : MAP_FAILED);
 		if (ret == CONTINUE)
@@ -103,12 +107,15 @@ t_ast				*parser(char *input_str)
 			break ;
 		input_str++;
 	}
+	check_op_type(par);
 	if (add_token(par->current_token, &(par->current_type), par)
 		== EXIT_FAILURE)
 	{
 		free_segs(&par);
 		return (NULL);
 	}
+	if (paren || par->quoted)
+		return (MAP_FAILED);
 	free(par->current_token);
 	return ((t_ast *)par);
 }
@@ -118,13 +125,18 @@ int main(void)
 	t_ast	*ast;
 	int		i;
 
-	char *test_str = "echo hello\\ world; cat -e world.c";
+	char *test_str = "\"this is not an op || or this && \"| this is a sub shell $(echo buuts) ";
 	ast = parser(test_str);
-	i = 0;
-	while (ast->token[i])
+	if (ast == MAP_FAILED)
+		ft_printf("SOFT FAILED ... LIKE Terrences dick\n");
+	else
 	{
-		ft_printf("%s\n", ast->token[i]);
-		i++;
+		i = 0;
+		while (ast->token[i])
+		{
+			ft_printf("%s (%d)\n", ast->token[i], ast->type[i]);
+			i++;
+		}
 	}
 	return (0);
 }
