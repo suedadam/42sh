@@ -125,7 +125,8 @@ SRC_EXEC =	\
 SRC_EXEC_BUILTINS = \
 			cd \
 			env \
-			handler
+			handler \
+			echo
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \
