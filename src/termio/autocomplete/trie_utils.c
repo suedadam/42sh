@@ -6,12 +6,12 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 16:07:47 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:31:18 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "trie.h"
-#include "ft_term.h"
+#include "libft.h"
 
 t_trie		*new_trie(void)
 {
@@ -96,10 +96,10 @@ void		free_trie(t_trie *trie)
 		i = 0;
 		while (i < 128)
 		{
-			free_trie(trie->array[i]);
+			free_trie(trie->children[i]);
 			i++;
 		}
-		meta_free(trie->array);
 		meta_free(trie);
+		trie = NULL;
 	}
 }

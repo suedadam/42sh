@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:05:24 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:26:25 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		normal_prompt(void)
 		, pwd, GRN, YEL, NRM);
 	g_shell_env.cursor.buffer_length = g_shell_env.buffer->length;
 	cursor->buffer = g_shell_env.buffer->buff;
-	meta_free(raw_pwd);
+	free(raw_pwd);
 	raw_pwd = NULL;
 	return (n);
 }

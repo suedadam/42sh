@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 15:00:04 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:25:34 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@
 # include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <dirent.h>
-
-# include "libft.h"
 # include "trie.h"
+# include "libft.h"
 # include "error.h"
 
 # define UNSET (void *)

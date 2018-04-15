@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 01:12:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 16:04:51 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:38:38 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int					start_autocomplete(void)
 {
 	t_trie		*trie;
 
+	if (!g_shell_env.cursor.position)
+		return (EXIT_SUCCESS);
 	find_backwords();
 	if (autofind_pathnames() == EXIT_FAILURE)
 		return (EXIT_FAILURE);

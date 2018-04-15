@@ -6,18 +6,20 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:28:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:08:35 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:32:49 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_autocomplete.h"
+#include "ft_proto.h"
+#include "trie.h"
 
 static int	reinit_trie(t_autocheck *trie_inf)
 {
 	printf("reINIT __trie__\n");
 	// if (trie_inf)
 	// 	meta_free(trie_inf->stack);
-	free_trie(trie);
+	free_trie(trie_inf->trie);
 	trie_inf->trie = NULL;
 	if (!(trie_inf->trie = new_trie()))
 		return (EXIT_FAILURE);
@@ -27,9 +29,9 @@ static int	reinit_trie(t_autocheck *trie_inf)
 static int	reinit_stack(t_autocheck *trie_inf)
 {
 	printf("reINIT __stack__\n");
-	// if (trie_inf)
-	// 	meta_free(trie_inf->stack);
-	free_trie(trie);
+	if (trie_inf)
+		meta_free(trie_inf->stack);
+	// free stack correctly
 	trie_inf->stack = NULL;
 	if (!(trie_inf->stack = new_stack()))
 		return (EXIT_FAILURE);

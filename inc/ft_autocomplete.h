@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 10:18:20 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 16:23:48 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define FT_AUTOCOMPLETE_H
 
 # include <sys/stat.h>
-# include "trie.h"
-# include "ft_term.h"
 # include "ft_proto.h"
+# include "ft_term.h"
 
 typedef struct	s_trie_with_level
 {
