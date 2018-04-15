@@ -15,6 +15,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static void			free_env(t_environ *env)
+{
+	int		i;
+
+	i = 0;
+	while (i < env->size)
+	{
+		free(env->environ[i]);
+		i++;
+	}
+	free(env->environ);
+	free(env);
+}
+
 static t_environ	*set_local_env(int subshell_env)
 {
 	size_t		i;
@@ -56,5 +70,7 @@ int	manager(char *input_str, char **substr)
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))
 		return (EXIT_FAILURE);
 	ret = run_forest(forest, substr, env);
+	if (substr != NULL)
+		free_env(env);
 	return (ret);
 }

@@ -15,6 +15,10 @@
 
 t_environ	*g_environ = NULL;
 
+/*
+** Intial shell enviorment is copied here from program start
+*/
+
 static int	init_environ(char **environ)
 {
 	int		i;
@@ -91,9 +95,6 @@ int			init_shellenv(void)
 
 int			main(__attribute__((unused))int argc, __attribute__((unused))char *argv[], char **environ)
 {
-//	if (!(g_environ = malloc(sizeof(t_environ))))
-//		return (EXIT_FAILURE);
-//	g_environ->environ = environ;
 	bzero(&g_shell_env, sizeof(t_terminf));
 	if (init_environ(environ) == EXIT_FAILURE
 		|| init_shellenv() == EXIT_FAILURE
