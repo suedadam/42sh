@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:21:43 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:16:15 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 19:38:41 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_chunk		*new_chunk(int fd, char *str)
 
 	if (!(newb = (t_chunk *)ft_memalloc(sizeof(t_chunk))))
 	{
-		ft_printf("Error allocating memory new chunk\n");
+		ft_putstr("Error allocating memory new chunk\n");
 		exit(2);
 	}
 	newb->fd = fd;
