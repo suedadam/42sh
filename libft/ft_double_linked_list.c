@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:17:15 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 17:27:05 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 18:55:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_dblist				*new_dblist(void)
 	dblist->first = NULL;
 	dblist->last = NULL;
 	dblist->nbr_elements = 0;
-	return (node);
+	return (dblist);
 }
 
 int					dbl_push_end(t_dblist *dblist, void *content, size_t c_size)
