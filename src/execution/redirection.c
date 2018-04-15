@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 16:45:07 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 17:12:29 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int		ops_redir_to(t_ast *curr, int pos)
 			*src = curr->p_info->stdout;
 		else if (dtmp == 2)
 			*src = curr->p_info->stderr;
+		else if (curr->token[pos + 1][1] == '-')
+			**src = -1;
 		else
 			return (EXIT_FAILURE);
 	}
