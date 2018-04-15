@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 19:57:20 by ztisnes           #+#    #+#             */
-/*   Updated: 2018/04/13 18:43:35 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 15:35:34 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void				*ft_stackpop(t_stack *stack)
 		return (NULL);
 	next = stack->top->next;
 	anything = stack->top->content;
-	free(stack->top);
+	meta_free(stack->top);
 	stack->top = next;
 	return (anything);
 }

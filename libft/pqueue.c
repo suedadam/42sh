@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pqueue.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 17:13:22 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/10 21:27:42 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:36:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_pqueue			*init_pqueue(void)
 {
 	t_pqueue		*node;
 
-	node = (t_pqueue *)malloc(sizeof(t_pqueue));
+	node = (t_pqueue *)ft_memalloc(sizeof(t_pqueue));
 	node->first = NULL;
 	return (node);
 }
@@ -27,7 +27,7 @@ void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 	t_node			*node;
 	t_node			*tmp;
 
-	node = (t_node *)malloc(sizeof(t_node));
+	node = (t_node *)ft_memalloc(sizeof(t_node));
 	node->content = ft_memalloc(c_size);
 	node->content = ft_memmove(node->content, content, c_size);
 	node->next = NULL;
@@ -76,7 +76,7 @@ void				*pqueue_find(t_pqueue *queue, void *trgt,
 	{
 		queue->first = tmp->next;
 		hold = tmp->content;
-		free(tmp);
+		meta_free(tmp);
 		return (hold);
 	}
 	while (tmp->next)
@@ -86,7 +86,7 @@ void				*pqueue_find(t_pqueue *queue, void *trgt,
 			tmp->next = tmp->next->next;
 			tmp = hold;
 			hold = tmp->content;
-			free(tmp);
+			meta_free(tmp);
 			return (hold);
 		}
 		tmp = tmp->next;
@@ -103,10 +103,10 @@ void				del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr))
 	while (node)
 	{
 		deconstruct(node->content);
-		free(node->content);
+		meta_free(node->content);
 		hold = node->next;
-		free(node);
+		meta_free(node);
 		node = hold;
 	}
-	free(queue);
+	meta_free(queue);
 }
