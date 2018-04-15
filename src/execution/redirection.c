@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 13:03:38 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 17:12:29 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int		ops_read_from(t_ast *curr, int pos)
 {
 	int	**src;
 
-	if (curr->token[pos - 1])
+	if (curr->token[pos - 1] &&
+		(ft_atoi(curr->token[pos - 1]) || *(curr->token[pos - 1]) == '0'))
 	{
 		free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
@@ -32,7 +33,7 @@ int		ops_read_from(t_ast *curr, int pos)
 	if (!curr->token[pos + 1])
 		return (EXIT_FAILURE);
 	src = &(curr->p_info->stdin);
-	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) == -1)
+	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
 	free(curr->token[pos + 1]);
 	free(curr->token[pos]);
@@ -42,16 +43,21 @@ int		ops_read_from(t_ast *curr, int pos)
 
 int		ops_append_to(t_ast *curr, int pos)
 {
-	int		ftmp;
+	int		stmp;
 	int		dtmp;
 	int		**src;
 
-	if (!(ftmp = ft_atoi(curr->token[pos - 1])) || ftmp == 1)
+	if (!(stmp = ft_atoi(curr->token[pos - 1])) || stmp == 1)
 		src = &(curr->p_info->stdout);
-	else if (ftmp == 2)
+	else if (stmp == 2)
 		src = &(curr->p_info->stderr);
 	else
 		return (EXIT_FAILURE);
+	if ((stmp && stmp != 1) || (stmp == 1 && curr->token[pos - 1][0] == '1'))
+	{
+		free(curr->token[pos - 1]);
+		curr->token[pos - 1] = NULL;
+	}
 	if (*(curr->token[pos + 1]) == '&')
 	{
 		dtmp = ft_atoi(&(curr->token[pos + 1][1]));
@@ -62,10 +68,12 @@ int		ops_append_to(t_ast *curr, int pos)
 		else
 			return (EXIT_FAILURE);
 	}
-	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) == -1)
+	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	// free(curr->token[pos - 1]); //Eable when using Satkins'
-	curr->token[(ftmp) ? pos - 1 : pos] = NULL;
+	free(curr->token[pos]);
+	curr->token[pos] = NULL;
+	free(curr->token[pos + 1]);
+	curr->token[pos + 1] = NULL;
 	return (EXIT_SUCCESS);
 }
 
@@ -75,16 +83,21 @@ int		ops_append_to(t_ast *curr, int pos)
 
 int		ops_redir_to(t_ast *curr, int pos)
 {
-	int		ftmp;
+	int		stmp;
 	int		dtmp;
 	int		**src;
 
-	if (!(ftmp = ft_atoi(curr->token[pos - 1])) || ftmp == 1)
+	if (!(stmp = ft_atoi(curr->token[pos - 1])) || stmp == 1)
 		src = &(curr->p_info->stdout);
-	else if (ftmp == 2)
+	else if (stmp == 2)
 		src = &(curr->p_info->stderr);
 	else
 		return (EXIT_FAILURE);
+	if ((stmp && stmp != 1) || (stmp == 1 && curr->token[pos - 1][0] == '1'))
+	{
+		free(curr->token[pos - 1]);
+		curr->token[pos - 1] = NULL;
+	}
 	if (*(curr->token[pos + 1]) == '&')
 	{
 		dtmp = ft_atoi(&(curr->token[pos + 1][1]));
@@ -92,13 +105,17 @@ int		ops_redir_to(t_ast *curr, int pos)
 			*src = curr->p_info->stdout;
 		else if (dtmp == 2)
 			*src = curr->p_info->stderr;
+		else if (curr->token[pos + 1][1] == '-')
+			**src = -1;
 		else
 			return (EXIT_FAILURE);
 	}
-	else if ((**src = open(curr->token[pos + 1], O_TRUNC | O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)) == -1)
+	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	// free(curr->token[pos - 1]); //Eable when using Satkins'
-	curr->token[(ftmp) ? pos - 1 : pos] = NULL;
+	free(curr->token[pos]);
+	curr->token[pos] = NULL;
+	free(curr->token[pos + 1]);
+	curr->token[pos + 1] = NULL;
 	return (EXIT_SUCCESS);
 }
 

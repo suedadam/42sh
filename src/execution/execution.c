@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 16:43:38 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 17:35:56 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 		dup2(*(process->p_info->stdout), STDOUT_FILENO);
 		dup2(*(process->p_info->stderr), STDERR_FILENO);
 		execvP(*(process->token), getenv("PATH"), process->token);
+		ft_printf("Error: %s: %s\n", strerror(errno), *(process->token));
 		exit(EXIT_FAILURE);
 	}
 	if (*(process->p_info->stdin) != STDIN_FILENO)
@@ -72,18 +73,16 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		// ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
+		// ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
 		if (handle_redirection(curr))
-		{
-			// ft_printf("Failure....\n");
 			exit(EXIT_FAILURE);
-		}
 		// ft_printf(".......?\n");
-		// ft_printf("-----> A [In: %d, Out: %d, Err: %d] |%s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token));
+		// ft_printf("-----> A [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
 		dup2(*(curr->p_info->stdin), STDIN_FILENO);
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
 		execvP(*(curr->token), getenv("PATH"), curr->token);
+		ft_printf("Error: %s: %s\n", strerror(errno), *(curr->token));
 		exit(EXIT_FAILURE);
 	}
 	if (wait)
