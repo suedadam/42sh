@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 15:23:52 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 15:53:16 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int			ft_linefeed(void)
 {
 	int		ret;
+	static char	*cache = NULL;	
 	// g_shell_env.buffer.buff; //string of line
 
 /*	history_handler()
@@ -23,6 +24,7 @@ int			ft_linefeed(void)
 **	reset the buffer
 */
 	ft_restoretty();
+	ft_printf_fd(STDOUT_FILENO, "\n");
 	ret = manager(g_shell_env.buffer->buff, NULL);
 	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
@@ -32,6 +34,9 @@ int			ft_linefeed(void)
 		exit(0);
 	}
 	ft_setty();
+	if (!cache)
+		cache = tgetstr("up", NULL);
+	tputs(cache, 1, my_putchar);
 	if (reset_buffer() == EXIT_SUCCESS)
 		return (reset_prompt());
 	return (EXIT_SUCCESS);

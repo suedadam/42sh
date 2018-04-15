@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:58:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 02:13:16 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 16:43:44 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@ int		autofind_pathnames(void)
 	int		i;
 
 	i = 0;
-	find_backwords();
 	if (!(mul_path = gather_paths(g_shell_env.cursor.wordloc)))
 		return (EXIT_FAILURE);
 	if (!mul_path[0])
 		mul_path[0] = ".";
-	while (mul_path[i])
+	if (trie_rebuild(mul_path))
 	{
-		if (!(d_base = opendir(mul_path[i])))
-			return (EXIT_FAILURE);
-		if (word == 1)
-			basepath = mul_path[i];
-		buildir_names(d_base, basepath);
-		closedir(d_base);
+		while (mul_path[i])
+		{
+			if (!(d_base = opendir(mul_path[i])))
+				return (EXIT_FAILURE);
+			if (word == 1)
+				basepath = mul_path[i];
+			buildir_names(d_base, basepath);
+			closedir(d_base);
+		}
 	}
-	del_paths(mul_path);
 	return (EXIT_SUCCESS);
 }

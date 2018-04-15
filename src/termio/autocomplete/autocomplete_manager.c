@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 01:12:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 02:12:34 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:10:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void				start_autocomplete(void)
 {
 	t_trie		*trie;
 
-	if (update() || g_shell_env.trie == NULL)
+	find_backwords();
+	g_shell_env.cursor.wordloc == 1 ? trie = g_shell_env.trie1 :
+		trie = g_shell_env.trie2; 
+	if (update() || trie == NULL)
 		construct();
 	trie = advanced_trie(end_word_debut(), g_shell_env.trie);
 	if (trie)

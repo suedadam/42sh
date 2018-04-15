@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 15:14:59 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 16:21:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,17 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 			// ft_printf("Failure????\n");
 			exit(EXIT_FAILURE);
 		}
-		// ft_printf("-----> A (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
+		// ft_printf("\n-----> A (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
 		// ft_printf("(%d) Closing %d %d\n", getpid(), process->p_info->stdin[1], process->p_info->stdout[1]);
 		dup2(*(process->p_info->stdin), STDIN_FILENO);
 		dup2(*(process->p_info->stdout), STDOUT_FILENO);
 		dup2(*(process->p_info->stderr), STDERR_FILENO);
 		execvP(*(process->token), getenv("PATH"), process->token);
+		ft_printf("Error: %s: %s\n", strerror(errno), *(process->token));
 		exit(EXIT_FAILURE);
 	}
-	close(process->p_info->stdin[0]);
+	if (*(process->p_info->stdin) != STDIN_FILENO)
+		close(process->p_info->stdin[0]);
 	if (*(process->p_info->stdout) != STDOUT_FILENO)
 		close(process->p_info->stdout[0]);
 	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
@@ -83,6 +85,7 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
 		dup2(*(curr->p_info->stderr), STDERR_FILENO);
 		execvP(*(curr->token), getenv("PATH"), curr->token);
+		ft_printf("Error: %s: %s\n", strerror(errno), *(curr->token));
 		exit(EXIT_FAILURE);
 	}
 	if (wait)

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 16:47:28 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:41:33 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 
 # include "libft.h"
 # include "error.h"
-# include "trie.h"
 
 # define UNSET (void *)
 # define HISTORY_FILE ".42sh_history"
