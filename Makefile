@@ -6,7 +6,7 @@
 #    By: satkins <satkins@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/13 18:43:08 by asyed            ###   ########.fr        #
+#    Updated: 2018/04/14 19:40:12 by tle-huu-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_isascii.c \
 		  libft/ft_isdigit.c \
 		  libft/ft_isprint.c \
+		  libft/ft_lstadd.c \
+		  libft/get_next_line.c \
 		  libft/ft_memccpy.c \
 		  libft/ft_memchr.c \
 		  libft/ft_memcmp.c \
@@ -42,6 +44,7 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_toupper.c \
 		  libft/ft_memalloc.c \
 		  libft/ft_memdel.c \
+		  libft/ft_node.c \
 		  libft/ft_strnew.c \
 		  libft/ft_strdel.c \
 		  libft/ft_strclr.c \
@@ -75,7 +78,8 @@ LIBFT = libft/ft_atoi.c \
 		  libft/queue.c \
 		  libft/ft_lstnew.c \
 		  libft/ft_splitwhitespace.c \
-		  libft/stack.c 
+		  libft/stack.c \
+		  libft/ft_double_linked_list.c
 
 PRINTF = printf/ft_printf.c \
 		 printf/ft_printf_fd.c \
@@ -103,9 +107,9 @@ HEADER = inc
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS += -Wall -Wextra -Werror
 
-CFLAGS = -Wall -Wextra -Werror -c
+CFLAGS += -c -Wall -Wextra -Werror -g -fsanitize=address
 
 TARG = $(SRCS:.c=.o)
 

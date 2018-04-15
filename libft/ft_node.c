@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_node.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tle-huu- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 16:26:06 by satkins          ###   ########.fr       */
+/*   Created: 2018/04/14 18:19:33 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/04/14 18:21:19 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strdup(const char *s1)
+t_node		*new_node(void)
 {
-	char	*str;
-	size_t	len;
+	t_node		*node;
 
-	if (!s1)
+	if (!(node = ft_memalloc(sizeof(t_node))))
 		return (NULL);
-	len = ft_strlen(s1);
-	if ((str = (char *)malloc(len * sizeof(*str) + 1)) == NULL)
-		return (NULL);
-	str = (char *)ft_memcpy(str, s1, len);
-	str[len] = '\0';
-	return (str);
+	node->content = NULL;
+	node->next = NULL;
+	node->previous = NULL;
+	return (node);
 }

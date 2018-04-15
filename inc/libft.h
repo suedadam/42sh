@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/13 22:00:42 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:16:05 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 int	g_fd;
 
+typedef struct		s_chunk
+{
+	int		fd;
+	char	*str;
+}					t_chunk;
+
 typedef struct		s_btree
 {
 	void			*data;
@@ -48,6 +54,13 @@ typedef struct		s_node
 	struct s_node	*next;
 	struct s_node	*previous;
 }					t_node;
+
+typedef struct		s_dblist
+{
+	t_node			*first;
+	t_node			*last;
+	int				nbr_elements;
+}					t_dblist;
 
 typedef struct		s_pqueue
 {
@@ -71,6 +84,8 @@ typedef struct		s_index
 	int				x;
 }					t_index;
 
+t_node				*new_node(void);
+
 /*
 ** Stack
 */
@@ -79,6 +94,16 @@ void				*ft_stackpop(t_stack *stack);
 int					ft_stackpush(t_stack *stack, void *content, size_t c_size);
 t_stack				*new_stack(void);
 int					isempty_stack(t_stack *stack);
+
+/*
+** Double linked list
+*/
+t_dblist			*new_dblist(void);
+int					dbl_push_end(t_dblist *dblist, void *content,
+						size_t c_size);
+int					dbl_push_front(t_dblist *dblist, void *content,
+						size_t c_size);
+int					isempty_dblist(t_dblist *dblist);
 
 /*
 ** Priority Queue
