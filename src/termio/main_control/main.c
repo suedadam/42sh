@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 20:37:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 23:32:57 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ int			init_shellenv(void)
 		|| (ft_setty() == EXIT_FAILURE)
 		|| (init_buffer() == EXIT_FAILURE)
 		|| (get_window_size() == EXIT_FAILURE)
-		|| (history_init() == EXIT_FAILURE))
+		|| (history_init() == EXIT_FAILURE)
+		|| !(g_shell_env.trie_binaries.trie = new_trie())
+		|| !(g_shell_env.trie_wdir.trie = new_trie()))
 	{
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);

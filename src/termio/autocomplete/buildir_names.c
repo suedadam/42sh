@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildir_names.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 14:33:35 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 20:22:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 23:21:56 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		buildir_names(DIR *d_base, char *basepath)
 	char			*smallpath;
 	char			*fullpath;
 
+	printf("I am entireing build iddir\n");
 	while ((entry = readdir(d_base)))
 	{
 		smallpath = concatpath("/", basepath);

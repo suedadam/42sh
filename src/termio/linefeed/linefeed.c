@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 20:12:46 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 22:40:05 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,14 @@ int			ft_linefeed(void)
 {
 	int		ret;
 	static char	*cache = NULL;	
-	// g_shell_env.buffer.buff; //string of line
 
-/*	history_handler()
-**	satkins_parser(g_shell_env->line_buffer)
-**	reset the buffer
-*/
-	history_append_file(g_shell_env.buffer->buff);
+	if (g_shell_env.buffer->length)
+		history_append_file(g_shell_env.buffer->buff);
 	ft_restoretty();
 	signal(SIGINT, SIG_IGN);
 	// signal(SIGTSTP, SIG_IGN);
 	ft_printf_fd(STDOUT_FILENO, "\n");
+	// ft_printf("Buffer = \"%s\"\n", g_shell_env.buffer->buff);
 	ret = manager(g_shell_env.buffer->buff, NULL);
 	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)

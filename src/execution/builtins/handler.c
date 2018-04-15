@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:13:26 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 21:05:41 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 	int i;
 
 	i = 0;
+	if (handle_redirection(curr))
+		return (EXIT_FAILURE);
 	while (builtins[i].name)
 	{
 		if (!strcmp(builtins[i].name, *(curr->token)))

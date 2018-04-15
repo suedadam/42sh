@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:52:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:04:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 21:15:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	unsuspend(char *name)
 	t_node		*list;
 	t_jobspec	*job;
 
-	if (isempty_queue(g_jobs))
+	if (isempty_queue(g_jobs) || !name)
 		return ;
 	list = g_jobs->first;
 	while (list)
