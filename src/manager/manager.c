@@ -17,7 +17,7 @@
 
 static void			free_env(t_environ *env)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
 	while (i < env->size)

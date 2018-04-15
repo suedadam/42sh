@@ -12,65 +12,6 @@
 
 #include "ast.h"
 
-static int	is_quoted(uint8_t *quoted, char c, char **command)
-{
-	if (*quoted & BACKSLASH)
-	{
-		if (!IS_ESCAPED(c))
-			if (!(*command = strappend(command, '\\')))
-				return (EXIT_FAILURE);
-		*quoted &= ~BACKSLASH;
-	}
-	else if (IS_QUOTE(c))
-		*quoted ^= quoted_flags(c);
-	return (EXIT_SUCCESS);
-}
-
-static int	close_chck(uint8_t quoted, char c, char **command, int paren)
-{
-	if (!(quoted & BACKSLASH) && c == BACKT)
-	{
-		if (quoted || paren)
-		{
-			free(*command);
-			*command = NULL;
-			return (EXIT_FAILURE_SOFT); //parse error
-		}
-		return (EXIT_SUCCESS);
-	}
-	return (UNUSED_CHAR);
-}
-
-static char	*bquote_command(char **input_str)
-{
-	int		i;
-	char	*command;
-	int		paren;
-	uint8_t	quoted;
-
-	quoted = 0;
-	paren = 0;
-	command = NULL;
-	i = 1;
-	while ((*input_str)[i])
-	{
-		if (close_chck(quoted, (*input_str)[i], &command, paren) != UNUSED_CHAR)
-		{
-			*input_str = *input_str + i + 1;
-			return (command == NULL ? MAP_FAILED : command);
-		}
-		if (is_quoted(&quoted, (*input_str)[i], &command) == EXIT_FAILURE)
-			return (NULL);
-		if (!(quoted & BACKSLASH) &&
-			!(command = strappend(&command, (*input_str)[i])))
-			return (NULL);
-		paren += check_paren((*input_str)[i]);
-		i++;
-	}
-	free(command);
-	return (MAP_FAILED);
-}
-
 static char	*create_subs_command(char **input_str, char close_char)
 {
 	if (close_char == ')')
@@ -103,10 +44,27 @@ static int	split_into_tokens(t_parser *p, char *token_str)
 	return (EXIT_SUCCESS);
 }
 
+static int	recurs_into_subshell(t_parser *par, char *command)
+{
+	char	*output;
+	int		ret;
+
+	output = NULL;
+	ret = manager(command, &output);
+	free(command);
+	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
+		return (ret);
+	if (!output || split_into_tokens(par, output) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	free(output);
+	return (EXIT_SUCCESS);
+}
+
 int		is_command_sub(t_parser *par, char **input_str)
 {
 	char	close_char;
 	char	*command;
+	int		ret;
 
 	if ((par->quoted & ~DOUBLE_QUOTE) ||
 		!(**input_str == '$' || **input_str == BACKT))
@@ -119,8 +77,10 @@ int		is_command_sub(t_parser *par, char **input_str)
 	if (!(command = create_subs_command(input_str, close_char)) ||
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);
-	if (split_into_tokens(par, command) == EXIT_FAILURE)
+	ret = recurs_into_subshell(par, command);
+	if (ret == EXIT_FAILURE)
 		return (0);
-	free(command);
-	return (CONTINUE);
+	else if (ret == EXIT_SUCCESS)
+		return (CONTINUE);
+	return (ret);
 }

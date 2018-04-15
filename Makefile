@@ -181,7 +181,8 @@ SRC_IPARSE =	\
         strappend \
 		command_sub \
 		sh_strcat \
-		subshell
+		subshell \
+		btick
 
 
 ################################################################################
@@ -306,7 +307,7 @@ $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
 	$(CC) $(CFLAGS) $(MALLOC_PATH) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
-	install_name_tool -change $(MALLOC) $(PWD)/deps/malloc/$(MALLOC) $(NAME)
+	install_name_tool -change $(MALLOC) $(MALLOC_PATH) $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 
@@ -314,8 +315,8 @@ $(MALLOC): $(LIBFT)
 	make -C deps/malloc
 
 $(LIBFT):
-	@git submodule init
-	@git submodule update
+	# @git submodule init
+	# @git submodule update
 	make -C deps/libft
 
 %.o: %.c
@@ -323,7 +324,7 @@ $(LIBFT):
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	/bin/rm -f $(OBJSRC)
+	@/bin/rm -f $(OBJSRC)
 	make -C deps/libft clean
 	make -C deps/malloc clean
 	@ echo "$(RED)Cleaning folders of object files...$(RES)"

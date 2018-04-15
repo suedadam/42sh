@@ -81,6 +81,7 @@ typedef struct				s_parser
 }							t_parser;
 
 int							manager(char *input_str, char **substr);
+char						*bquote_command(char **input_str);
 
 void						free_segs(t_parser *par);
 char						*sh_strcat(char **front, char *back);

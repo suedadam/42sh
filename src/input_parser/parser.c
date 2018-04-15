@@ -117,27 +117,7 @@ t_ast				*parser(char *input_str)
 	if (paren || par->quoted)
 		return (MAP_FAILED);
 	free(par->current_token);
+	// for (int j = 0; par->tokens[j]; j++)
+	// 	ft_printf("%s\t[%d]\n", par->tokens[j], par->types[j]);
 	return ((t_ast *)par);
 }
-
-// int main(int argc, char *argv[])
-// {
-// 	// t_ast	*ast;
-// 	// int		i;
-
-// 	// char *test_str = ;
-// 	// ast = parser(test_str);
-// 	// if (ast == MAP_FAILED)
-// 	// 	ft_printf("SOFT FAILED ... LIKE Terrences dick\n");
-// 	// else
-// 	// {
-// 	// 	i = 0;
-// 	// 	while (ast->token[i])
-// 	// 	{
-// 	// 		ft_printf("%s (%d)\n", ast->token[i], ast->type[i]);
-// 	// 		i++;
-// 	// 	}
-// 	// }
-// 	manager(argv[1], NULL);
-// 	return (0);
-// }
