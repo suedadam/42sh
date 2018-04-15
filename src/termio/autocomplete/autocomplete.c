@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:54:51 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:43:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		next_child(t_trie *trie, int start)
 	int		i;
 
 	i = start + 1;
-	if (trie->nbr_children)
+	if (!trie->nbr_children)
 		return (NO_CHILD);
 	while (i < 128)
 	{
@@ -35,6 +35,7 @@ static void	one_child(t_trie *trie)
 	int		child;
 
 	child = next_child(trie, 0);
+	printf("here |%c| child : [%d]\n", trie->key, child);
 	regular_text(trie->key);
 	trie_dfs(trie->children[child]);
 }
@@ -44,7 +45,12 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 	int			child;
 	t_cursor	*cursor;
 
-	if (isempty_stack(stack) || stack->top->content != trie)
+	if (!stack)
+	{
+		ft_printf("BONJOUR\n");
+		exit(1);
+	}
+	if (!(stack->top) || ((t_trie *)(stack->top->content))->key != trie->key)
 	{
 		regular_text(trie->key);
 		ft_stackpush(stack, trie, sizeof(t_trie_with_level));
@@ -61,7 +67,8 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 	else if (child == NO_CHILD)
 	{
 		free(ft_stackpop(stack));
-		trie_dfs((t_trie *)((stack)->top->content));
+		if ((t_trie *)((stack)->top))
+			trie_dfs((t_trie *)((stack)->top->content));
 	}
 }
 
@@ -79,7 +86,9 @@ void				trie_dfs(t_trie *trie)
 {
 	t_stack		*stack;
 
-	stack = g_shell_env.trie_stack;
+	ft_printf("here\n");
+	stack = g_shell_env.cursor.wordloc == 1 ? g_shell_env.trie_binaries.stack
+											: g_shell_env.trie_wdir.stack;
 	if (!trie && isempty_stack(stack))
 		return ;
 	else if (!trie)

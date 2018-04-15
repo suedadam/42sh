@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 00:19:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:00:04 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ typedef	struct			s_terminf
 	t_buffer			paperweight;
 	t_cursor			cursor;
 	t_tokens			tokens;
-	t_stack				*trie_stack;
 	t_autocheck			trie_binaries;
 	t_autocheck			trie_wdir;
 	t_hist_var			history_var;

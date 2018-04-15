@@ -6,11 +6,12 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 19:31:52 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:39:42 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "trie.h"
+#include "ft_term.h"
 
 t_trie		*new_trie(void)
 {
@@ -40,9 +41,9 @@ void		add_word_to_trie(t_trie *trie, char *word)
 		trie->nbr_children++;
 		nw_trie = new_trie();
 		trie->children[(int)(*word)] = nw_trie;
+		trie->key = *word;
 		return (add_word_to_trie(nw_trie, word + 1));
 	}
-	return ;
 }
 
 int			search_word(t_trie *trie, char *word)
@@ -65,7 +66,10 @@ void		display_trie(t_trie *trie, int level)
 
 	i = 0;
 	if (!trie || !trie->nbr_children)
+	{
+
 		return ;
+	}
 	ft_printf("-------\n");
 	ft_printf("Level %d\n", level);
 	while (i < 128)

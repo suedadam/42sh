@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trie_rebuild.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:28:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 10:15:49 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:22:50 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		trie_rebuild(char **mul_path)
 	int			i;
 	int			ret;
 
-	printf("begin rebuild\n");
+	printf("rebuyild trie : bin <%p>, dir <%p>\n", g_shell_env.trie_binaries.trie, g_shell_env.trie_wdir.trie);
 	g_shell_env.cursor.wordloc == 1 ? (trie_inf = &(g_shell_env.trie_binaries)) :
 		(trie_inf = &(g_shell_env.trie_wdir));
 	i = 0;
