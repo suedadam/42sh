@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 21:41:56 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 13:14:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,13 +181,13 @@ int		stringify(int fd, char **str)
 
 	strlen = 0;
 	cap = 1024;
-	if (!(*str = malloc(sizeof(char) * cap)))
+	if (!(*str = ft_memalloc(sizeof(char) * cap)))
 		return (EXIT_FAILURE);
 	while ((res = read(fd, &((*str)[strlen]), 1)) > 0)
 	{
 		if (strlen == (cap -1))
 		{
-			if (!(*str = realloc(*str, sizeof(char) * (strlen * 2))))
+			if (!(*str = meta_realloc(*str, sizeof(char) * (strlen * 2))))
 				return (EXIT_FAILURE);
 			cap = strlen * 2;
 		}

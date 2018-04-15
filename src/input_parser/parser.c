@@ -20,16 +20,16 @@ inline __attribute__((always_inline)) void	free_segs(t_parser *par)
 	if (par)
 	{
 		if (par->current_token)
-			free(par->current_token);
+			meta_free(par->current_token);
 		if (par->tokens)
 		{
 			i = 0;
 			while (par->tokens[i])
-				free(par->tokens[i++]);
+				meta_free(par->tokens[i++]);
 		}
 		if (par->types)
-			free(par->types);
-		free(par);
+			meta_free(par->types);
+		meta_free(par);
 	}
 }
 
@@ -41,10 +41,10 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 		return (NULL);
 	if (!(parser->tokens = ft_memalloc(sizeof(char *))))
 	{
-		free(parser);
+		meta_free(parser);
 		return (NULL);
 	}
-	if (!(parser->current_token = ft_memalloc(sizeof(char))))
+	if (!(parser->current_token = ft_memalloc(sizeof(char) * 2)))
 	{
 		free_segs(parser);
 		return (NULL);
@@ -99,6 +99,7 @@ t_ast				*parser(char *input_str)
 	while (*input_str)
 	{
 		// paren += check_paren(*input_str);
+		// printf("%s -> %s\n", input_str, par->current_token);
 		if ((ret = check_char(&par, &input_str)) <= 0)
 			return (ret == 0 ? NULL : MAP_FAILED);
 		if (ret == CONTINUE)
@@ -116,7 +117,7 @@ t_ast				*parser(char *input_str)
 	}
 	if (paren || par->quoted)
 		return (MAP_FAILED);
-	free(par->current_token);
+	meta_free(par->current_token);
 	return ((t_ast *)par);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 19:00:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 13:15:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	builtin_setenv(char *argv[], t_environ *env)
 			equal_index) &&
 			ft_strchr(env->environ[i], '=') - env->environ[i] == equal_index)
 		{
-			free(env->environ[i]);
+			meta_free(env->environ[i]);
 			if (!(env->environ[i] = ft_strdup(argv[1])))
 				return (EXIT_FAILURE);
 			return (EXIT_SUCCESS);
@@ -74,7 +74,7 @@ int	builtin_setenv(char *argv[], t_environ *env)
 		i++;
 	}
 	env->size++;
-	if (!(env->environ = realloc(env->environ, (env->size + 1) * sizeof(char *))))
+	if (!(env->environ = meta_realloc(env->environ, (env->size + 1) * sizeof(char *))))
 		return (EXIT_FAILURE);
 	env->environ[env->size - 1] = ft_strdup(argv[1]);
 	env->environ[env->size] = NULL;
@@ -98,10 +98,10 @@ int	builtin_unsetenv(char *argv[], t_environ *env)
 	{
 		if (!strncmp(argv[1], env->environ[i], (ft_strchr(env->environ[i], '=') - env->environ[i])))
 		{
-			free(env->environ[i]);
+			meta_free(env->environ[i]);
 			ft_memmove(&(env->environ[i]), &(env->environ[i + 1]), ((env->size - i) - 1) * sizeof(char *));
 			env->size--;
-			env->environ = realloc(env->environ, ((env->size + 1) * sizeof(char *)));
+			env->environ = meta_realloc(env->environ, ((env->size + 1) * sizeof(char *)));
 			env->environ[env->size] = NULL;
 			return (EXIT_SUCCESS);
 		}

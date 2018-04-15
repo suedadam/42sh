@@ -27,25 +27,25 @@ inline __attribute__((always_inline)) void	*init_process(void)
 		return (NULL);
 	else if (!(new->stdin = ft_memalloc(sizeof(int) * 2)))
 	{
-		free(new);
+		meta_free(new);
 	}
 	else if (!(new->stderr = ft_memalloc(sizeof(int) * 2)))
 	{
-		free(new);
-		free(new->stdin);
+		meta_free(new);
+		meta_free(new->stdin);
 	}
 	else if (!(new->stdout = ft_memalloc(sizeof(int) * 2)))
 	{
-		free(new);
-		free(new->stdin);
-		free(new->stderr);
+		meta_free(new);
+		meta_free(new->stdin);
+		meta_free(new->stderr);
 	}
 	else if (!(new->comm = ft_memalloc(sizeof(int) * 2)))
 	{
-		free(new);
-		free(new->stdin);
-		free(new->stderr);
-		free(new->stdout);
+		meta_free(new);
+		meta_free(new->stdin);
+		meta_free(new->stderr);
+		meta_free(new->stdout);
 	}
 	else
 		return (new);

@@ -52,8 +52,8 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 			new_ast_leaf(sub_token_char(sub_string, 0, i),
 							sub_token_type(sub_types, 0, i)),
 			build_ast(tokens + i + 1, type + i + 1, position));
-	free(sub_string);
-	free(sub_types);
+	meta_free(sub_string);
+	meta_free(sub_types);
 	return (ast);
 }
 
@@ -74,7 +74,7 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 			free_forest(forest);
 			return (NULL);
 		}
-		free(ast);
+		meta_free(ast);
 	}
 	return (forest);
 }

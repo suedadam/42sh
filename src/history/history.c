@@ -70,10 +70,10 @@ t_dblist		*get_history(void)
 	while ((gnl_ret = get_next_line(fd, &line)) > 0)
 	{
 		dbl_push_front(history_list, line, ft_strlen(line) + 1);
-		free(line);
+		meta_free(line);
 		line = NULL;
 	}
-	free(line);
+	meta_free(line);
 	if (close(fd) < 0 || gnl_ret < 0)
 		return (NULL);
 	return (history_list);

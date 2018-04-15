@@ -47,7 +47,7 @@ char		*literal_command(char **input_str, int i)
 			return (NULL);
 		i++;
 	}
-	free(command);
+	meta_free(command);
 	return (MAP_FAILED);
 }
 
@@ -67,7 +67,7 @@ int		is_subshell(t_parser *par, char **input_str)
 	else if (command == NULL)
 		return (0);
 	ret = manager(command, &unused);
-	free(command);
+	meta_free(command);
 	if (ret == EXIT_FAILURE)
 		return (0);
 	return (ret == EXIT_FAILURE_SOFT ? -1 : CONTINUE);

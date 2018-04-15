@@ -305,7 +305,7 @@ all: $(NAME)
 $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
-	$(CC) $(CFLAGS) $(MALLOC_PATH) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
+	$(CC) $(CFLAGS) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
 	install_name_tool -change $(MALLOC) $(PWD)/deps/malloc/$(MALLOC) $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
@@ -314,8 +314,8 @@ $(MALLOC): $(LIBFT)
 	make -C deps/malloc
 
 $(LIBFT):
-	@git submodule init
-	@git submodule update
+	#@git submodule init
+	#@git submodule update
 	make -C deps/libft
 
 %.o: %.c

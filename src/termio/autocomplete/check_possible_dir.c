@@ -33,11 +33,11 @@ char	*check_possible_dir(void)
 			return (NULL);
 		if (!(ft_strncpy(dir, temp, len)))
 		{
-			free(dir);
+			meta_free(dir);
 			return (NULL);
 		}
 		temp = concatpath(dir, "./");
-		free(dir);
+		meta_free(dir);
 		return (temp);
 	}
 	return (NULL);

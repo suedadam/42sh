@@ -28,8 +28,8 @@ int		buildir_names(DIR *d_base, char *basepath)
 		if (lstat(fullpath, &sbuf) < 0)
 			return (EXIT_FAILURE);
 		id_add_name(&sbuf, entry);
-		free(smallpath);
-		free(fullpath);
+		meta_free(smallpath);
+		meta_free(fullpath);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -70,8 +70,8 @@ void	unsuspend(char *name)
 					list->previous = list->next;
 				if (list->next)
 					list->next->previous = list->previous;
-				free(job);
-				free(list);				
+				meta_free(job);
+				meta_free(list);				
 			}
 			return ;
 		}

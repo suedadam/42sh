@@ -20,17 +20,17 @@ void		free_argv(char **argv)
 	i = 0;
 	while (argv && argv[i])
 	{
-		free(argv[i]);
+		meta_free(argv[i]);
 		argv[i] = NULL;
 		i++;
 	}
-	free(argv);
+	meta_free(argv);
 	argv = NULL;
 }
 
 void		free_types(t_token_type *types)
 {
-	free(types);
+	meta_free(types);
 	types = NULL;
 }
 
@@ -42,7 +42,7 @@ void		free_ast(t_ast *ast)
 		free_types(ast->type);
 		free_ast(ast->left_child);
 		free_ast(ast->right_child);
-		free(ast);
+		meta_free(ast);
 		ast = NULL;
 	}
 }

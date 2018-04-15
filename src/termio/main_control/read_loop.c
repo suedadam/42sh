@@ -22,7 +22,7 @@ static int											reset_terminal(void)
 {
 	if (g_shell_env.shell_tty)
 	{
-		free(g_shell_env.shell_tty);
+		meta_free(g_shell_env.shell_tty);
 		g_shell_env.shell_tty = NULL;
 	}
 	return (init_shellenv());

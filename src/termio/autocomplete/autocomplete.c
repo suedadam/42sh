@@ -60,7 +60,7 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 	}
 	else if (child == NO_CHILD)
 	{
-		free(ft_stackpop(stack));
+		meta_free(ft_stackpop(stack));
 		trie_dfs((t_trie *)((stack)->top->content));
 	}
 }

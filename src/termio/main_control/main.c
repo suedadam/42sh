@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 23:32:57 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 12:04:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	init_environ(char **environ)
 {
 	int		i;
 
-	if (!environ || !(g_environ = malloc(sizeof(t_environ))))
+	if (!environ || !(g_environ = ft_memalloc(sizeof(t_environ))))
 		return (EXIT_FAILURE);
 	i = 0;
 	while (environ[i])
 		i++;
-	if (!(g_environ->environ = malloc(sizeof(char *) * (i + 1))))
+	if (!(g_environ->environ = ft_memalloc(sizeof(char *) * (i + 1))))
 		return (EXIT_FAILURE);
 	i = 0;
 	while (environ[i])

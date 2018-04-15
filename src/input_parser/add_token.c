@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 10:38:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/09 17:32:51 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 13:14:52 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int					add_token(char *curr_token, t_token_type *curr_type,
 	i = 0;
 	while ((par->tokens)[i])
 		i++;
-	if (!(par->tokens = (char **)realloc(par->tokens, sizeof(char *) * (i + 2)))
-		|| !(par->types = realloc(par->types, sizeof(t_token_type) * (i + 2))))
+	if (!(par->tokens = (char **)meta_realloc(par->tokens, sizeof(char *) * (i + 2)))
+		|| !(par->types = meta_realloc(par->types, sizeof(t_token_type) * (i + 2))))
 		return (EXIT_FAILURE);
 	if (!((par->tokens)[i] = ft_strdup(curr_token))
 		|| !ft_memcpy(&((par->types)[i]), curr_type, sizeof(t_token_type)))

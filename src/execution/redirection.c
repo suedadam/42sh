@@ -27,7 +27,7 @@ int		ops_read_from(t_ast *curr, int pos)
 	if (curr->token[pos - 1] &&
 		(ft_atoi(curr->token[pos - 1]) || *(curr->token[pos - 1]) == '0'))
 	{
-		free(curr->token[pos - 1]);
+		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
 	if (!curr->token[pos + 1])
@@ -35,8 +35,8 @@ int		ops_read_from(t_ast *curr, int pos)
 	src = &(curr->p_info->stdin);
 	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	free(curr->token[pos + 1]);
-	free(curr->token[pos]);
+	meta_free(curr->token[pos + 1]);
+	meta_free(curr->token[pos]);
 	curr->token[pos] = NULL;
 	return (EXIT_SUCCESS);
 }
@@ -55,7 +55,7 @@ int		ops_append_to(t_ast *curr, int pos)
 		return (EXIT_FAILURE);
 	if ((stmp && stmp != 1) || (stmp == 1 && curr->token[pos - 1][0] == '1'))
 	{
-		free(curr->token[pos - 1]);
+		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
 	if (*(curr->token[pos + 1]) == '&')
@@ -70,9 +70,9 @@ int		ops_append_to(t_ast *curr, int pos)
 	}
 	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	free(curr->token[pos]);
+	meta_free(curr->token[pos]);
 	curr->token[pos] = NULL;
-	free(curr->token[pos + 1]);
+	meta_free(curr->token[pos + 1]);
 	curr->token[pos + 1] = NULL;
 	return (EXIT_SUCCESS);
 }
@@ -95,7 +95,7 @@ int		ops_redir_to(t_ast *curr, int pos)
 		return (EXIT_FAILURE);
 	if ((stmp && stmp != 1) || (stmp == 1 && curr->token[pos - 1][0] == '1'))
 	{
-		free(curr->token[pos - 1]);
+		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
 	if (*(curr->token[pos + 1]) == '&')
@@ -112,9 +112,9 @@ int		ops_redir_to(t_ast *curr, int pos)
 	}
 	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	free(curr->token[pos]);
+	meta_free(curr->token[pos]);
 	curr->token[pos] = NULL;
-	free(curr->token[pos + 1]);
+	meta_free(curr->token[pos + 1]);
 	curr->token[pos + 1] = NULL;
 	return (EXIT_SUCCESS);
 }

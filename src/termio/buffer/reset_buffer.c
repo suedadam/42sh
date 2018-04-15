@@ -15,10 +15,10 @@
 
 int			reset_buffer(void)
 {
-	free(g_shell_env.buffer->buff);
+	meta_free(g_shell_env.buffer->buff);
 	g_shell_env.buffer->buff = NULL;
-	free(g_shell_env.buffer);
+	meta_free(g_shell_env.buffer);
 	g_shell_env.buffer = NULL;
-	free(g_shell_env.paperweight.buff);
+	meta_free(g_shell_env.paperweight.buff);
 	return (init_buffer());
 }

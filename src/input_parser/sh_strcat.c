@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 21:34:10 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/13 21:44:44 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 13:15:20 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*sh_strcat(char **front, char *back)
 	if (!front || !back)
 		return (NULL);
 	len = ft_strlen(*front) + ft_strlen(back) + 1;
-	if (!(*front = realloc(*front, len)))
+	if (!(*front = meta_realloc(*front, len)))
 		return (NULL);
 	return (ft_strcat(*front, back));
 }

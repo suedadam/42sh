@@ -21,7 +21,7 @@ void		cut_line_after_cursor(void)
 	cursor = &g_shell_env.cursor;
 	if ((buffer = cursor->buffer))
 	{
-		free(PAPER.buff);
+		meta_free(PAPER.buff);
 		PAPER.buff = NULL;
 		PAPER.buff = ft_strdup(buffer + cursor->position);
 		PAPER.length = ft_strlen(PAPER.buff);
@@ -39,7 +39,7 @@ void		cut_line_before_cursor(void)
 	cursor = &g_shell_env.cursor;
 	if ((buffer = cursor->buffer))
 	{
-		free(PAPER.buff);
+		meta_free(PAPER.buff);
 		PAPER.buff = NULL;
 		PAPER.buff = ft_strsub(buffer, 0, cursor->position);
 		PAPER.length = ft_strlen(PAPER.buff);

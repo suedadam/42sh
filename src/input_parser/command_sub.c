@@ -32,7 +32,7 @@ static int	close_chck(uint8_t quoted, char c, char **command, int paren)
 	{
 		if (quoted || paren)
 		{
-			free(*command);
+			meta_free(*command);
 			*command = NULL;
 			return (EXIT_FAILURE_SOFT); //parse error
 		}
@@ -67,7 +67,7 @@ static char	*bquote_command(char **input_str)
 		paren += check_paren((*input_str)[i]);
 		i++;
 	}
-	free(command);
+	meta_free(command);
 	return (MAP_FAILED);
 }
 
@@ -88,7 +88,7 @@ static int	split_into_tokens(t_parser *p, char *token_str)
 		(p->current_type != WORD &&
 		add_token(p->current_token, &(p->current_type), p) == EXIT_FAILURE))
 		return (EXIT_FAILURE);
-	free(token_str);
+	meta_free(token_str);
 	while (*words)
 	{
 		p->current_type = WORD;
@@ -96,10 +96,10 @@ static int	split_into_tokens(t_parser *p, char *token_str)
 			(words[1] &&
 			add_token(p->current_token, &p->current_type, p) == EXIT_FAILURE))
 			return (EXIT_FAILURE);
-		free(*words);
+		meta_free(*words);
 		words++;
 	}
-	free(words);
+	meta_free(words);
 	return (EXIT_SUCCESS);
 }
 
@@ -121,6 +121,6 @@ int		is_command_sub(t_parser *par, char **input_str)
 		return (command == NULL ? 0 : -1);
 	if (split_into_tokens(par, command) == EXIT_FAILURE)
 		return (0);
-	free(command);
+	meta_free(command);
 	return (CONTINUE);
 }

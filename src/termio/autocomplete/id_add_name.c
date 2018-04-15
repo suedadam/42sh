@@ -30,6 +30,6 @@ int		id_add_name(struct stat *sbuf, struct dirent *entry)
 		send[len] = '/';
 	printf("id add name : [%s]\n", send);
 	add_word_to_trie(trie, send);
-	free(send);
+	meta_free(send);
 	return (EXIT_SUCCESS);
 }

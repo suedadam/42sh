@@ -19,6 +19,6 @@ void	del_paths(char **mul_paths)
 
 	temp = mul_paths;
 	while (*temp)
-		free(*temp++);
-	free(mul_paths);
+		meta_free(*temp++);
+	meta_free(mul_paths);
 }

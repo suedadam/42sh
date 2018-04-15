@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:53 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 21:07:41 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 12:05:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token_type	*sub_token_type(t_token_type *array, int index, int length)
 	int				i;
 	int				j;
 
-	if (!(copy = (t_token_type *)malloc(sizeof(t_token_type) *
+	if (!(copy = (t_token_type *)ft_memalloc(sizeof(t_token_type) *
 		(length + 1))))
 		return (NULL);
 	j = 0;
@@ -39,7 +39,7 @@ char			**sub_token_char(char **array, int index, int length)
 	int				i;
 	int				j;
 
-	if (!(copy = (char **)malloc(sizeof(char *) *
+	if (!(copy = (char **)ft_memalloc(sizeof(char *) *
 		(length + 1))))
 		return (NULL);
 	j = 0;

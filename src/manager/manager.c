@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 21:41:19 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 12:06:36 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static t_environ	*set_local_env(int subshell_env)
 
 	if (!subshell_env)
 		return (g_environ);
-	if (!(env = malloc(sizeof(t_environ))) ||
-		!(env->environ = malloc(sizeof(char *) * g_environ->size + 1)))
+	if (!(env = ft_memalloc(sizeof(t_environ))) ||
+		!(env->environ = ft_memalloc(sizeof(char *) * g_environ->size + 1)))
 		return (NULL);
 	i = 0;
 	while (i < g_environ->size)
