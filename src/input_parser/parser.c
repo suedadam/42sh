@@ -94,7 +94,7 @@ t_ast				*parser(char *input_str)
 	int				paren;
 
 	paren = 0;
-	if (!(par = init_parser()))
+	if (!input_str || !(par = init_parser()))
 		return (NULL);
 	while (*input_str)
 	{
