@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 22:38:40 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 13:41:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,31 @@ static void			history_append_list(char *buffer)
 	history_var = &g_shell_env.history_var;
 	if (buffer && history_var && history_var->history_list)
 		dbl_push_front(history_var->history_list, buffer, ft_strlen(buffer) + 1);
+}
+
+int				delete_history(void)
+{
+	t_hist_var	*history_var;
+	t_dblist	*temp;
+	int			i;
+
+	history_var = &g_shell_env.history_var;
+}
+
+int				display_history(void)
+{
+	t_hist_var	*history_var;
+	t_dblist	*temp;
+	int			i;
+
+	history_var = &g_shell_env.history_var;
+	temp = history_var->history_list->first;
+	while (temp)
+	{
+		ft_printf_fd(STDIN_FILENO, "\t%d %s\n", i, (char *)(temp->content));
+		temp = temp->next;
+		i++
+	}
 }
 
 int				history_init(void)
