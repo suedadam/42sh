@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 21:24:21 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 15:32:11 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,14 @@
 # define BUFF_SIZE 2048
 
 # define ABS(X) X > 0 ? X : -X
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r') //Fix me.
+
 int	g_fd;
+
+typedef struct		s_meta
+{
+	size_t		len;
+}					t_meta;
 
 typedef struct		s_chunk
 {
@@ -85,6 +91,14 @@ typedef struct		s_index
 }					t_index;
 
 t_node				*new_node(void);
+
+/*
+** Tracked memory allocations.
+*/
+
+void				*meta_malloc(size_t size);
+void				*meta_realloc(void *old, size_t newsize);
+void				meta_free(void *old);
 
 /*
 ** Stack

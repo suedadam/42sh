@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_double_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:17:15 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 18:55:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:30:36 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_dblist				*new_dblist(void)
+t_dblist		*new_dblist(void)
 {
 	t_dblist			*dblist;
 
@@ -24,7 +24,7 @@ t_dblist				*new_dblist(void)
 	return (dblist);
 }
 
-int					dbl_push_end(t_dblist *dblist, void *content, size_t c_size)
+int				dbl_push_end(t_dblist *dblist, void *content, size_t c_size)
 {
 	t_node			*node;
 
@@ -51,7 +51,7 @@ int					dbl_push_end(t_dblist *dblist, void *content, size_t c_size)
 	return (EXIT_SUCCESS);
 }
 
-int					dbl_push_front(t_dblist *dblist, void *content, size_t c_size)
+int				dbl_push_front(t_dblist *dblist, void *content, size_t c_size)
 {
 	t_node			*node;
 
@@ -79,7 +79,7 @@ int					dbl_push_front(t_dblist *dblist, void *content, size_t c_size)
 	return (EXIT_SUCCESS);
 }
 
-int					isempty_dblist(t_dblist *dblist)
+int				isempty_dblist(t_dblist *dblist)
 {
 	return (!dblist || !dblist->first);
 }

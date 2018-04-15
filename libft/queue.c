@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 01:11:16 by ztisnes           #+#    #+#             */
-/*   Updated: 2018/04/13 16:23:10 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:27:46 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void				*ft_dequeue(t_queue *queue)
 		else
 			queue->first->previous = NULL;
 		content = tmp->content;
-		free(tmp);
+		meta_free(tmp);
 		return (content);
 	}
 	return (NULL);

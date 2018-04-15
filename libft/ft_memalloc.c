@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2016/07/19 23:00:46 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:29:12 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void		*ft_memalloc(size_t size)
 {
 	void	*ret;
 
-	if (!(ret = malloc(size)))
+	if (!(ret = meta_malloc(size)))
 		return (NULL);
-	ft_bzero(ret, size);
 	return (ret);
 }

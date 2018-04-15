@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: satkins <satkins@student.42.fr>            +#+  +:+       +#+         #
+#    By: asyed <asyed@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/14 19:40:12 by tle-huu-         ###   ########.fr        #
+#    Updated: 2018/04/15 13:12:26 by asyed            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,8 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_lstnew.c \
 		  libft/ft_splitwhitespace.c \
 		  libft/stack.c \
-		  libft/ft_double_linked_list.c
+		  libft/ft_double_linked_list.c \
+		  libft/metaalloc.c 
 
 PRINTF = printf/ft_printf.c \
 		 printf/ft_printf_fd.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:21:43 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:38:41 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:07:40 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_list		*get_fd(t_list **list, int fd)
 		}
 		new_chunky = new_chunk(fd, "\0");
 		tmp = ft_lstnew(new_chunky, sizeof(t_chunk));
-		free(new_chunky);
+		meta_free(new_chunky);
 		ft_lstadd(list, tmp);
 		return (tmp);
 	}
@@ -109,7 +109,7 @@ int			get_next_line(const int fd, char **line)
 		ft_strjoin(((t_chunk *)curr->content)->str, buff)))
 			return (-1);
 		if (test && test[0])
-			free(test);
+			meta_free(test);
 		if (check(buff) >= 0)
 			break ;
 	}

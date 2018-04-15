@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2016/07/19 23:00:46 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:09:10 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char		*ft_strnew(size_t size)
 {
 	char	*new_str;
 
-	if (!(new_str = (char *)malloc(sizeof(char) * size + 1)))
+	if (!(new_str = (char *)ft_memalloc(sizeof(char) * size + 1)))
 		return (NULL);
 	new_str = (char *)ft_memset(new_str, 0, size + 1);
 	return (new_str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 16:20:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/12 16:58:44 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:30:14 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t				ft_printf_fd(int fd, char *format, ...)
 	size_t			len;
 	va_list			ap;
 
-    g_fd = fd;
+	g_fd = fd;
 	len = 0;
 	if (format)
 	{

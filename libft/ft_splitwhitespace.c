@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitwhitespace.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/13 22:25:48 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:30:52 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int		word_count(const char *s)
 	{
 		while (*s != '\0' && IS_WHITESPACE(*s))
 			s++;
-		if (*s != '\0')	
+		if (*s != '\0')
 			i++;
-		while (*s != '\0' && !IS_WHITESPACE(*s))	
+		while (*s != '\0' && !IS_WHITESPACE(*s))
 			s++;
 	}
 	return (i);
