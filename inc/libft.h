@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 16:32:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:58:50 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_dblist
 {
 	t_node			*first;
 	t_node			*last;
+	int				nbr_elements;
 }					t_dblist;
 
 typedef struct		s_pqueue

@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:17:15 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 16:32:13 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:27:05 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 t_dblist				*new_dblist(void)
 {
-	t_dblist			*node;
+	t_dblist			*dblist;
 
-	if (!(node = (t_dblist *)ft_memalloc(sizeof(t_dblist))))
+	if (!(dblist = (t_dblist *)ft_memalloc(sizeof(t_dblist))))
 		return (NULL);
-	node->first = NULL;
-	node->last = NULL;
+	dblist->first = NULL;
+	dblist->last = NULL;
+	dblist->nbr_elements = 0;
 	return (node);
 }
 
@@ -32,8 +33,9 @@ int					dbl_push_end(t_dblist *dblist, void *content, size_t c_size)
 		!(node->content = ft_memalloc(c_size)))
 		return (EXIT_FAILURE);
 	node->content = ft_memmove(node->content, content, c_size);
-	node->next = NULL;
-	node->previous = NULL
+	node->next = node;
+	node->previous = node;
+	dblist->nbr_elements++;
 	if (!dblist->last)
 	{
 		dblist->last = node;
@@ -43,6 +45,7 @@ int					dbl_push_end(t_dblist *dblist, void *content, size_t c_size)
 	{
 		dblist->last->next = node;
 		node->previous = dblist->last;
+		node->next = dblist->first;
 		dblist->last = node;
 	}
 	return (EXIT_SUCCESS);
@@ -57,8 +60,9 @@ int					dbl_push_front(t_dblist *dblist, void *content, size_t c_size)
 		!(node->content = ft_memalloc(c_size)))
 		return (EXIT_FAILURE);
 	node->content = ft_memmove(node->content, content, c_size);
-	node->next = NULL;
-	node->previous = NULL
+	node->next = node;
+	node->previous = node;
+	dblist->nbr_elements++;
 	if (!dblist->last)
 	{
 		dblist->last = node;
@@ -67,6 +71,8 @@ int					dbl_push_front(t_dblist *dblist, void *content, size_t c_size)
 	else
 	{
 		node->next = dblist->first;
+		node->previous = dblist->last;
+		dblist->last->next = node;
 		dblist->first->previous = node;
 		dblist->first = node;
 	}
