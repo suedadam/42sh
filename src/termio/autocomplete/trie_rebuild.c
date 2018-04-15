@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:28:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 15:57:50 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 16:08:35 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 static int	reinit_trie(t_autocheck *trie_inf)
 {
 	printf("reINIT __trie__\n");
-	if (trie_inf)
-		meta_free(trie_inf->trie);
+	// if (trie_inf)
+	// 	meta_free(trie_inf->stack);
+	free_trie(trie);
 	trie_inf->trie = NULL;
 	if (!(trie_inf->trie = new_trie()))
 		return (EXIT_FAILURE);
@@ -26,8 +27,9 @@ static int	reinit_trie(t_autocheck *trie_inf)
 static int	reinit_stack(t_autocheck *trie_inf)
 {
 	printf("reINIT __stack__\n");
-	if (trie_inf)
-		meta_free(trie_inf->stack);
+	// if (trie_inf)
+	// 	meta_free(trie_inf->stack);
+	free_trie(trie);
 	trie_inf->stack = NULL;
 	if (!(trie_inf->stack = new_stack()))
 		return (EXIT_FAILURE);

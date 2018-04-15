@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 15:39:42 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:07:47 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,22 @@ void		display_trie(t_trie *trie, int level)
 	{
 		display_trie(trie->children[i], level + 1);
 		i++;
+	}
+}
+
+void		free_trie(t_trie *trie)
+{
+	int		i;
+
+	if (trie)
+	{
+		i = 0;
+		while (i < 128)
+		{
+			free_trie(trie->array[i]);
+			i++;
+		}
+		meta_free(trie->array);
+		meta_free(trie);
 	}
 }

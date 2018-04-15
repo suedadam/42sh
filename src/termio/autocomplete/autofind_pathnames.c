@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:58:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 15:32:17 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:05:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		autofind_pathnames(void)
 	char	*temp;
 	int		i;
 
-printf("\nfinding pathnames\n");
+	printf("\nfinding pathnames\n");
 	i = 0;
 	if (!(mul_path = gather_paths(g_shell_env.cursor.wordloc)))
 		return (EXIT_FAILURE);
