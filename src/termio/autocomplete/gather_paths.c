@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:41:40 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 02:13:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 16:13:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	**gather_paths(int word)
 	temp = NULL;
 	if (word == 1)
 	{
-	// made to use g_environ, for now placeholder with PATH from getenv
 		temp = "PATH";
 		if (!(temp = getenv(temp)))
 			return (NULL);
@@ -39,14 +38,5 @@ char	**gather_paths(int word)
 		else
 			mul_path[0] = NULL;
 	}
-	/*
-		if (!(mul_path[0] = (char *)ft_memalloc(2)))
-		{
-			del_paths(mul_path);
-			return (NULL);
-		}
-		mul_path[0][0] = '.';
-	}
-	*/
 	return (mul_path);
 }
