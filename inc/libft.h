@@ -82,6 +82,8 @@ typedef struct		s_index
 	int				x;
 }					t_index;
 
+t_node				*new_node(void);
+
 /*
 ** Stack
 */

@@ -6,7 +6,7 @@
 #    By: satkins <satkins@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/13 18:43:08 by asyed            ###   ########.fr        #
+#    Updated: 2018/04/14 18:22:09 by tle-huu-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_toupper.c \
 		  libft/ft_memalloc.c \
 		  libft/ft_memdel.c \
+		  libft/ft_node.c \
 		  libft/ft_strnew.c \
 		  libft/ft_strdel.c \
 		  libft/ft_strclr.c \
