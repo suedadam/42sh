@@ -37,19 +37,19 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 {
 	t_parser	*parser;
 
-	if (!(parser = malloc(sizeof(t_ast))))
+	if (!(parser = ft_memalloc(sizeof(t_ast))))
 		return (NULL);
-	if (!(parser->tokens = malloc(sizeof(char *))))
+	if (!(parser->tokens = ft_memalloc(sizeof(char *))))
 	{
 		free(parser);
 		return (NULL);
 	}
-	if (!(parser->current_token = malloc(sizeof(char))))
+	if (!(parser->current_token = ft_memalloc(sizeof(char))))
 	{
 		free_segs(parser);
 		return (NULL);
 	}
-	if (!(parser->types = malloc(sizeof(t_token_type))))
+	if (!(parser->types = ft_memalloc(sizeof(t_token_type))))
 	{
 		free_segs(parser);
 		return (NULL);
@@ -98,6 +98,7 @@ t_ast				*parser(char *input_str)
 		return (NULL);
 	while (*input_str)
 	{
+		ft_printf("here\n");
 		// paren += check_paren(*input_str);
 		if ((ret = check_char(&par, &input_str)) <= 0)
 			return (ret == 0 ? NULL : MAP_FAILED);
