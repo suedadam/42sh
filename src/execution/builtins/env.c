@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 18:56:34 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:00:15 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	builtin_env(__attribute__((unused)) char *argv[], t_environ *env)
 	int	i;
 
 	i = 0;
-	ft_printf("Starting: %p\nSize: %zu\n", (env->environ)[i], env->size);
 	while ((env->environ)[i])
 	{
 		ft_printf_fd(STDOUT_FILENO, "%s\n", env->environ[i]);
