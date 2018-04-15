@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 15:42:46 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/19 16:04:14 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 12:38:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,12 @@ void	*realloc(void *ptr, size_t size)
 {
 	t_header	*l_ptr;
 	void		*copy;
-	size_t		max;
 
 	if (!ptr || !valid_chksum(ptr - sizeof(t_header)))
 		return (malloc(size));
+	copy = malloc(size);
 	l_ptr = ptr - sizeof(t_header);
-	max = get_memseg_size(l_ptr->index);
-	if (l_ptr->len < size)
-	{
-		if (l_ptr->index != LARGE_IND && size <= max &&
-			!l_ptr->next_page && !space_avail(l_ptr, size))
-		{
-			l_ptr->chksum = chksum(l_ptr);
-			return (ptr);
-		}
-		copy = malloc(size);
-		ft_memcpy(copy, ptr, l_ptr->len);
-		free(ptr);
-		return (copy);
-	}
-	else if (size <= l_ptr->len && size > 0)
-		return (ptr);
-	free(ptr);
-	return (NULL);
+	ft_memcpy(copy, ptr, l_ptr->len);
+	free_realloc(ptr);
+	return (copy);
 }

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 17:55:09 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/19 15:56:46 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 12:31:48 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,24 @@ void	cleaning_lady(int *clean_up, int page_index)
 		*clean_up = 0;
 }
 
+void	free_realloc(void *ptr)
+{
+	static int	clean_up = 0;
+	t_header	*l_ptr;
+
+	if (!ptr)
+		return ;
+	// if (!valid_chksum(ptr - sizeof(t_header)))
+	// 	return ;
+	l_ptr = ptr - sizeof(t_header);
+	pthread_mutex_lock(&(g_mutex[l_ptr->index]));
+	ft_bzero(ptr, l_ptr->len);
+	l_ptr->used = 0;
+	pthread_mutex_unlock(&(g_mutex[l_ptr->index]));
+	if (clean_up++ == CLEAN_INTERVAL)
+		cleaning_lady(&clean_up, 0);
+}
+
 void	free(void *ptr)
 {
 	static int	clean_up = 0;
@@ -97,8 +115,8 @@ void	free(void *ptr)
 	if (!valid_chksum(l_ptr))
 		return ;
 	pthread_mutex_lock(&(g_mutex[l_ptr->index]));
-	l_ptr->used = 0;
 	ft_bzero(ptr, l_ptr->len);
+	l_ptr->used = 0;
 	pthread_mutex_unlock(&(g_mutex[l_ptr->index]));
 	if (clean_up++ == CLEAN_INTERVAL)
 		cleaning_lady(&clean_up, 0);

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 15:42:46 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/11 18:15:29 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 12:31:29 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct __attribute__((packed))	s_header
 }				t_header;
 
 void			free(void *ptr);
+void			free_realloc(void *ptr);
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
 void			*size_spacer(int page_index, size_t pagesize, size_t size);
