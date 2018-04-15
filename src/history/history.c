@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:07:05 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:43:53 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ int				history_init(void)
 		printf("\ndblist fail\n");
 		return (EXIT_FAILURE);
 	}
-	if (!(history_var->current_history_cmd = new_node()))
-	{
-		printf("\ndblist fail\n");
-		return (EXIT_FAILURE);
-	}
+	history_var->current_history_cmd = NULL;
+	// if (!(history_var->current_history_cmd = new_node()))
+	// {
+	// 	printf("\ndblist fail\n");
+	// 	return (EXIT_FAILURE);
+	// }
 	history_var->history_list = get_history();
 	return (EXIT_SUCCESS);
 }
