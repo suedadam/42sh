@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 14:11:43 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 20:07:37 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <signal.h>
 # include "ast.h"
 # define IS_REDIR(x) (x == '>' || x == '<' || x == ">>" || x == '<<')
 
@@ -53,11 +54,19 @@ typedef struct	s_builtins
 }				t_builtins;
 
 /*
+** job_control
+*/
+
+void		add_suspended(pid_t pid, char *name);
+void		unsuspend(char *name);
+void		print_first(void);
+
+/*
 ** utils
 */
 
-void	*init_process(void);
-int		compare(int *n1, int *n2);
+void		*init_process(void);
+int			compare(int *n1, int *n2);
 
 /*
 ** builders
@@ -79,6 +88,7 @@ int				builtin_setenv(char *argv[]);
 int				builtin_unsetenv(char *argv[]);
 int				builtin_cd(char *argv[]);
 int				builtin_echo(char *argv[]);
+int				builtin_fg(char *argv[])
 
 /*
 ** op_checks

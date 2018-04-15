@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 16:45:15 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 20:08:38 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGCONT, SIG_DFL);
+		// if (signal(SIGTSTP, &suspend) == SIG_ERR)
+		// 	ft_printf("Error setting up signal handler: %s\n", strerror(errno));
+		// else
+		// 	ft_printf("Setup signal handler... %s\n", strerror(errno));
+		// sleep(1);
 		// ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
@@ -87,9 +94,14 @@ int		run_operation(t_ast *curr, uint8_t wait)
 	}
 	if (wait)
 	{
-		// ft_printf("Waiting\n");
-		waitpid(pid, &res, 0);
-		// ft_printf("Done waiting\n");
+		waitpid(pid, &res, WUNTRACED);
+		if (WIFSTOPPED(res))
+		{
+			add_suspended(pid, *(curr->token));
+			ft_printf("Its suspended! (%d)\n", WSTOPSIG(res));
+		}
+		else
+			ft_printf("Changed states!\n");
 		return (res);
 	}
 	return (EXIT_SUCCESS);

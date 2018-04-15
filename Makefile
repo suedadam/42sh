@@ -24,6 +24,7 @@ MALLOC_PATH = $(addprefix $(MALLOC_DIR), $(MALLOC))
 SRCDIR_AST = src/ast_construction/srcs/
 
 SRCDIR_EXEC = src/execution/
+SRCDIR_EXEC_JOBS = job_control/
 SRCDIR_EXEC_BUILTINS = builtins/
 SRCDIR_EXEC_OPS = ops/
 SRCDIR_EXEC_OPS_CHECKS = op_checks/
@@ -52,6 +53,9 @@ OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_EXEC), $(SRC_EXEC)))
 # OBJSRC += $(patsubst %, %.o, $(addprefix \
 # 		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
 # 		  $(SRC_EXEC_BUILTINS)))
+OBJSRC += $(patsubst %, %.o, $(addprefix \
+		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_JOBS)), \
+		  $(SRC_EXEC_JOBS)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_CHECKS))), \
@@ -133,12 +137,16 @@ SRC_EXEC_BUILTINS = \
 			cd \
 			env \
 			handler \
-			echo
+			echo \
+			fg 
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \
             op_or \
             op_pipe 
+
+SRC_EXEC_JOBS =	\
+            suspend  
 
 SRC_EXEC_OPS_EXECS =	\
             op_and \
