@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 19:09:29 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:16:05 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 # define ABS(X) X > 0 ? X : -X
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 int	g_fd;
+
+typedef struct		s_chunk
+{
+	int		fd;
+	char	*str;
+}					t_chunk;
 
 typedef struct		s_btree
 {

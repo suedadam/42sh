@@ -6,12 +6,11 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 15:21:43 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/03/16 14:54:34 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 19:16:15 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "get_next_line.h"
 #include <fcntl.h>
 #include <unistd.h>
 
