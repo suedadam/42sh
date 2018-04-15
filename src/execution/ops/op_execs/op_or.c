@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   op_or.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:47:47 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/10 22:52:19 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 17:45:16 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int		op_or_exec(t_ast *curr)
+int		op_or_exec(t_ast *curr, t_environ *env)
 {
 	if (!curr)
 		return (EXIT_FAILURE);
-	if (run_operation(curr->left_child, 1))
+	if (run_operation(curr->left_child, 1, env))
 	{
-		run_operation(curr->right_child, 1);
-		return (run_tree(curr->right_child));
+		run_operation(curr->right_child, 1, env);
+		return (run_tree(curr->right_child, env));
 	}
 	return (EXIT_FAILURE);
 }

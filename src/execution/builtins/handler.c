@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:05:23 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 20:13:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 */
 
 struct s_builtins	builtins[] = {
-	{"cd", &builtin_cd},
+	// {"cd", &builtin_cd},
 	{"echo", &builtin_echo},
 	{"fg", &builtin_fg},
 	// {"exit", &builtin_exit},
 	{"env", &builtin_env},
-	{"history", &builtin_env},
+	// {"history", &builtin_env},
+	{"getenv", &builtin_getenv},
 	{"setenv", &builtin_setenv},
 	{"unsetenv", &builtin_unsetenv},
 	{"unset", &builtin_unsetenv},
@@ -30,7 +31,7 @@ struct s_builtins	builtins[] = {
 	{NULL, NULL},
 };
 
-int		builtin_handler(t_ast *curr)
+int		builtin_handler(t_ast *curr, t_environ *env)
 {
 	int i;
 
@@ -38,7 +39,7 @@ int		builtin_handler(t_ast *curr)
 	while (builtins[i].name)
 	{
 		if (!strcmp(builtins[i].name, *(curr->token)))
-			return (builtins[i].exec(curr->token));
+			return (builtins[i].exec(curr->token, env));
 		i++;
 	}
 	return (-1);

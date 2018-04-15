@@ -6,16 +6,16 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 14:20:22 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 14:43:14 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 16:48:46 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int				builtin_echo(char *argv[])
+int	builtin_echo(char *argv[], __attribute__((unused))t_environ *e)
 {
-	uint8_t		nl;
-	id_t		i;
+	uint8_t	nl;
+	int		i;
 
 	if (!argv || !argv[0] || !ft_strequ("echo", argv[0]))
 		return (EXIT_FAILURE);

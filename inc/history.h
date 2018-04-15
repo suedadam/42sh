@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fg.c                                               :+:      :+:    :+:   */
+/*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 20:05:58 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:14:19 by asyed            ###   ########.fr       */
+/*   Created: 2018/04/14 16:02:31 by tle-huu-          #+#    #+#             */
+/*   Updated: 2018/04/14 18:28:51 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#ifndef HISTORY_H
+# define HISTORY_H
 
-int	builtin_fg(char *argv[], __attribute__((unused)) t_environ *env)
-{
-	if (!argv || !argv[0])
-		return (EXIT_FAILURE);
-	unsuspend(argv[1]);
-}
+int				history_append_file(char *buffer);
+int				history_init(void);
+t_dblist		*get_history(void);
+void			up_history_command(void);
+void			down_history_command(void);
+
+#endif

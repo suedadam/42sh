@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 20:01:33 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 20:12:46 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int			ft_linefeed(void)
 **	satkins_parser(g_shell_env->line_buffer)
 **	reset the buffer
 */
+	history_append_file(g_shell_env.buffer->buff);
 	ft_restoretty();
 	signal(SIGINT, SIG_IGN);
 	// signal(SIGTSTP, SIG_IGN);

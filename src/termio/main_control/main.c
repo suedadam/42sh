@@ -3,17 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 16:12:59 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 19:50:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_maincontrol.h"
 #include "ft_proto.h"
 
-// t_environ	*g_environ;
+t_environ	*g_environ = NULL;
+
+static int	init_environ(char **environ)
+{
+	int		i;
+
+	if (!environ || !(g_environ = malloc(sizeof(t_environ))))
+		return (EXIT_FAILURE);
+	i = 0;
+	while (environ[i])
+		i++;
+	if (!(g_environ->environ = malloc(sizeof(char *) * (i + 1))))
+		return (EXIT_FAILURE);
+	i = 0;
+	while (environ[i])
+	{
+		if (!(g_environ->environ[i] = ft_strdup(environ[i])))
+			return (EXIT_FAILURE);
+		i++;
+	}
+	g_environ->environ[i] = NULL;
+	g_environ->size = i;
+	return (EXIT_SUCCESS);
+}
 
 /*
 ** Termcaps database is initialized here and reference to it is saved
@@ -51,7 +74,8 @@ int			init_shellenv(void)
 					sizeof(struct termios))))
 		|| (ft_setty() == EXIT_FAILURE)
 		|| (init_buffer() == EXIT_FAILURE)
-		|| (get_window_size() == EXIT_FAILURE))
+		|| (get_window_size() == EXIT_FAILURE)
+		|| (history_init() == EXIT_FAILURE))
 	{
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);
@@ -65,13 +89,14 @@ int			init_shellenv(void)
 ** EXIT_FAILURE = 1 for ints, and NULL / 0
 */
 
-int			main(__attribute__((unused))int argc, __attribute__((unused))char *argv[], __attribute__((unused))char **environ)
+int			main(void)
 {
-	// if (!(g_environ = malloc(sizeof(t_environ))))
-	// 	return (EXIT_FAILURE);
-	// g_environ->environ = environ;
+//	if (!(g_environ = malloc(sizeof(t_environ))))
+//		return (EXIT_FAILURE);
+//	g_environ->environ = environ;
 	bzero(&g_shell_env, sizeof(t_terminf));
-	if (init_shellenv() == EXIT_FAILURE
+	if (init_environ(environ) == EXIT_FAILURE
+		|| init_shellenv() == EXIT_FAILURE
 		|| shsignal_handlers() == EXIT_FAILURE
 		|| init_termcaps() == EXIT_FAILURE
 		|| ft_read_loop() == EXIT_FAILURE

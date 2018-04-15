@@ -30,6 +30,8 @@ SRCDIR_EXEC_OPS = ops/
 SRCDIR_EXEC_OPS_CHECKS = op_checks/
 SRCDIR_EXEC_OPS_EXECS = op_execs/
 
+SRCDIR_HISTORY = src/history/
+
 SRCDIR_IPARSE = src/input_parser/
 
 SRCDIR_MANAGER = src/manager/
@@ -50,9 +52,9 @@ SRCDIR_TERMIO_SCREEN = screen/
 OBJSRC = $(patsubst %, %.o, $(addprefix $(SRCDIR_AST), $(SRC_AST)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_MANAGER), $(SRC_MANAGER)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_EXEC), $(SRC_EXEC)))
-# OBJSRC += $(patsubst %, %.o, $(addprefix \
-# 		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
-# 		  $(SRC_EXEC_BUILTINS)))
+OBJSRC += $(patsubst %, %.o, $(addprefix \
+		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
+		  $(SRC_EXEC_BUILTINS)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_JOBS)), \
 		  $(SRC_EXEC_JOBS)))
@@ -64,6 +66,7 @@ OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_EXECS))), \
 		  $(SRC_EXEC_OPS_EXECS)))
+OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_HISTORY), $(SRC_HISTORY)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_IPARSE), $(SRC_IPARSE)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_TERMIO), $(SRCDIR_TERMIO_AUTOCOMPLETE)), \
@@ -134,11 +137,11 @@ SRC_EXEC =	\
 			utils
 
 SRC_EXEC_BUILTINS = \
-			cd \
 			env \
 			handler \
 			echo \
 			fg 
+			# cd
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \
@@ -155,6 +158,14 @@ SRC_EXEC_OPS_EXECS =	\
 
 ################################################################################
 # EXECUTION SOURCE FILES                                                       #
+################################################################################
+
+SRC_HISTORY =	\
+			history \
+			history_keyboard_actions
+
+################################################################################
+# PARSER SOURCE FILES                                                          #
 ################################################################################
 
 SRC_IPARSE =	\
@@ -178,16 +189,23 @@ SRC_IPARSE =	\
 ################################################################################
 
 # AUTOCOMPLETE
-#SRC_TERMIO_AUTOCOMPLETE = \
-#					count_word \
-#					id_add_name \
-#					check_possible_dir \
-#					gather_paths \
-#					concat_path \
-#					autofind_pathnames \
-#					buildir_names \
-#					del_paths
-#
+SRC_TERMIO_AUTOCOMPLETE =	\
+					autocomplete \
+					autocomplete_manager \
+					autofind_pathnames \
+					buildir_names \
+					check_possible_dir \
+					concat_path \
+					count_word \
+					del_paths \
+					gather_paths \
+					get_binaries \
+					get_files \
+					id_add_name \
+					modification_check \
+					trie_rebuild \
+					trie_utils
+
 # BUFFER
 SRC_TERMIO_BUFFER =	\
 					init_buffer \

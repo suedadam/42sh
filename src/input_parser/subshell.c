@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 18:35:42 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 13:23:00 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 18:57:03 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int		is_subshell(t_parser *par, char **input_str)
 	else if (command == NULL)
 		return (0);
 	ret = manager(command, &unused);
+	free(command);
 	if (ret == EXIT_FAILURE)
 		return (0);
 	return (ret == EXIT_FAILURE_SOFT ? -1 : CONTINUE);

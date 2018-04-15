@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 02:15:47 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:55:07 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_AUTOCOMPLETE_H
 
 # include <sys/stat.h>
+# include "trie.h"
 # include "ft_term.h"
 # include "ft_proto.h"
 
@@ -22,14 +23,26 @@ typedef struct	s_trie_with_level
 	struct s_trie	*children[128];
 	char			key;
 	int				nbr_children;
-	int				pos;
+	size_t			pos;
 	char			child;
 }				t_trie_with_level;
+
+typedef struct	s_autocheck_info
+{
+	t_trie			trie;
+	char			**members;
+	int				nmem;
+	time_t			*timestamp;
+	int				ntime;
+}				t_autocomplete_info;
+
+
+int					start_autocomplete(void);
 
 /*
 ** trie dfs autocomplete
 */
-void		trie_dfs(t_trie *trie, t_stack *stack);
+void		trie_dfs(t_trie *trie);
 
 /*
 **	For finding relative word location / count on the terminal, which will

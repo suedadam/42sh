@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 14:11:48 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 18:33:35 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@
 # include <dirent.h>
 
 # include "libft.h"
-# include "error.h"
 # include "trie.h"
+# include "error.h"
 
 # define UNSET (void *)
-
+# define HISTORY_FILE ".42sh_history"
 # define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v'\
 		|| c == '\f' || c == '\r')
 #define IS_OPERATOR(c) (c == '(' || c == '&' || c == '|')
@@ -134,6 +134,12 @@ typedef struct			s_tokens
 	int					pipe;
 }						t_tokens;
 
+typedef struct			s_hist_var
+{
+	t_dblist			*history_list;
+	t_node				*current_history_cmd;
+}						t_hist_var;
+
 typedef	struct			s_terminf
 {
 	struct termios		original_tty;
@@ -145,6 +151,7 @@ typedef	struct			s_terminf
 	t_tokens			tokens;
 	t_trie				*trie;
 	t_stack				*trie_stack;
+	t_hist_var			history_var;
 	size_t				prompt_length;
 	char				*term_name;
 	char				*term_buff;

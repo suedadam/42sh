@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:08:38 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 20:13:12 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
+char **environ = NULL;
+
+int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 {
 	int		pid;
 	t_ast	*process;
@@ -36,6 +38,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 		return (EXIT_FAILURE);
 	if (!pid)
 	{
+		environ = env->environ;
 		// ft_printf("-----> B (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
 		if (handle_redirection(process))
 		{
@@ -56,19 +59,19 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 	if (*(process->p_info->stdout) != STDOUT_FILENO)
 		close(process->p_info->stdout[0]);
 	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
-	run_pipecmds(cmd, pids);
+	run_pipecmds(cmd, pids, env);
 	return (EXIT_SUCCESS);
 }
 
-int		run_operation(t_ast *curr, uint8_t wait)
+int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 {
 	pid_t	pid;
 	int		res;
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
-	// if ((res = builtin_handler(curr)) != -1)
-	// 	return (res);
+	if ((res = builtin_handler(curr, env)) != -1)
+		return (res);
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
@@ -80,6 +83,7 @@ int		run_operation(t_ast *curr, uint8_t wait)
 		// else
 		// 	ft_printf("Setup signal handler... %s\n", strerror(errno));
 		// sleep(1);
+		environ = env->environ;
 		// ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
@@ -148,7 +152,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 ** Left will always be present, if not then its a failure.
 */
 
-int		run_tree(t_ast *curr)
+int		run_tree(t_ast *curr, __attribute__((unused))t_environ *env)
 {
 	int	i;
 
@@ -160,12 +164,12 @@ int		run_tree(t_ast *curr)
 		while (op_handlers[i].check)
 		{
 			if (!op_handlers[i].check(*(curr->token)))
-				return (op_handlers[i].exec(curr));
+				return (op_handlers[i].exec(curr, env));
 			i++;
 		}
 	}
 	else
-		return (run_operation(curr, 1));
+		return (run_operation(curr, 1, env));
 	return (EXIT_FAILURE);
 }
 
@@ -193,7 +197,7 @@ int		stringify(int fd, char **str)
 	return (res);
 }
 
-int		subshell(t_queue *forest, char **substr)
+int		subshell(t_queue *forest, char **substr, t_environ *env)
 {
 	pid_t	pid;
 	int		fds[2];
@@ -207,25 +211,25 @@ int		subshell(t_queue *forest, char **substr)
 	if (!pid)
 	{
 		dup2(fds[1], STDOUT_FILENO);
-		exit(run_forest(forest, NULL));
+		exit(run_forest(forest, NULL, env));
 	}
 	close(fds[1]);
 	return (stringify(fds[0], substr));
 }
 
-int		run_forest(t_queue *forest, char **substr)
+int		run_forest(t_queue *forest, char **substr, t_environ *env)
 {
 	t_ast	*asts;
 
 	if (!forest)
 		return (EXIT_FAILURE);
 	if (substr)
-		return (subshell(forest, substr));
+		return (subshell(forest, substr, env));
 	while (!isempty_queue(forest) && (asts = ft_dequeue(forest)))
 	{
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
-		if (run_tree((t_ast *)asts) == EXIT_FAILURE)
+		if (run_tree((t_ast *)asts, env) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}		
 	return (EXIT_SUCCESS);

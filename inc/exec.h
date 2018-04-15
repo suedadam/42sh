@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:07:37 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 20:14:03 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_process
 typedef struct	s_ophandlers
 {
 	int		(*check)(char *str);
-	int		(*exec)(t_ast *curr);
+	int		(*exec)(t_ast *curr, t_environ *env);
 }				t_ophandlers;
 
 typedef struct	s_redir_op
@@ -50,7 +50,7 @@ typedef struct	s_redir_op
 typedef struct	s_builtins
 {
 	char	*name;
-	int		(*exec)(char **argv);
+	int		(*exec)(char **argv, t_environ *env);
 }				t_builtins;
 
 /*
@@ -82,13 +82,14 @@ int			build_info(t_ast *prev, t_ast *curr);
 ** builtins
 */
 
-int				builtin_handler(t_ast *curr);
-int				builtin_env(char *argv[]);
-int				builtin_setenv(char *argv[]);
-int				builtin_unsetenv(char *argv[]);
-int				builtin_cd(char *argv[]);
-int				builtin_echo(char *argv[]);
-int				builtin_fg(char *argv[])
+int				builtin_handler(t_ast *curr, t_environ *env);
+int				builtin_env(char *argv[], t_environ *env);
+int				builtin_setenv(char *argv[], t_environ *env);
+int				builtin_unsetenv(char *argv[], t_environ *env);
+int				builtin_cd(char *argv[], t_environ *env);
+int				builtin_echo(char *argv[], t_environ *env);
+int				builtin_getenv(char *argv[], t_environ *env);
+int				builtin_fg(char *argv[], t_environ *env);
 
 /*
 ** op_checks
@@ -102,22 +103,22 @@ int				op_and_check(char *str);
 ** op_execs
 */
 
-int				op_pipe_exec(t_ast *curr);
-int				op_or_exec(t_ast *curr);
-int				op_and_exec(t_ast *curr);
+int				op_pipe_exec(t_ast *curr, t_environ *env);
+int				op_or_exec(t_ast *curr, t_environ *env);
+int				op_and_exec(t_ast *curr, t_environ *env);
 
 /*
 ** execution.c
 */
 
 int				compare(int *n1, int *n2);
-int				run_pipecmds(t_stack *cmd, t_pqueue *pids);
-int				run_operation(t_ast *curr, uint8_t wait);
+int				run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env);
+int				run_operation(t_ast *curr, uint8_t wait, t_environ *env);
 void			build_leafs(t_ast *curr);
 void			pipe_carry(t_ast *prev, t_ast *curr);
 void			build_default(t_ast *curr);
 int				build_info(t_ast *prev, t_ast *curr);
-int				run_tree(t_ast *curr);
+int				run_tree(t_ast *curr, t_environ *env);
 
 /*
 ** redirection.c
