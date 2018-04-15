@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 18:24:46 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:50:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int			init_shellenv(void)
 					sizeof(struct termios))))
 		|| (ft_setty() == EXIT_FAILURE)
 		|| (init_buffer() == EXIT_FAILURE)
-		|| (get_window_size() == EXIT_FAILURE))
+		|| (get_window_size() == EXIT_FAILURE)
+		|| (history_init() == EXIT_FAILURE))
 	{
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);
@@ -88,8 +89,11 @@ int			init_shellenv(void)
 ** EXIT_FAILURE = 1 for ints, and NULL / 0
 */
 
-int			main(__attribute__((unused))int argc, __attribute__((unused))char *argv[], __attribute__((unused))char **environ)
+int			main(void)
 {
+//	if (!(g_environ = malloc(sizeof(t_environ))))
+//		return (EXIT_FAILURE);
+//	g_environ->environ = environ;
 	bzero(&g_shell_env, sizeof(t_terminf));
 	if (init_environ(environ) == EXIT_FAILURE
 		|| init_shellenv() == EXIT_FAILURE

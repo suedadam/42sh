@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 02:10:10 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 19:43:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		next_child(t_trie *trie, int start)
 		return (NO_CHILD);
 	while (i < 128)
 	{
-		if (trie->array[i])
+		if (trie->children[i])
 			return (i);
 		i++;
 	}
@@ -36,7 +36,7 @@ static void	one_child(t_trie *trie)
 
 	child = next_child(trie, 0);
 	regular_text(trie->key);
-	trie_dfs(trie->array[child]);
+	trie_dfs(trie->children[child]);
 }
 
 static void	bottleneck(t_trie *trie, t_stack *stack)
@@ -56,7 +56,7 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 	else if ((child = next_child(trie, (int)(((t_trie_with_level *)(trie))->child))) != NO_CHILD)
 	{
 		((t_trie_with_level *)(trie))->child = child;
-		trie_dfs(trie->array[child]);
+		trie_dfs(trie->children[child]);
 	}
 	else if (child == NO_CHILD)
 	{
