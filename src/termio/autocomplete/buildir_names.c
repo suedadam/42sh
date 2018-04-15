@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 14:33:35 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 23:21:56 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 10:25:28 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ int		buildir_names(DIR *d_base, char *basepath)
 	char			*smallpath;
 	char			*fullpath;
 
-	printf("I am entireing build iddir\n");
+	printf("I am entering build iddir\n");
 	while ((entry = readdir(d_base)))
 	{
 		smallpath = concatpath("/", basepath);
+		printf("smallpath <%s>\n", smallpath);
 		fullpath = concatpath(entry->d_name, smallpath);
+		printf("fullpath <%s>\n", fullpath);
 		if (lstat(fullpath, &sbuf) < 0)
 			return (EXIT_FAILURE);
 		id_add_name(&sbuf, entry);
+	printf("");	
 		free(smallpath);
 		free(fullpath);
 	}

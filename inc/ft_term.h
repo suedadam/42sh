@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:19:02 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 00:19:11 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct			s_cursor
 typedef struct	s_autocheck
 {
 	t_trie			*trie;
+	t_stack			*stack;
 	char			**members;
 	int				nmem;
 	time_t			*timestamp;
