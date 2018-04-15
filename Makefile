@@ -6,7 +6,7 @@
 #    By: satkins <satkins@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/14 18:54:06 by nkouris          ###   ########.fr        #
+#    Updated: 2018/04/14 19:19:45 by tle-huu-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ LIBFT = libft/ft_atoi.c \
 		  libft/ft_isascii.c \
 		  libft/ft_isdigit.c \
 		  libft/ft_isprint.c \
+		  libft/ft_lstadd.c \
 		  libft/ft_memccpy.c \
 		  libft/ft_memchr.c \
 		  libft/ft_memcmp.c \
