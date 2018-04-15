@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 15:43:49 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 16:43:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		run_operation(t_ast *curr, uint8_t wait)
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
-	// if ((res = builtin_handler(curr)) != -1)
+	// if ((res = builtin_handler(curr, env)) != -1)
 	// 	return (res);
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
@@ -137,7 +137,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 ** Left will always be present, if not then its a failure.
 */
 
-int		run_tree(t_ast *curr)
+int		run_tree(t_ast *curr, __attribute__((unused))t_environ *env)
 {
 	int	i;
 
@@ -182,7 +182,7 @@ int		stringify(int fd, char **str)
 	return (res);
 }
 
-int		subshell(t_queue *forest, char **substr)
+int		subshell(t_queue *forest, char **substr, t_environ *env)
 {
 	pid_t	pid;
 	int		fds[2];
@@ -196,25 +196,25 @@ int		subshell(t_queue *forest, char **substr)
 	if (!pid)
 	{
 		dup2(fds[1], STDOUT_FILENO);
-		exit(run_forest(forest, NULL));
+		exit(run_forest(forest, NULL, env));
 	}
 	close(fds[1]);
 	return (stringify(fds[0], substr));
 }
 
-int		run_forest(t_queue *forest, char **substr)
+int		run_forest(t_queue *forest, char **substr, t_environ *env)
 {
 	t_ast	*asts;
 
 	if (!forest)
 		return (EXIT_FAILURE);
 	if (substr)
-		return (subshell(forest, substr));
+		return (subshell(forest, substr, env));
 	while (!isempty_queue(forest) && (asts = ft_dequeue(forest)))
 	{
 		if (build_info(NULL, (t_ast *)asts))
 			return (EXIT_FAILURE);
-		if (run_tree((t_ast *)asts) == EXIT_FAILURE)
+		if (run_tree((t_ast *)asts, env) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}		
 	return (EXIT_SUCCESS);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/03 21:51:46 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 17:30:47 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	builtin_cd(char *argv[])
+int	builtin_cd(char *argv[], t_environ *env)
 {
 	int	i;
 	int	res;
@@ -21,9 +21,9 @@ int	builtin_cd(char *argv[])
 	i = 0;
 	if (!argv[1] || !(len = strlen(argv[1])))
 		return (EXIT_FAILURE);
-	while (g_environ->environ[i])
+	while (env->environ[i])
 	{
-		if ((res = strcmp("PWD", g_environ->environ[i])) <= 0 &&
+		if ((res = strcmp("PWD", env->environ[i])) <= 0 &&
 			(!res || -res == '='))
 		{
 			if (argv[1][0] == '/')

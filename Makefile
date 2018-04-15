@@ -49,9 +49,9 @@ SRCDIR_TERMIO_SCREEN = screen/
 OBJSRC = $(patsubst %, %.o, $(addprefix $(SRCDIR_AST), $(SRC_AST)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_MANAGER), $(SRC_MANAGER)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_EXEC), $(SRC_EXEC)))
-# OBJSRC += $(patsubst %, %.o, $(addprefix \
-# 		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
-# 		  $(SRC_EXEC_BUILTINS)))
+OBJSRC += $(patsubst %, %.o, $(addprefix \
+		  $(addprefix $(SRCDIR_EXEC), $(SRCDIR_EXEC_BUILTINS)), \
+		  $(SRC_EXEC_BUILTINS)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_CHECKS))), \
@@ -130,10 +130,10 @@ SRC_EXEC =	\
 			utils
 
 SRC_EXEC_BUILTINS = \
-			cd \
 			env \
 			handler \
 			echo
+			# cd
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \

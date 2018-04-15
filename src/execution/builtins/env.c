@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/11 15:28:07 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 17:06:04 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** Custom builtin
 */
 
-int	builtin_getenv(char *argv[])
+int	builtin_getenv(char *argv[], t_environ *env)
 {
 	int	i;
 	int	ret;
@@ -26,42 +26,41 @@ int	builtin_getenv(char *argv[])
 	i = 0;
 	if (!argv[1])
 		return (EXIT_FAILURE);
-	while ((g_environ->environ)[i])
+	while ((env->environ)[i])
 	{
-		if ((ret = strcmp(argv[1], g_environ->environ[i])) <= 0 && 
+		if ((ret = strcmp(argv[1], env->environ[i])) <= 0 && 
 			(!ret || -ret == '='))
 		{
-			printf("Found it!\n");
+			ft_printf_fd(STDOUT_FILENO, "%s\n", env->environ[i]);
+			return (EXIT_SUCCESS);
 		}
-		// ft_putstr((g_environ->environ)[i++]);
-		write(STDOUT_FILENO, "\n", 1);
 	}
 	return (EXIT_SUCCESS);
 }
 
 
-int	builtin_env(__attribute__((unused)) char *argv[])
+int	builtin_env(__attribute__((unused)) char *argv[], t_environ *env)
 {
 	int	i;
 
 	i = 0;
-	while ((g_environ->environ)[i])
+	while ((env->environ)[i])
 	{
-		ft_putstr((g_environ->environ)[i++]);
-		write(STDOUT_FILENO, "\n", 1);
+		ft_printf_fd(STDOUT_FILENO, "%s\n", env->environ[i]);
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }
 
-int	builtin_setenv(char *argv[])
+int	builtin_setenv(char *argv[], t_environ *env)
 {
-	if (!argv[1] || !strchr(argv[1], '='))
+	if (!argv[1] || !ft_strchr(argv[1], '='))
 		return (EXIT_FAILURE);
-	if (!(g_environ->environ = realloc(g_environ->environ, (g_environ->size + 1) * sizeof(char **))))
+	env->size++;
+	if (!(env->environ = realloc(env->environ, (env->size + 1) * sizeof(char *))))
 		return (EXIT_FAILURE);
-	g_environ->size++;
-	g_environ->environ[g_environ->size - 1] = argv[1];
-	printf("%zu = %s\n", g_environ->size, g_environ->environ[g_environ->size - 1]);
+	env->environ[env->size - 1] = ft_strdup(argv[1]);
+	// printf("%zu = %s\n", g_environ->size, g_environ->environ[g_environ->size - 1]);
 	return (EXIT_SUCCESS);
 }
 
@@ -71,24 +70,25 @@ int	builtin_setenv(char *argv[])
 ** My realloc doesn't change sizes when its smaller than the block's size so the realloc won't be doing anything. 
 */
 
-int	builtin_unsetenv(char *argv[])
+int	builtin_unsetenv(char *argv[], t_environ *env)
 {
 	int		i;
 	int		res;
 	int		len;
 
 	i = 0;
-	len = strlen(argv[1]);
-	while (g_environ->environ[i])
+	len = ft_strlen(argv[1]);
+	while (env->environ[i])
 	{
-		if ((res = ft_strcmp(argv[1], g_environ->environ[i])) <= 0 &&
+		if ((res = strcmp(argv[1], env->environ[i])) <= 0 &&
 			(!res || -res == '='))
 		{
-			free(g_environ->environ[i]);
-			memcpy(&(g_environ->environ[i]), &(g_environ->environ[i + 1]), ((g_environ->size - i) - 1) * sizeof(char *));
-			g_environ->environ = realloc(g_environ->environ, (g_environ->size - 1 * sizeof(char *)));
-			g_environ->environ[g_environ->size - 1] = NULL;
+			free(env->environ[i]);
+			memcpy(&(env->environ[i]), &(env->environ[i + 1]), ((env->size - i) - 1) * sizeof(char *));
 			g_environ->size--;
+			env->environ = realloc(env->environ, ((env->size + 1) * sizeof(char *)));
+			env->environ[env->size] = NULL;
+			return (EXIT_SUCCESS);
 		}
 		i++;
 	}

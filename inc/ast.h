@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 03:15:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 16:45:56 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_ast				*parser(char *input_str);
 ** lol remove me.
 */
 
-int				run_forest(t_queue *forest, char **substr);
+int				run_forest(t_queue *forest, char **substr, t_environ *env);
 t_queue			*build_forest(char **tokens, t_token_type *type);
 
 /*

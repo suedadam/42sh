@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 14:11:43 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 16:47:04 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct	s_redir_op
 typedef struct	s_builtins
 {
 	char	*name;
-	int		(*exec)(char **argv);
+	int		(*exec)(char **argv, t_environ *env);
 }				t_builtins;
 
 /*
@@ -73,12 +73,12 @@ int			build_info(t_ast *prev, t_ast *curr);
 ** builtins
 */
 
-int				builtin_handler(t_ast *curr);
-int				builtin_env(char *argv[]);
-int				builtin_setenv(char *argv[]);
-int				builtin_unsetenv(char *argv[]);
-int				builtin_cd(char *argv[]);
-int				builtin_echo(char *argv[]);
+int				builtin_handler(t_ast *curr, t_environ *env);
+int				builtin_env(char *argv[], t_environ *env);
+int				builtin_setenv(char *argv[], t_environ *env);
+int				builtin_unsetenv(char *argv[], t_environ *env);
+int				builtin_cd(char *argv[], t_environ *env);
+int				builtin_echo(char *argv[], t_environ *env);
 
 /*
 ** op_checks
@@ -107,7 +107,7 @@ void			build_leafs(t_ast *curr);
 void			pipe_carry(t_ast *prev, t_ast *curr);
 void			build_default(t_ast *curr);
 int				build_info(t_ast *prev, t_ast *curr);
-int				run_tree(t_ast *curr);
+int				run_tree(t_ast *curr, t_environ *env);
 
 /*
 ** redirection.c
