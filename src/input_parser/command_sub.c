@@ -119,8 +119,8 @@ int		is_command_sub(t_parser *par, char **input_str)
 	if (!(command = create_subs_command(input_str, close_char)) ||
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);
-	free(command);
 	if (split_into_tokens(par, command) == EXIT_FAILURE)
 		return (0);
+	free(command);
 	return (CONTINUE);
 }

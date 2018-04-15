@@ -98,7 +98,6 @@ t_ast				*parser(char *input_str)
 		return (NULL);
 	while (*input_str)
 	{
-		ft_printf("here\n");
 		// paren += check_paren(*input_str);
 		if ((ret = check_char(&par, &input_str)) <= 0)
 			return (ret == 0 ? NULL : MAP_FAILED);
