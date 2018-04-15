@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 18:33:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 20:19:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,15 @@ typedef struct			s_cursor
 	int					wordloc;
 }						t_cursor;
 
+typedef struct	s_autocheck
+{
+	t_trie			*trie;
+	char			**members;
+	int				nmem;
+	time_t			*timestamp;
+	int				ntime;
+}				t_autocheck;
+
 typedef struct			s_errstr
 {
 	int					err;
@@ -149,8 +158,9 @@ typedef	struct			s_terminf
 	t_buffer			paperweight;
 	t_cursor			cursor;
 	t_tokens			tokens;
-	t_trie				*trie;
 	t_stack				*trie_stack;
+	t_autocheck			trie_binaries;
+	t_autocheck			trie_wdir;
 	t_hist_var			history_var;
 	size_t				prompt_length;
 	char				*term_name;

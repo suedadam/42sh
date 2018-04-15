@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:50:38 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 20:37:19 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			init_shellenv(void)
 ** EXIT_FAILURE = 1 for ints, and NULL / 0
 */
 
-int			main(void)
+int			main(__attribute__((unused))int argc, __attribute__((unused))char *argv[], char **environ)
 {
 //	if (!(g_environ = malloc(sizeof(t_environ))))
 //		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 19:55:07 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:20:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ typedef struct	s_trie_with_level
 	size_t			pos;
 	char			child;
 }				t_trie_with_level;
-
-typedef struct	s_autocheck_info
-{
-	t_trie			trie;
-	char			**members;
-	int				nmem;
-	time_t			*timestamp;
-	int				ntime;
-}				t_autocomplete_info;
 
 
 int					start_autocomplete(void);
@@ -102,5 +93,8 @@ int		buildir_names(DIR *d_base, char *basepath);
 */
 
 void	del_paths(char **mul_paths);
+
+
+int		trie_rebuild(char **mul_path);
 
 #endif

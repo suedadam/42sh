@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 01:12:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:57:54 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:19:41 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_trie		*advanced_trie(char *word, t_trie *trie)
 {
 	if (IS_WHITESPACE(*word) || !(*word))
 		return (trie);
-	if (!trie->array[(int)(*word)])
+	if (!trie->children[(int)(*word)])
 		return (NULL);
 	return (advanced_trie(word + 1, trie->children[(int)(*word)]));
 }
@@ -43,9 +43,10 @@ int					start_autocomplete(void)
 	find_backwords();
 	if (autofind_pathnames() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	g_shell_env.cursor.wordloc == 1 ? trie = g_shell_env.trie1 :
-		trie = g_shell_env.trie2;
-	trie = advanced_trie(end_word_debut(), g_shell_env.trie);
+	g_shell_env.cursor.wordloc == 1 ? (trie = g_shell_env.trie_binaries.trie) :
+		(trie = g_shell_env.trie_wdir.trie);
+	trie = advanced_trie(end_word_debut(), trie);
 	if (trie)
 		trie_dfs(trie);
+	return (EXIT_SUCCESS);
 }
