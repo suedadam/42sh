@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:43:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:54:51 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 	{
 		regular_text(trie->key);
 		ft_stackpush(stack, trie, sizeof(t_trie_with_level));
-		cursor = g_shell_env.cursor;
+		cursor = &g_shell_env.cursor;
 		((t_trie_with_level *)(trie))->pos = cursor->position;
 		((t_trie_with_level *)(trie))->child = 0;
 		trie_dfs(trie);
@@ -69,14 +69,17 @@ static void			resume_dfs(t_trie *trie)
 {
 	t_cursor			*cursor;
 
-	cursor = g_shell.cursor;
-	while (cursor->position != ((t_trie_with_level)(trie))->pos)
+	cursor = &g_shell_env.cursor;
+	while (cursor->position != ((t_trie_with_level *)(trie))->pos)
 		ft_delete(-1);
 	trie_dfs(trie);
 }
 
-void				trie_dfs(t_trie *trie, t_stack *stack)
+void				trie_dfs(t_trie *trie)
 {
+	t_stack		*stack;
+
+	stack = g_shell_env.trie_stack;
 	if (!trie && isempty_stack(stack))
 		return ;
 	else if (!trie)
