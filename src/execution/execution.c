@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 17:35:56 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 17:56:44 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
+char **environ = NULL;
+
+int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 {
 	int		pid;
 	t_ast	*process;
@@ -36,6 +38,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 		return (EXIT_FAILURE);
 	if (!pid)
 	{
+		environ = env->environ;
 		// ft_printf("-----> B (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
 		if (handle_redirection(process))
 		{
@@ -56,23 +59,24 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids)
 	if (*(process->p_info->stdout) != STDOUT_FILENO)
 		close(process->p_info->stdout[0]);
 	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
-	run_pipecmds(cmd, pids);
+	run_pipecmds(cmd, pids, env);
 	return (EXIT_SUCCESS);
 }
 
-int		run_operation(t_ast *curr, uint8_t wait)
+int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 {
 	pid_t	pid;
 	int		res;
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
-	// if ((res = builtin_handler(curr, env)) != -1)
-	// 	return (res);
+	if ((res = builtin_handler(curr, env)) != -1)
+		return (res);
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
+		environ = env->environ;
 		// ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
 		if (handle_redirection(curr))
 			exit(EXIT_FAILURE);
@@ -148,12 +152,12 @@ int		run_tree(t_ast *curr, __attribute__((unused))t_environ *env)
 		while (op_handlers[i].check)
 		{
 			if (!op_handlers[i].check(*(curr->token)))
-				return (op_handlers[i].exec(curr));
+				return (op_handlers[i].exec(curr, env));
 			i++;
 		}
 	}
 	else
-		return (run_operation(curr, 1));
+		return (run_operation(curr, 1, env));
 	return (EXIT_FAILURE);
 }
 

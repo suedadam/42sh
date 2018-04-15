@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/13 23:25:30 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 17:43:49 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	itterate_pipes(t_stack *cmdstack, t_ast *curr)
 	}
 }
 
-int		op_pipe_exec(t_ast *curr)
+int		op_pipe_exec(t_ast *curr, t_environ *env)
 {
 	t_pqueue	pids;
 	t_stack		cmdstack;
@@ -43,7 +43,7 @@ int		op_pipe_exec(t_ast *curr)
 	cmdstack.top = NULL;
 	pids.first = NULL;
 	itterate_pipes(&cmdstack, curr);
-	run_pipecmds(&cmdstack, &pids);
+	run_pipecmds(&cmdstack, &pids, env);
 	if (!(kpid = malloc(sizeof(int))))
 		return (EXIT_FAILURE);
 	while ((res = wait(kpid)) >= 0)

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 17:06:33 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 18:58:21 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 */
 
 struct s_builtins	builtins[] = {
-	{"cd", &builtin_cd},
+	// {"cd", &builtin_cd},
 	{"echo", &builtin_echo},
 	// {"exit", &builtin_exit},
 	{"env", &builtin_env},
 	// {"history", &builtin_env},
+	{"getenv", &builtin_getenv},
 	{"setenv", &builtin_setenv},
 	{"unsetenv", &builtin_unsetenv},
 	{"unset", &builtin_unsetenv},

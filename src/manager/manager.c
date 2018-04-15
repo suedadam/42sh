@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 17:33:16 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 18:58:07 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_environ	*set_local_env(int subshell_env)
 	}
 	env->environ[i] = NULL;
 	env->size = g_environ->size;
-	return (env);	
+	return (env);
 }
 
 int	manager(char *input_str, char **substr)
