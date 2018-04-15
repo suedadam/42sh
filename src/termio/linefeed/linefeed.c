@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 15:53:16 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:26:37 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int			ft_linefeed(void)
 **	satkins_parser(g_shell_env->line_buffer)
 **	reset the buffer
 */
+	history_append_file(g_shell_env.buffer->buff);
 	ft_restoretty();
 	ft_printf_fd(STDOUT_FILENO, "\n");
 	ret = manager(g_shell_env.buffer->buff, NULL);
