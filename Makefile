@@ -181,16 +181,23 @@ SRC_IPARSE =	\
 ################################################################################
 
 # AUTOCOMPLETE
-#SRC_TERMIO_AUTOCOMPLETE = \
-#					count_word \
-#					id_add_name \
-#					check_possible_dir \
-#					gather_paths \
-#					concat_path \
-#					autofind_pathnames \
-#					buildir_names \
-#					del_paths
-#
+SRC_TERMIO_AUTOCOMPLETE =	\
+					autocomplete \
+					autocomplete_manager \
+					autofind_pathnames \
+					buildir_names \
+					check_possible_dir \
+					concat_path \
+					count_word \
+					del_paths \
+					gather_paths \
+					get_binaries \
+					get_files \
+					id_add_name \
+					modification_check \
+					trie_rebuild \
+					trie_utils
+
 # BUFFER
 SRC_TERMIO_BUFFER =	\
 					init_buffer \

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 16:48:59 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 19:33:08 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct	s_autocheck_info
 	time_t			*timestamp;
 	int				ntime;
 }				t_autocomplete_info;
+
+
+int					start_autocomplete(void);
 
 /*
 ** trie dfs autocomplete
