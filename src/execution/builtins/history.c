@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:32:40 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/04 16:33:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 15:50:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 int	builtin_history(char *argv[])
 {
-	
+	if (ft_strcmp(argv[1]ft_strcmp(argv[1], "--delete"))
+		history_delete();
+	else if (ft_srcmp(argv[1], "-ls") || ft_strcmp(argv[1], "--display"))
+		history
 }

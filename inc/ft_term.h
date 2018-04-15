@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 20:19:02 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 15:00:04 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct			s_cursor
 typedef struct	s_autocheck
 {
 	t_trie			*trie;
+	t_stack			*stack;
 	char			**members;
 	int				nmem;
 	time_t			*timestamp;
@@ -158,7 +159,6 @@ typedef	struct			s_terminf
 	t_buffer			paperweight;
 	t_cursor			cursor;
 	t_tokens			tokens;
-	t_stack				*trie_stack;
 	t_autocheck			trie_binaries;
 	t_autocheck			trie_wdir;
 	t_hist_var			history_var;

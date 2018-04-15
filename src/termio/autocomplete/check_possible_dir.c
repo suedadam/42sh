@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:28:19 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 22:57:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 15:49:14 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*check_possible_dir(void)
 	printf("check for possible dir\n");
 	if (len && (g_shell_env.cursor.buffer[(len - 1)] == '/'))
 	{
-		temp = g_shell_env.cursor.buffer;
+		temp = end_word_debut();
 		while (temp != g_shell_env.buffer->buff	&& !IS_WHITESPACE(*(temp - 1)))
 			temp--;
 		dir = ft_strchr(temp, '/');
@@ -38,6 +38,7 @@ char	*check_possible_dir(void)
 		}
 		temp = concatpath(dir, "./");
 		meta_free(dir);
+		printf("is possible\n");
 		return (temp);
 	}
 	return (NULL);
