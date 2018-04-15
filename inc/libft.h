@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 16:32:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:36:29 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int					isempty_stack(t_stack *stack);
 /*
 ** Double linked list
 */
-t_dblist			*new_dblist(void)
+t_dblist			*new_dblist(void);
 int					dbl_push_end(t_dblist *dblist, void *content,
 						size_t c_size);
 int					dbl_push_front(t_dblist *dblist, void *content,
