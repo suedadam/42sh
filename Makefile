@@ -29,6 +29,8 @@ SRCDIR_EXEC_OPS = ops/
 SRCDIR_EXEC_OPS_CHECKS = op_checks/
 SRCDIR_EXEC_OPS_EXECS = op_execs/
 
+SRCDIR_HISTORY = src/history/
+
 SRCDIR_IPARSE = src/input_parser/
 
 SRCDIR_MANAGER = src/manager/
@@ -60,6 +62,7 @@ OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_EXECS))), \
 		  $(SRC_EXEC_OPS_EXECS)))
+OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_HISTORY), $(SRC_HISTORY)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_IPARSE), $(SRC_IPARSE)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_TERMIO), $(SRCDIR_TERMIO_AUTOCOMPLETE)), \
@@ -147,6 +150,14 @@ SRC_EXEC_OPS_EXECS =	\
 
 ################################################################################
 # EXECUTION SOURCE FILES                                                       #
+################################################################################
+
+SRC_HISTORY =	\
+			history \
+			history_keyboard_actions
+
+################################################################################
+# PARSER SOURCE FILES                                                          #
 ################################################################################
 
 SRC_IPARSE =	\

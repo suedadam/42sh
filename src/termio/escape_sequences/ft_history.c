@@ -6,14 +6,18 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:06:48 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/06 22:24:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 18:58:04 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_escape.h"
 #include "ft_proto.h"
 
-int		ft_history(__attribute__((unused)) char byte)
+int		ft_history(char byte)
 {
+	if (byte == 'A')
+		up_history_command();
+	else if (byte == 'B')
+		down_history_command();
 	return (EXIT_SUCCESS);
 }
