@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 19:43:53 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/14 22:38:40 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void			history_append_list(char *buffer)
 
 	history_var = &g_shell_env.history_var;
 	if (buffer && history_var && history_var->history_list)
-		dbl_push_front(history_var->history_list, buffer, ft_strlen(buffer));
+		dbl_push_front(history_var->history_list, buffer, ft_strlen(buffer) + 1);
 }
 
 int				history_init(void)
@@ -69,7 +69,7 @@ t_dblist		*get_history(void)
 	fd = open(HISTORY_FILE, O_RDONLY | O_APPEND | O_CREAT, 0644);
 	while ((gnl_ret = get_next_line(fd, &line)) > 0)
 	{
-		dbl_push_front(history_list, line, ft_strlen(line));
+		dbl_push_front(history_list, line, ft_strlen(line) + 1);
 		free(line);
 		line = NULL;
 	}

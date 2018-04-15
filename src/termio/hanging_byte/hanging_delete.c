@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hanging_delete.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 16:01:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 22:03:07 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 21:28:10 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		hanging_delete(char *byte)
 		while ((temp != g_shell_env.buffer->buff)
 				&& IS_WHITESPACE(*(temp - 1)))
 			temp--;
-		if (*(temp - 1) == '|')
+		if (temp != g_shell_env.buffer->buff && *(temp - 1) == '|')
 			T_PIPE ? (T_PIPE = 0) : (T_PIPE = 1);
 	}
 	else if (paren_delete(*byte) == EXIT_SUCCESS)

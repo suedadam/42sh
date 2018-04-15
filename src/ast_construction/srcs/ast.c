@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 13:01:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 21:35:22 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	if (!(forest = new_queue()))
 		return (NULL);
 	pos = 0;
+	printf("First token: \"%s\"\n", *tokens);
 	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
 		if (ft_enqueue(forest, ast, sizeof(t_ast)) == EXIT_FAILURE)

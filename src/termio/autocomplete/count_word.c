@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 20:59:40 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/13 23:16:58 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 22:53:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,18 @@ void		wcount_forword(char byte)
 void		wcount_backword(char byte)
 {
 	if (IS_WHITESPACE(byte))
-	{
-		if (g_shell_env.cursor.wordloc == -1)
-			find_backwords();
-		else
-			T_WORD ? T_WORD = 0 : 0;
-	}
-	else if (!IS_WHITESPACE(byte))
+		T_WORD = 0;
+	else
 	{
 		if (IS_OPERATOR(byte))
 			g_shell_env.cursor.wordloc = -1;
 		else
 		{
-			!T_WORD ? g_shell_env.cursor.wordloc-- : 0;
+			!T_WORD ? g_shell_env.cursor.wordloc++ : 0;
 			T_WORD = 1;
 		}
 	}
-	printf("\non: %d %d\n", g_shell_env.cursor.wordloc, byte);
+	// printf("\non: %d %d\n", g_shell_env.cursor.wordloc, byte);
 }
 
 void		find_backwords(void)
@@ -62,7 +57,15 @@ void		find_backwords(void)
 
 	T_WORD = 0;
 	g_shell_env.cursor.wordloc = 0;
-	temp = g_shell_env.cursor.buffer + g_shell_env.cursor.position; 
-	while (temp != g_shell_env.buffer->buff && g_shell_env.cursor.wordloc < 2)
-		wcount_backword(*temp--);
+	temp = g_shell_env.cursor.buffer + g_shell_env.cursor.position;
+	while (temp != g_shell_env.cursor.buffer && g_shell_env.cursor.wordloc < 2)
+	{
+		wcount_backword(*temp);
+		if (g_shell_env.cursor.wordloc == -1)
+		{
+			g_shell_env.cursor.wordloc = 1;
+			break ;
+		}
+		temp--;
+	}
 }

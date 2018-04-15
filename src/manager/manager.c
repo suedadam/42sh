@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manager.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 18:58:07 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/14 21:41:19 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ int	manager(char *input_str, char **substr)
 	if (!(forest = build_forest(res->token, res->type)))
 	{
 		// free_segs(res);
+		// ft_printf("Got here?\n");
 		return (EXIT_FAILURE);
 	}
+	// ft_printf("Nick\n");
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))
 		return (EXIT_FAILURE);
+	// ft_printf("Greg....\n");
 	ret = run_forest(forest, substr, env);
 	return (ret);
 }

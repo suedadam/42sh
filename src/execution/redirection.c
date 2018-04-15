@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 17:12:29 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/14 21:04:32 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int		handle_redirection(t_ast *curr)
 		j = 0;
 		while (redir_ops[j].opflag)
 		{
-			if (!strcmp(curr->token[i], redir_ops[j].opflag) && curr->type[i] == REDIR)
+			if (!strcmp(curr->token[i], redir_ops[j].opflag))
 			{
 				if (!curr || redir_ops[j].func(curr, i))
 					return (EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trie_rebuild.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:28:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 20:36:06 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/14 23:02:39 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ int		trie_rebuild(char **mul_path)
 	int			i;
 	int			ret;
 
+	printf("begin rebuild\n");
 	g_shell_env.cursor.wordloc == 1 ? (trie_inf = &(g_shell_env.trie_binaries)) :
 		(trie_inf = &(g_shell_env.trie_wdir));
 	i = 0;
 	while (trie_inf->members && trie_inf->timestamp && mul_path[i])
 	{
+		printf("check memebers\n");
 		if (!ft_strncmp(mul_path[i], trie_inf->members[i], ft_strlen(mul_path[i])))
 			ret = EXIT_FAILURE;
 		if (lstat(mul_path[i], &sbuf) < 0)
@@ -56,6 +58,7 @@ int		trie_rebuild(char **mul_path)
 		if (ret == EXIT_FAILURE)
 			break ;
 	}
+	printf("rebuild end\n");
 	if (ret == EXIT_FAILURE)
 		ret = build_association(trie_inf, mul_path);
 	return (ret);
