@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 02:42:41 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 03:28:12 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			ft_delete(char byte)
 	char		*buffer;
 	static char	*cache = NULL;
 
-	cache ? 0 : cache = tgetstr("dc", NULL);
+	!cache ? cache = tgetstr("dc", NULL) : 0;
 	if (byte > 0)
 	{
 		if (read(STDIN_FILENO, &byte, 1) < 0)
