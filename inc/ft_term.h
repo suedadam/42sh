@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:19:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:15:03 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,26 @@
 # include "libft.h"
 # include "error.h"
 
-# define UNSET (void *)
-# define HISTORY_FILE ".42sh_history"
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v'\
-		|| c == '\f' || c == '\r')
-#define IS_OPERATOR(c) (c == '(' || c == '&' || c == '|')
-# define PRINTABLE(c) (c >= 32 && c <= 126)
-# define T_BSLASH (g_shell_env.tokens.bslash)
-# define T_MPASS (g_shell_env.tokens.mpass)
-# define T_WORD (g_shell_env.tokens.spcdelim)
-# define T_QUOTE (g_shell_env.tokens.quote)
-# define T_DQUOTE (g_shell_env.tokens.dquote)
-# define T_DBLESC (g_shell_env.tokens.dblesc)
-# define T_OPAREN (g_shell_env.tokens.oparen)
-# define T_CPAREN (g_shell_env.tokens.cparen)
-# define T_OCURLY (g_shell_env.tokens.ocurly)
-# define T_CCURLY (g_shell_env.tokens.ccurly)
-# define T_PIPE (g_shell_env.tokens.pipe)
+# define UNSET				(void *)
+# define HISTORY_FILE		".42sh_history"
 
-int						g_ft_errnum;
+# define SORRY_GUYS			|| c == ' ' || c == '\v' || c == '\f' || c == '\r'
+# define IS_WHITESPACE(c) 	(c == '\n' || c == '\t' SORRY_GUYS)
+# define IS_OPERATOR(c) 	(c == '(' || c == '&' || c == '|')
+# define PRINTABLE(c) 		(c >= 32 && c <= 126)
+# define T_BSLASH 			(g_shell_env.tokens.bslash)
+# define T_MPASS 			(g_shell_env.tokens.mpass)
+# define T_WORD 			(g_shell_env.tokens.spcdelim)
+# define T_QUOTE 			(g_shell_env.tokens.quote)
+# define T_DQUOTE 			(g_shell_env.tokens.dquote)
+# define T_DBLESC 			(g_shell_env.tokens.dblesc)
+# define T_OPAREN 			(g_shell_env.tokens.oparen)
+# define T_CPAREN 			(g_shell_env.tokens.cparen)
+# define T_OCURLY 			(g_shell_env.tokens.ocurly)
+# define T_CCURLY 			(g_shell_env.tokens.ccurly)
+# define T_PIPE 			(g_shell_env.tokens.pipe)
+
+int							g_ft_errnum;
 
 enum {
 	CURSOR_MOVE,
@@ -87,13 +88,13 @@ enum {
 	TGETSTR
 };
 
-typedef struct			s_vertex
+typedef struct				s_vertex
 {
 	int					x;
 	int					y;
-}						t_vertex;
+}							t_vertex;
 
-typedef struct			s_cursor
+typedef struct				s_cursor
 {
 	t_vertex			og_position;
 	t_vertex			res_position;
@@ -102,9 +103,9 @@ typedef struct			s_cursor
 	char				*buffer;
 	size_t				buffer_length;
 	int					wordloc;
-}						t_cursor;
+}							t_cursor;
 
-typedef struct	s_autocheck
+typedef struct				s_autocheck
 {
 	t_trie			*trie;
 	t_stack			*stack;
@@ -112,23 +113,23 @@ typedef struct	s_autocheck
 	int				nmem;
 	time_t			*timestamp;
 	int				ntime;
-}				t_autocheck;
+}							t_autocheck;
 
-typedef struct			s_errstr
+typedef struct				s_errstr
 {
 	int					err;
 	char				*str;
 	size_t				len;
-}						t_errstr;
+}							t_errstr;
 
-typedef struct			s_buffer
+typedef struct				s_buffer
 {
 	char				*buff;
 	size_t				length;
 	size_t				max_size;
-}						t_buffer;
+}							t_buffer;
 
-typedef struct			s_tokens
+typedef struct				s_tokens
 {
 	int					mpass;
 	int					control_v;
@@ -141,15 +142,15 @@ typedef struct			s_tokens
 	int					ccurly;
 	int					dblesc;
 	int					pipe;
-}						t_tokens;
+}							t_tokens;
 
-typedef struct			s_hist_var
+typedef struct				s_hist_var
 {
 	t_dblist			*history_list;
 	t_node				*current_history_cmd;
-}						t_hist_var;
+}							t_hist_var;
 
-typedef	struct			s_terminf
+typedef	struct				s_terminf
 {
 	struct termios		original_tty;
 	struct termios		*shell_tty;
@@ -164,8 +165,8 @@ typedef	struct			s_terminf
 	size_t				prompt_length;
 	char				*term_name;
 	char				*term_buff;
-}						t_terminf;
+}							t_terminf;
 
-t_terminf				g_shell_env;
+t_terminf					g_shell_env;
 
 #endif
