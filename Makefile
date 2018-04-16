@@ -191,7 +191,6 @@ SRC_TERMIO_AUTOCOMPLETE =	\
 					count_word \
 					del_paths \
 					gather_paths \
-					get_files \
 					id_add_name \
 					trie_rebuild \
 					trie_utils

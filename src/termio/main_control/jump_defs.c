@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 15:45:18 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 20:55:31 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 02:34:01 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		(*g_control_jump[])() = {
 	NULL,
 	control_c,
 	control_h,
-	start_autocomplete,
+	NULL,
 	control_j,
 	control_k,
 	control_l,
