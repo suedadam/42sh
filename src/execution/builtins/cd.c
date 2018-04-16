@@ -6,13 +6,38 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 23:16:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 02:25:05 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <string.h>
 #include <errno.h>
+
+void	parse_relative(char **str)
+{
+	char	*res;
+	char	*tmp;
+	size_t	len;
+
+	if (!(len = ft_strlen(*str)))
+		return ;
+	while ((res = ft_strstr(*str, "..")))
+	{
+		if (!(*res))
+			return ;
+		*(res - 1) = '\0';
+		tmp = ft_strrchr(*str, '/');
+		*(res - 1) = '/';
+		if ((len = strlen(res)) > 2)
+		{
+			ft_memmove(tmp, res + 2, len - 2);
+			tmp[len - 2] = '\0';
+		}
+		else
+			*tmp = '\0';
+	}
+}
 
 static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
 {
@@ -21,6 +46,7 @@ static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
 	bzero(&((*l_pwd)[4]), inlen + 2);
 	if (!(*l_pwd = ft_strcat(*l_pwd, input)))
 		return (EXIT_FAILURE);
+	parse_relative(l_pwd);
 	if (chdir(&((*l_pwd)[4])) == -1)
 	{
 		ft_printf("Error: %s\n", ft_strerror(errno));
@@ -40,6 +66,7 @@ static int	relative_update(char **l_pwd, char **res, char *input, size_t inlen)
 	if (!(*l_pwd = ft_strcat(*l_pwd, input)))
 		return (EXIT_FAILURE);
 	//error handle here.
+	parse_relative(l_pwd);
 	if (chdir(&((*l_pwd)[4])) == -1)
 	{
 		ft_printf("Error: %s\n", ft_strerror(errno));
