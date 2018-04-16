@@ -16,8 +16,6 @@ char				*strappend(char **str, char c)
 {
 	int				length;
 
-	if (!*str)
-		return (NULL);
 	length = ft_strlen(*str);
 	if (!(*str = meta_realloc(*str, length + 2)))
 		return (NULL);
