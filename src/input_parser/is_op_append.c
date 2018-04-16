@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 10:36:32 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 11:58:04 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:50:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,4 @@ int					is_op_append(char *token, char c)
 	else
 		return (!c && cmp(token, 2));
 	return (cmp(tmp, len));
-	
 }

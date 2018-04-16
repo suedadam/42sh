@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   btick.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/16 02:49:40 by nkouris           #+#    #+#             */
+/*   Updated: 2018/04/16 02:59:42 by nkouris          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
 static int	is_quoted(uint8_t *quoted, char c, char **command)
@@ -20,9 +32,9 @@ static int	close_chck(uint8_t quoted, char c, char **command, int paren)
 	{
 		if (quoted || paren)
 		{
-			free(*command);
+			meta_free(*command);
 			*command = NULL;
-			return (EXIT_FAILURE_SOFT); //parse error
+			return (EXIT_FAILURE_SOFT);
 		}
 		return (EXIT_SUCCESS);
 	}
@@ -52,9 +64,8 @@ char		*bquote_command(char **input_str)
 		if (!(quoted & BACKSLASH) &&
 			!(command = strappend(&command, (*input_str)[i])))
 			return (NULL);
-		paren += check_paren((*input_str)[i]);
-		i++;
+		paren += check_paren((*input_str)[i++]);
 	}
-	free(command);
+	meta_free(command);
 	return (MAP_FAILED);
 }

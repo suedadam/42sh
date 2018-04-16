@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 02:39:07 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 03:21:17 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void			one_child(t_trie *trie)
 static void			bottleneck(t_trie *trie, t_stack *stack)
 {
 	int			child;
-	t_cursor	*cursor;
 
 	if (!stack || !trie)
 		return ;

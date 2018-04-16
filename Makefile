@@ -153,7 +153,8 @@ SRC_EXEC_OPS_EXECS =	\
 
 SRC_HISTORY =	\
 			history \
-			history_keyboard_actions
+			history_keyboard_actions \
+			history_utils
 
 ################################################################################
 # PARSER SOURCE FILES                                                          #

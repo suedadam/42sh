@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 18:35:42 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/15 17:13:12 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:09:46 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		check_paren(char c)
 		return (0);
 }
 
-char		*literal_command(char **input_str, int i)
+char	*literal_command(char **input_str, int i)
 {
 	int		embedded_open_paren;
 	char	*command;
@@ -44,9 +44,8 @@ char		*literal_command(char **input_str, int i)
 		}
 		else if ((*input_str)[i] == '(')
 			embedded_open_paren++;
-		if (!(command = strappend(&command, (*input_str)[i]))) //possible optimization memcpy instead of char by char append
+		if (!(command = strappend(&command, (*input_str)[i++])))
 			return (NULL);
-		i++;
 	}
 	meta_free(command);
 	return (MAP_FAILED);
@@ -70,9 +69,6 @@ int		is_subshell(t_parser *par, char **input_str)
 	ret = manager(command, &unused);
 	meta_free(command);
 	if (ret == EXIT_FAILURE)
-	{
-		printf("Manager returned a fail :( \n");
-		return (0);
-	}
+		return (EXIT_FAILURE);
 	return (ret == EXIT_FAILURE_SOFT ? -1 : CONTINUE);
 }

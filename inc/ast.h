@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 03:17:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 03:18:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # include <unistd.h>
 # include <sys/mman.h>
 
-# define SORRY_GUYS || c == ' ' || c == '\v' || c == '\f' || c == '\r'
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' SORRY_GUYS)
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 
 /*
 ** quoted flags
