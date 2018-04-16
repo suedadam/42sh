@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:16:46 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 16:10:49 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 06:42:10 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int		paren_delete(char byte);
 */
 
 int		quote_mode(void);
+void	verify_hanging(void);
 
 #endif

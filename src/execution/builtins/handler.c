@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:53:18 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 06:19:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ struct s_builtins	builtins[] = {
 	{"fg", &builtin_fg},
 	{"bg", &builtin_bg},
 	{"jobs", &builtin_jobs},
-	// {"exit", &builtin_exit},
 	{"env", &builtin_env},
 	{"history", &builtin_history},
 	{"getenv", &builtin_getenv},
@@ -70,7 +69,10 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 		{
 			backup_fds(&backup);
 			set_fds(curr->p_info);
-			i = builtins[i].exec(curr->token, env);
+			if (i == 11)
+				i = builtins[11].exec(curr->token, g_environ);
+			else
+				i = builtins[i].exec(curr->token, env);
 			restore_fds(backup);
 			meta_free(backup);
 			return (i);

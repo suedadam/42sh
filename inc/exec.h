@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 06:15:58 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 07:20:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int				builtin_history(char *argv[], t_environ *env);
 int				builtin_fg(char *argv[], t_environ *env);
 int				builtin_bg(char *argv[], t_environ *env);
 int				builtin_jobs(char *argv[], t_environ *env);
+int				builtin_export(char *argv[], t_environ *env);
+//int				builtin_exit(char *argv[], t_environ *env);
 
 /*
 ** op_checks

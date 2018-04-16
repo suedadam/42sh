@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 03:48:09 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 06:39:08 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 static int											checktty(void)
 {
 	return (EXIT_SUCCESS);
+}
+
+static int											builtin_exit(char byte)
+{
+	if (byte == 10 && ft_strequ("exit", g_shell_env.buffer->buff))
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
 }
 
 static int											reset_terminal(void)
@@ -30,6 +38,7 @@ static int											reset_terminal(void)
 
 static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 {
+	verify_hanging();
 	if (g_shell_env.cursor.position
 			&& g_shell_env.buffer->buff[g_shell_env.buffer->length - 1] == '\\')
 		return (drop_prompt("> "));
@@ -66,7 +75,8 @@ int													ft_read_loop(void)
 		return (EXIT_FAILURE);
 	while ((ret = read(STDIN_FILENO, &byte, 1)) == 1)
 	{
-		if (byte == 4 && !(*g_shell_env.buffer->buff))
+		if ((byte == 4 || (builtin_exit(byte) == EXIT_SUCCESS))
+		&& (!(*g_shell_env.buffer->buff && (builtin_exit(byte) == EXIT_FAILURE))))
 		{
 			if (reset_prompt() == EXIT_FAILURE)
 				return (EXIT_FAILURE);

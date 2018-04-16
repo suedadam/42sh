@@ -133,7 +133,7 @@ SRC_EXEC_BUILTINS = \
 			cd \
 			fg \
 			env_utils \
-			history \
+			history 
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \

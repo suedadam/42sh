@@ -6,12 +6,25 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:43:49 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 06:46:04 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hangingbyte.h"
 #include "ft_proto.h"
+
+void	verify_hanging(void)
+{
+	char	*buf;
+
+	buf = g_shell_env.buffer->buff;
+	ft_bzero(&g_shell_env.tokens, sizeof(t_tokens));
+	while (*buf)
+	{
+		hanging_byte(*buf);
+		buf++;
+	}
+}
 
 void	hanging_byte(char byte)
 {
