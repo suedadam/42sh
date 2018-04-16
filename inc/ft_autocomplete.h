@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 17:33:47 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 01:36:34 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_trie_with_level
 
 char				*end_word_debut(void);
 int					start_autocomplete(void);
+int					reinit_stack(t_autocheck *trie_inf);
 
 /*
 ** trie dfs autocomplete

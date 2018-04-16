@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 23:54:51 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:12:44 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define NO_CHILD -42
 
-int		next_child(t_trie *trie, int start)
+int					next_child(t_trie *trie, int start)
 {
 	int		i;
 
@@ -39,16 +39,13 @@ static void	one_child(t_trie *trie)
 	trie_dfs(trie->children[child]);
 }
 
-static void	bottleneck(t_trie *trie, t_stack *stack)
+static void			bottleneck(t_trie *trie, t_stack *stack)
 {
 	int			child;
 	t_cursor	*cursor;
 
 	if (!stack || !trie)
-	{
-		ft_printf("BONJOUR [error in bottleneck null stack || null trie]\n");
-		exit(1);
-	}
+		return ;
 	if (!(stack->top) || ((t_trie *)(stack->top->content))->pos != trie->pos)
 	{
 		cursor = &g_shell_env.cursor;
@@ -59,7 +56,6 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 		if (!trie->is_word)
 			trie_dfs(trie);
 		trie->is_word = 0;
-
 	}
 	else if ((child = next_child(trie, (int)(trie->child))) != NO_CHILD)
 	{
@@ -77,8 +73,17 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 static void			resume_dfs(t_trie *trie, t_stack *stack)
 {
 	t_cursor			*cursor;
+	t_autocheck 		*trie_inf;
 
 	cursor = &g_shell_env.cursor;
+	cursor->wordloc == 1 ? (trie_inf = &(g_shell_env.trie_binaries)) :
+		(trie_inf = &(g_shell_env.trie_wdir));
+	if (cursor->position < trie->pos)
+	{
+		reinit_stack(trie_inf);
+		start_autocomplete();
+		return ;
+	}
 	while (trie->pos > 0 && cursor->position != trie->pos)
 		ft_backspace();
 	trie->is_word = 0;

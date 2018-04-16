@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:41:40 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:41:13 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:11:33 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	**gather_paths(int word)
 	temp = NULL;
 	if (word == 1)
 	{
-		// printf("first word\n");
 		temp = "PATH";
 		if (!(temp = getenv(temp)))
 			return (NULL);
@@ -31,7 +30,6 @@ char	**gather_paths(int word)
 	}
 	else
 	{
-		// printf("second word\n");
 		temp = check_possible_dir();
 		if (!(mul_path = (char **)ft_memalloc(sizeof(char *) * 2)))
 			return (NULL);

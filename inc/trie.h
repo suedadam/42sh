@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:15 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 19:15:11 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 01:36:24 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ t_trie		*new_trie(void);
 int			search_word(t_trie *trie, char *word);
 void		display_trie(t_trie *trie, int level);
 void		free_trie(t_trie *trie);
+
 #endif

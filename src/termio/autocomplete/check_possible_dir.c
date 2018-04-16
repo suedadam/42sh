@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:28:19 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 01:17:17 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:11:39 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*check_possible_dir(void)
 			meta_free(dir);
 			return (NULL);
 		}
-//		temp = concatpath(dir, "./");
 		return (dir);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 23:34:24 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:11:13 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,7 @@ void		display_trie(t_trie *trie, int level)
 
 	i = 0;
 	if (!trie || !trie->nbr_children)
-	{
-
 		return ;
-	}
 	ft_printf("-------\n");
 	ft_printf("Level %d\n", level);
 	while (i < 128)
