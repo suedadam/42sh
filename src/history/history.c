@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 16:57:30 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 17:15:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int				display_history(void)
 	int			i;
 
 	history_var = &g_shell_env.history_var;
-	temp = history_var->history_list->first;
+	temp = history_var->history_list->last;
 	i = 0;
-	while (temp && !(i && temp == history_var->history_list->first))
+	while (temp && !(i && temp == history_var->history_list->last))
 	{
-		ft_printf_fd(STDIN_FILENO, "\t%d %s\n", i, (char *)(temp->content));
-		temp = temp->next;
+		ft_printf_fd(STDIN_FILENO, "%d %s\n", i, (char *)(temp->content));
+		temp = temp->previous;
 		i++;
 	}
 	return (EXIT_SUCCESS);

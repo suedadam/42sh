@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 12:05:38 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 17:25:06 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 				meta_free(kpid);
 			}
 		}
+		printf("%d", WEXITSTATUS(*kpid));
 	}
 	return (EXIT_SUCCESS);
 }

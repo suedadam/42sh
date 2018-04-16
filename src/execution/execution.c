@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 13:14:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 17:27:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 		return (EXIT_FAILURE);
 	if (!pid)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGCONT, SIG_DFL);
 		environ = env->environ;
 		// ft_printf("-----> B (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
 		if (handle_redirection(process))
