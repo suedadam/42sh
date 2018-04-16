@@ -1,1 +1,0 @@
-gcc -g ../deps/libft/libftprintf.a execution/ops/op_checks/*.c execution/ops/op_execs/*.c execution/*.c manager/manager.c ast_construction/main.c ast_construction/srcs/*.c -I ../inc -I ../deps/libft/inc -I ../deps

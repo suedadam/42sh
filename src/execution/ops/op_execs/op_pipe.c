@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:29:33 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:42:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		suspend_chain(t_pqueue *pids, char *name)
 		kill(*pid, SIGTSTP);
 		meta_free(pid);
 	}
-	job.name = strdup(name);
+	job.name = ft_strdup(name);
 	add_suspended(&job);
 	return (EXIT_SUCCESS);
 }

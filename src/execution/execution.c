@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:32:56 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:43:38 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 	{
 		exec_init(process);
 		execvP(*(process->token), ft_getenv("PATH", env), process->token);
-		ft_printf("Error: %s: %s\n", strerror(errno), *(process->token));
+		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(process->token));
 		exit(EXIT_FAILURE);
 	}
 	parent_pipes(process);
@@ -62,7 +62,7 @@ int		handle_suspend(pid_t *pid, t_ast *curr)
 		return (EXIT_FAILURE);
 	if (ft_stackpush(job.pids, pid, sizeof(pid_t)) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	job.name = strdup(*(curr->token));
+	job.name = ft_strdup(*(curr->token));
 	add_suspended(&job);
 	return (EXIT_SUCCESS);
 }
@@ -82,7 +82,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 	{
 		exec_init(curr);
 		execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
-		ft_printf("Error: %s: %s\n", strerror(errno), *(curr->token));
+		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(curr->token));
 		exit(EXIT_FAILURE);
 	}
 	if (wait)
@@ -113,7 +113,7 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		return ;
 	if (!(curr->right_child->right_child) ||
 			(*(curr->right_child->type) == OPERATOR &&
-			strcmp(*(curr->right_child->token), "|")))
+			ft_strcmp(*(curr->right_child->token), "|")))
 	{
 		fds[0] = STDOUT_FILENO;
 		fds[1] = STDOUT_FILENO;

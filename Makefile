@@ -108,7 +108,6 @@ RES = \033[0m
 SRC_AST =	\
           ast \
           ast_free_utils \
-          debugging \
           new_ast_utils \
           utils
 

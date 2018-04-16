@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:29:17 by asyed             #+#    #+#             */
-/*   Updated: 2018/03/29 16:50:10 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:42:12 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	op_pipe_check(char *str)
 {
-	return (strcmp(str, "|"));
+	return (ft_strcmp(str, "|"));
 }

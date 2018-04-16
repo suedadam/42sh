@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 05:41:38 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 08:45:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	builtin_export(char *argv[], __attribute__((unused)) t_environ *env)
 	i = 0;
 	while (env->environ[i])
 	{
-		if (!strncmp(argv[1], env->environ[i], 
+		if (!ft_strncmp(argv[1], env->environ[i], 
 			equal_index) &&
 			ft_strchr(env->environ[i], '=') - env->environ[i] == equal_index)
 		{
@@ -52,7 +52,7 @@ int	builtin_getenv(char *argv[], t_environ *env)
 		return (EXIT_FAILURE);
 	while ((env->environ)[i])
 	{
-		if (!strncmp(argv[1], env->environ[i], 
+		if (!ft_strncmp(argv[1], env->environ[i], 
 			(ft_strchr(env->environ[i], '=') - env->environ[i])))
 		{
 			ft_printf_fd(STDOUT_FILENO, "%s\n", env->environ[i]);

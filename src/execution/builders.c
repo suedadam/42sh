@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:46:16 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:10:31 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:41:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		build_info(t_ast *prev, t_ast *curr)
 		return (EXIT_FAILURE);
 	if (*(curr->type) == OPERATOR)
 	{
-		if (!strcmp(*(curr->token), "|"))
+		if (!ft_strcmp(*(curr->token), "|"))
 			pipe_carry(prev, curr);
 		else
 			build_operator(curr);

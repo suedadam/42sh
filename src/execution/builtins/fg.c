@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 20:05:58 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:29:05 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:42:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_fg(char *argv[], __attribute__((unused)) t_environ *env)
 				return (EXIT_FAILURE);
 			if (ft_stackpush(job.pids, &ret, sizeof(pid_t)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			job.name = strdup("undefined");
+			job.name = ft_strdup("undefined");
 			add_suspended(&job);
 		}
 		return (res);

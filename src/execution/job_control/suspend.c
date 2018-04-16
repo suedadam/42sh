@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:52:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:09:49 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:41:55 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ pid_t			unsuspend(char *name)
 	}
 	while (list)
 	{
-		if ((job = list->content) && !strcmp(job->name, name))
+		if ((job = list->content) && !ft_strcmp(job->name, name))
 		{
 			ret = unsuspend_chain(job->pids);
 			if (peek_queue(g_jobs) == job)

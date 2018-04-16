@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 07:26:02 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:44:57 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		parse_relative(char **str)
 		if (!(tmp = ft_strrchr(*str, '/')))
 			return ;
 		*(res - 1) = '/';
-		if ((len = strlen(res)) > 2)
+		if ((len = ft_strlen(res)) > 2)
 		{
 			ft_memmove(tmp, res + 2, len - 2);
 			tmp[len - 2] = '\0';
@@ -92,7 +92,7 @@ int			builtin_cd(char *argv[], t_environ *env)
 	{
 		if (!(home = ft_getenv("HOME", env)))
 			return (EXIT_FAILURE);
-		return (absolute_update(&l_pwd, res, home, strlen(home)));
+		return (absolute_update(&l_pwd, res, home, ft_strlen(home)));
 	}
 	else if (argv[1][0] == '/')
 		return (absolute_update(&l_pwd, res, argv[1], len));
