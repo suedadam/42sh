@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 08:03:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:42:39 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int			ft_linefeed(void)
 
 	if (g_shell_env.buffer->length)
 		history_append_file(g_shell_env.buffer->buff);
-	verify_hanging();
 	ft_execprep();
 	ret = manager(g_shell_env.buffer->buff, NULL);
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)

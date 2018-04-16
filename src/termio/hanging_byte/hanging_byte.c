@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 06:46:04 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 08:53:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 void	verify_hanging(void)
 {
 	char	*buf;
+//	int		ogpipe;
 
 	buf = g_shell_env.buffer->buff;
+//	ogpipe = g_shell_env.tokens.pipe;
 	ft_bzero(&g_shell_env.tokens, sizeof(t_tokens));
 	while (*buf)
 	{
 		hanging_byte(*buf);
+		if (!IS_WHITESPACE(*buf))
+		T_PIPE = 0;
 		buf++;
 	}
+//	g_shell_env.tokens.pipe = ogpipe;
 }
 
 void	hanging_byte(char byte)

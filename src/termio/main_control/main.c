@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 03:53:28 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:46:08 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	init_termcaps(void)
 	int		ret;
 
 	if (!(g_shell_env.term_buff = (char *)ft_memalloc(3096))
-		|| !(g_shell_env.term_name = getenv("TERM")))
+		|| !(g_shell_env.term_name = ft_getenv("TERM", g_environ)))
 		return (EXIT_FAILURE);
 	ret = tgetent(g_shell_env.term_buff, g_shell_env.term_name);
 	if (ret < 0)

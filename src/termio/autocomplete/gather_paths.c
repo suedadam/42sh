@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:41:40 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:11:33 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:45:43 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ char	**gather_paths(int word)
 	temp = NULL;
 	if (word == 1)
 	{
-		temp = "PATH";
-		if (!(temp = getenv(temp)))
+		if (!(temp = ft_getenv("PATH", g_environ)))
 			return (NULL);
 		if (!(mul_path = ft_strsplit(temp, ':')))
 			return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:45:49 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:49:37 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:48:40 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void			yank(char *buffer)
 			return ;
 		i++;
 	}
+	verify_hanging();
 }
