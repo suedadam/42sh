@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	*meta_ft_memalloc(size_t size)
+void	*meta_malloc(size_t size)
 {
 	void	*ret;
 	t_meta	*new_h;
@@ -36,11 +36,11 @@ void	*meta_realloc(void *old, size_t newsize)
 	t_meta		*new_h;
 
 	if (!old)
-		return (meta_ft_memalloc(newsize));
+		return (meta_malloc(newsize));
 	old_h = old - sizeof(t_meta);
 	if (old_h->len >= newsize)
 		return (old);
-	if (!(new = meta_ft_memalloc(newsize)))
+	if (!(new = meta_malloc(newsize)))
 		return (NULL);
 	new_h = new - sizeof(t_meta);
 	memcpy(new, old, old_h->len);
