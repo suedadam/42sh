@@ -304,8 +304,8 @@ $(NAME): $(LIBFT) $(OBJSRC)
 
 
 $(LIBFT):
-	@git submodule init
-	@git submodule update
+	#@git submodule init
+	#@git submodule update
 	make -C deps/libft
 
 %.o: %.c

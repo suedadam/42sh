@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 01:12:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 23:43:25 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 00:25:30 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char				*end_word_debut(void)
 
 	cursor = &g_shell_env.cursor;
 	counter = cursor->position;
-	while (counter > 0 && (!IS_WHITESPACE(cursor->buffer[counter - 1])))
+	while ((counter > 0 && cursor->buffer[counter - 1] != '/') && (!IS_WHITESPACE(cursor->buffer[counter - 1])))
 		counter--;
 	word = cursor->buffer + counter;
 	return (word);
@@ -62,7 +62,6 @@ int					start_autocomplete(void)
 	// display_trie(trie, 0);
 
 	// ft_printf("constructing the tree \n ---------------------------\n");
-	// display_trie(trie, 0);
 	// ft_printf("end constructing the tree \n ---------------------------\n");
 	if (trie_toolbox->stack->top)
 	{

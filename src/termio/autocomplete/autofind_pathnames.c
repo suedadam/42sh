@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:58:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:43:51 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 00:22:05 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		autofind_pathnames(void)
 	{
 		while (mul_path[i])
 		{
-			// printf("hello : [%s]\n", mul_path[i]);
+//			printf("hello : [%s]\n", mul_path[i]);
 			if (!(d_base = opendir(mul_path[i])))
 			{
 				i++;

@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 22:30:46 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 00:54:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char				*create_home_assoc(char *filename)
 	char	*temp;
 
 	temp = __getenv("HOME", g_environ);
-	temp = (ft_strchr(temp, '=') + 1);
 	homepath = concatpath("/", temp);
 	homepath = concatpath(filename, homepath);
 	return (homepath);
