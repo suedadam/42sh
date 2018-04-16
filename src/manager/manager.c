@@ -22,11 +22,11 @@ static void			free_env(t_environ *env)
 	i = 0;
 	while (i < env->size)
 	{
-		free(env->environ[i]);
+		meta_free(env->environ[i]);
 		i++;
 	}
-	free(env->environ);
-	free(env);
+	meta_free(env->environ);
+	meta_free(env);
 }
 
 static t_environ	*set_local_env(int subshell_env)
@@ -37,7 +37,7 @@ static t_environ	*set_local_env(int subshell_env)
 	if (!subshell_env)
 		return (g_environ);
 	if (!(env = ft_memalloc(sizeof(t_environ))) ||
-		!(env->environ = ft_memalloc(sizeof(char *) * g_environ->size + 1)))
+		!(env->environ = ft_memalloc(sizeof(char *) * (g_environ->size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < g_environ->size)

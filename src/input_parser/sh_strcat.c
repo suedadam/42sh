@@ -16,7 +16,7 @@ char	*sh_strcat(char **front, char *back)
 {
 	size_t	len;
 
-	if (!front || !back)
+	if (!front)
 		return (NULL);
 	len = ft_strlen(*front) + ft_strlen(back) + 1;
 	if (!(*front = meta_realloc(*front, len)))

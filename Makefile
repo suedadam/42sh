@@ -307,8 +307,9 @@ all: $(NAME)
 $(NAME): $(MALLOC) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
-	$(CC) $(CFLAGS) $(MALLOC_PATH) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
-	install_name_tool -change $(MALLOC) $(MALLOC_PATH) $(NAME)
+	$(CC) $(CFLAGS) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
+	# $(CC) $(CFLAGS) $(MALLOC_PATH) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
+	# install_name_tool -change $(MALLOC) $(MALLOC_PATH) $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
 

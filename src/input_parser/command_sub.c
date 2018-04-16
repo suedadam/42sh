@@ -21,15 +21,8 @@ static char	*create_subs_command(char **input_str, char close_char)
 	return (MAP_FAILED);
 }
 
-static int	split_into_tokens(t_parser *p, char *token_str)
+static int	set_tokens(char **words, t_parser *p)
 {
-	char	**words;
-
-	if (!(words = ft_splitwhitespace(token_str)) ||
-		(p->current_type != WORD &&
-		add_token(p->current_token, &(p->current_type), p) == EXIT_FAILURE))
-		return (EXIT_FAILURE);
-	meta_free(token_str);
 	while (*words)
 	{
 		p->current_type = WORD;
@@ -40,6 +33,20 @@ static int	split_into_tokens(t_parser *p, char *token_str)
 		meta_free(*words);
 		words++;
 	}
+	return (EXIT_SUCCESS);
+}
+
+static int	split_into_tokens(t_parser *p, char *token_str)
+{
+	char	**words;
+
+	if (!(words = ft_splitwhitespace(token_str)) ||
+		(p->current_type != WORD &&
+		add_token(p->current_token, &(p->current_type), p) == EXIT_FAILURE))
+		return (EXIT_FAILURE);
+	meta_free(token_str);
+	if (set_tokens(words, p) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	meta_free(words);
 	return (EXIT_SUCCESS);
 }
@@ -51,12 +58,11 @@ static int	recurs_into_subshell(t_parser *par, char *command)
 
 	output = NULL;
 	ret = manager(command, &output);
-	free(command);
+	meta_free(command);
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 		return (ret);
 	if (!output || split_into_tokens(par, output) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	free(output);
 	return (EXIT_SUCCESS);
 }
 
@@ -78,9 +84,6 @@ int		is_command_sub(t_parser *par, char **input_str)
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);
 	ret = recurs_into_subshell(par, command);
-	if (ret == EXIT_FAILURE)
-		return (0);
-	meta_free(command);
 	if (ret == EXIT_FAILURE)
 		return (0);
 	else if (ret == EXIT_SUCCESS)

@@ -35,6 +35,7 @@ int		ops_read_from(t_ast *curr, int pos)
 	src = &(curr->p_info->stdin);
 	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
+	curr->token[pos + 1] = NULL;
 	meta_free(curr->token[pos + 1]);
 	meta_free(curr->token[pos]);
 	curr->token[pos] = NULL;
