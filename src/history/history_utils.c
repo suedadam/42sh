@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 02:37:57 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:46:32 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:20:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int				history_init(void)
 {
 	t_hist_var	*history_var;
 
-	history_var = &g_shell_env.history_var;
+	history_var = &g_shell_env.hist_var;
 	if (!(history_var->history_list = new_dblist()))
 	{
 		printf("\ndblist fail\n");

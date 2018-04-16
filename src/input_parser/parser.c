@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/12 00:27:46 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:15:02 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +90,11 @@ t_ast				*parser(char *input_str)
 {
 	t_parser		*par;
 	int				ret;
-	int				paren;
 
-	paren = 0;
 	if (!input_str || !(par = init_parser()))
 		return (NULL);
 	while (*input_str)
 	{
-		// paren += check_paren(*input_str);
-		// printf("%s -> %s\n", input_str, par->current_token);
 		if ((ret = check_char(&par, &input_str)) <= 0)
 			return (ret == 0 ? NULL : MAP_FAILED);
 		if (ret == CONTINUE)
@@ -109,16 +104,13 @@ t_ast				*parser(char *input_str)
 		input_str++;
 	}
 	check_op_type(par);
-	if (add_token(par->current_token, &(par->current_type), par)
-		== EXIT_FAILURE)
+	if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
 	{
 		free_segs(par);
 		return (NULL);
 	}
-	if (paren || par->quoted)
+	if (par->quoted)
 		return (MAP_FAILED);
 	meta_free(par->current_token);
-	// for (int j = 0; par->tokens[j]; j++)
-	// 	ft_printf("[%s] ---> [%d]\n", par->tokens[j], par->types[j]);
 	return ((t_ast *)par);
 }

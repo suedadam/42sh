@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 01:39:40 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 18:57:53 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:10:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	recurs_into_subshell(t_parser *par, char *command)
 	return (EXIT_SUCCESS);
 }
 
-int		is_command_sub(t_parser *par, char **input_str)
+int			is_command_sub(t_parser *par, char **input_str)
 {
 	char	close_char;
 	char	*command;
@@ -79,7 +79,7 @@ int		is_command_sub(t_parser *par, char **input_str)
 		return (EXIT_FAILURE_SOFT);
 	close_char = **input_str == '$' ? ')' : BACKT;
 	if (!ft_strchr(&((*input_str)[1]), close_char))
-		return (EXIT_FAILURE_SOFT); //set ernno for parse error
+		return (EXIT_FAILURE_SOFT);
 	if (!(command = create_subs_command(input_str, close_char)) ||
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);

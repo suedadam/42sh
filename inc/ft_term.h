@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 15:29:49 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:19:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:19:58 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ typedef	struct			s_terminf
 	t_tokens			tokens;
 	t_autocheck			trie_binaries;
 	t_autocheck			trie_wdir;
-	t_hist_var			history_var;
+	t_hist_var			hist_var;
 	size_t				prompt_length;
 	char				*term_name;
 	char				*term_buff;
