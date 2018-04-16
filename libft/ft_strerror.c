@@ -6,19 +6,13 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 22:55:33 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 23:13:54 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 02:56:01 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-typedef struct	s_errno
-{
-	int		ernum;
-	char	*reason;
-}				t_errno;
-
-t_errno	ft_errno[107] = {
+static t_errno	g_ft_errno[107] = {
 	{0, NULL},
 	{1, "Operation not permitted"},
 	{2, "No such file or directory"},
@@ -110,7 +104,7 @@ t_errno	ft_errno[107] = {
 	{88, "Malformed Macho file"},
 	{89, "Operation canceled"},
 	{90, "Identifier removed"},
-	{91, "No message of desired {type"},   
+	{91, "No message of desired {type"},
 	{92, "Illegal byte sequence"},
 	{93, "Attribute not found"},
 	{94, "Bad message"},

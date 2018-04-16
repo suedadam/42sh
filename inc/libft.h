@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/15 23:13:38 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:05:12 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,16 @@
 # define BUFF_SIZE 2048
 
 # define ABS(X) X > 0 ? X : -X
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r') //Fix me.
+# define SORRY_GUYS || c == ' ' || c == '\v' || c == '\f' || c == '\r'
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' SORRY_GUYS)
 
-int	g_fd;
+int					g_fd;
+
+typedef struct		s_errno
+{
+	int			ernum;
+	char		*reason;
+}					t_errno;
 
 typedef struct		s_meta
 {
@@ -124,9 +131,9 @@ int					isempty_dblist(t_dblist *dblist);
 ** Priority Queue
 */
 void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
-	int (*comparer)(void *, void *));
+					int (*comparer)(void *, void *));
 void				*pqueue_find(t_pqueue *queue, void *trgt,
-	int (*equality)(void *, void *));
+					int (*equality)(void *, void *));
 void				*ft_depqueue(t_pqueue *queue);
 t_pqueue			*init_pqueue(void);
 void				del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr));
