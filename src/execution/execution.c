@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 19:58:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:39:09 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGCONT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
 		environ = env->environ;
 		// ft_printf("-----> B (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
 		if (handle_redirection(process))
@@ -60,6 +61,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 		close(process->p_info->stdin[0]);
 	if (*(process->p_info->stdout) != STDOUT_FILENO)
 		close(process->p_info->stdout[0]);
+	meta_free(process);
 	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
 	run_pipecmds(cmd, pids, env);
 	return (EXIT_SUCCESS);
@@ -67,8 +69,9 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 
 int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 {
-	pid_t	pid;
-	int		res;
+	pid_t		pid;
+	int			res;
+	t_jobspec	job;
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
@@ -80,6 +83,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGCONT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
 		// if (signal(SIGTSTP, &suspend) == SIG_ERR)
 		// 	ft_printf("Error setting up signal handler: %s\n", strerror(errno));
 		// else
@@ -103,7 +107,18 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		waitpid(pid, &res, WUNTRACED);
 		if (WIFSTOPPED(res))
 		{
-			add_suspended(pid, *(curr->token));
+			if (!(job.pids = new_stack()))
+			{
+				printf("Failed!?\n");
+				return (EXIT_FAILURE);
+			}
+			if (ft_stackpush(job.pids, &pid, sizeof(pid_t)) == EXIT_FAILURE)
+			{
+				printf("wow failed to push to stack :c\n");
+				return (EXIT_FAILURE);
+			}
+			job.name = strdup(*(curr->token));
+			add_suspended(&job);
 			ft_printf("Its suspended! (%d)\n", WSTOPSIG(res));
 		}
 		else

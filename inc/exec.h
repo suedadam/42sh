@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 19:58:24 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:38:04 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ typedef struct	s_process
 	int		*stderr;
 }				t_process;
 
+typedef struct	s_jobspec
+{
+	t_stack		*pids;
+	char		*name;
+}				t_jobspec;
+
 typedef struct	s_ophandlers
 {
 	int		(*check)(char *str);
@@ -57,8 +63,8 @@ typedef struct	s_builtins
 ** job_control
 */
 
-void		add_suspended(pid_t pid, char *name);
-void		unsuspend(char *name);
+void		add_suspended(t_jobspec *job);
+pid_t		unsuspend(char *name);
 void		print_first(void);
 
 /*

@@ -6,17 +6,11 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:52:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 21:15:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:38:39 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-typedef struct	s_jobspec
-{
-	pid_t	pid;
-	char	*name;
-}				t_jobspec;
 
 t_queue	*g_jobs = NULL;
 
@@ -26,42 +20,67 @@ t_queue	*g_jobs = NULL;
 ** program's life.
 */
 
-void	add_suspended(pid_t pid, char *name)
+void	add_suspended(t_jobspec *job)
 {
-	t_jobspec job;
-
 	if (!g_jobs)
 		g_jobs = new_queue();
-	job.pid = pid;
-	job.name = strdup(name);
-	if ((ft_enqueue(g_jobs, &job, sizeof(t_jobspec))) == EXIT_FAILURE)
+	if ((ft_enqueue(g_jobs, job, sizeof(t_jobspec))) == EXIT_FAILURE)
 	{
 		printf("Failed to add.\n");
 		return ;
 	}
-	printf("Top of queue = \"%s\" (%p) |%d|\n", ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->pid);
+	printf("Top of queue = \"%s\" (%p)\n", ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->name);
 }
 
-void	unsuspend(char *name)
+pid_t	unsuspend_chain(t_stack *jobs)
+{
+	pid_t	*pid;
+	pid_t	ret;
+
+	ret = 0;
+	while (jobs->top)
+	{
+		if (!(pid = ft_stackpop(jobs)))
+			return (-1);
+		if (!ret)
+			ret = *pid;
+		kill(*pid, SIGCONT);
+		meta_free(pid);
+	}
+	return (ret);
+}
+
+pid_t	unsuspend(char *name)
 {
 	t_node		*list;
 	t_jobspec	*job;
+	pid_t		ret;
 
-	if (isempty_queue(g_jobs) || !name)
-		return ;
+	if (isempty_queue(g_jobs))
+	{
+		ft_printf("Empty queue!\n");
+		return (-2);
+	}
 	list = g_jobs->first;
+	if (!name)
+	{
+		printf("Nothing! dequeueing!\n");
+		job = ft_dequeue(g_jobs);
+		return (unsuspend_chain(job->pids));
+	}
 	while (list)
 	{
 		printf("Itterating through\n");
 		if (!(job = list->content))
 		{
 			ft_printf("What the balls?\n");
-			return ;
+			return (-1);
 		}
 		if (!strcmp(job->name, name))
 		{
+			ret = unsuspend_chain(job->pids);
 			printf("Found it! %s\n", name);
-			kill(job->pid, SIGCONT);
+			// kill(job->pid, SIGCONT);
 			if (peek_queue(g_jobs) == job)
 				ft_dequeue(g_jobs);
 			else
@@ -73,10 +92,11 @@ void	unsuspend(char *name)
 				meta_free(job);
 				meta_free(list);				
 			}
-			return ;
+			return (ret);
 		}
 		list = list->next;
 	}
+	return (-2);
 }
 
 void	print_first(void)
@@ -84,7 +104,7 @@ void	print_first(void)
 	if (isempty_queue(g_jobs))
 		printf("Empty!!!\n");
 	else
-		printf("Top of queue = \"%s\" (%p) |%d|\n", ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->pid);
+		printf("Top of queue = \"%s\" (%p)\n", ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->name);
 }
 
 // int	g_lol;
