@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:36:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 21:02:16 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:43:06 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		get_cursor_first_position(void)
 
 	ft_putstr_fd("\e[6n", STDIN_FILENO);
 	bzero(temp, 42);
-	if ((i = read(STDIN_FILENO, temp, 42)) < 0)
+	if ((i = read(STDIN_FILENO, temp, 9)) < 0)
 		return ;
 	temp[i] = '\0';
 	i = 2;

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 17:09:07 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 23:28:46 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "ft_proto.h"
 
 static void			free_env(t_environ *env)
 {
@@ -73,8 +74,10 @@ int	manager(char *input_str, char **substr)
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))
 		return (EXIT_FAILURE);
 	// ft_printf("Greg....\n");
+	ft_restoretty();
 	ret = run_forest(forest, substr, env);
 	if (substr != NULL)
 		free_env(env);
+	ft_setty();
 	return (ret);
 }

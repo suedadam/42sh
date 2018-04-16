@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 19:59:31 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:52:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,27 @@ void	itterate_pipes(t_stack *cmdstack, t_ast *curr)
 	}
 }
 
+int		suspend_chain(t_pqueue *pids, __attribute__((unused)) pid_t deadpid, char *name)
+{
+	t_jobspec	job;
+	pid_t		*pid;
+
+	if (!(job.pids = new_stack()))
+		return (EXIT_FAILURE);
+	while (pids->first)
+	{
+		if (!(pid = ft_depqueue(pids)))
+			return (EXIT_FAILURE);
+		if (ft_stackpush(job.pids, pid, sizeof(pid_t)))
+			return (EXIT_FAILURE);
+		kill(*pid, SIGTSTP);
+		meta_free(pid);	
+	}
+	job.name = strdup(name);
+	add_suspended(&job);
+	return (EXIT_SUCCESS);
+}
+
 int		op_pipe_exec(t_ast *curr, t_environ *env)
 {
 	t_pqueue	pids;
@@ -46,22 +67,27 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 	run_pipecmds(&cmdstack, &pids, env);
 	if (!(kpid = ft_memalloc(sizeof(int))))
 		return (EXIT_FAILURE);
-	while ((res = wait(kpid)) >= 0)
+	while (pids.first && (res = wait3(kpid, WUNTRACED, NULL)) >= 0)
 	{
 		if (WEXITSTATUS(*kpid) || WIFSTOPPED(*kpid))
 		{
-			// if (WIFSTOPPED(*kpid))
-			// 	suspend_chain(pids, kpid);
-			// else
-			// 	kill_chain(pids, kpid);
-			// meta_free(kpid);
-			// while (pids.first)
-			// {
-			// 	if (!(kpid = ft_depqueue(&pids)))
-			// 		return (EXIT_FAILURE);
-			// 	kill(*kpid, SIGKILL);
-			// 	meta_free(kpid);
-			// }
+			if (WIFSTOPPED(*kpid))
+			{
+				ft_printf("Received suspend calls!!!\n");
+				// return (suspend_chain(&pids, res, *(curr->token)));
+				suspend_chain(&pids, res, *(curr->token));
+				// print_first();
+				return (EXIT_SUCCESS);
+			}
+			// kill_chain(&pids, res);
+			meta_free(kpid);
+			while (pids.first)
+			{
+				if (!(kpid = ft_depqueue(&pids)))
+					return (EXIT_FAILURE);
+				kill(*kpid, SIGKILL);
+				meta_free(kpid);
+			}
 		}
 		printf("%d", WEXITSTATUS(*kpid));
 	}

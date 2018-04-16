@@ -315,13 +315,11 @@ $(LIBFT):
 clean:
 	@/bin/rm -f $(OBJSRC)
 	make -C deps/libft clean
-	make -C deps/malloc clean
 	@ echo "$(RED)Cleaning folders of object files...$(RES)"
 
 fclean: clean
 	/bin/rm -f $(NAME)
 	/bin/rm -f $(STAT)
-	/bin/rm -f $(MALLOC_PATH)
 	@ echo "$(RED)Removing library file and binary...$(RES)"
 
 re: fclean all

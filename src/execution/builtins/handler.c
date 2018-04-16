@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 19:58:35 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:53:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ struct s_builtins	builtins[] = {
 	{"cd", &builtin_cd},
 	{"echo", &builtin_echo},
 	{"fg", &builtin_fg},
+	{"bg", &builtin_bg},
+	{"jobs", &builtin_jobs},
 	// {"exit", &builtin_exit},
 	{"env", &builtin_env},
 	{"history", &builtin_history},

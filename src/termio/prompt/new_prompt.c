@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 19:59:03 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 22:38:21 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,12 @@ static int		normal_prompt(void)
 		g_ft_errnum = TERMGET;
 		return (EXIT_FAILURE);
 	}
-	raw_pwd = &(raw_pwd[4]);
-	offset = ft_strstr(raw_pwd, getenv("HOME")) ? ft_strlen(getenv("HOME")) : 0;
+	offset = ft_strstr(raw_pwd, __getenv("HOME", g_environ)) ? ft_strlen(__getenv("HOME", g_environ)) : 0;
 	pwd = raw_pwd + offset;
 	n = ft_printf("%s42sh %s[%s%c%s%s]%s %%%s ", CYN, GRN, MAG, offset ? '~' : 0
 		, pwd, GRN, YEL, NRM);
 	g_shell_env.cursor.buffer_length = g_shell_env.buffer->length;
 	cursor->buffer = g_shell_env.buffer->buff;
-	// free(raw_pwd);
-	// raw_pwd = NULL;
 	return (n);
 }
 

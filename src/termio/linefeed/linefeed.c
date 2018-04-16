@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 11:24:09 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 20:50:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int			ft_linefeed(void)
 		history_append_file(g_shell_env.buffer->buff);
 	ft_restoretty();
 	signal(SIGINT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	// signal(SIGTSTP, SIG_IGN);
 	ft_printf_fd(STDOUT_FILENO, "\n");
 	// ft_printf("Buffer = \"%s\"\n", g_shell_env.buffer->buff);
