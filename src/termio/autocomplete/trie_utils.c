@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 19:35:20 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:34:24 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_trie		*new_trie(void)
 	}
 	trie->nbr_children = 0;
 	trie->key = 0;
-	trie->pos = 0;
+	trie->pos = -1;
 	trie->child = 0;
 	trie->is_word = 0;
 	return (trie);

@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 21:27:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 22:30:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,17 +142,15 @@ t_dblist		*get_history(void)
 	history_list = new_dblist();
 	line = NULL;
 	histfile = create_home_assoc(HISTORY_FILE);
-	printf("histpath <%s>\n", histfile);
 	if ((fd = open(histfile, O_RDONLY | O_APPEND | O_CREAT, 0644)) < 0)
 	{
-//		meta_free(histfile);
+		meta_free(histfile);
 		return (NULL);
 	}
-	printf("fd for hist <%d>\n", fd);
-//	meta_free(histfile);
+	meta_free(histfile);
+	histfile = NULL;
 	while ((gnl_ret = get_next_line(fd, &line)) > 0)
 	{
-		printf("looking\n");
 		dbl_push_front(history_list, line, ft_strlen(line) + 1);
 		meta_free(line);
 		line = NULL;

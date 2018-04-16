@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 21:04:57 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:47:58 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 		trie->pos = cursor->position;
 		trie->child = 0;
 		ft_stackpush(stack, trie, sizeof(t_trie));
-		trie_dfs(trie);
+		if (!trie->is_word)
+			trie_dfs(trie);
+		trie->is_word = 0;
+
 	}
 	else if ((child = next_child(trie, (int)(trie->child))) != NO_CHILD)
 	{
@@ -76,13 +79,14 @@ static void			resume_dfs(t_trie *trie, t_stack *stack)
 	t_cursor			*cursor;
 
 	cursor = &g_shell_env.cursor;
-	while (cursor->position != trie->pos)
-		ft_delete(-1);
+	while (trie->pos > 0 && cursor->position != trie->pos)
+		ft_backspace();
 	trie->is_word = 0;
 	if (trie->nbr_children <= 1)
 	{
 		ft_stackpop(stack);
 		trie_dfs(trie->children[next_child(trie, 0)]);
+		return ;
 	}
 	trie_dfs(trie);
 }
@@ -97,16 +101,10 @@ void				trie_dfs(t_trie *trie)
 		return ;
 	else if (!trie)
 		resume_dfs((t_trie *)(stack->top->content), stack);
-	if (trie->is_word && trie->nbr_children)
-	{
-		ft_stackpush(stack, trie, sizeof(t_trie));
-		regular_text(trie->key);
-		trie->is_word = 0;
-	}
+	else if (trie->is_word && trie->nbr_children || trie->children > 1)
+		bottleneck(trie, stack);
 	else if (trie->nbr_children == 1)
 		one_child(trie);
-	else if (trie->nbr_children > 1)
-		bottleneck(trie, stack);
 	else if (trie->nbr_children == 0)
 		regular_text(trie->key);
 }
