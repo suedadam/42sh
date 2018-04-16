@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 21:59:31 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:56:00 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 17:33:47 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int					start_autocomplete(void);
 ** trie dfs autocomplete
 */
 void		trie_dfs(t_trie *trie);
+int			next_child(t_trie *trie, int start);
+
 
 /*
 **	For finding relative word location / count on the terminal, which will

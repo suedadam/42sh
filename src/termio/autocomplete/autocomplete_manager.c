@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 01:12:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 16:40:14 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 17:34:43 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 static t_trie		*advanced_trie(char *word, t_trie *trie)
 {
 	if (IS_WHITESPACE(*word) || !(*word))
+	{
+		if (trie->nbr_children == 1)
+			return (trie->children[next_child(trie, 0)]);
+		else if (trie->nbr_children == 0)
+			return (NULL);
 		return (trie);
+	}
 	if (!trie || !(trie->children[(int)(*word)]))
 		return (NULL);
 	return (advanced_trie(word + 1, trie->children[(int)(*word)]));

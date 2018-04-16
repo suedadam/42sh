@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 17:03:54 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 17:34:37 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define NO_CHILD -42
 
-static int		next_child(t_trie *trie, int start)
+int		next_child(t_trie *trie, int start)
 {
 	int		i;
 
@@ -46,7 +46,7 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 
 	if (!stack || !trie)
 	{
-		ft_printf("BONJOUR [error in bottleneck null stack]\n");
+		ft_printf("BONJOUR [error in bottleneck null stack || null trie]\n");
 		exit(1);
 	}
 	if (!(stack->top) || ((t_trie *)(stack->top->content))->key != trie->key)
