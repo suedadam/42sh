@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 07:11:23 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:54:24 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_environ	*set_local_env(int subshell_env)
 
 int	manager(char *input_str, char **substr)
 {
-	t_ast 		*res;
+	t_ast		*res;
 	void		*forest;
 	int			ret;
 	t_environ	*env;
