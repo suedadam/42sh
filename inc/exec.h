@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:53:33 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:14:40 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,26 @@ typedef struct	s_builtins
 ** job_control
 */
 
-void		add_suspended(t_jobspec *job);
-pid_t		unsuspend(char *name);
-void		print_jobs(void);
+void			add_suspended(t_jobspec *job);
+pid_t			unsuspend(char *name);
+void			print_jobs(void);
 
 /*
 ** utils
 */
 
-void		*init_process(void);
-int			compare(int *n1, int *n2);
+void			*init_process(void);
+int				compare(int *n1, int *n2);
 
 /*
 ** builders
 */
 
-void		build_carry(t_ast *curr);
-void		build_leafs(t_ast *curr);
-void		build_operator(t_ast *curr);
-void		build_default(t_ast *curr);
-int			build_info(t_ast *prev, t_ast *curr);
+void			build_carry(t_ast *curr);
+void			build_leafs(t_ast *curr);
+void			build_operator(t_ast *curr);
+void			build_default(t_ast *curr);
+int				build_info(t_ast *prev, t_ast *curr);
 
 /*
 ** builtins
