@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:49:18 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 03:38:59 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		normal_prompt(void)
 	int			n;
 
 	n = 0;
-	cursor = &(g_shell_env.cursor);
+	cursor = &(g_shell_env.cursor);;
 	if (!(raw_pwd = __getenv("PWD", g_environ)))
 	{
 		g_ft_errnum = TERMGET;

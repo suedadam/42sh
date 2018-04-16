@@ -1,6 +1,6 @@
 NAME = 42sh
 STAT = deps/libft/libftprintf.a
-CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS += -Wall -Werror -Wextra -g
 INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc
@@ -137,10 +137,10 @@ SRC_EXEC_BUILTINS = \
 SRC_EXEC_OPS_CHECKS =	\
             op_and \
             op_or \
-            op_pipe 
+            op_pipe
 
 SRC_EXEC_JOBS =	\
-            suspend  
+            suspend
 
 SRC_EXEC_OPS_EXECS =	\
             op_and \
@@ -220,7 +220,7 @@ SRC_TERMIO_CONTROL_CODES =	\
 					control_w \
 					control_y \
 					control_newline \
-					control_execute 
+					control_execute
 
 # CURSOR
 SRC_TERMIO_CURSOR = \
