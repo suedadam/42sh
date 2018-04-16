@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_possible_dir.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:28:19 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 15:49:14 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 16:40:56 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*check_possible_dir(void)
 
 	dir = NULL;
 	len = g_shell_env.cursor.position;
-	printf("check for possible dir\n");
+	// printf("check for possible dir\n");
 	if (len && (g_shell_env.cursor.buffer[(len - 1)] == '/'))
 	{
 		temp = end_word_debut();
@@ -38,7 +38,7 @@ char	*check_possible_dir(void)
 		}
 		temp = concatpath(dir, "./");
 		meta_free(dir);
-		printf("is possible\n");
+		// printf("is possible\n");
 		return (temp);
 	}
 	return (NULL);

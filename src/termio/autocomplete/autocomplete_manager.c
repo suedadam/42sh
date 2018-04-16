@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 01:12:34 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 16:38:38 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:40:14 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ int					start_autocomplete(void)
 		return (EXIT_FAILURE);
 	g_shell_env.cursor.wordloc == 1 ? (trie = g_shell_env.trie_binaries.trie) :
 		(trie = g_shell_env.trie_wdir.trie);
-	printf("advanced trie : bin <%p>, dir <%p>, <%p>\n", g_shell_env.trie_binaries.trie, g_shell_env.trie_wdir.trie, trie);
+	// printf("advanced trie : bin <%p>, dir <%p>, <%p>\n", g_shell_env.trie_binaries.trie, g_shell_env.trie_wdir.trie, trie);
 	// display_trie(trie, 0);
 
 	// ft_printf("constructing the tree \n ---------------------------\n");
 	// display_trie(trie, 0);
 	// ft_printf("end constructing the tree \n ---------------------------\n");
 	trie = advanced_trie(end_word_debut(), trie);
-	printf("done trie : <%p>\n", trie);
+	// printf("done trie : <%p>\n", trie);
 	// ft_printf("constructing the tree \n ---------------------------\n");
 	// display_trie(trie, 0);
 	// ft_printf("end constructing the tree \n ---------------------------\n");
 	// exit(1);
 	if (trie)
 	{
-		printf("before dfs\n");
+		// printf("before dfs\n");
 		trie_dfs(trie);
-		printf("after dfs\n");
+		// printf("after dfs\n");
 	}
 	return (EXIT_SUCCESS);
 }

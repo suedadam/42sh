@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:34:42 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:43:32 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int											one_byte(char byte)
 		T_PIPE = 0;
 	if (PRINTABLE(byte))
 		return (regular_text(byte));
-	else if (!PRINTABLE(byte) && byte <= 26)
+	else if (!PRINTABLE(byte) || byte == 127)
 		return (control_char(byte));
 	return (EXIT_SUCCESS);
 }

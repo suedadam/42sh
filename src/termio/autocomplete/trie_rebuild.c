@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:28:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:32:49 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 16:40:37 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	reinit_trie(t_autocheck *trie_inf)
 {
-	printf("reINIT __trie__\n");
+	// printf("reINIT __trie__\n");
 	// if (trie_inf)
 	// 	meta_free(trie_inf->stack);
 	free_trie(trie_inf->trie);
@@ -28,7 +28,7 @@ static int	reinit_trie(t_autocheck *trie_inf)
 
 static int	reinit_stack(t_autocheck *trie_inf)
 {
-	printf("reINIT __stack__\n");
+	// printf("reINIT __stack__\n");
 	if (trie_inf)
 		meta_free(trie_inf->stack);
 	// free stack correctly
@@ -71,14 +71,14 @@ int		trie_rebuild(char **mul_path)
 	int			i;
 	int			ret;
 
-	printf("rebuyild trie : bin <%p>, dir <%p>\n", g_shell_env.trie_binaries.trie, g_shell_env.trie_wdir.trie);
+	// printf("rebuyild trie : bin <%p>, dir <%p>\n", g_shell_env.trie_binaries.trie, g_shell_env.trie_wdir.trie);
 	g_shell_env.cursor.wordloc == 1 ? (trie_inf = &(g_shell_env.trie_binaries)) :
 		(trie_inf = &(g_shell_env.trie_wdir));
 	i = 0;
 	while (trie_inf->members && trie_inf->timestamp && mul_path[i])
 	{
-		printf("check members\n");
-		printf("member <%s>\n", mul_path[i]);
+		// printf("check members\n");
+		// printf("member <%s>\n", mul_path[i]);
 		if (!ft_strncmp(mul_path[i], trie_inf->members[i], ft_strlen(mul_path[i])))
 			ret = EXIT_FAILURE;
 		if (lstat(mul_path[i], &sbuf) < 0)
@@ -92,7 +92,7 @@ int		trie_rebuild(char **mul_path)
 			break ;
 		i++;
 	}
-	printf("rebuild end\n");
+	// printf("rebuild end\n");
 	if (!(trie_inf->members) || !(trie_inf->timestamp) || ret == EXIT_FAILURE)
 		ret = build_association(trie_inf, mul_path);
 	return (ret);

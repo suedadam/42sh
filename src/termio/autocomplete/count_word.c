@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 20:59:40 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 22:53:26 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 16:41:01 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		wcount_forword(char byte)
 			T_WORD = 1;
 		}
 	}
-	printf("\non: %d\n", g_shell_env.cursor.wordloc);
+	// printf("\non: %d\n", g_shell_env.cursor.wordloc);
 }
 
 void		wcount_backword(char byte)
