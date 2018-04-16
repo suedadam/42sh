@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:28:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:40:37 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 20:31:42 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,12 @@ int		trie_rebuild(char **mul_path)
 	g_shell_env.cursor.wordloc == 1 ? (trie_inf = &(g_shell_env.trie_binaries)) :
 		(trie_inf = &(g_shell_env.trie_wdir));
 	i = 0;
+	ret = EXIT_SUCCESS;
 	while (trie_inf->members && trie_inf->timestamp && mul_path[i])
 	{
 		// printf("check members\n");
 		// printf("member <%s>\n", mul_path[i]);
-		if (!ft_strncmp(mul_path[i], trie_inf->members[i], ft_strlen(mul_path[i])))
+		if (ft_strncmp(mul_path[i], trie_inf->members[i], ft_strlen(mul_path[i])))
 			ret = EXIT_FAILURE;
 		if (lstat(mul_path[i], &sbuf) < 0)
 		{

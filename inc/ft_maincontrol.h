@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_maincontrol.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:16:03 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 17:50:02 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 16:30:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 # define FT_MAINCONTROL_H
 
 # include "ft_term.h"
-
-typedef struct	s_environ
-{
-	size_t		size;
-	char		**environ;
-}				t_environ;
+# include "ast.h"
+# include "exec.h"
 
 /*
 **	tty settings and resetting

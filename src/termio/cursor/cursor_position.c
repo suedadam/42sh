@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_position.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:36:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/11 18:50:20 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:02:16 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void		get_cursor_first_position(void)
 		i++;
 	g_shell_env.cursor.og_position.x = ft_atoi(temp + i + 1) - 1;
 }
+
+// tputs(tgetstr("sc", NULL), 1, my_putchar);    Save current position
+//tputs(tgetstr("rc", NULL), 1, my_putchar);	Restor cursor position
 
 /*
 ** void		get_cursor_current_position(void)

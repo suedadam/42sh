@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 16:26:25 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 19:59:03 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_prompt.h"
 #include "ft_proto.h"
+#include "ast.h"
 
 /*
 ** Swap to our internal environ API.
@@ -27,19 +28,20 @@ static int		normal_prompt(void)
 
 	n = 0;
 	cursor = &(g_shell_env.cursor);
-	if (!(raw_pwd = getcwd(NULL, 0)))
+	if (!(raw_pwd = __getenv("PWD", g_environ)))
 	{
 		g_ft_errnum = TERMGET;
 		return (EXIT_FAILURE);
 	}
+	raw_pwd = &(raw_pwd[4]);
 	offset = ft_strstr(raw_pwd, getenv("HOME")) ? ft_strlen(getenv("HOME")) : 0;
 	pwd = raw_pwd + offset;
 	n = ft_printf("%s42sh %s[%s%c%s%s]%s %%%s ", CYN, GRN, MAG, offset ? '~' : 0
 		, pwd, GRN, YEL, NRM);
 	g_shell_env.cursor.buffer_length = g_shell_env.buffer->length;
 	cursor->buffer = g_shell_env.buffer->buff;
-	free(raw_pwd);
-	raw_pwd = NULL;
+	// free(raw_pwd);
+	// raw_pwd = NULL;
 	return (n);
 }
 

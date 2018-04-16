@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 18:35:42 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 18:57:03 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/15 17:13:12 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char		*literal_command(char **input_str, int i)
 	char	*command;
 
 	embedded_open_paren = 0;
-	command = NULL;
+	if (!(command = ft_memalloc(sizeof(char))))
+		return (NULL);
 	while ((*input_str)[i])
 	{
 		if ((*input_str)[i] == ')')
@@ -69,6 +70,9 @@ int		is_subshell(t_parser *par, char **input_str)
 	ret = manager(command, &unused);
 	meta_free(command);
 	if (ret == EXIT_FAILURE)
+	{
+		printf("Manager returned a fail :( \n");
 		return (0);
+	}
 	return (ret == EXIT_FAILURE_SOFT ? -1 : CONTINUE);
 }

@@ -7,17 +7,6 @@ CC = gcc
 LIBFT = libftprintf.a
 
 ################################################################################
-# Malloc Hijacking                                                             #
-################################################################################
-
-ifeq ($(HOSTTYPE),)
-	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
-endif
-MALLOC = libft_malloc_${HOSTTYPE}.so
-MALLOC_DIR = deps/malloc/
-MALLOC_PATH = $(addprefix $(MALLOC_DIR), $(MALLOC))
-
-################################################################################
 # Source directories identifiers                                               #
 ################################################################################
 
@@ -140,9 +129,10 @@ SRC_EXEC_BUILTINS = \
 			env \
 			handler \
 			echo \
+			cd \
 			fg \
-			history
-			# cd
+			env_utils \
+			history \
 
 SRC_EXEC_OPS_CHECKS =	\
             op_and \
@@ -304,7 +294,7 @@ SRC_TERMIO_SCREEN =	\
 
 all: $(NAME)
 
-$(NAME): $(MALLOC) $(OBJSRC)
+$(NAME): $(LIBFT) $(OBJSRC)
 	@ echo "$(YELLOW)Building static library...$(RES)"
 	@ echo "$(YELLOW)Compiling program$(RES)"
 	$(CC) $(CFLAGS) -L deps/libft -lftprintf -ltermcap $(OBJSRC) -o $(NAME)
@@ -312,9 +302,6 @@ $(NAME): $(MALLOC) $(OBJSRC)
 	# install_name_tool -change $(MALLOC) $(MALLOC_PATH) $(NAME)
 	@ echo "$(GREEN)$(NAME) binary ready$(RES)"
 
-
-$(MALLOC): $(LIBFT)
-	make -C deps/malloc
 
 $(LIBFT):
 	@git submodule init

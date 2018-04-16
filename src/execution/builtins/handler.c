@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 16:45:26 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 19:58:35 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 
 struct s_builtins	builtins[] = {
-	// {"cd", &builtin_cd},
+	{"cd", &builtin_cd},
 	{"echo", &builtin_echo},
 	{"fg", &builtin_fg},
 	// {"exit", &builtin_exit},
@@ -31,9 +31,33 @@ struct s_builtins	builtins[] = {
 	{NULL, NULL},
 };
 
+void	restore_fds(int *backup)
+{
+	dup2(backup[0], STDIN_FILENO);
+	dup2(backup[1], STDOUT_FILENO);
+	dup2(backup[2], STDERR_FILENO);
+}
+
+void	backup_fds(int **backup)
+{
+	if (!(*backup = ft_memalloc(sizeof(int) * 3)))
+		return ;
+	(*backup)[0] = dup(STDIN_FILENO);
+	(*backup)[1] = dup(STDOUT_FILENO);
+	(*backup)[2] = dup(STDERR_FILENO);
+}
+
+void	set_fds(t_process *info)
+{
+	dup2(*(info->stdin), STDIN_FILENO);
+	dup2(*(info->stdout), STDOUT_FILENO);
+	dup2(*(info->stderr), STDERR_FILENO);
+}
+
 int		builtin_handler(t_ast *curr, t_environ *env)
 {
 	int i;
+	int	*backup;
 
 	i = 0;
 	if (handle_redirection(curr))
@@ -41,7 +65,14 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 	while (builtins[i].name)
 	{
 		if (!strcmp(builtins[i].name, *(curr->token)))
-			return (builtins[i].exec(curr->token, env));
+		{
+			backup_fds(&backup);
+			set_fds(curr->p_info);
+			i = builtins[i].exec(curr->token, env);
+			restore_fds(backup);
+			meta_free(backup);
+			return (i);
+		}
 		i++;
 	}
 	return (-1);

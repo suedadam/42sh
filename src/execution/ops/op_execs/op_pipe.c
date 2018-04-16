@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 17:25:06 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 19:59:31 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,20 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 		return (EXIT_FAILURE);
 	while ((res = wait(kpid)) >= 0)
 	{
-		if (WEXITSTATUS(*kpid))
+		if (WEXITSTATUS(*kpid) || WIFSTOPPED(*kpid))
 		{
-			meta_free(kpid);
-			while (pids.first)
-			{
-				if (!(kpid = ft_depqueue(&pids)))
-					return (EXIT_FAILURE);
-				kill(*kpid, SIGKILL);
-				meta_free(kpid);
-			}
+			// if (WIFSTOPPED(*kpid))
+			// 	suspend_chain(pids, kpid);
+			// else
+			// 	kill_chain(pids, kpid);
+			// meta_free(kpid);
+			// while (pids.first)
+			// {
+			// 	if (!(kpid = ft_depqueue(&pids)))
+			// 		return (EXIT_FAILURE);
+			// 	kill(*kpid, SIGKILL);
+			// 	meta_free(kpid);
+			// }
 		}
 		printf("%d", WEXITSTATUS(*kpid));
 	}

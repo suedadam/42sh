@@ -6,12 +6,24 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 17:15:23 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 21:27:19 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_term.h"
 #include "ft_proto.h"
+
+char				*create_home_assoc(char *filename)
+{
+	char	*homepath;
+	char	*temp;
+
+	temp = __getenv("HOME", g_environ);
+	temp = (ft_strchr(temp, '=') + 1);
+	homepath = concatpath("/", temp);
+	homepath = concatpath(filename, homepath);
+	return (homepath);
+}
 
 static void			history_append_list(char *buffer)
 {
@@ -22,15 +34,44 @@ static void			history_append_list(char *buffer)
 		dbl_push_front(history_var->history_list, buffer, ft_strlen(buffer) + 1);
 }
 
+void			free_dblist(t_dblist **delete)
+{
+	t_node	*temp;
+	t_node	*nextemp;
+
+	temp = (*delete)->first;
+	while (temp != (*delete)->first && temp)
+	{
+		if (temp->content)
+			meta_free(temp->content);
+		nextemp = temp->next;
+		meta_free(temp);
+		temp = NULL;
+		temp = nextemp;
+	}
+	meta_free(*delete);
+	*delete = NULL;
+}
+
 int				delete_history(void)
 {
 	t_hist_var	*history_var;
-	t_dblist	*temp;
+	char		*histfile;
 	int			i;
 
 	history_var = &g_shell_env.history_var;
-	temp = 0;
 	i = 0;
+	free_dblist(&history_var->history_list);
+	history_var->history_list = new_dblist();
+	histfile = create_home_assoc(HISTORY_FILE);
+	if ((i = open(histfile, O_TRUNC) < 0))
+	{
+		meta_free(histfile);
+		return (EXIT_FAILURE);
+	}
+	meta_free(histfile);
+	if (close(i) < 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -75,13 +116,16 @@ int				history_init(void)
 int				history_append_file(char *buffer)
 {
 	int		fd;
+	char	*histfile;
 
 	if (!buffer)
 		return (EXIT_FAILURE);
-	if ((fd = open(HISTORY_FILE, O_CREAT | O_APPEND | O_WRONLY, 0644)) < 0)
+	histfile = create_home_assoc(HISTORY_FILE);
+	if ((fd = open(histfile, O_CREAT | O_APPEND | O_WRONLY, 0644)) < 0)
 		return (EXIT_FAILURE);
 	ft_putendl_fd(buffer, fd);
 	history_append_list(buffer);
+	meta_free(histfile);
 	if (close(fd) < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -92,13 +136,23 @@ t_dblist		*get_history(void)
 	int				fd;
 	int				gnl_ret;
 	char			*line;
+	char			*histfile = NULL;
 	t_dblist		*history_list;
 
 	history_list = new_dblist();
 	line = NULL;
-	fd = open(HISTORY_FILE, O_RDONLY | O_APPEND | O_CREAT, 0644);
+	histfile = create_home_assoc(HISTORY_FILE);
+	printf("histpath <%s>\n", histfile);
+	if ((fd = open(histfile, O_RDONLY | O_APPEND | O_CREAT, 0644)) < 0)
+	{
+//		meta_free(histfile);
+		return (NULL);
+	}
+	printf("fd for hist <%d>\n", fd);
+//	meta_free(histfile);
 	while ((gnl_ret = get_next_line(fd, &line)) > 0)
 	{
+		printf("looking\n");
 		dbl_push_front(history_list, line, ft_strlen(line) + 1);
 		meta_free(line);
 		line = NULL;
