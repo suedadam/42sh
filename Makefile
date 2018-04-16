@@ -140,7 +140,8 @@ SRC_EXEC_BUILTINS = \
 			env \
 			handler \
 			echo \
-			fg 
+			fg \
+			history
 			# cd
 
 SRC_EXEC_OPS_CHECKS =	\

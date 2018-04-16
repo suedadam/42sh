@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 15:46:01 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 16:57:30 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void			history_append_list(char *buffer)
 	if (buffer && history_var && history_var->history_list)
 		dbl_push_front(history_var->history_list, buffer, ft_strlen(buffer) + 1);
 }
-/*
+
 int				delete_history(void)
 {
 	t_hist_var	*history_var;
@@ -29,24 +29,28 @@ int				delete_history(void)
 	int			i;
 
 	history_var = &g_shell_env.history_var;
+	temp = 0;
+	i = 0;
+	return (EXIT_SUCCESS);
 }
 
 int				display_history(void)
 {
 	t_hist_var	*history_var;
-	t_dblist	*temp;
+	t_node		*temp;
 	int			i;
 
 	history_var = &g_shell_env.history_var;
 	temp = history_var->history_list->first;
-	while (temp)
+	i = 0;
+	while (temp && !(i && temp == history_var->history_list->first))
 	{
 		ft_printf_fd(STDIN_FILENO, "\t%d %s\n", i, (char *)(temp->content));
 		temp = temp->next;
-		i++
+		i++;
 	}
+	return (EXIT_SUCCESS);
 }
-*/
 
 int				history_init(void)
 {
