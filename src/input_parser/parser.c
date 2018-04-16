@@ -6,11 +6,13 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 03:15:02 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:35:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+
+#define EF EXIT_FAILURE
 
 inline __attribute__((always_inline)) void	free_segs(t_parser *par)
 {
@@ -104,7 +106,7 @@ t_ast				*parser(char *input_str)
 		input_str++;
 	}
 	check_op_type(par);
-	if (add_token(par->current_token, &(par->current_type), par) == EXIT_FAILURE)
+	if (add_token(par->current_token, &(par->current_type), par) == EF)
 	{
 		free_segs(par);
 		return (NULL);
