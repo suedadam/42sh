@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 23:47:58 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:54:51 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void				trie_dfs(t_trie *trie)
 		return ;
 	else if (!trie)
 		resume_dfs((t_trie *)(stack->top->content), stack);
-	else if (trie->is_word && trie->nbr_children || trie->children > 1)
+	else if ((trie->is_word && trie->nbr_children) || trie->nbr_children > 1)
 		bottleneck(trie, stack);
 	else if (trie->nbr_children == 1)
 		one_child(trie);
