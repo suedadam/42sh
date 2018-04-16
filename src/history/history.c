@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 02:46:07 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:26:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 
 static void		history_append_list(char *buf)
 {
-	t_hist_var		*history_var;
+	t_hist_var		*hist_var;
 
-	history_var = &g_shell_env.history_var;
-	if (buf && history_var && history_var->history_list)
-		dbl_push_front(history_var->history_list, buf, ft_strlen(buf) + 1);
+	hist_var = &g_shell_env.hist_var;
+	if (buf && hist_var && hist_var->history_list)
+		dbl_push_front(hist_var->history_list, buf, ft_strlen(buf) + 1);
 }
 
 int				delete_history(void)
 {
-	t_hist_var	*history_var;
+	t_hist_var	*hist_var;
 	char		*histfile;
 	int			i;
 
-	history_var = &g_shell_env.history_var;
+	hist_var = &g_shell_env.hist_var;
 	i = 0;
-	free_dblist(&history_var->history_list);
-	history_var->history_list = new_dblist();
+	free_dblist(&hist_var->history_list);
+	hist_var->history_list = new_dblist();
 	histfile = create_home_assoc(HISTORY_FILE);
 	if ((i = open(histfile, O_TRUNC) < 0))
 	{
@@ -46,14 +46,14 @@ int				delete_history(void)
 
 int				display_history(void)
 {
-	t_hist_var	*history_var;
+	t_hist_var	*hist_var;
 	t_node		*temp;
 	int			i;
 
-	history_var = &g_shell_env.history_var;
-	temp = history_var->history_list->last;
+	hist_var = &g_shell_env.hist_var;
+	temp = hist_var->history_list->last;
 	i = 0;
-	while (temp && !(i && temp == history_var->history_list->last))
+	while (temp && !(i && temp == hist_var->history_list->last))
 	{
 		ft_printf_fd(STDIN_FILENO, "%d %s\n", i, (char *)(temp->content));
 		temp = temp->previous;
