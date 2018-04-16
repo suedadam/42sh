@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 17:01:51 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 17:23:31 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		add_word_to_trie(t_trie *trie, char *word)
 		trie->nbr_children++;
 		nw_trie = new_trie();
 		trie->children[(int)(*word)] = nw_trie;
-		trie->key = *word;
+		trie->children[(int)(*word)]->key = *word;
 		return (add_word_to_trie(nw_trie, word + 1));
 	}
 }
