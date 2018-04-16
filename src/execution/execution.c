@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:39:09 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 23:27:48 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
+#include "ft_proto.h"
 
 struct s_ophandlers	op_handlers[] = {
 	{&op_pipe_check, &op_pipe_exec},
@@ -27,33 +28,33 @@ struct s_ophandlers	op_handlers[] = {
 
 char **environ = NULL;
 
+static inline __attribute__((always_inline)) void	exec_init(t_ast *process)
+{
+	signaldef_handlers();
+	if (handle_redirection(process))
+		exit(EXIT_FAILURE);
+	dup2(*(process->p_info->stdin), STDIN_FILENO);
+	dup2(*(process->p_info->stdout), STDOUT_FILENO);
+	dup2(*(process->p_info->stderr), STDERR_FILENO);
+}
+
 int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 {
 	int		pid;
+	int		res;
 	t_ast	*process;
 
 	if (!cmd || isempty_stack(cmd) || !(process = ft_stackpop(cmd)))
 		return (EXIT_SUCCESS);
+	if ((res = builtin_handler(process, env)) != -1)
+		return (res);
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (!pid)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGCONT, SIG_DFL);
-		signal(SIGTSTP, SIG_DFL);
+		exec_init(process);
 		environ = env->environ;
-		// ft_printf("-----> B (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
-		if (handle_redirection(process))
-		{
-			// ft_printf("Failure????\n");
-			exit(EXIT_FAILURE);
-		}
-		// ft_printf("\n-----> A (%d) [In: %d, Out: %d, Err: %d] |%s|\n", getpid(), *(process->p_info->stdin), *(process->p_info->stdout), *(process->p_info->stderr), *(process->token));
-		// ft_printf("(%d) Closing %d %d\n", getpid(), process->p_info->stdin[1], process->p_info->stdout[1]);
-		dup2(*(process->p_info->stdin), STDIN_FILENO);
-		dup2(*(process->p_info->stdout), STDOUT_FILENO);
-		dup2(*(process->p_info->stderr), STDERR_FILENO);
-		execvP(*(process->token), getenv("PATH"), process->token);
+		execvP(*(process->token), __getenv("PATH", env), process->token);
 		ft_printf("Error: %s: %s\n", strerror(errno), *(process->token));
 		exit(EXIT_FAILURE);
 	}
@@ -81,24 +82,9 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGCONT, SIG_DFL);
-		signal(SIGTSTP, SIG_DFL);
-		// if (signal(SIGTSTP, &suspend) == SIG_ERR)
-		// 	ft_printf("Error setting up signal handler: %s\n", strerror(errno));
-		// else
-		// 	ft_printf("Setup signal handler... %s\n", strerror(errno));
-		// sleep(1);
+		exec_init(curr);
 		environ = env->environ;
-		// ft_printf("-----> B [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
-		if (handle_redirection(curr))
-			exit(EXIT_FAILURE);
-		// ft_printf(".......?\n");
-		// ft_printf("-----> A [In: %d, Out: %d, Err: %d] |%s - %s|\n", *(curr->p_info->stdin), *(curr->p_info->stdout), *(curr->p_info->stderr), *(curr->token), curr->token[1]);
-		dup2(*(curr->p_info->stdin), STDIN_FILENO);
-		dup2(*(curr->p_info->stdout), STDOUT_FILENO);
-		dup2(*(curr->p_info->stderr), STDERR_FILENO);
-		execvP(*(curr->token), getenv("PATH"), curr->token);
+		execvP(*(curr->token), __getenv("PATH", env), curr->token);
 		ft_printf("Error: %s: %s\n", strerror(errno), *(curr->token));
 		exit(EXIT_FAILURE);
 	}
@@ -108,24 +94,16 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		if (WIFSTOPPED(res))
 		{
 			if (!(job.pids = new_stack()))
-			{
-				printf("Failed!?\n");
 				return (EXIT_FAILURE);
-			}
 			if (ft_stackpush(job.pids, &pid, sizeof(pid_t)) == EXIT_FAILURE)
-			{
-				printf("wow failed to push to stack :c\n");
 				return (EXIT_FAILURE);
-			}
 			job.name = strdup(*(curr->token));
 			add_suspended(&job);
 			ft_printf("Its suspended! (%d)\n", WSTOPSIG(res));
 		}
-		else
-			ft_printf("Changed states!\n");
-		return (res);
 	}
-	return (EXIT_SUCCESS);
+	meta_free(*(curr->token));
+	return (res);
 }
 
 /*

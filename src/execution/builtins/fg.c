@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 20:05:58 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:07:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:52:56 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,23 @@ int	builtin_fg(char *argv[], __attribute__((unused)) t_environ *env)
 		return (res);
 	}
 	return ((ret == -1) ? EXIT_FAILURE : EXIT_SUCCESS);
+}
+
+int	builtin_bg(char *argv[], __attribute__((unused)) t_environ *env)
+{
+	pid_t		ret;
+
+	if (!argv || !argv[0])
+		return (EXIT_FAILURE);
+	ret = unsuspend(argv[1]);
+	return ((ret == -1) ? EXIT_FAILURE : EXIT_SUCCESS);
+}
+
+int	builtin_jobs(char *argv[], __attribute__((unused)) t_environ *env)
+{
+
+	if (!argv)
+		return (EXIT_FAILURE);
+	print_jobs();
+	return (EXIT_SUCCESS);
 }

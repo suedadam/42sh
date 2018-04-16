@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:38:20 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:52:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 				ft_printf("Received suspend calls!!!\n");
 				// return (suspend_chain(&pids, res, *(curr->token)));
 				suspend_chain(&pids, res, *(curr->token));
-				print_first();
+				// print_first();
 				return (EXIT_SUCCESS);
 			}
 			// kill_chain(&pids, res);

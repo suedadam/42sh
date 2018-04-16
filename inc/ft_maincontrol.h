@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:16:03 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 20:56:00 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 23:20:01 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ int		regular_text(char byte);
 */
 
 int		shsignal_handlers(void);
+int		signaldef_handlers(void);
 
 #endif

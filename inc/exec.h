@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:38:04 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:53:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct	s_builtins
 
 void		add_suspended(t_jobspec *job);
 pid_t		unsuspend(char *name);
-void		print_first(void);
+void		print_jobs(void);
 
 /*
 ** utils
@@ -99,6 +99,8 @@ int				builtin_echo(char *argv[], t_environ *env);
 int				builtin_getenv(char *argv[], t_environ *env);
 int				builtin_history(char *argv[], t_environ *env);
 int				builtin_fg(char *argv[], t_environ *env);
+int				builtin_bg(char *argv[], t_environ *env);
+int				builtin_jobs(char *argv[], t_environ *env);
 
 /*
 ** op_checks

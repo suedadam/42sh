@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 16:42:19 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 21:50:14 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ops_read_from(t_ast *curr, int pos)
 	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
 	meta_free(curr->token[pos + 1]);
+	curr->token[pos + 1] = NULL;
 	meta_free(curr->token[pos]);
 	curr->token[pos] = NULL;
 	return (EXIT_SUCCESS);

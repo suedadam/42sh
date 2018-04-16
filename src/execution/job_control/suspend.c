@@ -99,12 +99,26 @@ pid_t	unsuspend(char *name)
 	return (-2);
 }
 
-void	print_first(void)
+void	print_jobs(void)
 {
-	if (isempty_queue(g_jobs))
-		printf("Empty!!!\n");
-	else
-		printf("Top of queue = \"%s\" (%p)\n", ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->name);
+	int			i;
+	t_node		*node;
+	t_jobspec	*job;
+
+	if (!g_jobs || !(node = g_jobs->first))
+		return ;
+	i = 0;
+	while (node)
+	{
+		if (!(job = node->content) || !job->name)
+			return ;
+		ft_printf("[%d] + Name: %s\n", job->name);
+		node = node->next;
+	}
+	// if (isempty_queue(g_jobs))
+	// 	printf("Empty!!!\n");
+	// else
+	// 	printf("Top of queue = \"%s\" (%p)\n", ((t_jobspec *)peek_queue(g_jobs))->name, ((t_jobspec *)peek_queue(g_jobs))->name);
 }
 
 // int	g_lol;
