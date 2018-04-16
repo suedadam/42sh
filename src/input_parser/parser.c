@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 03:35:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 06:47:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ inline __attribute__((always_inline)) void	free_segs(t_parser *par)
 			while (par->tokens[i])
 				meta_free(par->tokens[i++]);
 		}
+		meta_free(par->tokens);
 		if (par->types)
 			meta_free(par->types);
+		meta_free(par->types);
 		meta_free(par);
 	}
 }
@@ -45,16 +47,16 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 		meta_free(parser);
 		return (NULL);
 	}
-	if (!(parser->current_token = ft_memalloc(sizeof(char) * 2)))
+	if (!(parser->current_token = ft_memalloc(sizeof(char *) * 2)))
 	{
 		free_segs(parser);
 		return (NULL);
 	}
-	if (!(parser->types = ft_memalloc(sizeof(t_token_type))))
-	{
-		free_segs(parser);
-		return (NULL);
-	}
+	// if (!(parser->types = ft_memalloc(sizeof(t_token_type))))
+	// {
+	// 	free_segs(parser);
+	// 	return (NULL);
+	// }
 	parser->types = NULL;
 	parser->current_type = null;
 	parser->quoted = 0;
@@ -114,5 +116,6 @@ t_ast				*parser(char *input_str)
 	if (par->quoted)
 		return (MAP_FAILED);
 	meta_free(par->current_token);
+	par->current_token = NULL;
 	return ((t_ast *)par);
 }

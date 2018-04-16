@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:14:11 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:14:17 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 07:08:06 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 int		run_tree(t_ast *curr, __attribute__((unused)) t_environ *env)
 {
 	int	i;
+	int	res;
 
+	res = EXIT_SUCCESS;
 	if (!curr)
 		return (EXIT_FAILURE);
 	if (*(curr->type) == OPERATOR)
@@ -94,6 +96,7 @@ int		run_forest(t_queue *forest, char **substr, t_environ *env)
 			return (EXIT_FAILURE);
 		if (run_tree((t_ast *)asts, env) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
+		free_ast(asts);
 	}
 	return (EXIT_SUCCESS);
 }

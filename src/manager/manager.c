@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 23:28:46 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 07:11:23 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static t_environ	*set_local_env(int subshell_env)
 			return (NULL);
 		i++;
 	}
-	printf("i = %zu vs %zu\n", i, g_environ->size + 1);
 	env->environ[i] = NULL;
 	env->size = g_environ->size;
 	return (env);
@@ -65,17 +64,15 @@ int	manager(char *input_str, char **substr)
 	if (!(res = parser(input_str)) || res == MAP_FAILED)
 		return ((!res) ? EXIT_FAILURE : EXIT_FAILURE_SOFT);
 	if (!(forest = build_forest(res->token, res->type)))
-	{
-		// free_segs(res);
-		// ft_printf("Got here?\n");
 		return (EXIT_FAILURE);
-	}
-	// ft_printf("Nick\n");
+	meta_free(res->type);
+	meta_free(res->token);
+	meta_free(res);
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))
 		return (EXIT_FAILURE);
-	// ft_printf("Greg....\n");
 	ft_restoretty();
 	ret = run_forest(forest, substr, env);
+	meta_free(forest);
 	if (substr != NULL)
 		free_env(env);
 	ft_setty();

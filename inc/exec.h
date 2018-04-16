@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:50:48 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 06:15:58 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@
 # include <signal.h>
 # include "ast.h"
 # define IS_REDIR(x) (x == '>' || x == '<' || x == ">>" || x == '<<')
-
-/*
-** Parent has 2 INTs while leafs/childs have one.
-** For 2 INTs:
-** 	- 0 = read 1 = write.
-*/
-
-typedef struct	s_process
-{
-	int		*stdin;
-	int		*comm;
-	int		*stdout;
-	int		*stderr;
-}				t_process;
 
 typedef struct	s_jobspec
 {

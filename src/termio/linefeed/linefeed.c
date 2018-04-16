@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linefeed.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:45:27 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 06:53:06 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int			ft_linefeed(void)
 	signal(SIGTSTP, SIG_IGN);
 	ft_printf_fd(STDOUT_FILENO, "\n");
 	ret = manager(g_shell_env.buffer->buff, NULL);
-	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
 		ft_printf("Error exiting...\n");

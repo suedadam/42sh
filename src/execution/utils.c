@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:34:50 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:42:36 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 06:15:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ void	help_free(t_process *new)
 {
 	meta_free(new);
 	meta_free(new->stdin);
+}
+
+void		free_process(t_process *process)
+{
+	meta_free(process->stdin);
+	meta_free(process->stderr);
+	meta_free(process->stdout);
+	meta_free(process->comm);
+	meta_free(process);
 }
 
 void	*init_process(void)
@@ -47,9 +56,7 @@ void	*init_process(void)
 		meta_free(new->stderr);
 		meta_free(new->stdout);
 	}
-	else
-		return (new);
-	return (NULL);
+	return (new);
 }
 
 int		fd_redir(t_ast *curr, int **src, int pos, uint8_t closer)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 03:18:46 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 06:16:05 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,20 @@
 static const char	*ops[OPS] = {"&", "&&", "||", "|", ";", "<", ">", ">>"};
 
 # define EXIT_FAILURE_SOFT -1
+
+/*
+** Parent has 2 INTs while leafs/childs have one.
+** For 2 INTs:
+** 	- 0 = read 1 = write.
+*/
+
+typedef struct				s_process
+{
+	int		*stdin;
+	int		*comm;
+	int		*stdout;
+	int		*stderr;
+}							t_process;
 
 typedef enum				e_token_type
 {
@@ -151,6 +165,7 @@ void						free_argv(char **argv);
 void						free_types(t_token_type *types);
 void						free_ast(t_ast *ast);
 void						free_forest(t_queue *forest);
+void						free_process(t_process *process);
 
 extern	t_environ			*g_environ;
 

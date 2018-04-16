@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_free_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 13:54:47 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/13 18:17:31 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 06:37:06 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,18 @@ void		free_ast(t_ast *ast)
 	if (ast)
 	{
 		free_argv(ast->token);
+		ast->token = NULL;
 		free_types(ast->type);
+		ast->type = NULL;
+		if (ast->p_info)
+		{
+			free_process(ast->p_info);
+			ast->p_info = NULL;
+		}
 		free_ast(ast->left_child);
+		ast->p_info = NULL;
 		free_ast(ast->right_child);
+		ast->p_info = NULL;
 		meta_free(ast);
 		ast = NULL;
 	}
