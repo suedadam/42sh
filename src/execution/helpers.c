@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 08:32:17 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:34:49 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 16:46:53 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	parent_pipes(t_ast *curr)
 	if (*(curr->p_info->stdin) != STDIN_FILENO)
 		close(*(curr->p_info->stdin));
 	if (*(curr->p_info->stdout) != STDOUT_FILENO)
-		close(*(curr->p_info->stdin));
+		close(*(curr->p_info->stdout));
 	meta_free(curr);
 }
