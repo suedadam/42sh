@@ -35,7 +35,7 @@ char				*ft_strtrim(char const *s)
 	while (i > start && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n'))
 		i--;
 	end = i;
-	if (!(ret = (char *)malloc(sizeof(char) * (end - start) + 1)))
+	if (!(ret = (char *)ft_memalloc(sizeof(char) * (end - start) + 1)))
 		return (NULL);
 	ret = ft_strsub(s, start, (size_t)end - start + 1);
 	return (ret);
