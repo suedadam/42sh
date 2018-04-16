@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 02:12:44 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:39:07 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					next_child(t_trie *trie, int start)
 	return (NO_CHILD);
 }
 
-static void	one_child(t_trie *trie)
+static void			one_child(t_trie *trie)
 {
 	int		child;
 
@@ -48,10 +48,8 @@ static void			bottleneck(t_trie *trie, t_stack *stack)
 		return ;
 	if (!(stack->top) || ((t_trie *)(stack->top->content))->pos != trie->pos)
 	{
-		cursor = &g_shell_env.cursor;
 		regular_text(trie->key);
-		trie->pos = cursor->position;
-		trie->child = 0;
+		trie->pos = g_shell_env.cursor.position;
 		ft_stackpush(stack, trie, sizeof(t_trie));
 		if (!trie->is_word)
 			trie_dfs(trie);
@@ -73,17 +71,13 @@ static void			bottleneck(t_trie *trie, t_stack *stack)
 static void			resume_dfs(t_trie *trie, t_stack *stack)
 {
 	t_cursor			*cursor;
-	t_autocheck 		*trie_inf;
+	t_autocheck			*trie_inf;
 
 	cursor = &g_shell_env.cursor;
 	cursor->wordloc == 1 ? (trie_inf = &(g_shell_env.trie_binaries)) :
 		(trie_inf = &(g_shell_env.trie_wdir));
 	if (cursor->position < trie->pos)
-	{
-		reinit_stack(trie_inf);
-		start_autocomplete();
 		return ;
-	}
 	while (trie->pos > 0 && cursor->position != trie->pos)
 		ft_backspace();
 	trie->is_word = 0;

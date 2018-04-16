@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   yank.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:45:49 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 14:05:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:49:37 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void			yank(char *buffer)
 	{
 		if (regular_text(buffer[i]) == EXIT_FAILURE)
 			return ;
-
 		i++;
 	}
 }

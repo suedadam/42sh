@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/14 21:21:51 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 02:46:46 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int											reset_terminal(void)
 
 static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 {
-	if (g_shell_env.cursor.position && g_shell_env.buffer->buff[g_shell_env.buffer->length - 1] == '\\')
+	if (g_shell_env.cursor.position
+			&& g_shell_env.buffer->buff[g_shell_env.buffer->length - 1] == '\\')
 		return (drop_prompt("> "));
 	else if (T_QUOTE | T_DQUOTE)
 		return (quote_mode());

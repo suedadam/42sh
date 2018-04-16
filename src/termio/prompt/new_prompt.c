@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 01:09:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:49:18 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int		normal_prompt(void)
 		g_ft_errnum = TERMGET;
 		return (EXIT_FAILURE);
 	}
-	offset = ft_strstr(raw_pwd, __getenv("HOME", g_environ)) ? ft_strlen(__getenv("HOME", g_environ)) : 0;
+	offset = ft_strstr(raw_pwd, __getenv("HOME", g_environ))
+							? ft_strlen(__getenv("HOME", g_environ)) : 0;
 	pwd = raw_pwd + offset;
 	n = ft_printf("%s42sh %s[%s%c%s%s]%s %%%s ", CYN, GRN, MAG, offset ? '~' : 0
 		, pwd, GRN, YEL, NRM);

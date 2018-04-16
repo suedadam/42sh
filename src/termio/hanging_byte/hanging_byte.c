@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hanging_byte.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 14:05:34 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:43:49 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	hanging_byte(char byte)
 	else if (byte == '{' || byte == '}')
 		curly_check(byte);
 	else if (byte == '|')
-		T_PIPE ? (T_PIPE = 0) : (T_PIPE = 1);
+		T_PIPE = T_PIPE ? 0 : 1;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linefeed.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/15 20:50:44 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 02:45:27 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,21 @@
 
 int			ft_linefeed(void)
 {
-	int		ret;
-	static char	*cache = NULL;	
+	int				ret;
+	static char		*cache = NULL;
 
 	if (g_shell_env.buffer->length)
 		history_append_file(g_shell_env.buffer->buff);
 	ft_restoretty();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-	// signal(SIGTSTP, SIG_IGN);
 	ft_printf_fd(STDOUT_FILENO, "\n");
-	// ft_printf("Buffer = \"%s\"\n", g_shell_env.buffer->buff);
 	ret = manager(g_shell_env.buffer->buff, NULL);
 	g_shell_env.buffer->buff = NULL;
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
-		//handle manager failure
-		ft_printf("error exiting...\n");
-		exit(0);
+		ft_printf("Error exiting...\n");
+		return (EXIT_FAILURE);
 	}
 	ft_setty();
 	if (!cache)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_terminal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:21:04 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/14 14:30:44 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:46:11 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ int		ft_restoretty(void)
 		g_ft_errnum = SYSERR;
 		return (EXIT_FAILURE);
 	}
-//	ft_printf("exit\n");
 	return (EXIT_SUCCESS);
 }

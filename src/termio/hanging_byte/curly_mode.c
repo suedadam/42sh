@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   curly_mode.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 15:47:44 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/12 20:08:00 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:43:16 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "ft_hangingbyte.h"
 #include "ft_proto.h"

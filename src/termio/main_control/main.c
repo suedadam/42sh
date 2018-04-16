@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 12:04:45 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 02:46:27 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int			init_shellenv(void)
 ** EXIT_FAILURE = 1 for ints, and NULL / 0
 */
 
-int			main(__attribute__((unused))int argc, __attribute__((unused))char *argv[], char **environ)
+int			main(__attribute__((unused))int argc,
+ 						__attribute__((unused))char *argv[], char **environ)
 {
 	bzero(&g_shell_env, sizeof(t_terminf));
 	if (init_environ(environ) == EXIT_FAILURE

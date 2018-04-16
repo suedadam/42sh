@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:47:52 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/09 19:31:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 02:48:50 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void		cut_word_before_cursor(void)
 			og_pos - cursor->position);
 		PAPER.length = ft_strlen(PAPER.buff);
 		PAPER.max_size = PAPER.length;
-		while (cursor->position != og_pos)
-		{
+		while (cursor->position != og_pos--)
 			ft_delete(-1);
-			og_pos--;
-		}
 	}
 }

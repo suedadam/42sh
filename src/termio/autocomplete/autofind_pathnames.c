@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 20:58:55 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:12:28 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:37:15 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ int		autofind_pathnames(void)
 	{
 		while (mul_path[i])
 		{
-			if (!(d_base = opendir(mul_path[i])))
-			{
-				i++;
+			if (!(d_base = opendir(mul_path[i++])))
 				continue ;
-			}
 			temp = mul_path[i];
 			buildir_names(d_base, temp);
 			closedir(d_base);

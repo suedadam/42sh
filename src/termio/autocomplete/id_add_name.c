@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:07:32 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 02:13:02 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:37:31 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		id_add_name(struct stat *sbuf, struct dirent *entry)
 {
 	size_t	len;
 	char	*send;
-	t_trie 	*trie;
+	t_trie	*trie;
 
 	len = ft_strlen(entry->d_name);
 	(g_shell_env.cursor.wordloc == 1) ? (trie = g_shell_env.trie_binaries.trie)
