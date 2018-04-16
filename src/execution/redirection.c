@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 21:50:14 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:39:50 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ struct s_redir_op	redir_ops[] = {
 	{">>", &ops_append_to},
 	{NULL, NULL},
 };
+
+int		free_after(t_ast *curr, int pos)
+{
+	meta_free(curr->token[pos + 1]);
+	curr->token[pos + 1] = NULL;
+	meta_free(curr->token[pos]);
+	curr->token[pos] = NULL;
+	return (EXIT_SUCCESS);
+}
 
 int		ops_read_from(t_ast *curr, int pos)
 {
@@ -33,20 +42,15 @@ int		ops_read_from(t_ast *curr, int pos)
 	if (!curr->token[pos + 1])
 		return (EXIT_FAILURE);
 	src = &(curr->p_info->stdin);
-	if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
+	if ((**src = open(curr->token[pos + 1],
+		O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	curr->token[pos + 1] = NULL;
-	meta_free(curr->token[pos + 1]);
-	curr->token[pos + 1] = NULL;
-	meta_free(curr->token[pos]);
-	curr->token[pos] = NULL;
-	return (EXIT_SUCCESS);
+	return (free_after(curr, pos));
 }
 
 int		ops_append_to(t_ast *curr, int pos)
 {
 	int		stmp;
-	int		dtmp;
 	int		**src;
 
 	if (!(stmp = ft_atoi(curr->token[pos - 1])) || stmp == 1)
@@ -62,21 +66,13 @@ int		ops_append_to(t_ast *curr, int pos)
 	}
 	if (*(curr->token[pos + 1]) == '&')
 	{
-		dtmp = ft_atoi(&(curr->token[pos + 1][1]));
-		if (dtmp == 1)
-			*src = curr->p_info->stdout;
-		else if (dtmp == 2)
-			*src = curr->p_info->stderr;
-		else
+		if (fd_redir(curr, src, pos, 0) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
+	else if ((**src = open(curr->token[pos + 1],
+		O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	meta_free(curr->token[pos]);
-	curr->token[pos] = NULL;
-	meta_free(curr->token[pos + 1]);
-	curr->token[pos + 1] = NULL;
-	return (EXIT_SUCCESS);
+	return (free_after(curr, pos));
 }
 
 /*
@@ -86,7 +82,6 @@ int		ops_append_to(t_ast *curr, int pos)
 int		ops_redir_to(t_ast *curr, int pos)
 {
 	int		stmp;
-	int		dtmp;
 	int		**src;
 
 	if (!(stmp = ft_atoi(curr->token[pos - 1])) || stmp == 1)
@@ -102,23 +97,13 @@ int		ops_redir_to(t_ast *curr, int pos)
 	}
 	if (*(curr->token[pos + 1]) == '&')
 	{
-		dtmp = ft_atoi(&(curr->token[pos + 1][1]));
-		if (dtmp == 1)
-			*src = curr->p_info->stdout;
-		else if (dtmp == 2)
-			*src = curr->p_info->stderr;
-		else if (curr->token[pos + 1][1] == '-')
-			**src = -1;
-		else
+		if (fd_redir(curr, src, pos, 1) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	else if ((**src = open(curr->token[pos + 1], O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
+	else if ((**src = open(curr->token[pos + 1],
+		O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
-	meta_free(curr->token[pos]);
-	curr->token[pos] = NULL;
-	meta_free(curr->token[pos + 1]);
-	curr->token[pos + 1] = NULL;
-	return (EXIT_SUCCESS);
+	return (free_after(curr, pos));
 }
 
 int		handle_redirection(t_ast *curr)

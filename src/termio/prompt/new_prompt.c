@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:55:14 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 03:38:59 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 03:54:16 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static int		normal_prompt(void)
 	int			n;
 
 	n = 0;
-	cursor = &(g_shell_env.cursor);;
-	if (!(raw_pwd = __getenv("PWD", g_environ)))
+	cursor = &(g_shell_env.cursor);
+	if (!(raw_pwd = ft_getenv("PWD", g_environ)))
 	{
 		g_ft_errnum = TERMGET;
 		return (EXIT_FAILURE);
 	}
-	offset = ft_strstr(raw_pwd, __getenv("HOME", g_environ))
-							? ft_strlen(__getenv("HOME", g_environ)) : 0;
+	offset = ft_strstr(raw_pwd, ft_getenv("HOME", g_environ)) ?
+			ft_strlen(ft_getenv("HOME", g_environ)) : 0;
 	pwd = raw_pwd + offset;
 	n = ft_printf("%s42sh %s[%s%c%s%s]%s %%%s ", CYN, GRN, MAG, offset ? '~' : 0
 		, pwd, GRN, YEL, NRM);

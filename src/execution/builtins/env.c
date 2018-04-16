@@ -6,17 +6,13 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 15:57:06 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:44:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-/*
-** Custom builtin
-*/
 
 int	builtin_getenv(char *argv[], t_environ *env)
 {
@@ -80,12 +76,6 @@ int	builtin_setenv(char *argv[], t_environ *env)
 	env->environ[env->size] = NULL;
 	return (EXIT_SUCCESS);
 }
-
-/*
-** Tested logic - should work work fine.
-** https://gist.github.com/suedadam/f70fa11e3aa0e6953286fa3ae951be5b
-** My realloc doesn't change sizes when its smaller than the block's size so the realloc won't be doing anything. 
-*/
 
 int	builtin_unsetenv(char *argv[], t_environ *env)
 {

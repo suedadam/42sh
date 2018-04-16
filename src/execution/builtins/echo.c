@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 14:20:22 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 16:48:46 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:01:47 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	builtin_echo(char *argv[], __attribute__((unused))t_environ *e)
+int	builtin_echo(char *argv[], __attribute__((unused)) t_environ *e)
 {
 	uint8_t	nl;
 	int		i;
@@ -32,11 +32,3 @@ int	builtin_echo(char *argv[], __attribute__((unused))t_environ *e)
 		ft_printf_fd(STDOUT_FILENO, "\n");
 	return (EXIT_SUCCESS);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	if (argc == 1)
-// 		return (0);
-// 	builtin_echo(&(argv[1]));
-// 	return (0);
-// }

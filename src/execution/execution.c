@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 23:27:48 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:26:23 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-char **environ = NULL;
-
-static inline __attribute__((always_inline)) void	exec_init(t_ast *process)
+void	exec_init(t_ast *process)
 {
 	signaldef_handlers();
 	if (handle_redirection(process))
@@ -53,8 +51,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 	if (!pid)
 	{
 		exec_init(process);
-		environ = env->environ;
-		execvP(*(process->token), __getenv("PATH", env), process->token);
+		execvP(*(process->token), ft_getenv("PATH", env), process->token);
 		ft_printf("Error: %s: %s\n", strerror(errno), *(process->token));
 		exit(EXIT_FAILURE);
 	}
@@ -68,11 +65,23 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 	return (EXIT_SUCCESS);
 }
 
+int		handle_suspend(pid_t *pid, t_ast *curr)
+{
+	t_jobspec	job;
+
+	if (!(job.pids = new_stack()))
+		return (EXIT_FAILURE);
+	if (ft_stackpush(job.pids, pid, sizeof(pid_t)) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	job.name = strdup(*(curr->token));
+	add_suspended(&job);
+	return (EXIT_SUCCESS);
+}
+
 int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 {
 	pid_t		pid;
 	int			res;
-	t_jobspec	job;
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
@@ -83,27 +92,27 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 	if (pid == 0)
 	{
 		exec_init(curr);
-		environ = env->environ;
-		execvP(*(curr->token), __getenv("PATH", env), curr->token);
+		execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
 		ft_printf("Error: %s: %s\n", strerror(errno), *(curr->token));
 		exit(EXIT_FAILURE);
 	}
 	if (wait)
 	{
 		waitpid(pid, &res, WUNTRACED);
-		if (WIFSTOPPED(res))
-		{
-			if (!(job.pids = new_stack()))
-				return (EXIT_FAILURE);
-			if (ft_stackpush(job.pids, &pid, sizeof(pid_t)) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			job.name = strdup(*(curr->token));
-			add_suspended(&job);
-			ft_printf("Its suspended! (%d)\n", WSTOPSIG(res));
-		}
+		if (WIFSTOPPED(res) && (handle_suspend(&pid, curr) == EXIT_FAILURE))
+			return (EXIT_FAILURE);
 	}
 	meta_free(*(curr->token));
 	return (res);
+}
+
+int		pipe_ops(int *fds)
+{
+	pipe(fds);
+	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
+		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -118,14 +127,10 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		return ;
 	*(curr->p_info->stdin) = (prev ? *(curr->p_info->stdin) : STDIN_FILENO);
 	curr->p_info->stdin[1] = (prev ? curr->p_info->stdin[1] : -1);
-	pipe(fds);
-	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
-		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+	if (pipe_ops(fds))
 		return ;
 	memcpy(curr->p_info->comm, fds, sizeof(int) * 2);
-	pipe(fds);
-	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
-		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
+	if (pipe_ops(fds))
 		return ;
 	if (!(curr->right_child->right_child) ||
 			(*(curr->right_child->type) == OPERATOR &&
@@ -141,92 +146,4 @@ void	pipe_carry(t_ast *prev, t_ast *curr)
 		build_leafs(curr);
 		build_info(curr, curr->right_child);
 	}
-}
-
-/*
-** Left will always be present, if not then its a failure.
-*/
-
-int		run_tree(t_ast *curr, __attribute__((unused))t_environ *env)
-{
-	int	i;
-
-	if (!curr)
-		return (EXIT_FAILURE);
-	if (*(curr->type) == OPERATOR)
-	{
-		i = 0;
-		while (op_handlers[i].check)
-		{
-			if (!op_handlers[i].check(*(curr->token)))
-				return (op_handlers[i].exec(curr, env));
-			i++;
-		}
-	}
-	else
-		return (run_operation(curr, 1, env));
-	return (EXIT_FAILURE);
-}
-
-int		stringify(int fd, char **str)
-{
-	size_t	strlen;
-	size_t	cap;
-	int		res;
-
-	strlen = 0;
-	cap = 1024;
-	if (!(*str = ft_memalloc(sizeof(char) * cap)))
-		return (EXIT_FAILURE);
-	while ((res = read(fd, &((*str)[strlen]), 1)) > 0)
-	{
-		if (strlen == (cap -1))
-		{
-			if (!(*str = meta_realloc(*str, sizeof(char) * (strlen * 2))))
-				return (EXIT_FAILURE);
-			cap = strlen * 2;
-		}
-		strlen++;
-	}
-	// printf("str = \"%s\"\n", *str);
-	return (res);
-}
-
-int		subshell(t_queue *forest, char **substr, t_environ *env)
-{
-	pid_t	pid;
-	int		fds[2];
-
-	pipe(fds);
-	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
-		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
-		return (EXIT_FAILURE);
-	if ((pid = fork()) == -1)
-		return (EXIT_FAILURE);
-	if (!pid)
-	{
-		dup2(fds[1], STDOUT_FILENO);
-		exit(run_forest(forest, NULL, env));
-	}
-	close(fds[1]);
-	return (stringify(fds[0], substr));
-}
-
-int		run_forest(t_queue *forest, char **substr, t_environ *env)
-{
-	t_ast	*asts;
-
-	if (!forest)
-		return (EXIT_FAILURE);
-	if (substr)
-		return (subshell(forest, substr, env));
-	while (!isempty_queue(forest) && (asts = ft_dequeue(forest)))
-	{
-		// ft_printf("Brown: %s\n", *(asts->token));
-		if (build_info(NULL, (t_ast *)asts))
-			return (EXIT_FAILURE);
-		if (run_tree((t_ast *)asts, env) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-	}		
-	return (EXIT_SUCCESS);
 }

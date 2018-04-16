@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:14:40 by tle-huu-         ###   ########.fr       */
+/*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
+/*   Updated: 2018/04/16 03:50:48 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void			print_jobs(void);
 
 void			*init_process(void);
 int				compare(int *n1, int *n2);
+int				fd_redir(t_ast *curr, int **src, int pos, uint8_t closer);
 
 /*
 ** builders
@@ -88,8 +89,8 @@ int				build_info(t_ast *prev, t_ast *curr);
 ** builtins
 */
 
-char			*__getenv(char *name, t_environ *env);
-char			**__mutgetenv(char *name, t_environ *env);
+char			*ft_getenv(char *name, t_environ *env);
+char			**ft_mutgetenv(char *name, t_environ *env);
 int				builtin_handler(t_ast *curr, t_environ *env);
 int				builtin_env(char *argv[], t_environ *env);
 int				builtin_setenv(char *argv[], t_environ *env);

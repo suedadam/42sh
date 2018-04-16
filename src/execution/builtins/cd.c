@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 02:25:05 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:26:42 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string.h>
 #include <errno.h>
 
-void	parse_relative(char **str)
+void		parse_relative(char **str)
 {
 	char	*res;
 	char	*tmp;
@@ -27,14 +27,15 @@ void	parse_relative(char **str)
 		if (!(*res))
 			return ;
 		*(res - 1) = '\0';
-		tmp = ft_strrchr(*str, '/');
+		if (!(tmp = ft_strrchr(*str, '/')))
+			return ;
 		*(res - 1) = '/';
 		if ((len = strlen(res)) > 2)
 		{
 			ft_memmove(tmp, res + 2, len - 2);
 			tmp[len - 2] = '\0';
 		}
-		else
+		else if (tmp)
 			*tmp = '\0';
 	}
 }
@@ -65,11 +66,10 @@ static int	relative_update(char **l_pwd, char **res, char *input, size_t inlen)
 	(*l_pwd)[len] = '/';
 	if (!(*l_pwd = ft_strcat(*l_pwd, input)))
 		return (EXIT_FAILURE);
-	//error handle here.
 	parse_relative(l_pwd);
 	if (chdir(&((*l_pwd)[4])) == -1)
 	{
-		ft_printf("Error: %s\n", ft_strerror(errno));
+		ft_printf("Error: %s (%s)\n", ft_strerror(errno), *l_pwd);
 		return (EXIT_SUCCESS);
 	}
 	*res = *l_pwd;
@@ -83,21 +83,20 @@ int			builtin_cd(char *argv[], t_environ *env)
 	char	*l_pwd;
 	char	*home;
 
-	if (!argv[0] || !argv[1] || !(len = strlen(argv[1])))
+	if (!argv[0])
 		return (EXIT_FAILURE);
-	if (!(res = __mutgetenv("PWD", env)))
-	{
-		//Create a PWD.
+	if (!(res = ft_mutgetenv("PWD", env)))
 		return (EXIT_FAILURE);
-	}
 	l_pwd = ft_strdup(*res);
-	if (argv[1][0] == '/')
-		return (absolute_update(&l_pwd, res, argv[1], len));
-	else if (argv[1][0] == '~')
+	if (!argv[1] || !(len = ft_strlen(argv[1])) || argv[1][0] == '~')
 	{
-		if (!(home = __getenv("HOME", env)))
+		if (!(home = ft_getenv("HOME", env)))
 			return (EXIT_FAILURE);
 		return (absolute_update(&l_pwd, res, home, strlen(home)));
 	}
+	else if (argv[1][0] == '/')
+		return (absolute_update(&l_pwd, res, argv[1], len));
+	else if (argv[1][0] == '.' && len == 1)
+		return (EXIT_SUCCESS);
 	return (relative_update(&l_pwd, res, argv[1], len));
 }

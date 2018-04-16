@@ -6,13 +6,13 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:56:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 22:49:24 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:01:21 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char	*__getenv(char *name, t_environ *env)
+char	*ft_getenv(char *name, t_environ *env)
 {
 	int		i;
 	char	*ret;
@@ -22,7 +22,7 @@ char	*__getenv(char *name, t_environ *env)
 		return (NULL);
 	while ((env->environ)[i])
 	{
-		if (!strncmp(name, env->environ[i], 
+		if (!strncmp(name, env->environ[i],
 			((ret = ft_strchr(env->environ[i], '=')) - env->environ[i])))
 			return (ret + 1);
 		i++;
@@ -30,7 +30,7 @@ char	*__getenv(char *name, t_environ *env)
 	return (NULL);
 }
 
-char	**__mutgetenv(char *name, t_environ *env)
+char	**ft_mutgetenv(char *name, t_environ *env)
 {
 	int	i;
 
@@ -39,7 +39,7 @@ char	**__mutgetenv(char *name, t_environ *env)
 		return (NULL);
 	while ((env->environ)[i])
 	{
-		if (!strncmp(name, env->environ[i], 
+		if (!strncmp(name, env->environ[i],
 			(ft_strchr(env->environ[i], '=') - env->environ[i])))
 			return (&(env->environ[i]));
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:02:17 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 03:26:16 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 03:51:26 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,38 @@ static void		history_append_list(char *buf)
 	hist_var = &g_shell_env.hist_var;
 	if (buf && hist_var && hist_var->history_list)
 		dbl_push_front(hist_var->history_list, buf, ft_strlen(buf) + 1);
+	temp = ft_getenv("HOME", g_environ);
+	homepath = concatpath("/", temp);
+	homepath = concatpath(filename, homepath);
+	return (homepath);
+}
+
+static void			history_append_list(char *buffer)
+{
+	t_hist_var		*history_var;
+
+	history_var = &g_shell_env.history_var;
+	if (buffer && history_var && history_var->history_list)
+		dbl_push_front(history_var->history_list, buffer, ft_strlen(buffer) + 1);
+}
+
+void			free_dblist(t_dblist **delete)
+{
+	t_node	*temp;
+	t_node	*nextemp;
+
+	temp = (*delete)->first;
+	while (temp != (*delete)->first && temp)
+	{
+		if (temp->content)
+			meta_free(temp->content);
+		nextemp = temp->next;
+		meta_free(temp);
+		temp = NULL;
+		temp = nextemp;
+	}
+	meta_free(*delete);
+	*delete = NULL;
 }
 
 int				delete_history(void)

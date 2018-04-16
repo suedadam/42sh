@@ -6,13 +6,13 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:46:16 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/14 13:23:43 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 03:10:31 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void		build_carry(t_ast *curr)
+void	build_carry(t_ast *curr)
 {
 	t_process	*info;
 
@@ -27,7 +27,7 @@ void		build_carry(t_ast *curr)
 ** Change dereference to [0] here because its easier to read.
 */
 
-void		build_leafs(t_ast *curr)
+void	build_leafs(t_ast *curr)
 {
 	t_process *info;
 
@@ -110,10 +110,7 @@ int		build_info(t_ast *prev, t_ast *curr)
 			build_operator(curr);
 	}
 	else if (!prev)
-	{
 		build_default(curr);
-		// run_operation(curr, 1);
-	}
 	else
 		build_info(curr, curr->right_child);
 	return (EXIT_SUCCESS);

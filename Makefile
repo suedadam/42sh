@@ -123,7 +123,8 @@ SRC_EXEC =	\
 			execution \
 			redirection \
 			builders \
-			utils
+			utils \
+			runners
 
 SRC_EXEC_BUILTINS = \
 			env \
