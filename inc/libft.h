@@ -98,6 +98,7 @@ char				*ft_strerror(int num);
 */
 
 void				*meta_malloc(size_t size);
+void				*meta_ft_memalloc(size_t size);
 void				*meta_realloc(void *old, size_t newsize);
 void				meta_free(void *old);
 

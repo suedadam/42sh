@@ -60,13 +60,13 @@ char			**ft_splitwhitespace(char const *s)
 	count = word_count(s);
 	curr = next_word(s);
 	curr_len = 0;
-	if (!(array = (char **)malloc(sizeof(char *) * (1 + count))))
+	if (!(array = (char **)ft_memalloc(sizeof(char *) * (1 + count))))
 		return (NULL);
 	while (i < count)
 	{
 		curr = next_word(&(curr[curr_len]));
 		curr_len = word_len(curr);
-		if (!(array[i] = (char *)malloc(sizeof(char) * (1 + curr_len))))
+		if (!(array[i] = (char *)ft_memalloc(sizeof(char) * (1 + curr_len))))
 			return (NULL);
 		ft_strncpy(array[i], curr, curr_len);
 		i++;

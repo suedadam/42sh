@@ -16,7 +16,7 @@ void		*ft_memalloc(size_t size)
 {
 	void	*ret;
 
-	if (!(ret = meta_malloc(size)))
+	if (!(ret = meta_ft_memalloc(size)))
 		return (NULL);
 	return (ret);
 }
