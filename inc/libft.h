@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/15 15:32:11 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 23:13:38 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct		s_index
 }					t_index;
 
 t_node				*new_node(void);
+char				*ft_strerror(int num);
 
 /*
 ** Tracked memory allocations.

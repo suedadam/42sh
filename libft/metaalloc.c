@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 13:07:01 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 15:27:25 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 17:16:25 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	*meta_malloc(size_t size)
 	ft_bzero(ret, size + sizeof(t_meta));
 	new_h = ret;
 	new_h->len = size;
+	// printf("%ld\n", ret + sizeof(t_meta) - (void *)new_h);
 	return (ret + sizeof(t_meta));
 }
 
