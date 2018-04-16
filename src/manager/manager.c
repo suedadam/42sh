@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 12:06:36 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/15 17:09:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static t_environ	*set_local_env(int subshell_env)
 			return (NULL);
 		i++;
 	}
+	printf("i = %zu vs %zu\n", i, g_environ->size + 1);
 	env->environ[i] = NULL;
 	env->size = g_environ->size;
 	return (env);

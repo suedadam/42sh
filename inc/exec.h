@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:38:25 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/15 16:46:32 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 19:58:24 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int			build_info(t_ast *prev, t_ast *curr);
 ** builtins
 */
 
+char			*__getenv(char *name, t_environ *env);
+char			**__mutgetenv(char *name, t_environ *env);
 int				builtin_handler(t_ast *curr, t_environ *env);
 int				builtin_env(char *argv[], t_environ *env);
 int				builtin_setenv(char *argv[], t_environ *env);
