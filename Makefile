@@ -1,6 +1,6 @@
 NAME = 42sh
 STAT = deps/libft/libftprintf.a
-CFLAGS += -Wall -Werror -Wextra -g
+CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
 INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc
@@ -124,7 +124,8 @@ SRC_EXEC =	\
 			redirection \
 			builders \
 			utils \
-			runners
+			runners \
+			helpers 
 
 SRC_EXEC_BUILTINS = \
 			env \

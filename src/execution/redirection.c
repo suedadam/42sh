@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:39:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:17:45 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		ops_append_to(t_ast *curr, int pos)
 		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
-	if (*(curr->token[pos + 1]) == '&')
+	if (curr->token[pos + 1] && *(curr->token[pos + 1]) == '&')
 	{
 		if (fd_redir(curr, src, pos, 0) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -95,13 +95,13 @@ int		ops_redir_to(t_ast *curr, int pos)
 		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
-	if (*(curr->token[pos + 1]) == '&')
+	if (curr->token[pos + 1] && *(curr->token[pos + 1]) == '&')
 	{
 		if (fd_redir(curr, src, pos, 1) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	else if ((**src = open(curr->token[pos + 1],
-		O_APPEND | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
+		O_TRUNC | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
 	return (free_after(curr, pos));
 }
@@ -114,6 +114,8 @@ int		handle_redirection(t_ast *curr)
 	if (!curr)
 		return (EXIT_FAILURE);
 	i = 0;
+	if (curr->type[i] != WORD)
+		return (EXIT_SUCCESS);
 	while (curr->token[i])
 	{
 		j = 0;

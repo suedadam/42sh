@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 06:23:52 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:32:56 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,6 @@ struct s_ophandlers	op_handlers[] = {
 	{NULL, NULL},
 };
 
-void	exec_init(t_ast *process)
-{
-	signaldef_handlers();
-	if (handle_redirection(process))
-		exit(EXIT_FAILURE);
-	dup2(*(process->p_info->stdin), STDIN_FILENO);
-	dup2(*(process->p_info->stdout), STDOUT_FILENO);
-	dup2(*(process->p_info->stderr), STDERR_FILENO);
-}
-
-void	parent_pipes(t_process *info)
-{
-	if (*(info->stdin) != STDIN_FILENO)
-		close(*(info->stdin));
-	if (*(info->stdout) != STDOUT_FILENO)
-		close(*(info->stdout));
-}
-
-void		free_leaf(t_ast *ast)
-{
-	if (ast)
-	{
-		free_argv(ast->token);
-		free_types(ast->type);
-		meta_free(ast);
-		ast = NULL;
-	}
-}
-
 int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 {
 	int		pid;
@@ -65,8 +36,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 		return (EXIT_SUCCESS);
 	if ((res = builtin_handler(process, env)) != -1)
 	{
-		parent_pipes(process->p_info);
-		meta_free(process);
+		parent_pipes(process);
 		return (res);
 	}
 	if ((pid = fork()) == -1)
@@ -78,8 +48,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 		ft_printf("Error: %s: %s\n", strerror(errno), *(process->token));
 		exit(EXIT_FAILURE);
 	}
-	parent_pipes(process->p_info);
-	meta_free(process);
+	parent_pipes(process);
 	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
 	run_pipecmds(cmd, pids, env);
 	return (EXIT_SUCCESS);
@@ -122,17 +91,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		if (WIFSTOPPED(res) && (handle_suspend(&pid, curr) == EXIT_FAILURE))
 			return (EXIT_FAILURE);
 	}
-	// meta_free(*(curr->token));
 	return (res);
-}
-
-int		pipe_ops(int *fds)
-{
-	pipe(fds);
-	if (fcntl(fds[0], F_SETFD, FD_CLOEXEC) < 0 ||
-		fcntl(fds[1], F_SETFD, FD_CLOEXEC) < 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
 }
 
 /*

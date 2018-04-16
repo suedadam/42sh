@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:34:50 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 06:15:00 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:29:49 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	help_free(t_process *new)
 	meta_free(new->stdin);
 }
 
-void		free_process(t_process *process)
+void	free_process(t_process *process)
 {
 	meta_free(process->stdin);
 	meta_free(process->stderr);
@@ -62,14 +62,20 @@ void	*init_process(void)
 int		fd_redir(t_ast *curr, int **src, int pos, uint8_t closer)
 {
 	int	dtmp;
+	int fds[2];
 
-	dtmp = ft_atoi(&(curr->token[pos + 1][1]));
+	if (!curr->token[pos + 2] || (!(dtmp = ft_atoi(curr->token[pos + 2]))
+								&& strcmp(curr->token[pos + 2], "-")))
+		return (EXIT_SUCCESS);
 	if (dtmp == 1)
 		*src = curr->p_info->stdout;
 	else if (dtmp == 2)
 		*src = curr->p_info->stderr;
-	else if (closer && curr->token[pos + 1][1] == '-')
-		**src = -1;
+	else if (closer && *(curr->token[pos + 2]) == '-')
+	{
+		pipe_ops(fds);
+		**src = fds[1];
+	}
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

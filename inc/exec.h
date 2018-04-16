@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 07:20:45 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/16 08:33:39 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void			print_jobs(void);
 void			*init_process(void);
 int				compare(int *n1, int *n2);
 int				fd_redir(t_ast *curr, int **src, int pos, uint8_t closer);
+int				pipe_ops(int *fds);
+void			parent_pipes(t_ast *curr);
+void			exec_init(t_ast *process);
 
 /*
 ** builders

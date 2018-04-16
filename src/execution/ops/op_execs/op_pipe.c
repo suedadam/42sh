@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 07:11:30 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 08:29:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 	t_pqueue	pids;
 	t_stack		cmdstack;
 	pid_t		res;
-	pid_t		*kpid;
+	pid_t		kpid;
 
 	if (!curr)
 		return (EXIT_FAILURE);
@@ -95,19 +95,15 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 	pids.first = NULL;
 	itterate_pipes(&cmdstack, curr);
 	run_pipecmds(&cmdstack, &pids, env);
-	if (!(kpid = ft_memalloc(sizeof(int))))
-		return (EXIT_FAILURE);
-	while (pids.first && (res = wait3(kpid, WUNTRACED, NULL)) >= 0)
+	while (pids.first && (res = wait3(&kpid, WUNTRACED, NULL)) >= 0)
 	{
-		if (WEXITSTATUS(*kpid) || WIFSTOPPED(*kpid))
+		if (WEXITSTATUS(kpid) || WIFSTOPPED(kpid))
 		{
 			if (res)
 				return (suspend_chain(&pids, *(curr->token)));
-			meta_free(kpid);
 			if (itterate_queue(&pids, SIGKILL) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		meta_free(kpid);
 		if (itterate_queue(&pids, 0) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}

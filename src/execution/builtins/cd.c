@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 03:26:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 07:26:02 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
 	if (chdir(&((*l_pwd)[4])) == -1)
 	{
 		ft_printf("Error: %s\n", ft_strerror(errno));
-		return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	}
 	*res = *l_pwd;
 	return (EXIT_SUCCESS);
