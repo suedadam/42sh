@@ -6,7 +6,7 @@
 #    By: asyed <asyed@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/15 23:40:05 by asyed            ###   ########.fr        #
+#    Updated: 2018/04/16 04:25:12 by asyed            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCSDIR_PRINTF = printf/
 INCLUDES = -I inc/
 CC = gcc
 FLAGS += -Wall -Wextra -Werror
-CFLAGS += -c -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS += -c -Wall -Wextra -Werror -g
 
 ################################################################################
 # SOURCE FILES                                                          #

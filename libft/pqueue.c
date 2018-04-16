@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 17:13:22 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/15 15:36:26 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 06:25:10 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 void				*ft_depqueue(t_pqueue *queue)
 {
 	t_node			*tmp;
+	void			*content;
 
 	tmp = queue->first;
 	if (tmp)
 	{
 		queue->first = tmp->next;
-		return (tmp->content);
+		content = tmp->content;
+		meta_free(tmp);
+		return (content);
 	}
 	return (NULL);
 }

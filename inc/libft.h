@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 03:05:12 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:51:03 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@
 # define BUFF_SIZE 2048
 
 # define ABS(X) X > 0 ? X : -X
-# define SORRY_GUYS || c == ' ' || c == '\v' || c == '\f' || c == '\r'
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' SORRY_GUYS)
+# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 
 int					g_fd;
 

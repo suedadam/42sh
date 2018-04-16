@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 22:55:33 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 02:56:01 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:49:04 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,5 @@ char	*ft_strerror(int num)
 {
 	if (num > 106 || num <= 0)
 		return ("Undefined");
-	return (ft_errno[num].reason);
+	return (g_ft_errno[num].reason);
 }
