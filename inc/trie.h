@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 19:43:15 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 17:02:03 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 19:15:11 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_trie
 	int				nbr_children;
 	size_t			pos;
 	char			child;
+	int				is_word;
 }				t_trie;
 
 void		add_word_to_trie(t_trie *trie, char *word);

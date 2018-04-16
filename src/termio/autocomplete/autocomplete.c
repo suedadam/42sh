@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 18:02:51 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/15 17:34:37 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/15 21:04:57 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 		ft_printf("BONJOUR [error in bottleneck null stack || null trie]\n");
 		exit(1);
 	}
-	if (!(stack->top) || ((t_trie *)(stack->top->content))->key != trie->key)
+	if (!(stack->top) || ((t_trie *)(stack->top->content))->pos != trie->pos)
 	{
 		cursor = &g_shell_env.cursor;
 		regular_text(trie->key);
@@ -66,19 +66,24 @@ static void	bottleneck(t_trie *trie, t_stack *stack)
 	else if (child == NO_CHILD)
 	{
 		meta_free(ft_stackpop(stack));
-		trie_dfs((t_trie *)((stack)->top->content));
 		if ((t_trie *)((stack)->top))
 			trie_dfs((t_trie *)((stack)->top->content));
 	}
 }
 
-static void			resume_dfs(t_trie *trie)
+static void			resume_dfs(t_trie *trie, t_stack *stack)
 {
 	t_cursor			*cursor;
 
 	cursor = &g_shell_env.cursor;
 	while (cursor->position != trie->pos)
 		ft_delete(-1);
+	trie->is_word = 0;
+	if (trie->nbr_children <= 1)
+	{
+		ft_stackpop(stack);
+		trie_dfs(trie->children[next_child(trie, 0)]);
+	}
 	trie_dfs(trie);
 }
 
@@ -91,8 +96,14 @@ void				trie_dfs(t_trie *trie)
 	if (!trie && isempty_stack(stack))
 		return ;
 	else if (!trie)
-		resume_dfs((t_trie *)(stack->top->content));
-	if (trie->nbr_children == 1)
+		resume_dfs((t_trie *)(stack->top->content), stack);
+	if (trie->is_word && trie->nbr_children)
+	{
+		ft_stackpush(stack, trie, sizeof(t_trie));
+		regular_text(trie->key);
+		trie->is_word = 0;
+	}
+	else if (trie->nbr_children == 1)
 		one_child(trie);
 	else if (trie->nbr_children > 1)
 		bottleneck(trie, stack);
