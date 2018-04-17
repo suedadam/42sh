@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:34:50 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:29:49 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 17:02:55 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ void	help_free(t_process *new)
 void	free_process(t_process *process)
 {
 	meta_free(process->stdin);
-	meta_free(process->stderr);
-	meta_free(process->stdout);
+	if (process->stderr != process->stdin && process->stderr != process->stdout)
+		meta_free(process->stderr);
+	if (process->stdout != process->stdin && process->stdout != process->stderr)
+		meta_free(process->stdout);
 	meta_free(process->comm);
+	process->comm = NULL;
 	meta_free(process);
 }
 

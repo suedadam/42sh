@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:41:48 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 17:14:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		ops_append_to(t_ast *curr, int pos)
 		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
+	close(**src);
 	if (curr->token[pos + 1] && *(curr->token[pos + 1]) == '&')
 	{
 		if (fd_redir(curr, src, pos, 0) == EXIT_FAILURE)
@@ -95,6 +96,7 @@ int		ops_redir_to(t_ast *curr, int pos)
 		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
+	close(**src);
 	if (curr->token[pos + 1] && *(curr->token[pos + 1]) == '&')
 	{
 		if (fd_redir(curr, src, pos, 1) == EXIT_FAILURE)
@@ -125,6 +127,7 @@ int		handle_redirection(t_ast *curr)
 			{
 				if (!curr || redir_ops[j].func(curr, i))
 					return (EXIT_FAILURE);
+				i++;
 				break ;
 			}
 			j++;
