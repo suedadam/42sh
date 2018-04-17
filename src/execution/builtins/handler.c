@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:42:02 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/16 18:20:58 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 	int	*backup;
 
 	i = 0;
+	backup_fds(&backup);
 	if (handle_redirection(curr))
 		return (EXIT_FAILURE);
 	while (builtins[i].name)
 	{
 		if (!ft_strcmp(builtins[i].name, *(curr->token)))
 		{
-			backup_fds(&backup);
 			set_fds(curr->p_info);
 			if (i == 11)
 				i = builtins[11].exec(curr->token, g_environ);
@@ -79,5 +79,6 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 		}
 		i++;
 	}
+	restore_fds(backup);
 	return (-1);
 }
