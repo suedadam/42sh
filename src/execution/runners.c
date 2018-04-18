@@ -93,9 +93,15 @@ int		run_forest(t_queue *forest, char **substr, t_environ *env)
 	while (!isempty_queue(forest) && (asts = ft_dequeue(forest)))
 	{
 		if (build_info(NULL, (t_ast *)asts))
+		{
+			errno = 8;
 			return (EXIT_FAILURE);
+		}
 		if (run_tree((t_ast *)asts, env) == EXIT_FAILURE)
+		{
+			errno = 8;
 			return (EXIT_FAILURE);
+		}
 		free_ast(asts);
 	}
 	return (EXIT_SUCCESS);

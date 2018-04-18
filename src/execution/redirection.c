@@ -20,6 +20,31 @@ struct s_redir_op	redir_ops[] = {
 	{NULL, NULL},
 };
 
+void	*ref_picker(t_ast *curr, int fd)
+{
+	if (fd == 1)
+		return (&(curr->p_info->stdout));
+	else if (fd == 2)
+		return (&(curr->p_info->stderr));
+	return (NULL);
+}
+
+void	*valid_input(char *token, char exception, t_ast *curr)
+{
+	int	i;
+
+	i = 0;
+	if (!token)
+		return (NULL);
+	while (token[i])
+	{
+		if ((token[i] < '0' || token[i] > '9') && token[i] != exception)
+			return (NULL);
+		i++;
+	}
+	return (ref_picker(curr, ft_atoi(token)));
+}
+
 int		free_after(t_ast *curr, int pos)
 {
 	meta_free(curr->token[pos + 1]);
@@ -50,22 +75,19 @@ int		ops_read_from(t_ast *curr, int pos)
 
 int		ops_append_to(t_ast *curr, int pos)
 {
-	int		stmp;
 	int		**src;
 
-	if (!(stmp = ft_atoi(curr->token[pos - 1])) || stmp == 1)
+	if (!(src = valid_input(curr->token[pos - 1], -1, curr)))
 		src = &(curr->p_info->stdout);
-	else if (stmp == 2)
-		src = &(curr->p_info->stderr);
 	else
-		return (EXIT_FAILURE);
-	if ((stmp && stmp != 1) || (stmp == 1 && curr->token[pos - 1][0] == '1'))
 	{
 		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
+	if (!curr->token[pos + 1])
+		return (EXIT_FAILURE);
 	close(**src);
-	if (curr->token[pos + 1] && *(curr->token[pos + 1]) == '&')
+	if (*(curr->token[pos + 1]) == '&')
 	{
 		if (fd_redir(curr, src, pos, 0) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -82,27 +104,24 @@ int		ops_append_to(t_ast *curr, int pos)
 
 int		ops_redir_to(t_ast *curr, int pos)
 {
-	int		stmp;
 	int		**src;
 
-	if (!(stmp = ft_atoi(curr->token[pos - 1])) || stmp == 1)
+	if (!(src = valid_input(curr->token[pos - 1], -1, curr)))
 		src = &(curr->p_info->stdout);
-	else if (stmp == 2)
-		src = &(curr->p_info->stderr);
 	else
-		return (EXIT_FAILURE);
-	if ((stmp && stmp != 1) || (stmp == 1 && curr->token[pos - 1][0] == '1'))
 	{
 		meta_free(curr->token[pos - 1]);
 		curr->token[pos - 1] = NULL;
 	}
+	if (!curr->token[pos + 1])
+		return (EXIT_FAILURE);
 	close(**src);
-	if (curr->token[pos + 1] && *(curr->token[pos + 1]) == '&')
+	if (*(curr->token[pos + 1]) == '&')
 	{
 		if (fd_redir(curr, src, pos, 1) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	else if ((**src = open(curr->token[pos + 1],
+	else if (curr->token[pos + 1] && (**src = open(curr->token[pos + 1],
 		O_TRUNC | O_CREAT | O_RDWR | O_CLOEXEC, S_IRUSR | S_IWUSR)) == -1)
 		return (EXIT_FAILURE);
 	return (free_after(curr, pos));
