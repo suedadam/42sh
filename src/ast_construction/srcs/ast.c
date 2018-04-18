@@ -90,10 +90,10 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 		}
 		meta_free(ast);
 	}
-	if (isempy_queue(forest))
+	if (isempty_queue(forest))
 	{
 		free_forest(forest);
 		forest = NULL;
 	}
-	return (forest;
+	return (forest);
 }
