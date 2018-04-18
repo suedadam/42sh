@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/17 20:56:37 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/17 21:14:57 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 
 	ast = NULL;
 	i = 0;
-	if ((i = parse_tokens(tokens, type)) == END_PARSING)
+	if ((i = parse_tokens(tokens, type)) == END_PARSING || (!i && *type == OPERATOR))
 		return (ast);
 	*position += i + 1;
 	sub_string = sub_token_char(tokens, 0, i + 1);
@@ -80,7 +80,6 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	if (!(forest = new_queue()))
 		return (NULL);
 	pos = 0;
-	// printf("First token: \"%s\" %p\n", *tokens, *tokens);
 	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
 		if (ft_enqueue(forest, ast, sizeof(t_ast)) == EXIT_FAILURE || !parsing_pass(ast))
@@ -91,5 +90,5 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 		}
 		meta_free(ast);
 	}
-	return (isempty_queue(forest) ? NULL : forest);
+	return (forest);
 }
