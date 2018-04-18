@@ -38,6 +38,8 @@
 # define REDIR_LIMIT 4
 # define EXIT_FAILURE_SOFT -1
 
+static const char	*g_ops[OPS] = {"&", "&&", "||", "|", ";", "<", ">", ">>"};
+
 /*
 ** Parent has 2 INTs while leafs/childs have one.
 ** For 2 INTs:

@@ -20,40 +20,6 @@ struct s_redir_op	redir_ops[] = {
 	{NULL, NULL},
 };
 
-void	*ref_picker(t_ast *curr, int fd)
-{
-	if (fd == 1)
-		return (&(curr->p_info->stdout));
-	else if (fd == 2)
-		return (&(curr->p_info->stderr));
-	return (NULL);
-}
-
-void	*valid_input(char *token, char exception, t_ast *curr)
-{
-	int	i;
-
-	i = 0;
-	if (!token)
-		return (NULL);
-	while (token[i])
-	{
-		if ((token[i] < '0' || token[i] > '9') && token[i] != exception)
-			return (NULL);
-		i++;
-	}
-	return (ref_picker(curr, ft_atoi(token)));
-}
-
-int		free_after(t_ast *curr, int pos)
-{
-	meta_free(curr->token[pos + 1]);
-	curr->token[pos + 1] = NULL;
-	meta_free(curr->token[pos]);
-	curr->token[pos] = NULL;
-	return (EXIT_SUCCESS);
-}
-
 int		ops_read_from(t_ast *curr, int pos)
 {
 	int	**src;

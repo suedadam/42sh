@@ -121,6 +121,7 @@ SRC_MANAGER = \
 SRC_EXEC =	\
 			execution \
 			redirection \
+			redir_helper \
 			builders \
 			utils \
 			runners \

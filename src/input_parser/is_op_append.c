@@ -18,7 +18,7 @@ static	int			cmp(char *str, size_t len)
 
 	i = -1;
 	while (++i < OPS)
-		if (!ft_strncmp(ops[i], str, len + 1))
+		if (!ft_strncmp(g_ops[i], str, len + 1))
 			return (1);
 	return (0);
 }
