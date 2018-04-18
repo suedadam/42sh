@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/17 21:17:11 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/18 16:19:15 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	int			pos;
 
 	if (!(forest = new_queue()))
+	{
+		meta_free(forest);
+		forest = NULL;
 		return (NULL);
+	}
 	pos = 0;
 	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
@@ -86,6 +90,8 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 		{
 			errno = 8;
 			free_forest(forest);
+			meta_free(forest);
+			forest = NULL;
 			return (NULL);
 		}
 		meta_free(ast);
@@ -93,6 +99,7 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	if (isempty_queue(forest))
 	{
 		free_forest(forest);
+		meta_free(forest);
 		forest = NULL;
 	}
 	errno = 0;

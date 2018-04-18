@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manager.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:54:24 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/18 16:34:22 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,17 @@ int	manager(char *input_str, char **substr)
 	if (!(res = parser(input_str)) || res == MAP_FAILED)
 		return ((!res) ? EXIT_FAILURE : EXIT_FAILURE_SOFT);
 	if (!(forest = build_forest(res->token, res->type)) && errno)
+	{
+		meta_free(res->type);
+		for (int i = 0; res->token[i]; i++)
+			meta_free(res->token[i]);
+		meta_free(res->token);
+		meta_free(res);
 		return (EXIT_FAILURE);
+	}
 	meta_free(res->type);
+	// for (int i = 0; res->token[i]; i++)
+	// 	meta_free(res->token[i]);
 	meta_free(res->token);
 	meta_free(res);
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))

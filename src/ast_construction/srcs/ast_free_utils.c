@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_free_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 13:54:47 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 06:37:06 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/18 16:46:17 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void		free_ast(t_ast *ast)
 			ast->p_info = NULL;
 		}
 		free_ast(ast->left_child);
-		ast->p_info = NULL;
+		ast->left_child = NULL;
 		free_ast(ast->right_child);
-		ast->p_info = NULL;
+		ast->right_child = NULL;
 		meta_free(ast);
 		ast = NULL;
 	}

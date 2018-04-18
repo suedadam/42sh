@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 06:47:33 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/18 15:58:48 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 	return (parser);
 }
 
-static int			illegal_char(__attribute__((unused))t_parser *par, char cur_char)
+static int			illegal_char(__attribute__((unused))t_parser *par, 
+	char cur_char)
 {
 	if (cur_char == ')')
 		return (EXIT_FAILURE_SOFT);
