@@ -48,35 +48,16 @@ int		suspend_chain(t_pqueue *pids, char *name)
 	return (EXIT_SUCCESS);
 }
 
-int		itterate_queue(t_pqueue *pids, int signal)
+int		itterate_queue(t_pqueue *pids, int signal, pid_t deadpid)
 {
 	pid_t	*kpid;
 
-	while (pids->first)
+	while (pids->first && *(int *)pids->first->content <= deadpid)
 	{
 		if (!(kpid = ft_depqueue(pids)))
 			return (EXIT_FAILURE);
 		if (signal)
 			kill(*kpid, signal);
-		meta_free(kpid);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int		kill_chain(t_pqueue *pids, pid_t deadpid)
-{
-	pid_t	*kpid;
-
-	while (pids->first)
-	{
-		if (!(kpid = ft_depqueue(pids)))
-			return (EXIT_FAILURE);
-		kill(*kpid, SIGKILL);
-		if (*kpid == deadpid)
-		{
-			meta_free(kpid);
-			return (EXIT_SUCCESS);
-		}
 		meta_free(kpid);
 	}
 	return (EXIT_SUCCESS);
@@ -101,10 +82,10 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 		{
 			if (res)
 				return (suspend_chain(&pids, *(curr->token)));
-			if (itterate_queue(&pids, SIGKILL) == EXIT_FAILURE)
+			if (itterate_queue(&pids, SIGKILL, res) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		if (itterate_queue(&pids, 0) == EXIT_FAILURE)
+		if (itterate_queue(&pids, 0, res) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

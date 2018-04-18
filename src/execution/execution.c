@@ -90,6 +90,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		waitpid(pid, &res, WUNTRACED);
 		if (WIFSTOPPED(res) && (handle_suspend(&pid, curr) == EXIT_FAILURE))
 			return (EXIT_FAILURE);
+		kill(pid, SIGKILL);
 	}
 	return (res);
 }
