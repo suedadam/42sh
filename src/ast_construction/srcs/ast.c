@@ -95,5 +95,6 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 		free_forest(forest);
 		forest = NULL;
 	}
+	errno = 0;
 	return (forest);
 }

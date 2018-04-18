@@ -63,7 +63,7 @@ int	manager(char *input_str, char **substr)
 		return (EXIT_FAILURE);
 	if (!(res = parser(input_str)) || res == MAP_FAILED)
 		return ((!res) ? EXIT_FAILURE : EXIT_FAILURE_SOFT);
-	if (!(forest = build_forest(res->token, res->type)))
+	if (!(forest = build_forest(res->token, res->type)) && errno)
 		return (EXIT_FAILURE);
 	meta_free(res->type);
 	meta_free(res->token);
