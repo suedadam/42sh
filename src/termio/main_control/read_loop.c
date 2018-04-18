@@ -75,7 +75,8 @@ int													ft_read_loop(void)
 	while ((ret = read(STDIN_FILENO, &byte, 1)) == 1)
 	{
 		if ((byte == 4 || (builtin_exit(byte) == EXIT_SUCCESS))
-		&& (!(*g_shell_env.buffer->buff && (builtin_exit(byte) == EXIT_FAILURE))))
+			&& (!(*g_shell_env.buffer->buff &&
+			(builtin_exit(byte) == EXIT_FAILURE))))
 		{
 			if (reset_prompt() == EXIT_FAILURE)
 				return (EXIT_FAILURE);

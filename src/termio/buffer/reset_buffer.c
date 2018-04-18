@@ -15,7 +15,6 @@
 
 int			reset_buffer(void)
 {
-	// ft_printf("Test : %p paper: %p\n", g_shell_env.buffer->buff, g_shell_env.paperweight.buff);
 	meta_free(g_shell_env.buffer->buff);
 	g_shell_env.buffer->buff = NULL;
 	meta_free(g_shell_env.buffer);

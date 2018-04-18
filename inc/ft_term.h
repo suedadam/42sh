@@ -36,7 +36,6 @@
 # define UNSET				(void *)
 # define HISTORY_FILE		".42sh_history"
 
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
 # define IS_OPERATOR(c) 	(c == '(' || c == '&' || c == '|')
 # define PRINTABLE(c) 		(c >= 32 && c <= 126)
 # define T_BSLASH 			(g_shell_env.tokens.bslash)

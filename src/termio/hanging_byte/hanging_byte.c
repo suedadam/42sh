@@ -16,19 +16,16 @@
 void	verify_hanging(void)
 {
 	char	*buf;
-//	int		ogpipe;
 
 	buf = g_shell_env.buffer->buff;
-//	ogpipe = g_shell_env.tokens.pipe;
 	ft_bzero(&g_shell_env.tokens, sizeof(t_tokens));
 	while (*buf)
 	{
 		hanging_byte(*buf);
 		if (!IS_WHITESPACE(*buf))
-		T_PIPE = 0;
+			T_PIPE = 0;
 		buf++;
 	}
-//	g_shell_env.tokens.pipe = ogpipe;
 }
 
 void	hanging_byte(char byte)

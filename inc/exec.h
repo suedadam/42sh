@@ -92,7 +92,6 @@ int				builtin_fg(char *argv[], t_environ *env);
 int				builtin_bg(char *argv[], t_environ *env);
 int				builtin_jobs(char *argv[], t_environ *env);
 int				builtin_export(char *argv[], t_environ *env);
-//int				builtin_exit(char *argv[], t_environ *env);
 
 /*
 ** op_checks
