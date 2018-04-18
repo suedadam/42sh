@@ -32,7 +32,7 @@ int			ft_linefeed(void)
 	ret = manager(g_shell_env.buffer->buff, NULL);
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
-		ft_printf("Error exiting...\n");
+		ft_printf("Error: %s\n", ft_strerror(errno));
 		return (EXIT_FAILURE);
 	}
 	if (!cache)

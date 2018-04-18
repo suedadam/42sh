@@ -54,8 +54,8 @@ static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 		if (ft_linefeed() == EXIT_FAILURE
 			|| checktty() == EXIT_FAILURE)
 		{
-			ft_printf("fail\n", 5);
-			return (reset_terminal());
+			reset_terminal();
+			return (new_prompt(0));
 		}
 	}
 	return (EXIT_SUCCESS);

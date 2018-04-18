@@ -87,7 +87,7 @@ int		run_forest(t_queue *forest, char **substr, t_environ *env)
 	t_ast	*asts;
 
 	if (!forest)
-		return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	if (substr)
 		return (subshell(forest, substr, env));
 	while (!isempty_queue(forest) && (asts = ft_dequeue(forest)))

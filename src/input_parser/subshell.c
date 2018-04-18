@@ -54,7 +54,6 @@ char	*literal_command(char **input_str, int i)
 int		is_subshell(t_parser *par, char **input_str)
 {
 	char	*command;
-	char	*unused;
 	int		ret;
 
 	if (par->quoted || **input_str != '(')
@@ -66,7 +65,7 @@ int		is_subshell(t_parser *par, char **input_str)
 		return (EXIT_FAILURE_SOFT);
 	else if (command == NULL)
 		return (0);
-	ret = manager(command, &unused);
+	ret = manager(command, NULL);
 	meta_free(command);
 	if (ret == EXIT_FAILURE)
 		return (EXIT_FAILURE);

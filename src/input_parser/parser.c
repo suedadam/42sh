@@ -63,6 +63,13 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 	return (parser);
 }
 
+static int			illegal_char(__attribute__((unused))t_parser *par, char cur_char)
+{
+	if (cur_char == ')')
+		return (EXIT_FAILURE_SOFT);
+	return (UNUSED_CHAR);
+}
+
 static int			check_char(t_parser **par, char **input_str)
 {
 	int				ret;
@@ -75,6 +82,7 @@ static int			check_char(t_parser **par, char **input_str)
 		(ret == UNUSED_CHAR && (ret = is_subshell(*par, input_str)) <= 0) ||
 		(ret == UNUSED_CHAR && !(ret = is_start_op(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_whitespc(*par, input_str))) ||
+		(ret == UNUSED_CHAR && !(ret = illegal_char(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_word(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = is_comment(*par, **input_str))) ||
 		(ret == UNUSED_CHAR && !(ret = start_word(*par, **input_str))))
