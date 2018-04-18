@@ -19,7 +19,9 @@ int		op_and_exec(t_ast *curr, t_environ *env)
 	if (!run_operation(curr->left_child, 1, env))
 	{
 		run_operation(curr->right_child, 1, env);
-		return (run_tree(curr->right_child, env));
+		if (curr->right_child && *(curr->right_child->type) == OPERATOR)
+			return (run_tree(curr->right_child, env));
+		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }
