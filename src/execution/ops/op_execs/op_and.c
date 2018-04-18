@@ -23,5 +23,5 @@ int		op_and_exec(t_ast *curr, t_environ *env)
 			return (run_tree(curr->right_child, env));
 		return (EXIT_SUCCESS);
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
