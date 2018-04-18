@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/17 21:14:57 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/17 21:17:11 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,10 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 		}
 		meta_free(ast);
 	}
-	return (forest);
+	if (isempy_queue(forest))
+	{
+		free_forest(forest);
+		forest = NULL;
+	}
+	return (forest;
 }
