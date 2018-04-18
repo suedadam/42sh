@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 06:16:05 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/17 20:55:49 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ t_token_type				*sub_token_type(t_token_type *array,
 char						**sub_token_char(char **array,
 								int index, int length);
 int							str_search(char **argv, char *str);
+int							ast_is_leaf(t_ast *ast);
 
 /*
 ***		ast construction

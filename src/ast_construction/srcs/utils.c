@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:53 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 06:41:33 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/17 20:55:26 by tle-huu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+
+int				ast_is_leaf(t_ast *ast)
+{
+	return (!(ast->left_child || ast->right_child));
+}
 
 t_token_type	*sub_token_type(t_token_type *array, int index, int length)
 {
