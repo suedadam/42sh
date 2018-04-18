@@ -51,11 +51,6 @@ int				history_init(void)
 	t_hist_var	*history_var;
 
 	history_var = &g_shell_env.hist_var;
-	// if (!(history_var->history_list = new_dblist()))
-	// {
-	// 	printf("\ndblist fail\n");
-	// 	return (EXIT_FAILURE);
-	// }
 	history_var->current_history_cmd = NULL;
 	if (!(history_var->history_list = get_history()))
 		return (EXIT_FAILURE);

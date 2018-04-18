@@ -21,7 +21,7 @@ void	check_op_type(t_parser *par)
 	i = 0;
 	while (i < OPS)
 	{
-		if (ft_strequ(ops[i], par->current_token))
+		if (ft_strequ(g_ops[i], par->current_token))
 			break ;
 		i++;
 	}

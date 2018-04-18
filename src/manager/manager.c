@@ -52,7 +52,7 @@ static t_environ	*set_local_env(int subshell_env)
 	return (env);
 }
 
-int	manager(char *input_str, char **substr)
+int					manager(char *input_str, char **substr)
 {
 	t_ast		*res;
 	void		*forest;

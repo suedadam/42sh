@@ -92,7 +92,6 @@ int				builtin_fg(char *argv[], t_environ *env);
 int				builtin_bg(char *argv[], t_environ *env);
 int				builtin_jobs(char *argv[], t_environ *env);
 int				builtin_export(char *argv[], t_environ *env);
-//int				builtin_exit(char *argv[], t_environ *env);
 
 /*
 ** op_checks
@@ -131,6 +130,9 @@ int				handle_redirection(t_ast *curr);
 int				ops_redir_to(t_ast *curr, int pos);
 int				ops_append_to(t_ast *curr, int pos);
 int				ops_read_from(t_ast *curr, int pos);
+void			*ref_picker(t_ast *curr, int fd);
+void			*valid_input(char *token, char exception, t_ast *curr);
+int				free_after(t_ast *curr, int pos);
 
 extern struct s_ophandlers	op_handlers[];
 extern struct s_history		*hist_buf;

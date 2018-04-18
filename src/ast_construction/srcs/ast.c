@@ -16,7 +16,6 @@
 
 static int			parsing_pass(t_ast *ast)
 {
-
 	if (!ast)
 		return (1);
 	if (ast_is_leaf(ast))
@@ -50,8 +49,8 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 	int					i;
 
 	ast = NULL;
-	i = 0;
-	if ((i = parse_tokens(tokens, type)) == END_PARSING || (!i && *type == OPERATOR))
+	if ((i = parse_tokens(tokens, type)) == END_PARSING ||
+		(!i && *type == OPERATOR))
 		return (ast);
 	*position += i + 1;
 	sub_string = sub_token_char(tokens, 0, i + 1);
@@ -84,9 +83,11 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 		return (NULL);
 	}
 	pos = 0;
-	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
+	while (tokens && type &&
+			(ast = build_ast(tokens + pos, type + pos, &pos)))
 	{
-		if (ft_enqueue(forest, ast, sizeof(t_ast)) == EXIT_FAILURE || !parsing_pass(ast))
+		if (ft_enqueue(forest, ast, sizeof(t_ast)) == EXIT_FAILURE ||
+			!parsing_pass(ast))
 		{
 			errno = 8;
 			free_forest(forest);

@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <sys/mman.h>
 
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
-
 /*
 ** quoted flags
 */
@@ -38,10 +36,9 @@
 # define BREAK 69
 # define OPS 8
 # define REDIR_LIMIT 4
-
-static const char	*ops[OPS] = {"&", "&&", "||", "|", ";", "<", ">", ">>"};
-
 # define EXIT_FAILURE_SOFT -1
+
+static const char	*g_ops[OPS] = {"&", "&&", "||", "|", ";", "<", ">", ">>"};
 
 /*
 ** Parent has 2 INTs while leafs/childs have one.
