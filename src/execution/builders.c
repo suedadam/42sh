@@ -68,7 +68,7 @@ void	build_operator(t_ast *curr)
 		return ;
 	}
 	build_default(curr->left_child);
-	build_default(curr->right_child);
+	build_info(curr, curr->right_child);
 }
 
 void	build_default(t_ast *curr)
