@@ -6,11 +6,13 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 01:39:40 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/18 19:17:08 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 20:01:17 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+
+extern char **environ;
 
 static char	*create_subs_command(char **input_str, char close_char)
 {
@@ -84,6 +86,7 @@ int			is_command_sub(t_parser *par, char **input_str)
 		command == MAP_FAILED)
 		return (command == NULL ? 0 : -1);
 	ret = recurs_into_subshell(par, command);
+	environ = g_environ->environ;
 	if (ret == EXIT_FAILURE)
 		return (0);
 	else if (ret == EXIT_SUCCESS)

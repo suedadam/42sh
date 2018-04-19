@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 18:35:42 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 03:09:46 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 20:18:12 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+
+extern char **environ;
 
 int		check_paren(char c)
 {
@@ -65,7 +67,8 @@ int		is_subshell(t_parser *par, char **input_str)
 		return (EXIT_FAILURE_SOFT);
 	else if (command == NULL)
 		return (0);
-	ret = manager(command, NULL);
+	ret = manager(command, SUBSHELL_ENV);
+	environ = g_environ->environ;
 	meta_free(command);
 	if (ret == EXIT_FAILURE)
 		return (EXIT_FAILURE);
