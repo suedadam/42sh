@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 01:55:37 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 02:07:55 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 	while (pids.first && (res = wait3(&kpid, WUNTRACED, NULL)) >= 0)
 	{
 		if (WIFSTOPPED(kpid))
+		{
+			ft_printf("Suspending D:\n");
 			return (suspend_chain(&pids, *(curr->token)));
+		}
 		if (itterate_queue(&pids, SIGKILL, res) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 01:59:08 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 02:08:49 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,13 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 	if (wait)
 	{
 		waitpid(pid, &res, WUNTRACED);
-		if (WIFSTOPPED(res) && (handle_suspend(&pid, curr) == EXIT_FAILURE))
-			return (EXIT_FAILURE);
-		kill(pid, SIGKILL);
+		if (WIFSTOPPED(res))
+		{
+			if (handle_suspend(&pid, curr) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		else
+			kill(pid, SIGKILL);
 	}
 	return (res);
 }

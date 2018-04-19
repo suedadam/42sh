@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 01:51:00 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 02:16:33 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int				op_or_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack 
 
 void			add_suspended(t_jobspec *job);
 pid_t			unsuspend(char *name);
+pid_t			unsuspend_chain(t_stack *jobs, int sig);
+void			kill_suspended(void);
 void			print_jobs(void);
+void			linkfree(t_node *list, t_jobspec *job);
 
 /*
 ** utils

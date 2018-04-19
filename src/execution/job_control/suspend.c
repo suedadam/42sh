@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 16:52:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:41:55 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 02:15:11 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			add_suspended(t_jobspec *job)
 		return ;
 }
 
-pid_t			unsuspend_chain(t_stack *jobs)
+pid_t			unsuspend_chain(t_stack *jobs, int sig)
 {
 	pid_t	*pid;
 	pid_t	ret;
@@ -40,21 +40,26 @@ pid_t			unsuspend_chain(t_stack *jobs)
 			return (-1);
 		if (!ret)
 			ret = *pid;
-		kill(*pid, SIGCONT);
+		kill(*pid, sig);
 		meta_free(pid);
 	}
 	return (ret);
 }
 
-static void		linkfree(t_node *list, t_jobspec *job)
+void			kill_suspended(void)
 {
-	if (list->previous)
-		list->previous = list->next;
-	if (list->next)
-		list->next->previous = list->previous;
-	meta_free(job->name);
-	meta_free(job);
-	meta_free(list);
+	t_jobspec	*job;
+
+	if (!g_jobs || isempty_queue(g_jobs))
+		return ;
+	while (!isempty_queue(g_jobs))
+	{
+		if (!(job = ft_dequeue(g_jobs)))
+			return ;
+		meta_free(job->name);
+		meta_free(job);
+		unsuspend_chain(job->pids, SIGKILL);
+	}
 }
 
 pid_t			unsuspend(char *name)
@@ -68,13 +73,13 @@ pid_t			unsuspend(char *name)
 	if (!name)
 	{
 		job = ft_dequeue(g_jobs);
-		return (unsuspend_chain(job->pids));
+		return (unsuspend_chain(job->pids, SIGCONT));
 	}
 	while (list)
 	{
 		if ((job = list->content) && !ft_strcmp(job->name, name))
 		{
-			ret = unsuspend_chain(job->pids);
+			ret = unsuspend_chain(job->pids, SIGCONT);
 			if (peek_queue(g_jobs) == job)
 				ft_dequeue(g_jobs);
 			else

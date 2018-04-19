@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:34:50 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 00:48:59 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 02:11:01 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,15 @@ int		fd_redir(t_ast *curr, int **src, int pos, uint8_t closer)
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+void		linkfree(t_node *list, t_jobspec *job)
+{
+	if (list->previous)
+		list->previous = list->next;
+	if (list->next)
+		list->next->previous = list->previous;
+	meta_free(job->name);
+	meta_free(job);
+	meta_free(list);
 }
