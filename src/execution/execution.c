@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/18 17:32:44 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/19 00:39:17 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 
 	if (!cmd || isempty_stack(cmd) || !(process = ft_stackpop(cmd)))
 		return (EXIT_SUCCESS);
+	relative_hook(process, env);
 	if ((res = builtin_handler(process, env)) != -1)
 	{
 		parent_pipes(process);
@@ -43,8 +44,6 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 		return (EXIT_FAILURE);
 	if (!pid)
 	{
-		// int test = open("debug.txt", O_RDWR | O_APPEND);
-		// dprintf(test, "[%d] %s %s\n", getpid(), *(process->token), process->token[1]);
 		exec_init(process);
 		execvP(*(process->token), ft_getenv("PATH", env), process->token);
 		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(process->token));
@@ -76,6 +75,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 
 	if (!curr || *(curr->type) == OPERATOR)
 		return (EXIT_FAILURE);
+	relative_hook(curr, env);
 	if ((res = builtin_handler(curr, env)) != -1)
 		return (res);
 	if ((pid = fork()) == -1)

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:33:39 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 00:39:50 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ typedef struct	s_builtins
 	char	*name;
 	int		(*exec)(char **argv, t_environ *env);
 }				t_builtins;
+
+/*
+** Relative
+*/
+
+void			variable_expansion(char **str, t_environ *env);
+void			home_expansion(char **str, t_environ *env);
+void			relative_hook(t_ast *curr, t_environ *env);
 
 /*
 ** job_control

@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:42:35 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 00:40:59 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	itterate_pipes(t_stack *cmdstack, t_ast *curr)
 		itterate_pipes(cmdstack, curr->right_child);
 		if (curr->right_child)
 		{
-			if (*(curr->right_child->type) == OPERATOR && strcmp(*(curr->right_child->token), "|"))
+			if (*(curr->right_child->type) == OPERATOR &&
+				strcmp(*(curr->right_child->token), "|"))
 				return ;
 			else if (*(curr->right_child->type) != OPERATOR)
 				ft_stackpush(cmdstack, curr->right_child, sizeof(t_ast));
