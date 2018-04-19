@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:53 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/17 20:55:26 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/18 17:51:53 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char			**sub_token_char(char **array, int index, int length)
 	copy[length] = 0;
 	while (j < length)
 	{
-		copy[j] = array[i];
+		copy[j] = ft_strdup(array[i]);
 		i++;
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/18 16:19:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 18:01:10 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 	sub_types = sub_token_type(type, 0, i + 1);
 	if (ft_strequ(tokens[i], ";") || !tokens[i + 1])
 	{
+		ft_strequ(tokens[i], ";") ? meta_free(sub_string[i]) : 0;
 		ft_strequ(tokens[i], ";") ? sub_string[i] = NULL : 0;
 		return (new_ast_leaf(sub_string, sub_types));
 	}
