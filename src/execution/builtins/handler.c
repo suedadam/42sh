@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 18:20:58 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/18 17:31:11 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	backup_fds(int **backup)
 	(*backup)[0] = dup(STDIN_FILENO);
 	(*backup)[1] = dup(STDOUT_FILENO);
 	(*backup)[2] = dup(STDERR_FILENO);
+	meta_free(*backup);
 }
 
 void	set_fds(t_process *info)
@@ -74,7 +75,6 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 			else
 				i = builtins[i].exec(curr->token, env);
 			restore_fds(backup);
-			meta_free(backup);
 			return (i);
 		}
 		i++;

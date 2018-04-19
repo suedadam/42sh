@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:14:11 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/18 16:39:32 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 17:13:45 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ int		run_forest(t_queue *forest, char **substr, t_environ *env)
 			errno = 8;
 			return (EXIT_FAILURE);
 		}
-		while (1);
 		free_ast(asts);
 	}
 	return (EXIT_SUCCESS);
