@@ -37,6 +37,7 @@ void	restore_fds(int *backup)
 	dup2(backup[0], STDIN_FILENO);
 	dup2(backup[1], STDOUT_FILENO);
 	dup2(backup[2], STDERR_FILENO);
+	meta_free(backup);
 }
 
 void	backup_fds(int **backup)
@@ -46,7 +47,6 @@ void	backup_fds(int **backup)
 	(*backup)[0] = dup(STDIN_FILENO);
 	(*backup)[1] = dup(STDOUT_FILENO);
 	(*backup)[2] = dup(STDERR_FILENO);
-	meta_free(*backup);
 }
 
 void	set_fds(t_process *info)
