@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:04:38 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/17 20:55:49 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/18 20:14:45 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define OPS 8
 # define REDIR_LIMIT 4
 # define EXIT_FAILURE_SOFT -1
+# define SUBSHELL_ENV (void *)-1
 
 static const char	*g_ops[OPS] = {"&", "&&", "||", "|", ";", "<", ">", ">>"};
 

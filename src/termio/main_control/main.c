@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 08:46:08 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 20:03:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,31 @@
 #include "ft_proto.h"
 
 t_environ	*g_environ = NULL;
-
+extern char **environ;
 /*
 ** Intial shell enviorment is copied here from program start
 */
 
-static int	init_environ(char **environ)
+static int	init_environ(char **envp)
 {
 	int		i;
 
-	if (!environ || !(g_environ = ft_memalloc(sizeof(t_environ))))
+	if (!envp || !(g_environ = ft_memalloc(sizeof(t_environ))))
 		return (EXIT_FAILURE);
 	i = 0;
-	while (environ[i])
+	while (envp[i])
 		i++;
 	if (!(g_environ->environ = ft_memalloc(sizeof(char *) * (i + 1))))
 		return (EXIT_FAILURE);
 	i = 0;
-	while (environ[i])
+	while (envp[i])
 	{
-		if (!(g_environ->environ[i] = ft_strdup(environ[i])))
+		if (!(g_environ->environ[i] = ft_strdup(envp[i])))
 			return (EXIT_FAILURE);
 		i++;
 	}
 	g_environ->environ[i] = NULL;
+	environ = g_environ->environ;
 	g_environ->size = i;
 	return (EXIT_SUCCESS);
 }
@@ -96,10 +97,10 @@ int			init_shellenv(void)
 */
 
 int			main(__attribute__((unused))int argc,
- 						__attribute__((unused))char *argv[], char **environ)
+ 						__attribute__((unused))char *argv[], char **envp)
 {
 	bzero(&g_shell_env, sizeof(t_terminf));
-	if (init_environ(environ) == EXIT_FAILURE
+	if (init_environ(envp) == EXIT_FAILURE
 		|| init_shellenv() == EXIT_FAILURE
 		|| shsignal_handlers() == EXIT_FAILURE
 		|| init_termcaps() == EXIT_FAILURE

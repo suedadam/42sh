@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/18 17:52:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 20:23:41 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ft_proto.h"
+
+extern char **environ;
 
 static void			free_env(t_environ *env)
 {
@@ -48,6 +50,7 @@ static t_environ	*set_local_env(int subshell_env)
 		i++;
 	}
 	env->environ[i] = NULL;
+	environ = env->environ;
 	env->size = g_environ->size;
 	return (env);
 }
@@ -80,7 +83,7 @@ int					manager(char *input_str, char **substr)
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))
 		return (EXIT_FAILURE);
 	ft_restoretty();
-	ret = run_forest(forest, substr, env);
+	ret = run_forest(forest, (substr == SUBSHELL_ENV ? NULL : substr), env);
 	meta_free(forest);
 	if (substr != NULL)
 		free_env(env);
