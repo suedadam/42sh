@@ -18,6 +18,7 @@ SRCDIR_EXEC_BUILTINS = builtins/
 SRCDIR_EXEC_OPS = ops/
 SRCDIR_EXEC_OPS_CHECKS = op_checks/
 SRCDIR_EXEC_OPS_EXECS = op_execs/
+SRCDIR_EXEC_RELATIVE = relativity/
 
 SRCDIR_HISTORY = src/history/
 
@@ -55,6 +56,10 @@ OBJSRC += $(patsubst %, %.o, $(addprefix \
 		  $(addprefix $(SRCDIR_EXEC), \
 		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_OPS_EXECS))), \
 		  $(SRC_EXEC_OPS_EXECS)))
+OBJSRC += $(patsubst %, %.o, $(addprefix \
+		  $(addprefix $(SRCDIR_EXEC), \
+		  $(addprefix $(SRCDIR_EXEC_OPS), $(SRCDIR_EXEC_RELATIVE))), \
+		  $(SRC_EXEC_RELATIVE)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_HISTORY), $(SRC_HISTORY)))
 OBJSRC += $(patsubst %, %.o, $(addprefix $(SRCDIR_IPARSE), $(SRC_IPARSE)))
 OBJSRC += $(patsubst %, %.o, $(addprefix \
@@ -148,6 +153,9 @@ SRC_EXEC_OPS_EXECS =	\
             op_and \
             op_or \
             op_pipe
+
+SRC_EXEC_RELATIVE =		\
+			relative \
 
 ################################################################################
 # EXECUTION SOURCE FILES                                                       #
