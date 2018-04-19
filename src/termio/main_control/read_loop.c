@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 08:47:40 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 19:45:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int											reset_terminal(void)
 
 static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 {
+	verify_hanging();
 	if (g_shell_env.cursor.position
 			&& g_shell_env.buffer->buff[g_shell_env.buffer->length - 1] == '\\')
 		return (drop_prompt("> "));

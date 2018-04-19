@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 11:09:26 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/16 03:28:12 by tle-huu-         ###   ########.fr       */
+/*   Updated: 2018/04/18 20:13:17 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int			ft_delete(char byte)
 		return (EXIT_FAILURE);
 	if (cursor->buffer_length != cursor->position)
 	{
-		hanging_delete(buffer + cursor->position);
 		ft_memmove(buffer + cursor->position, buffer + cursor->position + 1,
 				cursor->buffer_length - cursor->position);
 		tputs(cache, 1, &my_putchar);

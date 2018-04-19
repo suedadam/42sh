@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 08:53:26 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 20:14:47 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	verify_hanging(void)
 	while (*buf)
 	{
 		hanging_byte(*buf);
-		if (!IS_WHITESPACE(*buf))
+		if (!IS_WHITESPACE(*buf) && *buf != '|')
 			T_PIPE = 0;
 		buf++;
 	}
@@ -39,5 +39,5 @@ void	hanging_byte(char byte)
 	else if (byte == '{' || byte == '}')
 		curly_check(byte);
 	else if (byte == '|')
-		T_PIPE = T_PIPE ? 0 : 1;
+		T_PIPE = 1;
 }
