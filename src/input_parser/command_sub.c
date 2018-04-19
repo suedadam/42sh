@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 01:39:40 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 03:10:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 19:17:08 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			is_command_sub(t_parser *par, char **input_str)
 		!(**input_str == '$' || **input_str == BACKT))
 		return (UNUSED_CHAR);
 	if (**input_str == '$' && (*input_str)[1] != '(')
-		return (EXIT_FAILURE_SOFT);
+		return (UNUSED_CHAR);
 	close_char = **input_str == '$' ? ')' : BACKT;
 	if (!ft_strchr(&((*input_str)[1]), close_char))
 		return (EXIT_FAILURE_SOFT);
