@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 00:39:17 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 01:59:08 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ struct s_ophandlers	op_handlers[] = {
 	{&op_pipe_check, &op_pipe_exec},
 	{&op_or_check, &op_or_exec},
 	{&op_and_check, &op_and_exec},
+	{NULL, NULL},
+};
+
+struct s_ophijackhandlers	ophijack_handlers[] = {
+	{&op_or_check, &op_or_exec_hijacked},
+	{&op_and_check, &op_and_exec_hijacked},
 	{NULL, NULL},
 };
 

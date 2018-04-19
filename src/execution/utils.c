@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:34:50 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 17:02:55 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 00:48:59 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		fd_redir(t_ast *curr, int **src, int pos, uint8_t closer)
 	else if (closer && *(curr->token[pos + 2]) == '-')
 	{
 		pipe_ops(fds);
+		close(**src);
 		**src = fds[1];
 	}
 	else

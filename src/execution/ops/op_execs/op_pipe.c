@@ -6,30 +6,54 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 00:40:59 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 01:55:37 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <signal.h>
 
-void	itterate_pipes(t_stack *cmdstack, t_ast *curr)
+int		op_hijack(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds)
+{
+	int	i;
+	int	res;
+
+	res = EXIT_SUCCESS;
+	if (!curr)
+		return (EXIT_FAILURE);
+	if (*(curr->type) == OPERATOR)
+	{
+		i = 0;
+		while (ophijack_handlers[i].check)
+		{
+			if (!ophijack_handlers[i].check(*(curr->token)))
+				return (ophijack_handlers[i].exec(curr, env, pids, cmds));
+			i++;
+		}
+	}
+	return (EXIT_FAILURE);
+}
+
+int		itterate_pipes(t_stack *cmdstack, t_ast *curr, t_environ *env, t_pqueue *pids)
 {
 	if (*(curr->type) == OPERATOR && !strcmp(*(curr->token), "|"))
 	{
 		ft_stackpush(cmdstack, curr->left_child, sizeof(t_ast));
-		itterate_pipes(cmdstack, curr->right_child);
+		itterate_pipes(cmdstack, curr->right_child, env, pids);
 		if (curr->right_child)
 		{
 			if (*(curr->right_child->type) == OPERATOR &&
 				strcmp(*(curr->right_child->token), "|"))
-				return ;
+			{
+				ft_stackpush(cmdstack, curr->right_child->left_child, sizeof(t_ast));
+				return (op_hijack(curr->right_child, env, pids, cmdstack));
+			}
 			else if (*(curr->right_child->type) != OPERATOR)
 				ft_stackpush(cmdstack, curr->right_child, sizeof(t_ast));
-			return ;
+			return (-1);
 		}
 	}
-	return ;
+	return (-1);
 }
 
 int		suspend_chain(t_pqueue *pids, char *name)
@@ -83,18 +107,14 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 		return (EXIT_FAILURE);
 	cmdstack.top = NULL;
 	pids.first = NULL;
-	itterate_pipes(&cmdstack, curr);
+	if ((res = itterate_pipes(&cmdstack, curr, env, &pids)) != -1)
+		return (res);
 	run_pipecmds(&cmdstack, &pids, env);
 	while (pids.first && (res = wait3(&kpid, WUNTRACED, NULL)) >= 0)
 	{
-		if (WEXITSTATUS(kpid) || WIFSTOPPED(kpid))
-		{
-			if (res)
-				return (suspend_chain(&pids, *(curr->token)));
-			if (itterate_queue(&pids, SIGKILL, res) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-		if (itterate_queue(&pids, 0, res) == EXIT_FAILURE)
+		if (WIFSTOPPED(kpid))
+			return (suspend_chain(&pids, *(curr->token)));
+		if (itterate_queue(&pids, SIGKILL, res) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

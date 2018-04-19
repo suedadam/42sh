@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 00:39:50 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 01:51:00 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct	s_ophandlers
 	int		(*exec)(t_ast *curr, t_environ *env);
 }				t_ophandlers;
 
+typedef struct	s_ophijackhandlers
+{
+	int		(*check)(char *str);
+	int		(*exec)(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds);
+}				t_ophijackhandlers;
+
+
 typedef struct	s_redir_op
 {
 	char	*opflag;
@@ -52,6 +59,12 @@ typedef struct	s_builtins
 void			variable_expansion(char **str, t_environ *env);
 void			home_expansion(char **str, t_environ *env);
 void			relative_hook(t_ast *curr, t_environ *env);
+
+/*
+** hijacked
+*/
+int				op_and_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds);
+int				op_or_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds);
 
 /*
 ** job_control
@@ -116,6 +129,8 @@ int				op_and_check(char *str);
 int				op_pipe_exec(t_ast *curr, t_environ *env);
 int				op_or_exec(t_ast *curr, t_environ *env);
 int				op_and_exec(t_ast *curr, t_environ *env);
+int				itterate_queue(t_pqueue *pids, int signal, pid_t deadpid);
+int				suspend_chain(t_pqueue *pids, char *name);
 
 /*
 ** execution.c
@@ -142,7 +157,8 @@ void			*ref_picker(t_ast *curr, int fd);
 void			*valid_input(char *token, char exception, t_ast *curr);
 int				free_after(t_ast *curr, int pos);
 
-extern struct s_ophandlers	op_handlers[];
-extern struct s_history		*hist_buf;
+extern struct s_ophandlers			op_handlers[];
+extern struct s_ophijackhandlers	ophijack_handlers[];
+extern struct s_history				*hist_buf;
 
 #endif

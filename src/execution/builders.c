@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:46:16 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:41:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 01:49:03 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	build_carry(t_ast *curr)
 
 	if (!curr || !(info = init_process()))
 		return ;
-	memcpy(info, curr, sizeof(t_process));
+	memcpy(info, curr->p_info, sizeof(t_process));
 	curr->left_child->p_info = info;
 }
 
