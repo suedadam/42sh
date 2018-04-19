@@ -52,8 +52,13 @@ int		itterate_queue(t_pqueue *pids, int signal, pid_t deadpid)
 {
 	pid_t	*kpid;
 
-	while (pids->first && *(int *)pids->first->content <= deadpid)
+	while (pids->first)
 	{
+		if (!(kpid = peek_pqueue(pids)))
+			return (EXIT_FAILURE);
+		// ft_printf("Got PID %d > %d\n", *kpid, deadpid);
+		if (*kpid >= deadpid)
+			return (EXIT_SUCCESS);
 		if (!(kpid = ft_depqueue(pids)))
 			return (EXIT_FAILURE);
 		if (signal)
@@ -78,6 +83,8 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 	run_pipecmds(&cmdstack, &pids, env);
 	while (pids.first && (res = wait3(&kpid, WUNTRACED, NULL)) >= 0)
 	{
+		// int test = open("debug.txt", O_RDWR | O_APPEND);
+		// ft_printf_fd(test, "%d signaled as dead.\n", res);
 		if (WEXITSTATUS(kpid) || WIFSTOPPED(kpid))
 		{
 			if (res)

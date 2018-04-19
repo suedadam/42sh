@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 19:24:01 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 06:19:28 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 20:11:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static inline __attribute__((always_inline)) int	control_char(char byte)
 
 static int											one_byte(char byte)
 {
-	if (!IS_WHITESPACE(byte))
-		T_PIPE = 0;
 	if (PRINTABLE(byte))
 		return (regular_text(byte));
 	else if (!PRINTABLE(byte) || byte == 127)
@@ -45,7 +43,6 @@ static int											multibyte(char byte)
 {
 	int	ret;
 
-	T_PIPE = 0;
 	if (T_MPASS == 0
 		|| (T_MPASS == 1 && byte == '['))
 	{
