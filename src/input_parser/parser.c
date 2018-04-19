@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/18 15:58:48 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 21:27:51 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ inline __attribute__((always_inline)) void	free_segs(t_parser *par)
 		meta_free(par->tokens);
 		if (par->types)
 			meta_free(par->types);
-		meta_free(par->types);
 		meta_free(par);
 	}
 }
