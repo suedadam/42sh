@@ -16,7 +16,7 @@
 ** Left will always be present, if not then its a failure.
 */
 
-int		run_tree(t_ast *curr, __attribute__((unused)) t_environ *env)
+int		run_tree(t_ast *curr, t_environ *env)
 {
 	int	i;
 	int	res;
@@ -102,7 +102,6 @@ int		run_forest(t_queue *forest, char **substr, t_environ *env)
 			errno = 8;
 			return (EXIT_FAILURE);
 		}
-		free_ast(asts);
 	}
 	return (EXIT_SUCCESS);
 }

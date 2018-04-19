@@ -19,12 +19,16 @@ void	itterate_pipes(t_stack *cmdstack, t_ast *curr)
 	{
 		ft_stackpush(cmdstack, curr->left_child, sizeof(t_ast));
 		itterate_pipes(cmdstack, curr->right_child);
-		if (!curr->right_child || *(curr->right_child->type) != OPERATOR)
+		if (curr->right_child)
 		{
-			ft_stackpush(cmdstack, curr->right_child, sizeof(t_ast));
+			if (*(curr->right_child->type) == OPERATOR && strcmp(*(curr->right_child->token), "|"))
+				return ;
+			else if (*(curr->right_child->type) != OPERATOR)
+				ft_stackpush(cmdstack, curr->right_child, sizeof(t_ast));
 			return ;
 		}
 	}
+	return ;
 }
 
 int		suspend_chain(t_pqueue *pids, char *name)
@@ -56,7 +60,6 @@ int		itterate_queue(t_pqueue *pids, int signal, pid_t deadpid)
 	{
 		if (!(kpid = peek_pqueue(pids)))
 			return (EXIT_FAILURE);
-		// ft_printf("Got PID %d > %d\n", *kpid, deadpid);
 		if (*kpid >= deadpid)
 			return (EXIT_SUCCESS);
 		if (!(kpid = ft_depqueue(pids)))
@@ -83,8 +86,6 @@ int		op_pipe_exec(t_ast *curr, t_environ *env)
 	run_pipecmds(&cmdstack, &pids, env);
 	while (pids.first && (res = wait3(&kpid, WUNTRACED, NULL)) >= 0)
 	{
-		// int test = open("debug.txt", O_RDWR | O_APPEND);
-		// ft_printf_fd(test, "%d signaled as dead.\n", res);
 		if (WEXITSTATUS(kpid) || WIFSTOPPED(kpid))
 		{
 			if (res)

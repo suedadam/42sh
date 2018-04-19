@@ -88,6 +88,7 @@ int					manager(char *input_str, char **substr)
 		return (EXIT_FAILURE);
 	ft_restoretty();
 	ret = run_forest(forest, (substr == SUBSHELL_ENV ? NULL : substr), env);
+	free_forest(forest);
 	meta_free(forest);
 	if (substr != NULL)
 		free_env(env);
