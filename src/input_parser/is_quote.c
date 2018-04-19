@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:17:02 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/14 00:46:53 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 22:53:08 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	quotes(t_parser *par, char cur_char)
 		{
 			if (!(par->quoted = quoted_flags(cur_char)))
 				return (0);
+			par->current_type = WORD;
 		}
 		else
 		{
@@ -30,6 +31,14 @@ int	quotes(t_parser *par, char cur_char)
 	}
 	else if ((par->quoted & BACKSLASH) && cur_char == '\n')
 	{
+		par->quoted &= ~BACKSLASH;
+		return (USED_CHAR);
+	}
+	else if ((par->quoted & DOUBLE_QUOTE) && (par->quoted & BACKSLASH) && cur_char == 'n')
+	{
+		par->current_type = WORD;
+		if (!(par->current_token = strappend(&(par->current_token), '\n')))
+			return (0);
 		par->quoted &= ~BACKSLASH;
 		return (USED_CHAR);
 	}

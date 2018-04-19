@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 14:15:45 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/18 20:14:47 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 23:17:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	verify_hanging(void)
 	ft_bzero(&g_shell_env.tokens, sizeof(t_tokens));
 	while (*buf)
 	{
+		if (*buf == '\\' && *(buf + 1))
+		{
+			buf += 2;
+			continue ;
+		}
 		hanging_byte(*buf);
 		if (!IS_WHITESPACE(*buf) && *buf != '|')
 			T_PIPE = 0;
@@ -30,9 +35,9 @@ void	verify_hanging(void)
 
 void	hanging_byte(char byte)
 {
-	if (byte == '\'' && !T_DQUOTE)
+	if (byte == '\'' && (!T_DQUOTE || !T_QUOTE))
 		T_QUOTE = (T_QUOTE == 1) ? 0 : 1;
-	else if (byte == '\"' && !T_QUOTE)
+	else if (byte == '\"' && (!T_QUOTE || !T_DQUOTE))
 		T_DQUOTE = (T_DQUOTE == 1) ? 0 : 1;
 	else if (byte == '(' || byte == ')')
 		paren_check(byte);
