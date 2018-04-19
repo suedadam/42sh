@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:45:42 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/18 19:32:32 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ int	builtin_setenv(char *argv[], t_environ *env)
 	int	i;
 	int	equal_index;
 
-	if (!argv[1] || !(equal_index = ft_strchr(argv[1], '=') - argv[1]))
+	if (!argv[1])
+		return (builtin_env(argv, env));
+	if (!(equal_index = ft_strchr(argv[1], '=') - argv[1]))
 		return (EXIT_FAILURE);
 	i = 0;
 	while (env->environ[i])
