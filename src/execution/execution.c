@@ -43,6 +43,8 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 		return (EXIT_FAILURE);
 	if (!pid)
 	{
+		// int test = open("debug.txt", O_RDWR | O_APPEND);
+		// dprintf(test, "[%d] %s %s\n", getpid(), *(process->token), process->token[1]);
 		exec_init(process);
 		execvP(*(process->token), ft_getenv("PATH", env), process->token);
 		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(process->token));
