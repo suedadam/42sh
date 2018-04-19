@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 18:56:05 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/18 20:23:41 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/18 21:21:47 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 #include "ft_proto.h"
 
 extern char **environ;
+
+static void			free_tokens(t_ast *res)
+{
+	int				i;
+
+	i = 0;
+	meta_free(res->type);
+	while (res->token[i])
+		meta_free(res->token[i++]);
+	meta_free(res->token);
+	meta_free(res);
+}
 
 static void			free_env(t_environ *env)
 {
@@ -68,18 +80,10 @@ int					manager(char *input_str, char **substr)
 		return ((!res) ? EXIT_FAILURE : EXIT_FAILURE_SOFT);
 	if (!(forest = build_forest(res->token, res->type)) && errno)
 	{
-		meta_free(res->type);
-		for (int i = 0; res->token[i]; i++)
-			meta_free(res->token[i]);
-		meta_free(res->token);
-		meta_free(res);
+		free_tokens(res);
 		return (EXIT_FAILURE);
 	}
-	meta_free(res->type);
-	for (int i = 0; res->token[i]; i++)
-		meta_free(res->token[i]);
-	meta_free(res->token);
-	meta_free(res);
+	free_tokens(res);
 	if (!(env = set_local_env(substr != NULL ? 1 : 0)))
 		return (EXIT_FAILURE);
 	ft_restoretty();
