@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 14:25:41 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 18:20:14 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 02:19:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ inline __attribute__((always_inline)) int			signaldef_handlers(void)
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGCONT, SIG_DFL);
 	signal(SIGWINCH, SIG_DFL);
+	signal(SIGSEGV, SIG_DFL);
 	return (EXIT_SUCCESS);
 }
 
 
 inline __attribute__((always_inline)) int			shsignal_handlers(void)
 {
+	signal(SIGSEGV, SIG_IGN);
 	signal(SIGINT, (void (*)(int))&control_c);
 	signal(SIGTSTP, &_y);
 	signal(SIGCONT, SIG_IGN);
