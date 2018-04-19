@@ -1,6 +1,6 @@
 NAME = 42sh
 STAT = deps/libft/libftprintf.a
-CFLAGS += -Wall -Werror -Wextra
+CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address -fsanitize=null
 INCLUDES = -I deps/libft/inc \
 		   -I src/ -I inc/
 CC = gcc

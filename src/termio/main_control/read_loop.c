@@ -6,7 +6,7 @@
 /*   By: tle-huu- <tle-huu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 21:33:27 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/18 20:44:20 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/18 21:39:39 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static inline __attribute__((always_inline)) int	ft_c_dispatch(void)
 {
 	verify_hanging();
 	if (g_shell_env.cursor.position
-			&& g_shell_env.buffer->buff[g_shell_env.buffer->length - 1] == '\n')
+			&& g_shell_env.buffer->buff[g_shell_env.buffer->length - 1] == '\\')
 		return (drop_prompt("> "));
 	else if (T_QUOTE | T_DQUOTE)
 		return (quote_mode());
