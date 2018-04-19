@@ -131,8 +131,7 @@ int					isempty_dblist(t_dblist *dblist);
 */
 void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 					int (*comparer)(void *, void *));
-void				*pqueue_find(t_pqueue *queue, void *trgt,
-					int (*equality)(void *, void *));
+void				*peek_pqueue(t_pqueue *queue);
 void				*ft_depqueue(t_pqueue *queue);
 t_pqueue			*init_pqueue(void);
 void				del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr));

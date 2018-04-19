@@ -67,35 +67,13 @@ void				*ft_depqueue(t_pqueue *queue)
 	return (NULL);
 }
 
-void				*pqueue_find(t_pqueue *queue, void *trgt,
-	int (*equality)(void *, void *))
+void				*peek_pqueue(t_pqueue *queue)
 {
-	t_node			*tmp;
-	void			*hold;
-
-	if (!(tmp = queue->first))
+	if (!queue || queue->first == NULL)
 		return (NULL);
-	if (equality(tmp->content, trgt))
-	{
-		queue->first = tmp->next;
-		hold = tmp->content;
-		meta_free(tmp);
-		return (hold);
-	}
-	while (tmp->next)
-	{
-		if (equality(tmp->next->content, trgt) && (hold = tmp->next))
-		{
-			tmp->next = tmp->next->next;
-			tmp = hold;
-			hold = tmp->content;
-			meta_free(tmp);
-			return (hold);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
+	return (queue->first->content);
 }
+
 
 void				del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr))
 {
