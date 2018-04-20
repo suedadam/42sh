@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 17:13:22 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 06:25:10 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 00:40:49 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void				*peek_pqueue(t_pqueue *queue)
 		return (NULL);
 	return (queue->first->content);
 }
-
 
 void				del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr))
 {

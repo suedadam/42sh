@@ -6,7 +6,7 @@
 #    By: asyed <asyed@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/25 14:05:53 by satkins           #+#    #+#              #
-#    Updated: 2018/04/18 14:59:51 by nkouris          ###   ########.fr        #
+#    Updated: 2018/04/20 12:59:30 by asyed            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,8 @@ SRC_LIBFT = \
 		stack \
 		ft_double_linked_list \
 		metaalloc \
-		ft_strerror 
+		ft_strerror \
+		ft_iswhitespace \
 
 SRC_PRINTF = \
 		ft_printf \

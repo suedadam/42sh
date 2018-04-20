@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 22:58:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/16 08:51:03 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/20 12:59:07 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define BUFF_SIZE 2048
 
 # define ABS(X) X > 0 ? X : -X
-# define IS_WHITESPACE(c) (c == '\n' || c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r')
+# define IS_WHITESPACE(c) (is_whitespace(c))
 
 int					g_fd;
 
@@ -148,6 +148,7 @@ int					isempty_queue(t_queue *queue);
 /*
 ** Libft
 */
+uint8_t				is_whitespace(char c);
 void				ft_bzero(void *s, size_t n);
 size_t				ft_printf(char *format, ...);
 size_t				ft_printf_fd(int fd, char *format, ...);
