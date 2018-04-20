@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 23:26:18 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/20 11:56:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ struct s_ophijackhandlers	ophijack_handlers[] = {
 	{&op_and_check, &op_and_exec_hijacked},
 	{NULL, NULL},
 };
+
+void	leave_me(t_ast *curr, t_environ *env)
+{
+	exec_init(curr);
+	execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
+	ft_printf("Error: %s: %s\n", ft_strerror(errno), *(curr->token));
+	exit(EXIT_FAILURE);
+}
 
 int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 {
@@ -87,12 +95,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (pid == 0)
-	{
-		exec_init(curr);
-		execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
-		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(curr->token));
-		exit(EXIT_FAILURE);
-	}
+		leave_me(curr, env);
 	if (wait)
 	{
 		waitpid(pid, &res, WUNTRACED);
