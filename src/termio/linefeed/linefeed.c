@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 11:52:17 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/16 08:42:39 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/20 15:42:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			ft_linefeed(void)
 	if (ret == EXIT_FAILURE || ret == EXIT_FAILURE_SOFT)
 	{
 		ft_printf("Error: %s\n", ft_strerror(errno));
+		shsignal_handlers();
 		return (EXIT_FAILURE);
 	}
 	if (!cache)
