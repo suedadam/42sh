@@ -6,13 +6,14 @@
 /*   By: sgardner <stephenbgardner@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/24 16:47:15 by sgardner          #+#    #+#             */
-/*   Updated: 2018/03/25 00:01:51 by sgardner         ###   ########.fr       */
+/*   Updated: 2018/04/11 16:37:46 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 # include "libft.h"
+# include <errno.h>
 
 # define FATAL_ERROR(x)	fatal_error(x)
 # define DEFAULT_ERROR	default_error()

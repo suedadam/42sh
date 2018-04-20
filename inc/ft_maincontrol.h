@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_maincontrol.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:16:03 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/10 12:08:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/15 23:20:01 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define FT_MAINCONTROL_H
 
 # include "ft_term.h"
+# include "ast.h"
+# include "exec.h"
 
 /*
 **	tty settings and resetting
@@ -36,7 +38,7 @@ void	ft_terror(void);
 */
 
 int		(*g_multibyte_jump[7])(char byte);
-int		(*g_control_jump[25])();
+int		(*g_control_jump[26])();
 
 /*
 **	Key handling, byte by byte, only strict ascii supported now
@@ -79,5 +81,6 @@ int		regular_text(char byte);
 */
 
 int		shsignal_handlers(void);
+int		signaldef_handlers(void);
 
 #endif
