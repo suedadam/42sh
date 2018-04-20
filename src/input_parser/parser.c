@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:11:39 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/18 22:53:26 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 10:55:54 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static inline __attribute__((always_inline)) void	*init_parser(void)
 		free_segs(parser);
 		return (NULL);
 	}
-	// if (!(parser->types = ft_memalloc(sizeof(t_token_type))))
-	// {
-	// 	free_segs(parser);
-	// 	return (NULL);
-	// }
+	if (!(parser->types = ft_memalloc(sizeof(t_token_type))))
+	{
+		free_segs(parser);
+		return (NULL);
+	}
 	parser->types = NULL;
 	parser->current_type = null;
 	parser->quoted = 0;
@@ -125,7 +125,5 @@ t_ast				*parser(char *input_str)
 		return (MAP_FAILED);
 	meta_free(par->current_token);
 	par->current_token = NULL;
-	// for (int i = 0; par->tokens[i]; i++)
-	// 	ft_printf("tok: %s, type: %d\n", par->tokens[i], par->types[i]);
 	return ((t_ast *)par);
 }

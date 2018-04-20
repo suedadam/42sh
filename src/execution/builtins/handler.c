@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 20:35:32 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/18 17:31:11 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 10:20:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ int		builtin_handler(t_ast *curr, t_environ *env)
 		if (!ft_strcmp(builtins[i].name, *(curr->token)))
 		{
 			set_fds(curr->p_info);
-			if (i == 11)
-				i = builtins[11].exec(curr->token, g_environ);
-			else
-				i = builtins[i].exec(curr->token, env);
+			i = builtins[i].exec(curr->token, env);
 			restore_fds(backup);
 			return (i);
 		}

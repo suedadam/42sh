@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 10:57:07 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/18 20:03:36 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 10:39:41 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	init_environ(char **envp)
 	g_environ->environ[i] = NULL;
 	environ = g_environ->environ;
 	g_environ->size = i;
+	builtin_setenv(((char *[]){"setenv", "SHELL=42sh"}), g_environ);
 	return (EXIT_SUCCESS);
 }
 

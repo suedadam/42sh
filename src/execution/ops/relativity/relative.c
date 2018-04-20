@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   relative.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 00:38:31 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/20 01:02:13 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/20 10:54:47 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	relative_hook(t_ast *curr, t_environ *env)
 	while (curr->token[i])
 	{
 		home_expansion(&(curr->token[i]), env);
-		oldpwd_expansion(&(curr->token[i]), env);
+		if (i && ft_strequ(curr->token[i - 1], "cd"))
+			oldpwd_expansion(&(curr->token[i]), env);
 		variable_expansion(&(curr->token[i]), env);
 		i++;
 	}

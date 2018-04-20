@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 02:16:33 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/20 11:31:34 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <signal.h>
 # include "ast.h"
 # define IS_REDIR(x) (x == '>' || x == '<' || x == ">>" || x == '<<')
+
+# define OLD_PWD_OFFSET 3
 
 typedef struct	s_jobspec
 {

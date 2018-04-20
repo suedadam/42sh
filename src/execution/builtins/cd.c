@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 22:44:36 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/20 11:52:56 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <string.h>
 #include <errno.h>
+
+extern char **environ;
 
 void		parse_relative(char **str)
 {
@@ -42,11 +44,11 @@ void		parse_relative(char **str)
 	}
 }
 
-static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
+static int	absolute_update(char **l_pwd, t_environ *env, char *input, size_t inlen)
 {
 	if (!(*l_pwd = meta_realloc(*l_pwd, 4 + inlen + 2)))
 		return (EXIT_FAILURE);
-	bzero(&((*l_pwd)[4]), inlen + 2);
+	ft_bzero(&((*l_pwd)[4]), inlen + 2);
 	if (!(*l_pwd = ft_strcat(*l_pwd, input)))
 		return (EXIT_FAILURE);
 	parse_relative(l_pwd);
@@ -55,12 +57,12 @@ static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
 		ft_printf("Error: %s\n", ft_strerror(errno));
 		return (EXIT_SUCCESS);
 	}
-	meta_free(*res);
-	*res = *l_pwd;
+	if (builtin_setenv((char *[]){NULL, *l_pwd}, env) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-static int	relative_update(char **l_pwd, char **res, char *input, size_t inlen)
+static int	relative_update(char **l_pwd, t_environ *env, char *input, size_t inlen)
 {
 	size_t	len;
 
@@ -75,8 +77,23 @@ static int	relative_update(char **l_pwd, char **res, char *input, size_t inlen)
 		ft_printf("Error: %s (%s)\n", ft_strerror(errno), *l_pwd);
 		return (EXIT_SUCCESS);
 	}
-	meta_free(*res);
-	*res = *l_pwd;
+
+	if (builtin_setenv((char *[]){NULL, *l_pwd}, env) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+static int	set_old_pwd(char **res, t_environ *env)
+{
+	char *old_pwd;
+
+	if (!(old_pwd = meta_malloc(ft_strlen(*res) + OLD_PWD_OFFSET + 1)))
+		return (EXIT_FAILURE);
+	ft_strcpy(old_pwd, "OLDPWD=");
+	ft_strcat(old_pwd, &((*res)[4]));
+	if (builtin_setenv((char *[]){NULL, old_pwd}, env) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	meta_free(old_pwd);
 	return (EXIT_SUCCESS);
 }
 
@@ -87,20 +104,21 @@ int			builtin_cd(char *argv[], t_environ *env)
 	char	*l_pwd;
 	char	*home;
 
-	if (!argv[0])
+	if (!argv[0]
+		|| !(res = ft_mutgetenv("PWD", env))
+		|| !(l_pwd = ft_strdup(*res))
+		|| set_old_pwd(res, env) == EXIT_FAILURE
+		|| builtin_unsetenv(((char *[]){NULL, *res}), env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (!(res = ft_mutgetenv("PWD", env)))
-		return (EXIT_FAILURE);
-	l_pwd = ft_strdup(*res);
 	if (!argv[1] || !(len = ft_strlen(argv[1])) || argv[1][0] == '~')
 	{
 		if (!(home = ft_getenv("HOME", env)))
 			return (EXIT_FAILURE);
-		return (absolute_update(&l_pwd, res, home, ft_strlen(home)));
+		return (absolute_update(&l_pwd, env, home, ft_strlen(home)));
 	}
 	else if (argv[1][0] == '/')
-		return (absolute_update(&l_pwd, res, argv[1], len));
+		return (absolute_update(&l_pwd, env, argv[1], len));
 	else if (argv[1][0] == '.' && len == 1)
 		return (EXIT_SUCCESS);
-	return (relative_update(&l_pwd, res, argv[1], len));
+	return (relative_update(&l_pwd, env, argv[1], len));
 }

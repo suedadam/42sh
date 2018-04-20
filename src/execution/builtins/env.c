@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 19:33:34 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/18 19:50:19 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 10:30:28 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,9 @@ extern char **environ;
 
 int	builtin_export(char *argv[], __attribute__((unused)) t_environ *env)
 {
-	int	i;
-	int	equal_index;
-
-	if (!argv[1] || !(equal_index = ft_strchr(argv[1], '=') - argv[1]))
+	if (builtin_setenv(argv, g_environ) == EXIT_FAILURE 
+		|| builtin_setenv(argv, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	i = 0;
-	while (env->environ[i])
-	{
-		if (!ft_strncmp(argv[1], env->environ[i], 
-			equal_index) &&
-			ft_strchr(env->environ[i], '=') - env->environ[i] == equal_index)
-		{
-			meta_free(env->environ[i]);
-			if (!(env->environ[i] = ft_strdup(argv[1])))
-				return (EXIT_FAILURE);
-			return (EXIT_SUCCESS);
-		}
-		i++;
-	}
-	env->size++;
-	if (!(env->environ = meta_realloc(env->environ, (env->size + 1) * sizeof(char *))))
-		return (EXIT_FAILURE);
-	environ = env->environ;
-	env->environ[env->size - 1] = ft_strdup(argv[1]);
-	env->environ[env->size] = NULL;
 	return (EXIT_SUCCESS);
 }
 
