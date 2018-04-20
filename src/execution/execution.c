@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/20 11:56:54 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/20 11:59:58 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct s_ophijackhandlers	ophijack_handlers[] = {
 	{NULL, NULL},
 };
 
-void	leave_me(t_ast *curr, t_environ *env)
+static void	leave_me(t_ast *curr, t_environ *env)
 {
 	exec_init(curr);
 	execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
@@ -40,7 +40,7 @@ void	leave_me(t_ast *curr, t_environ *env)
 	exit(EXIT_FAILURE);
 }
 
-int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
+int			run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 {
 	int		pid;
 	int		res;
@@ -69,7 +69,7 @@ int		run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 	return (EXIT_SUCCESS);
 }
 
-int		handle_suspend(pid_t *pid, t_ast *curr)
+int			handle_suspend(pid_t *pid, t_ast *curr)
 {
 	t_jobspec	job;
 
@@ -82,7 +82,7 @@ int		handle_suspend(pid_t *pid, t_ast *curr)
 	return (EXIT_SUCCESS);
 }
 
-int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
+int			run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 {
 	pid_t		pid;
 	int			res;
@@ -114,7 +114,7 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 ** Introduce error handling.
 */
 
-void	pipe_carry(t_ast *prev, t_ast *curr)
+void		pipe_carry(t_ast *prev, t_ast *curr)
 {
 	int fds[2];
 

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/20 11:52:56 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 12:12:32 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void		parse_relative(char **str)
 	}
 }
 
-static int	absolute_update(char **l_pwd, t_environ *env, char *input, size_t inlen)
+static int	absolute_update(char **l_pwd, t_environ *env,
+	char *input, size_t inlen)
 {
 	if (!(*l_pwd = meta_realloc(*l_pwd, 4 + inlen + 2)))
 		return (EXIT_FAILURE);
@@ -62,7 +63,8 @@ static int	absolute_update(char **l_pwd, t_environ *env, char *input, size_t inl
 	return (EXIT_SUCCESS);
 }
 
-static int	relative_update(char **l_pwd, t_environ *env, char *input, size_t inlen)
+static int	relative_update(char **l_pwd, t_environ *env,
+	char *input, size_t inlen)
 {
 	size_t	len;
 
@@ -77,7 +79,6 @@ static int	relative_update(char **l_pwd, t_environ *env, char *input, size_t inl
 		ft_printf("Error: %s (%s)\n", ft_strerror(errno), *l_pwd);
 		return (EXIT_SUCCESS);
 	}
-
 	if (builtin_setenv((char *[]){NULL, *l_pwd}, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

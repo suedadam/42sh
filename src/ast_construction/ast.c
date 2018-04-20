@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:39:45 by tle-huu-          #+#    #+#             */
-/*   Updated: 2018/04/18 18:01:10 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 12:19:57 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ static t_ast		*build_ast(char **tokens, t_token_type *type, int *position)
 	t_token_type		*sub_types;
 	int					i;
 
-	ast = NULL;
 	if ((i = parse_tokens(tokens, type)) == END_PARSING ||
 		(!i && *type == OPERATOR))
-		return (ast);
+		return (NULL);
 	*position += i + 1;
 	sub_string = sub_token_char(tokens, 0, i + 1);
 	sub_types = sub_token_type(type, 0, i + 1);
@@ -78,29 +77,21 @@ t_queue				*build_forest(char **tokens, t_token_type *type)
 	int			pos;
 
 	if (!(forest = new_queue()))
-	{
-		meta_free(forest);
-		forest = NULL;
 		return (NULL);
-	}
 	pos = 0;
-	while (tokens && type &&
-			(ast = build_ast(tokens + pos, type + pos, &pos)))
-	{
+	while (tokens && type && (ast = build_ast(tokens + pos, type + pos, &pos)))
 		if (ft_enqueue(forest, ast, sizeof(t_ast)) == EXIT_FAILURE ||
 			!parsing_pass(ast))
 		{
 			errno = 8;
 			free_forest(forest);
 			meta_free(forest);
-			forest = NULL;
 			return (NULL);
 		}
-		meta_free(ast);
-	}
+		else
+			meta_free(ast);
 	if (isempty_queue(forest))
 	{
-		free_forest(forest);
 		meta_free(forest);
 		forest = NULL;
 	}
