@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   relative.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 00:38:31 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 00:39:52 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/20 01:02:13 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,33 @@ void	variable_expansion(char **str, t_environ *env)
 	{
 		if (!(local = ft_strdup(ft_getenv(&((*str)[1]), env))))
 			return ;
+		meta_free(*str);
+		*str = local;
+	}
+}
+
+void	oldpwd_expansion(char **str, t_environ *env)
+{
+	size_t	len;
+	size_t	homelen;
+	char	*tmp;
+	char	*local;
+
+	len = ft_strlen(*str);
+	if (!(homelen = ft_strlen(ft_getenv("OLDPWD", env))))
+		return ;
+	if (**str == '-')
+	{
+		if (!(local = ft_memalloc(sizeof(char) * len + homelen + 1)))
+			return ;
+		if (!(tmp = ft_strdup(&((*str)[1]))))
+		{
+			meta_free(local);
+			return ;
+		}
+		memcpy(local, ft_getenv("OLDPWD", env), homelen);
+		memcpy(local + homelen, tmp, len);
+		meta_free(tmp);
 		meta_free(*str);
 		*str = local;
 	}
@@ -62,6 +89,7 @@ void	relative_hook(t_ast *curr, t_environ *env)
 	while (curr->token[i])
 	{
 		home_expansion(&(curr->token[i]), env);
+		oldpwd_expansion(&(curr->token[i]), env);
 		variable_expansion(&(curr->token[i]), env);
 		i++;
 	}
