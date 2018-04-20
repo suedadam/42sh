@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/16 08:44:57 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 22:44:36 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		parse_relative(char **str)
 			ft_memmove(tmp, res + 2, len - 2);
 			tmp[len - 2] = '\0';
 		}
+		else if (len == 2)
+			ft_memmove(tmp, "/\0", 2);
 		else if (tmp)
 			*tmp = '\0';
 	}
@@ -53,6 +55,7 @@ static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
 		ft_printf("Error: %s\n", ft_strerror(errno));
 		return (EXIT_SUCCESS);
 	}
+	meta_free(*res);
 	*res = *l_pwd;
 	return (EXIT_SUCCESS);
 }
@@ -72,6 +75,7 @@ static int	relative_update(char **l_pwd, char **res, char *input, size_t inlen)
 		ft_printf("Error: %s (%s)\n", ft_strerror(errno), *l_pwd);
 		return (EXIT_SUCCESS);
 	}
+	meta_free(*res);
 	*res = *l_pwd;
 	return (EXIT_SUCCESS);
 }
