@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/20 11:59:58 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 12:52:29 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct s_ophijackhandlers	ophijack_handlers[] = {
 	{NULL, NULL},
 };
 
-static void	leave_me(t_ast *curr, t_environ *env)
+static void	child_offload(t_ast *curr, t_environ *env)
 {
 	exec_init(curr);
 	execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
@@ -57,12 +57,7 @@ int			run_pipecmds(t_stack *cmd, t_pqueue *pids, t_environ *env)
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
 	if (!pid)
-	{
-		exec_init(process);
-		execvP(*(process->token), ft_getenv("PATH", env), process->token);
-		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(process->token));
-		exit(EXIT_FAILURE);
-	}
+		child_offload(process, env);
 	parent_pipes(process);
 	ft_enpqueue(pids, &pid, sizeof(int), (int (*)(void *, void *))&compare);
 	run_pipecmds(cmd, pids, env);
@@ -94,8 +89,8 @@ int			run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		return (res);
 	if ((pid = fork()) == -1)
 		return (EXIT_FAILURE);
-	if (pid == 0)
-		leave_me(curr, env);
+	if (!pid)
+		child_offload(curr, env);
 	if (wait)
 	{
 		waitpid(pid, &res, WUNTRACED);

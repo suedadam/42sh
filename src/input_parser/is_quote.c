@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_quote.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 18:17:02 by satkins           #+#    #+#             */
-/*   Updated: 2018/04/20 12:16:27 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 13:01:14 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	escaped_nl(t_parser *par)
 	return (USED_CHAR);
 }
 
-int	quotes(t_parser *par, char cur_char)
+int			quotes(t_parser *par, char cur_char)
 {
 	if (IS_QUOTE(cur_char))
 	{
