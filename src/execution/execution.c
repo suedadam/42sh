@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:16:12 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 02:08:49 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 19:33:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int		run_operation(t_ast *curr, uint8_t wait, t_environ *env)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		exec_init(curr);
-		execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
-		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(curr->token));
-		exit(EXIT_FAILURE);
+//		exec_init(curr);
+//		execvP(*(curr->token), ft_getenv("PATH", env), curr->token);
+//		ft_printf("Error: %s: %s\n", ft_strerror(errno), *(curr->token));
+//		exit(EXIT_FAILURE);
 	}
 	if (wait)
 	{

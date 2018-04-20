@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 16:27:28 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 02:07:55 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 19:26:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		op_hijack(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds)
 	return (EXIT_FAILURE);
 }
 
-int		itterate_pipes(t_stack *cmdstack, t_ast *curr, t_environ *env, t_pqueue *pids)
+int		itterate_pipes(t_stack *cmdstack, t_ast *curr,
+		t_environ *env, t_pqueue *pids)
 {
 	if (*(curr->type) == OPERATOR && !strcmp(*(curr->token), "|"))
 	{
@@ -45,7 +46,8 @@ int		itterate_pipes(t_stack *cmdstack, t_ast *curr, t_environ *env, t_pqueue *pi
 			if (*(curr->right_child->type) == OPERATOR &&
 				strcmp(*(curr->right_child->token), "|"))
 			{
-				ft_stackpush(cmdstack, curr->right_child->left_child, sizeof(t_ast));
+				ft_stackpush(cmdstack, curr->right_child->left_child,
+						sizeof(t_ast));
 				return (op_hijack(curr->right_child, env, pids, cmdstack));
 			}
 			else if (*(curr->right_child->type) != OPERATOR)

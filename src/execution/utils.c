@@ -6,23 +6,17 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 22:34:50 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 02:11:01 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 19:30:43 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int		compare(int *n1, int *n2)
-{
-	if (*n1 < *n2)
-		return (0);
-	return (1);
-}
 
 void	help_free(t_process *new)
 {
-	meta_free(new);
 	meta_free(new->stdin);
+	meta_free(new);
 }
 
 void	free_process(t_process *process)
@@ -49,15 +43,15 @@ void	*init_process(void)
 		help_free(new);
 	else if (!(new->stdout = ft_memalloc(sizeof(int) * 2)))
 	{
-		help_free(new);
 		meta_free(new->stderr);
+		help_free(new);
 	}
 	else if (!(new->comm = ft_memalloc(sizeof(int) * 2)))
 	{
-		meta_free(new);
 		meta_free(new->stdin);
 		meta_free(new->stderr);
 		meta_free(new->stdout);
+		meta_free(new);
 	}
 	return (new);
 }
@@ -83,15 +77,4 @@ int		fd_redir(t_ast *curr, int **src, int pos, uint8_t closer)
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
-}
-
-void		linkfree(t_node *list, t_jobspec *job)
-{
-	if (list->previous)
-		list->previous = list->next;
-	if (list->next)
-		list->next->previous = list->previous;
-	meta_free(job->name);
-	meta_free(job);
-	meta_free(list);
 }

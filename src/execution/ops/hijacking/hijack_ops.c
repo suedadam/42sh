@@ -6,13 +6,14 @@
 /*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 01:02:39 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 02:00:58 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 19:25:51 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int		op_and_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds)
+int		op_and_exec_hijacked(t_ast *curr, t_environ *env,
+		t_pqueue *pids, t_stack *cmds)
 {
 	pid_t	res;
 	pid_t	kpid;
@@ -35,7 +36,8 @@ int		op_and_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *
 	return (EXIT_SUCCESS);
 }
 
-int		op_or_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds)
+int		op_or_exec_hijacked(t_ast *curr, t_environ *env,
+		t_pqueue *pids, t_stack *cmds)
 {
 	pid_t	res;
 	pid_t	kpid;
