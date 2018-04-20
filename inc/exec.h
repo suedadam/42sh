@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 03:50:41 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/20 11:31:34 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 11:56:09 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct	s_ophijackhandlers
 	int		(*exec)(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds);
 }				t_ophijackhandlers;
 
-
 typedef struct	s_redir_op
 {
 	char	*opflag;
@@ -65,8 +64,10 @@ void			relative_hook(t_ast *curr, t_environ *env);
 /*
 ** hijacked
 */
-int				op_and_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds);
-int				op_or_exec_hijacked(t_ast *curr, t_environ *env, t_pqueue *pids, t_stack *cmds);
+int				op_and_exec_hijacked(t_ast *curr, t_environ *env,
+	t_pqueue *pids, t_stack *cmds);
+int				op_or_exec_hijacked(t_ast *curr, t_environ *env,
+	t_pqueue *pids, t_stack *cmds);
 
 /*
 ** job_control
