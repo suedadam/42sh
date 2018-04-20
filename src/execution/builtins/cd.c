@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asyed <asyed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 21:29:30 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/20 12:12:32 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/20 13:33:44 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void		parse_relative(char **str)
 	}
 }
 
-static int	absolute_update(char **l_pwd, t_environ *env,
-	char *input, size_t inlen)
+static int	absolute_update(char **l_pwd, char **res, char *input, size_t inlen)
 {
 	if (!(*l_pwd = meta_realloc(*l_pwd, 4 + inlen + 2)))
 		return (EXIT_FAILURE);
@@ -58,19 +57,20 @@ static int	absolute_update(char **l_pwd, t_environ *env,
 		ft_printf("Error: %s\n", ft_strerror(errno));
 		return (EXIT_SUCCESS);
 	}
-	if (builtin_setenv((char *[]){NULL, *l_pwd}, env) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	meta_free(*res);
+	*res = *l_pwd;
 	return (EXIT_SUCCESS);
 }
 
-static int	relative_update(char **l_pwd, t_environ *env,
-	char *input, size_t inlen)
+static int	relative_update(char **l_pwd, char **res, char *input, size_t inlen)
 {
 	size_t	len;
 
-	len = ft_strlen(*l_pwd);
+	if (!(len = ft_strlen(*l_pwd)))
+		return (EXIT_SUCCESS);
 	*l_pwd = meta_realloc(*l_pwd, len + inlen + 2);
-	(*l_pwd)[len] = '/';
+	if ((*l_pwd)[len - 1] != '/')
+		(*l_pwd)[len] = '/';
 	if (!(*l_pwd = ft_strcat(*l_pwd, input)))
 		return (EXIT_FAILURE);
 	parse_relative(l_pwd);
@@ -79,8 +79,8 @@ static int	relative_update(char **l_pwd, t_environ *env,
 		ft_printf("Error: %s (%s)\n", ft_strerror(errno), *l_pwd);
 		return (EXIT_SUCCESS);
 	}
-	if (builtin_setenv((char *[]){NULL, *l_pwd}, env) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	meta_free(*res);
+	*res = *l_pwd;
 	return (EXIT_SUCCESS);
 }
 
@@ -108,18 +108,17 @@ int			builtin_cd(char *argv[], t_environ *env)
 	if (!argv[0]
 		|| !(res = ft_mutgetenv("PWD", env))
 		|| !(l_pwd = ft_strdup(*res))
-		|| set_old_pwd(res, env) == EXIT_FAILURE
-		|| builtin_unsetenv(((char *[]){NULL, *res}), env) == EXIT_FAILURE)
+		|| set_old_pwd(res, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (!argv[1] || !(len = ft_strlen(argv[1])) || argv[1][0] == '~')
 	{
 		if (!(home = ft_getenv("HOME", env)))
 			return (EXIT_FAILURE);
-		return (absolute_update(&l_pwd, env, home, ft_strlen(home)));
+		return (absolute_update(&l_pwd, res, home, ft_strlen(home)));
 	}
 	else if (argv[1][0] == '/')
-		return (absolute_update(&l_pwd, env, argv[1], len));
+		return (absolute_update(&l_pwd, res, argv[1], len));
 	else if (argv[1][0] == '.' && len == 1)
 		return (EXIT_SUCCESS);
-	return (relative_update(&l_pwd, env, argv[1], len));
+	return (relative_update(&l_pwd, res, argv[1], len));
 }
