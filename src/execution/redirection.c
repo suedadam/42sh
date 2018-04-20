@@ -6,7 +6,7 @@
 /*   By: asyed <asyed@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 22:06:38 by asyed             #+#    #+#             */
-/*   Updated: 2018/04/19 23:25:30 by asyed            ###   ########.fr       */
+/*   Updated: 2018/04/19 23:28:18 by asyed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		ops_append_to(t_ast *curr, int pos)
 		return (EXIT_FAILURE);
 	if (*(curr->token[pos + 1]) == '&')
 	{
+		close(**src);
 		if (fd_redir(curr, src, pos, 0) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
@@ -82,6 +83,7 @@ int		ops_redir_to(t_ast *curr, int pos)
 		return (EXIT_FAILURE);
 	if (*(curr->token[pos + 1]) == '&')
 	{
+		close(**src);
 		if (fd_redir(curr, src, pos, 1) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
